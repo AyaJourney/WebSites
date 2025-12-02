@@ -64,7 +64,7 @@ export default function Footer() {
                 </div>
               </div>
 
-              <a href="tel:+903128701584" className="flex items-center gap-3  hover:opacity-80 transition">
+              <a href="tel:+903128701584" aria-label="Telefon numarasını ara" className="flex items-center gap-3  hover:opacity-80 transition">
                 <FiPhone className="text-white text-lg" />
                 <span className="text-sm opacity-90">+90 312 870 15 84</span>
               </a>
@@ -78,7 +78,7 @@ export default function Footer() {
                 </div>
               </div>
 
-              <a href="tel:+903128701584" className="flex items-center gap-3  hover:opacity-80 transition">
+              <a href="tel:+903128701584" aria-label="Telefon numarasını ara" className="flex items-center gap-3  hover:opacity-80 transition">
                 <FiPhone className="text-white text-lg" />
                 <span className="text-sm opacity-90">+90 312 870 15 84</span>
               </a>
@@ -86,6 +86,7 @@ export default function Footer() {
               {/* Mail */}
               <a
                 href="mailto:vizedestek@ayajourneys.com"
+                aria-label="E-Posta gönder"
                 className="flex items-center gap-3 mt-2 hover:opacity-80 transition"
               >
                 <HiOutlineMail className="text-white text-xl" />
@@ -95,19 +96,19 @@ export default function Footer() {
 
             {/* Sosyal ikonlar */}
             <div className="flex gap-6 mt-3 items-center justify-start w-full">
-              <a href="#" target="_blank" rel="noopener noreferrer" className="group">
+              <a href="https://www.facebook.com/people/AYA-Journey-Vize/100095568336692/" aria-label="Aya Journey Facebook" target="_blank" rel="noopener noreferrer" className="group">
                 <FaFacebookF className="text-blue-600 w-10 h-10 transition-all group-hover:bg-white group-hover:text-blue-600 p-2 rounded-full border-2 border-transparent group-hover:border-blue-600" />
               </a>
-              <a href="https://www.instagram.com/ayajourneyvize/" target="_blank" rel="noopener noreferrer" className="group">
+              <a href="https://www.instagram.com/ayajourneyvize/" target="_blank" aria-label="Aya Journey Instagram" rel="noopener noreferrer" className="group">
                 <FaInstagram className="text-pink-500 w-10 h-10 transition-all group-hover:bg-white group-hover:text-pink-500 p-2 rounded-full border-2 border-transparent group-hover:border-pink-500" />
               </a>
-              <a href="https://www.linkedin.com/company/ayajourney/" target="_blank" rel="noopener noreferrer" className="group">
+              <a href="https://www.linkedin.com/company/ayajourney/" target="_blank" rel="noopener noreferrer" aria-label="Aya Journey Linkedn" className="group">
                 <FaLinkedinIn className="text-blue-700 w-10 h-10 transition-all group-hover:bg-white group-hover:text-blue-700 p-2 rounded-full border-2 border-transparent group-hover:border-blue-700" />
               </a>
-              <a href="#" target="_blank" rel="noopener noreferrer" className="group">
+              <a href="https://x.com/ayajourneyvize" target="_blank" rel="noopener noreferrer" aria-label="Aya Journey Twitter" className="group">
                 <FaXTwitter className="text-black w-10 h-10 p-2 rounded-full border-2 border-transparent transition-all duration-300 group-hover:bg-white group-hover:text-black group-hover:border-black" />
               </a>
-              <a href="#" target="_blank" rel="noopener noreferrer" className="group">
+              <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Aya Journey Youtube" className="group">
                 <FaYoutube className="text-red-600 w-10 h-10 transition-all group-hover:bg-white group-hover:text-red-600 p-2 rounded-full border-2 border-transparent group-hover:border-red-600" />
               </a>
             </div>
@@ -166,14 +167,19 @@ export default function Footer() {
   {/* Menü */}
   <div className="mt-4">
     <ul className="flex flex-wrap justify-center gap-2 text-white text-sm opacity-90">
-      <li><a href="/biz-kimiz" className="hover:opacity-70 transition">Biz Kimiz</a></li>
-      <li><a href="/referanslarimiz" className="hover:opacity-70 transition">Referanslarımız</a></li>
-      <li><a href="/iletisim" className="hover:opacity-70 transition">İletişim</a></li>
-      <li><a href="/egitim" className="hover:opacity-70 transition">Eğitim</a></li>
-      <li><a href="/is-ticaret" className="hover:opacity-70 transition">İş / Ticaret</a></li>
-      <li><a href="/vize" className="hover:opacity-70 transition">Vize</a></li>
-      <li><a href="/yurtdisi-rehberi" className="hover:opacity-70 transition">Yurtdışı Rehberi</a></li>
-      <li><a href="/sikca-sorulan-sorular" className="hover:opacity-70 transition">SSS</a></li>
+      <li><a href="/biz-kimiz" className="hover:opacity-70 transition" aria-label="Biz Kimiz">Biz Kimiz</a></li>
+      <li><a href="/referanslarimiz" className="hover:opacity-70 transition" aria-label="Referanslarımız">Referanslarımız</a></li>
+      <li><a href="/iletisim" className="hover:opacity-70 transition" aria-label="İletişim">İletişim</a></li>
+      <li><a href="/egitim" className="hover:opacity-70 transition"aria-label="Eğitim">Eğitim</a></li>
+      <li><a href="/schengen-vizesi" className="hover:opacity-70 transition">Schengen Vizesi</a></li>
+      <li><a href="/ingiltere-vizesi" className="hover:opacity-70 transition">İngiltere Vizesi</a></li>
+      <li><a href="/portekiz-d7-vize" className="hover:opacity-70 transition">Portekiz D-7 Vizesi</a></li>
+
+
+
+      {/* <li><a href="/vize" className="hover:opacity-70 transition">Vize</a></li> */}
+      <li><a href="/yurtdisi-rehberi" className="hover:opacity-70 transition" aria-label="Yurtdışı Rehberi">Yurtdışı Rehberi</a></li>
+      <li><a href="/sikca-sorulan-sorular" className="hover:opacity-70 transition" aria-label="SSS">SSS</a></li>
     </ul>
   </div>
 

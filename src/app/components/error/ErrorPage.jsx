@@ -41,11 +41,11 @@ const ErrorPage = ({ error, reset }) => {
       </Link>
 
       {/* Opsiyonel: Hata Detayları (dev ortamında) */}
-      {error && (
+      {/* {error && (
         <pre className="mt-8 p-4 bg-gray-100 text-red-600 rounded-lg max-w-lg overflow-x-auto text-sm">
           {error.message}
         </pre>
-      )}
+      )} */}
     </main>
   );
 };
