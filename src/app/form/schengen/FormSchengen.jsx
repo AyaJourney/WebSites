@@ -174,7 +174,7 @@ const handleSubmit = async () => {
 };
 
 async function sendForm(payload) {
-  const res = await fetch("api/submit", {
+  const res = await fetch("https://ayajourney.com/api/submit", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
