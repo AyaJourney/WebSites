@@ -682,7 +682,7 @@ ${f.steps[6].photoFile ? `<h4>Vesikalık</h4><img src="cid:profilePhoto" style="
 
     const mailOptions = {
       from: `Aya Journey <${process.env.GOOGLE_MAIL_ADDRESS}>`,
-      to: "sevket@ayajourneys.com",
+      to: `${process.env.FORM_MAIL_ADRESS}`,
       subject: `İngiltere Vize Başvurusu - ${s(1).fullName || "İsimsiz"}`,
       text: textBody,
       html: htmlBody,

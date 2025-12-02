@@ -1000,7 +1000,7 @@ const attachments = [
 
     const mailOptions = {
       from: `Aya Journey <${process.env.GOOGLE_MAIL_ADDRESS}>`,
-      to: "sevket@ayajourneys.com",
+      to: `${process.env.FORM_MAIL_ADRESS}`,
       subject: `Kanada Vize Başvurusu - ${s(1).fullName || "İsimsiz"}`,
       text: textBody,
       html: htmlBody,
