@@ -44,9 +44,9 @@ const Aya2 = () => {
 
         {/* Sağ: Metin + Liste */}
         <div className="flex-1">
-          <h2 className="text-3xl md:text-6xl font-bold mb-4 leading-snug">
+          <h1 className="text-3xl md:text-6xl font-bold mb-4 leading-snug">
             Herkese ayrı fikir. Herkese ayrı söylem. Çünkü herkes ayrı.
-          </h2>
+          </h1>
    
 
           {/* Maddeli Liste */}
@@ -61,7 +61,7 @@ const Aya2 = () => {
                 </div>
 
                 <div>
-                  <h3 className="font-semibold text-lg">{item.title}</h3>
+                  <h2 className="font-semibold text-lg">{item.title}</h2>
                   <p className="text-gray-600 text-sm mt-1">{item.desc}</p>
                 </div>
               </div>

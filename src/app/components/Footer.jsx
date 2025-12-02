@@ -96,19 +96,19 @@ export default function Footer() {
 
             {/* Sosyal ikonlar */}
             <div className="flex gap-6 mt-3 items-center justify-start w-full">
-              <a href="https://www.facebook.com/people/AYA-Journey-Vize/100095568336692/" aria-label="Aya Journey Facebook" target="_blank" rel="noopener noreferrer" className="group">
+              <a href="https://www.facebook.com/people/AYA-Journey-Vize/100095568336692/" aria-label="Aya Journey Facebook" target="_blank" rel="noopener noreferrer" className="group p-3 inline-flex items-center justify-center min-w-[44px] min-h-[44px]">
                 <FaFacebookF className="text-blue-600 w-10 h-10 transition-all group-hover:bg-white group-hover:text-blue-600 p-2 rounded-full border-2 border-transparent group-hover:border-blue-600" />
               </a>
-              <a href="https://www.instagram.com/ayajourneyvize/" target="_blank" aria-label="Aya Journey Instagram" rel="noopener noreferrer" className="group">
+              <a href="https://www.instagram.com/ayajourneyvize/" target="_blank" aria-label="Aya Journey Instagram" rel="noopener noreferrer" className="group p-3 inline-flex items-center justify-center min-w-[44px] min-h-[44px]">
                 <FaInstagram className="text-pink-500 w-10 h-10 transition-all group-hover:bg-white group-hover:text-pink-500 p-2 rounded-full border-2 border-transparent group-hover:border-pink-500" />
               </a>
-              <a href="https://www.linkedin.com/company/ayajourney/" target="_blank" rel="noopener noreferrer" aria-label="Aya Journey Linkedn" className="group">
+              <a href="https://www.linkedin.com/company/ayajourney/" target="_blank" rel="noopener noreferrer" aria-label="Aya Journey Linkedn" className="group p-3 inline-flex items-center justify-center min-w-[44px] min-h-[44px]">
                 <FaLinkedinIn className="text-blue-700 w-10 h-10 transition-all group-hover:bg-white group-hover:text-blue-700 p-2 rounded-full border-2 border-transparent group-hover:border-blue-700" />
               </a>
-              <a href="https://x.com/ayajourneyvize" target="_blank" rel="noopener noreferrer" aria-label="Aya Journey Twitter" className="group">
+              <a href="https://x.com/ayajourneyvize" target="_blank" rel="noopener noreferrer" aria-label="Aya Journey Twitter" className="group p-3 inline-flex items-center justify-center min-w-[44px] min-h-[44px]">
                 <FaXTwitter className="text-black w-10 h-10 p-2 rounded-full border-2 border-transparent transition-all duration-300 group-hover:bg-white group-hover:text-black group-hover:border-black" />
               </a>
-              <a href="www.youtube.com/@aya.journey" target="_blank" rel="noopener noreferrer" aria-label="Aya Journey Youtube" className="group">
+              <a href="www.youtube.com/@aya.journey" target="_blank" rel="noopener noreferrer" aria-label="Aya Journey Youtube" className="group p-3 inline-flex items-center justify-center min-w-[44px] min-h-[44px]">
                 <FaYoutube className="text-red-600 w-10 h-10 transition-all group-hover:bg-white group-hover:text-red-600 p-2 rounded-full border-2 border-transparent group-hover:border-red-600" />
               </a>
             </div>

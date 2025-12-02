@@ -53,7 +53,7 @@ const Aya = () => {
 
               {/* Metinler */}
               <div>
-                <h3 className="font-semibold text-xl mb-1">{item.title}</h3>
+                <h2 className="font-semibold text-xl mb-1">{item.title}</h2>
                 <p className="text-gray-700 text-sm leading-relaxed">{item.text}</p>
               </div>
             </div>
