@@ -11,21 +11,21 @@ if (!fs.existsSync(FAILED_DIR)) fs.mkdirSync(FAILED_DIR);
 
 async function sendToApi(type, data, savedFilePath) {
   let apiUrl;
-   switch (type) {
+  switch (type) {
     case "canada":
-      apiUrl = "/api/send-canada";
+      apiUrl = "https://ayajourney.com/api/send-canada";
       break;
     case "ds-160":
-      apiUrl = "/api/send-abd";
+      apiUrl = "https://ayajourney.com/api/send-abd";
       break;
     case "uk":
-      apiUrl = "/api/send-uk";
+      apiUrl = "https://ayajourney.com/api/send-uk";
       break;
     case "schengen":
-      apiUrl = "/api/send-schengen";
+      apiUrl = "https://ayajourney.com/api/send-schengen";
       break;
     default:
-      apiUrl = "/api/send-default";
+      apiUrl = "https://ayajourney.com/api/send-default";
   }
 
   console.log(`${new Date().toISOString()} - ${type.toUpperCase()} işlemi başlıyor...`);
