@@ -108,7 +108,7 @@ export default function Footer() {
               <a href="https://x.com/ayajourneyvize" target="_blank" rel="noopener noreferrer" aria-label="Aya Journey Twitter" className="group">
                 <FaXTwitter className="text-black w-10 h-10 p-2 rounded-full border-2 border-transparent transition-all duration-300 group-hover:bg-white group-hover:text-black group-hover:border-black" />
               </a>
-              <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Aya Journey Youtube" className="group">
+              <a href="www.youtube.com/@aya.journey" target="_blank" rel="noopener noreferrer" aria-label="Aya Journey Youtube" className="group">
                 <FaYoutube className="text-red-600 w-10 h-10 transition-all group-hover:bg-white group-hover:text-red-600 p-2 rounded-full border-2 border-transparent group-hover:border-red-600" />
               </a>
             </div>
