@@ -11,21 +11,21 @@ if (!fs.existsSync(FAILED_DIR)) fs.mkdirSync(FAILED_DIR);
 
 async function sendToApi(type, data, savedFilePath) {
   let apiUrl;
-  switch (type) {
+   switch (type) {
     case "canada":
-      apiUrl = "http://localhost:3000/api/send-canada";
+      apiUrl = "/api/send-canada";
       break;
     case "ds-160":
-      apiUrl = "http://localhost:3000/api/send-abd";
+      apiUrl = "/api/send-abd";
       break;
     case "uk":
-      apiUrl = "http://localhost:3000/api/send-uk";
+      apiUrl = "/api/send-uk";
       break;
     case "schengen":
-      apiUrl = "http://localhost:3000/api/send-schengen";
+      apiUrl = "/api/send-schengen";
       break;
     default:
-      apiUrl = "http://localhost:3000/api/send-default";
+      apiUrl = "/api/send-default";
   }
 
   console.log(`${new Date().toISOString()} - ${type.toUpperCase()} işlemi başlıyor...`);
