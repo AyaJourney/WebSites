@@ -649,10 +649,10 @@ const visibleSteps = Array.from({length: end - start +1}, (_, i) => start + i);
      onChange={(e) => {
                 if (isMobile) {
                     // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(1, "money_cover_expenses", e.target.value);
+                    updateField(1, "fullName", e.target.value);
                 } else {
                     // Desktop/Diğer: Normalizasyon YAP
-                    updateField(1, "money_cover_expenses", normalizeInput(e.target.value));
+                    updateField(1, "fullName", normalizeInput(e.target.value));
                 }
             }}
             
@@ -660,7 +660,7 @@ const visibleSteps = Array.from({length: end - start +1}, (_, i) => start + i);
             onBlur={(e) => {
                 if (isMobile) {
                     const normalizedValue = normalizeInput(e.target.value);
-                    updateField(1, "money_cover_expenses", normalizedValue);
+                    updateField(1, "fullName", normalizedValue);
                 }
             }}
           placeholder="Örn: IPEK PARLAK"
