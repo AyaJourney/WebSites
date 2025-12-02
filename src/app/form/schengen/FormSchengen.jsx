@@ -1512,7 +1512,7 @@ const visibleSteps = Array.from({length: end - start +1}, (_, i) => start + i);
 </div>
   
 <div className="flex justify-center mt-6">
- { resMessage ? ( <button
+ { !resMessage ? ( <button
     type="button"
     onClick={handleSubmit}
     disabled={!kvkkConsent || isSubmitting}
