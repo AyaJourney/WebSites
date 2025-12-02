@@ -196,47 +196,59 @@ return (
 
 
       {/* Saatler */}
-      <div className="md:w-5/12 flex flex-col bg-gray-50 rounded-lg p-4 min-h-[320px] sm:min-h-auto">
-        <span className="text-md text-gray-600 mb-2">Saat Seçin</span>
-        {selectedDay ? (
-          <div className="grid grid-cols-3 gap-2 h-full">
-            {times.map(time => {
-              const isTaken = reservations.some(
-                r =>
-                  r.personId === person.id &&
-                  r.selectedDay === selectedDay.toISOString().split("T")[0] &&
-                  r.selectedTime === time
-              );
-              const isSelected = selectedTime === time;
+   {/* Saatler */}
+<div className="md:w-5/12 flex flex-col bg-gray-50 rounded-lg p-4 min-h-[320px] sm:min-h-auto">
+  <span className="text-md text-gray-600 mb-2">Saat Seçin</span>
+  {selectedDay ? (
+    <div className="grid grid-cols-3 gap-2 h-full">
+      {times.map(time => {
+        const [hour, minute] = time.split(":").map(Number);
+        const isTaken = reservations.some(
+          r =>
+            r.personId === person.id &&
+            r.selectedDay === selectedDay.toISOString().split("T")[0] &&
+            r.selectedTime === time
+        );
 
-              return (
-                <button
-                  key={time}
-                  onClick={() => { if (!isTaken) { setSelectedTime(time); setLevel("form"); } }}
-                  disabled={isTaken}
-                  className={`
-                    flex items-center justify-center gap-1 h-12 px-4 text-sm font-medium rounded-2xl border transition-all duration-200 shadow-[0_4px_14px_rgba(0,0,0,0.08)]
-                    ${isSelected && !isTaken
-                      ? "bg-[#0A84FF] border-[#0A84FF] text-white shadow-[0_4px_14px_rgba(10,132,255,0.25)] scale-[1.03]"
-                      : isTaken
-                      ? "bg-red-100/60 text-red-600 border-red-200 cursor-not-allowed"
-                      : "bg-white/70 border-gray-300 hover:scale-[1.02] hover:bg-white"
-                    }
-                  `}
-                >
-                  <AiOutlineClockCircle
-                    size={18}
-                    className={`${isSelected ? "text-white" : isTaken ? "text-red-600" : "text-[#0A84FF]"}`}
-                  />
-                  {time}
-                </button>
-              );
-            })}
-          </div>
-        ) : (
-          <p className="text-gray-400 text-sm mt-2">Önce bir gün seçin</p>
-        )}
-      </div>
+        let disableTime = false;
+
+        // Bugün ve geçmiş saat kontrolü
+        if (selectedDay.toDateString() === today.toDateString()) {
+          const now = new Date();
+          if (hour < now.getHours() || (hour === now.getHours() && minute <= now.getMinutes())) {
+            disableTime = true;
+          }
+        }
+
+        return (
+          <button
+            key={time}
+            onClick={() => { if (!isTaken && !disableTime) { setSelectedTime(time); setLevel("form"); } }}
+            disabled={isTaken || disableTime}
+            className={`
+              flex items-center justify-center gap-1 h-12 px-4 text-sm font-medium rounded-2xl border transition-all duration-200 shadow-[0_4px_14px_rgba(0,0,0,0.08)]
+              ${selectedTime === time && !isTaken && !disableTime
+                ? "bg-[#0A84FF] border-[#0A84FF] text-white shadow-[0_4px_14px_rgba(10,132,255,0.25)] scale-[1.03]"
+                : isTaken || disableTime
+                ? "bg-red-100/60 text-red-600 border-red-200 cursor-not-allowed"
+                : "bg-white/70 border-gray-300 hover:scale-[1.02] hover:bg-white"
+              }
+            `}
+          >
+            <AiOutlineClockCircle
+              size={18}
+              className={`${selectedTime === time ? "text-white" : isTaken || disableTime ? "text-red-600" : "text-[#0A84FF]"}`}
+            />
+            {time}
+          </button>
+        );
+      })}
+    </div>
+  ) : (
+    <p className="text-gray-400 text-sm mt-2">Önce bir gün seçin</p>
+  )}
+</div>
+
     </div>
 
     {/* Form alanı */}

@@ -48,7 +48,7 @@ export default function Footer() {
           <div className="flex flex-col flex-1 rounded-lg p-4 bg-white/10 gap-6">
             
             {/* Logo */}
-            <div className="flex justify-start w-full px-1">
+            <div className="flex justify-center w-full px-1">
               <img src="/images/logo_beyaz.svg" alt="aya journey logo" className="h-16" />
             </div>
 

@@ -174,7 +174,7 @@ export default function SchengenPage() {
               alt="Schengen Vize Danışmanlığı"
               width={560}
               height={600}
-              // Tailwind'de daha modern bir image stili
+            
               className="rounded-3xl object-cover border-4 border-white dark:border-zinc-700 shadow-2xl"
               priority
             />

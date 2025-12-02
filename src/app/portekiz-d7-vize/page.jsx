@@ -88,6 +88,7 @@ const Page = () => {
             width={500}
             height={400}
             className="rounded-2xl object-cover shadow-lg"
+             priority 
           />
         </div>
       </section>
