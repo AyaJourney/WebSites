@@ -243,6 +243,7 @@ export default function WhatsAppChatWithIcon() {
                 border: "none",
                 cursor: "pointer",
               }}
+              aria-label="Sayfanın başına git"
             >
               ➤
             </button>
