@@ -133,7 +133,7 @@ export default function Footer() {
   </div>
 
   {/* Butonlar */}
-  <div className="flex gap-2 justify-center mt-1">
+  <div className="flex gap-2 justify-center mt-1 gap-2">
     <button
       type="button"
       onClick={() => setLocation("ankara")}
