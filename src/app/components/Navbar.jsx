@@ -66,7 +66,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/"> <div className="text-2xl font-bold cursor-pointer" >
           <img
-            src="/images/aya_logo_svg.svg"
+            src="/images/logo.png"
             alt="Ekibimiz"
             // className="rounded-2xl w-full max-w-md object-cover"
             width={250}

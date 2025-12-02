@@ -17,7 +17,7 @@ const CardEgitim = () => {
     setIsMobile(isMobileOrAndroid());
   }, []);
 
-  const imageSrc = isMobile ? "/images/tmobile2.webp" : "/images/t.jpg";
+  const imageSrc = isMobile ? "/images/chefsmobil.webp" : "/images/chefs.webp";
 
   return (
     <section className="relative w-full h-screen overflow-hidden">

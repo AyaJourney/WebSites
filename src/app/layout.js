@@ -19,7 +19,7 @@ export const metadata = {
   title: "Aya Journey",
   description: "Visa Education and Business",
    icons: {
-    icon: "/images/logo_beyaz.svg",
+    icon: "/images/logo.png",
   },
 };
 
