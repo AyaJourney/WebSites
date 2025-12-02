@@ -61,7 +61,7 @@ const Aya2 = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-semibold text-lg">{item.title}</h4>
+                  <h3 className="font-semibold text-lg">{item.title}</h3>
                   <p className="text-gray-600 text-sm mt-1">{item.desc}</p>
                 </div>
               </div>

@@ -92,6 +92,7 @@ export default function WhatsAppChatWithIcon() {
   <div className="fixed bottom-6 right-6 z-50 flex gap-3 items-end">
     {/* Scroll to Top Butonu */}
     <button
+      aria-label="Sayfanın başına git"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       className="bg-gray-700 w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition cursor-pointer"
     >
@@ -110,6 +111,7 @@ export default function WhatsAppChatWithIcon() {
     {/* WhatsApp Butonu */}
     <div className="group relative">
       <button
+         aria-label="Whatsapp"
         onClick={() => setOpen(true)}
         className="bg-green-500 w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition"
       >
@@ -164,6 +166,7 @@ export default function WhatsAppChatWithIcon() {
             <button
               onClick={() => setOpen(false)}
               style={{ background: "none", border: "none", color: "white", fontSize: "20px", cursor: "pointer" }}
+                aria-label="Kapat"
             >
               ✕
             </button>
@@ -243,7 +246,7 @@ export default function WhatsAppChatWithIcon() {
                 border: "none",
                 cursor: "pointer",
               }}
-              aria-label="Sayfanın başına git"
+              aria-label="Gönder"
             >
               ➤
             </button>
