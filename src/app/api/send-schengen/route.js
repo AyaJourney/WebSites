@@ -13,7 +13,7 @@ async function compressImage(base64) {
     }
 
     // ❗ base64 prefix temizleme (data:image/jpeg;base64,...)
-    const pureBase64 = base64.includes(",")
+    const pureBase64 = base64?.includes(",")
       ? base64.split(",")[1]
       : base64;
 
@@ -25,7 +25,7 @@ async function compressImage(base64) {
       .toBuffer();
 
     // Bu asla hata vermez artık
-    return compressed.toString("base64");
+    return compressed?.toString("base64");
 
   } catch (err) {
     console.error("Image compression failed:", err);
