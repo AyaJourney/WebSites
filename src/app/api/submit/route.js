@@ -13,19 +13,19 @@ async function sendToApi(type, data, savedFilePath) {
   let apiUrl;
   switch (type) {
     case "canada":
-      apiUrl = "https://ayajourney.com/api/send-canada";
+      apiUrl = process.env.NEXT_PUBLIC_CANADA_URL;
       break;
     case "ds-160":
-      apiUrl = "https://ayajourney.com/api/send-abd";
+      apiUrl =process.env.NEXT_PUBLIC_DS_160_URL;
       break;
     case "uk":
-      apiUrl = "https://ayajourney.com/api/send-uk";
+      apiUrl = process.env.NEXT_PUBLIC_UK_URL;
       break;
     case "schengen":
-      apiUrl = "https://ayajourney.com/api/send-schengen";
+      apiUrl =process.env.NEXT_PUBLIC_SCHENGEN_URL;
       break;
     default:
-      apiUrl = "https://ayajourney.com/api/send-default";
+      return;
   }
 
   console.log(`${new Date().toISOString()} - ${type.toUpperCase()} işlemi başlıyor...`);
