@@ -7,13 +7,13 @@ import sharp from "sharp";
 
 async function compressImage(base64) {
   try {
-    // ❗ base64 hiç gelmemişse direkt boş string döndür
+    // base64 yoksa ya da string değilse -> hiç dokunma, olduğu gibi dön
     if (!base64 || typeof base64 !== "string") {
-      return "";
+      return base64 || "";
     }
 
-    // ❗ base64 prefix temizleme (data:image/jpeg;base64,...)
-    const pureBase64 = base64?.includes(",")
+    // data:image/jpeg;base64, .... gibi prefix varsa temizle
+    const pureBase64 = base64.includes(",")
       ? base64.split(",")[1]
       : base64;
 
@@ -24,14 +24,22 @@ async function compressImage(base64) {
       .jpeg({ quality: 60 })
       .toBuffer();
 
-    // Bu asla hata vermez artık
-    return compressed?.toString("base64");
+    // Sharp bir şekilde boş dönerse bile patlatma
+    if (!compressed) {
+      console.error("compressImage: compressed buffer boş döndü, orijinal base64 kullanılıyor.");
+      return base64;
+    }
+
+    // 🔴 Artık optional chaining YOK, önce null check yaptık
+    return compressed.toString("base64");
 
   } catch (err) {
     console.error("Image compression failed:", err);
-    return base64 || "";  // ❗ undefined asla dönmez
+    // Hata olursa en azından orijinali döndür, undefined dönme
+    return base64 || "";
   }
 }
+
 
 /**
  * POST handler - Professional Corporate PDF Design
@@ -462,8 +470,13 @@ drawFooter(currentPage, pageCount); // sayfa numarası için footer çizimi
 
 // Başlık
 drawSection("6. DOSYALAR");
-const passportBase64 = await compressImage(files.passportFileBase64);
-const photoBase64 = await compressImage(files.photoFileBase64);
+const passportBase64 = files.passportFileBase64
+  ? await compressImage(files.passportFileBase64)
+  : "";
+
+const photoBase64 = files.photoFileBase64
+  ? await compressImage(files.photoFileBase64)
+  : "";
 // Resim ekleme fonksiyonu
 const addFileImage = async (fileBase64, title, type) => {
     if (!fileBase64) return;
