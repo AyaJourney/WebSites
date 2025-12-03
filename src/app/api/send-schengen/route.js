@@ -159,7 +159,7 @@ const drawHeader = async (page) => {
   currentY = PAGE_HEIGHT - 50; // içerik başlangıç Y koordinatı
 };
 
-const fpTaken = s(5)?.fingerprint_taken?.toString()?.toUpperCase() || "";
+const fpTaken = s(5)?.fingerprint_taken || "";
     // 4. Footer (Sayfa Altı)
     const drawFooter = (page, pNum) => {
       const text = `Sayfa ${pNum}`;
