@@ -7,19 +7,32 @@ import sharp from "sharp";
 
 async function compressImage(base64) {
   try {
-    const inputBuffer = Buffer.from(base64, "base64");
+    // ❗ base64 hiç gelmemişse direkt boş string döndür
+    if (!base64 || typeof base64 !== "string") {
+      return "";
+    }
+
+    // ❗ base64 prefix temizleme (data:image/jpeg;base64,...)
+    const pureBase64 = base64.includes(",")
+      ? base64.split(",")[1]
+      : base64;
+
+    const inputBuffer = Buffer.from(pureBase64, "base64");
 
     const compressed = await sharp(inputBuffer)
-      .resize({ width: 1200 })          // max 1200px
-      .jpeg({ quality: 60 })            // kalite %60
+      .resize({ width: 1200 })
+      .jpeg({ quality: 60 })
       .toBuffer();
 
-    return compressed?.toString("base64");
+    // Bu asla hata vermez artık
+    return compressed.toString("base64");
+
   } catch (err) {
     console.error("Image compression failed:", err);
-    return base64; // hata olursa orijinali kullan
+    return base64 || "";  // ❗ undefined asla dönmez
   }
 }
+
 /**
  * POST handler - Professional Corporate PDF Design
  * Font fix: Uses single custom font for all fields to prevent errors and maintain consistency.
