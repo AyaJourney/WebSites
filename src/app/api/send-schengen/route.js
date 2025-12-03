@@ -84,7 +84,7 @@ export async function POST(req) {
     // 1. Metin Sarma (Word Wrap)
     const wrapText = (text, maxWidth, font, size) => {
       if (!text) return [];
-      const words = String(text).split(' ');
+      const words = (text)?.split(' ');
       let lines = [];
       let currentLine = words[0];
 
@@ -248,7 +248,7 @@ const fpTaken = s(5)?.fingerprint_taken || "";
     
     // drawHeader(currentPage, true);
 
-    const s = (n) => formData.steps?.[String(n)] || {};
+    const s = (n) => formData?.steps?.[(n)] || {};
 
     // --- BÖLÜM 1: Kişisel Bilgiler ---
        await drawHeader(currentPage);
@@ -337,7 +337,7 @@ h2 = drawField("Davetiye Türü", s(4).invitation_type || "", false, CONTENT_WID
  currentY -= Math.max(h1, h2) + 10;
 
 // Eğer Davet varsa alanlar gösterilsin
-if ((String(s(4).boolean_invitation).toUpperCase() === "EVET")&& (String(s(4).invitation_type).toUpperCase() === "BIREYSEL") ) {
+if (((s(4).boolean_invitation) === "EVET")&& ((s(4).invitation_type).toUpperCase() === "BIREYSEL") ) {
 
     // 1. Satır: Davet Eden Kişi Adı + Doğum Tarihi
     h1 = drawField("Davet Eden Kişi", s(4).invitation_sender_fullname || "", false, 0);
@@ -357,7 +357,7 @@ if ((String(s(4).boolean_invitation).toUpperCase() === "EVET")&& (String(s(4).in
     h1 = drawField("Adres", s(4).invitation_sender_home_address || "", true, 0);
     currentY -= h1 + 20;
 }
-if ((String(s(4).boolean_invitation).toUpperCase() === "EVET")&& (String(s(4).invitation_type).toUpperCase() === "SIRKET") ) {
+if (((s(4).boolean_invitation).toUpperCase() === "EVET")&& ((s(4).invitation_type).toUpperCase() === "SIRKET") ) {
 
     // 1. Satır: Davet Eden Kişi Adı + Doğum Tarihi
     h1 = drawField("Davet Eden Şirket Adı", s(4).invitation_company_fullname || "", false, 0);
@@ -390,7 +390,7 @@ h1 = drawField("Schengen Vizesi", s(5).boolean_schengen_visa || "", true, 0);
 currentY -= h1 + 10;
 
 // Eğer Schengen vizesi varsa ek bilgiler
-if (String(s(5).boolean_schengen_visa).toUpperCase() === "EVET") {
+if ((s(5).boolean_schengen_visa).toUpperCase() === "EVET") {
     
     // Vize Etiket Numarası
     h1 = drawField("Etiket Numarası", s(5).schengen_visa_label_number || "", false, 0);
