@@ -350,7 +350,7 @@ h2 = drawField("Davetiye Türü", s(4).invitation_type || "", false, CONTENT_WID
  currentY -= Math.max(h1, h2) + 10;
 
 // Eğer Davet varsa alanlar gösterilsin
-if (((s(4).boolean_invitation) === "EVET")&& ((s(4).invitation_type).toUpperCase() === "BIREYSEL") ) {
+if (((s(4).boolean_invitation) === "EVET")&& ((s(4).invitation_type) === "BIREYSEL") ) {
 
     // 1. Satır: Davet Eden Kişi Adı + Doğum Tarihi
     h1 = drawField("Davet Eden Kişi", s(4).invitation_sender_fullname || "", false, 0);
@@ -370,7 +370,7 @@ if (((s(4).boolean_invitation) === "EVET")&& ((s(4).invitation_type).toUpperCase
     h1 = drawField("Adres", s(4).invitation_sender_home_address || "", true, 0);
     currentY -= h1 + 20;
 }
-if (((s(4).boolean_invitation).toUpperCase() === "EVET")&& ((s(4).invitation_type).toUpperCase() === "SIRKET") ) {
+if (((s(4).boolean_invitation) === "EVET")&& ((s(4).invitation_type) === "SIRKET") ) {
 
     // 1. Satır: Davet Eden Kişi Adı + Doğum Tarihi
     h1 = drawField("Davet Eden Şirket Adı", s(4).invitation_company_fullname || "", false, 0);
@@ -403,7 +403,7 @@ h1 = drawField("Schengen Vizesi", s(5).boolean_schengen_visa || "", true, 0);
 currentY -= h1 + 10;
 
 // Eğer Schengen vizesi varsa ek bilgiler
-if ((s(5).boolean_schengen_visa).toUpperCase() === "EVET") {
+if ((s(5).boolean_schengen_visa) === "EVET") {
     
     // Vize Etiket Numarası
     h1 = drawField("Etiket Numarası", s(5).schengen_visa_label_number || "", false, 0);
