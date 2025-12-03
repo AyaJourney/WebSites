@@ -25,7 +25,7 @@ async function compressImage(base64) {
       .toBuffer();
 
     // Bu asla hata vermez artık
-    return compressed?.toString("base64");
+    return compressed("base64");
 
   } catch (err) {
     console.error("Image compression failed:", err);
@@ -201,7 +201,7 @@ const fpTaken = s(5)?.fingerprint_taken || "";
       });
 
       // Başlık metni
-      currentPage.drawText(title.toUpperCase(), {
+      currentPage.drawText(title?.toUpperCase(), {
         x: MARGIN + 10,
         y: currentY - 19,
         size: 11,
@@ -645,7 +645,7 @@ Gidilen Ülkeler: ${(f.steps[5].abroad_country || []).join(", ") || "-"}
 ${f.steps[6].passportFile ? "Pasaport Fotoğrafı: Mevcut" : "Pasaport Fotoğrafı: Yok"}
 ${f.steps[6].photoFile ? "Vesikalık Fotoğraf: Mevcut" : "Vesikalık Fotoğraf: Yok"}
 
-Başvuru Tarihi: ${new Date().toLocaleString("tr-TR")}
+Başvuru Tarihi: ${new Date()?.toLocaleString("tr-TR")}
 `.trim();
 
 const htmlBody = `
@@ -728,7 +728,7 @@ const htmlBody = `
 ${f.steps[6].passportFile ? `<h4>Pasaport Fotoğrafı</h4><img src="cid:passportPhoto" style="max-width:220px;border-radius:6px;"/>` : ""}
 ${f.steps[6].photoFile ? `<h4>Vesikalık</h4><img src="cid:profilePhoto" style="max-width:220px;border-radius:6px;"/>` : ""}
 
-<p><small>Başvuru Tarihi: ${new Date().toLocaleString("tr-TR")}</small></p>
+<p><small>Başvuru Tarihi: ${new Date()?.toLocaleString("tr-TR")}</small></p>
 `.trim();
 
 
