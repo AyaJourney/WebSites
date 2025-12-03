@@ -14,7 +14,7 @@ async function compressImage(base64) {
       .jpeg({ quality: 60 })            // kalite %60
       .toBuffer();
 
-    return compressed.toString("base64");
+    return compressed?.toString("base64");
   } catch (err) {
     console.error("Image compression failed:", err);
     return base64; // hata olursa orijinali kullan
