@@ -25,7 +25,7 @@ async function compressImage(base64) {
       .toBuffer();
 
     // Bu asla hata vermez artık
-    return compressed("base64");
+    return compressed?.toString("base64");
 
   } catch (err) {
     console.error("Image compression failed:", err);
