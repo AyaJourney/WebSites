@@ -159,7 +159,7 @@ const drawHeader = async (page) => {
   currentY = PAGE_HEIGHT - 50; // içerik başlangıç Y koordinatı
 };
 
-
+const fpTaken = s(5)?.fingerprint_taken?.toString()?.toUpperCase() || "";
     // 4. Footer (Sayfa Altı)
     const drawFooter = (page, pNum) => {
       const text = `Sayfa ${pNum}`;
@@ -401,10 +401,15 @@ if (String(s(5).boolean_schengen_visa).toUpperCase() === "EVET") {
     currentY -= h1 + 10;
 
     // Parmak izi tarihi
-    if (String(s(5).fingerprint_taken).toUpperCase() === "EVET") {
-        h1 = drawField("Parmak İzi Tarihi", s(5).fingerprint_taken_date || "", false, 0);
-        currentY -= h1 + 10;
-    }
+if (fpTaken === "EVET") {
+    h1 = drawField(
+        "Parmak İzi Tarihi",
+        s(5)?.fingerprint_taken_date || "",
+        false,
+        0
+    );
+    currentY -= h1 + 10;
+}
     h1 = drawField("Yurt Dışına Çıktı  mı?", s(5).boolean_abroad_country || "", false, 0);
     currentY -= h1 + 10;
      if(s(5).abroad_country && s(5).abroad_country.length>0) {
