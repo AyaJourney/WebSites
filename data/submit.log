@@ -80,3 +80,8 @@
 2025-12-04T07:31:25.500Z - [schengen] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"12312312312","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","maidenName":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","post_code":"06280","home_city":"ANKARA","home_district":"MAMAK","home_neighborhood":"KANUNI","home_street":"","home_avenue":"934","home_building_no":"11","home_apartment_no":"1","home_address":"KANUNI MAHALLESİ 934 SOKAK APT NO: 11 DAİRE NO...
 2025-12-04T07:32:38.717Z - [schengen] attempt=1 status=200 response={"success":true}
 2025-12-04T07:32:38.720Z - [schengen] success attempt=1
+2025-12-04T08:07:25.128Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1764835645115.json
+2025-12-04T08:07:25.130Z - [schengen] START apiUrl=http://localhost:3000/api/send-schengen
+2025-12-04T08:07:25.130Z - [schengen] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","maidenName":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","post_code":"06280","home_city":"NKARA","home_district":"MAMAK","home_neighborhood":"","home_street":"","home_avenue":"AFSAF","home_building_no":"12","home_apartment_no":"1","home_address":"AFSAF SOKAK APT NO: 12 DAİRE NO: 1 MAMAK NKARA"},"2...
+2025-12-04T08:08:36.304Z - [schengen] attempt=1 status=200 response={"success":true}
+2025-12-04T08:08:36.307Z - [schengen] success attempt=1

@@ -110,7 +110,14 @@ function readFromLocal() {
   }
 }
 
-
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(STORAGE_METHOD_KEY);
+  } catch (e) {
+    // console.warn("localStorage clear failed", e);
+  }
+}
 
 
 
@@ -196,11 +203,14 @@ async function sendForm(payload) {
     body: JSON.stringify(payload),
   });
 if(res.ok){
+  clearLocalStorage()
   setResMessage(true)
  setForm(prev => ({
   ...prev,
   currentStep: prev.currentStep + 1
 }));
+
+
 }
   if (!res.ok) {
     console.error("PDF oluşturulamadı");
@@ -2371,6 +2381,7 @@ if (endDate && endDate > today) {
         href="/"
        className="bg-white text-gray-700 cursor-pointer mt-5 border border-blue-300 px-4 py-2 rounded-3xl transition duration-300 hover:text-blue-500 hover:bg-gray-100"
       placeholder="Ana sayfa"
+ 
       >
         Ana Sayfaya Dön
       </a>
