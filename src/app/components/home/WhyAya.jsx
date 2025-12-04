@@ -145,7 +145,7 @@ function HoverCard({ item }) {
       <div className="md:hidden bg-white border border-gray-200 shadow-md rounded-2xl p-6 text-center flex flex-col items-center">
         <div className="mb-3">{item.icon}</div>
         <h3 className="text-lg font-semibold text-gray-800">{item.title}</h3>
-        <p className="text-sm text-gray-600 mt-2">{item.desc}</p>
+        {/* <p className="text-sm text-gray-600 mt-2">{item.desc}</p> */}
       </div>
     </div>
   );
