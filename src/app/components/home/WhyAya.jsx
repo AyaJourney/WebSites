@@ -14,7 +14,7 @@ import { motion } from "framer-motion";
 const items = [
   {
     icon: <FaPersonRays className="w-10 h-10 text-[#0d8cff]" />,
-    title: "Kişiye Özel Başvuru",
+    title: "Kişiye özel başvuru",
     desc: "Başvurunuz uzman ekibimiz tarafından hazırlanır.",
   },
   {
@@ -130,13 +130,13 @@ function HoverCard({ item }) {
     }
   }}
   className="
-    absolute bottom-6 left-0 right-0 
+    absolute bottom-15 left-0 right-0 
     text-center px-4 pointer-events-none
     flex flex-col items-center
   "
 >
-  <h3 className="text-lg font-semibold text-gray-800">{item.title}</h3>
-  <p className="text-sm text-gray-600 mt-2">{item.desc}</p>
+  <h3 className="text-xl font-semibold text-gray-800">{item.title}</h3>
+  {/* <p className="text-sm text-gray-600 mt-2">{item.desc}</p> */}
 </motion.div>
 
       </motion.div>
