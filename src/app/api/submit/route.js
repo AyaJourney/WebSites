@@ -16,49 +16,68 @@ async function sendToApi(type, data, savedFilePath) {
       apiUrl = process.env.NEXT_PUBLIC_CANADA_URL;
       break;
     case "ds-160":
-      apiUrl =process.env.NEXT_PUBLIC_DS_160_URL;
+      apiUrl = process.env.NEXT_PUBLIC_DS_160_URL;
       break;
     case "uk":
       apiUrl = process.env.NEXT_PUBLIC_UK_URL;
       break;
     case "schengen":
-      apiUrl =process.env.NEXT_PUBLIC_SCHENGEN_URL;
+      apiUrl = process.env.NEXT_PUBLIC_SCHENGEN_URL;
       break;
     default:
       return;
   }
 
-  console.log(`${new Date().toISOString()} - ${type.toUpperCase()} işlemi başlıyor...`);
+  console.log(`${new Date().toISOString()} - [${type.toUpperCase()}] BACKGROUND SEND STARTED → ${apiUrl}`);
+  fs.appendFileSync(LOG_FILE, `${new Date().toISOString()} - [${type}] START apiUrl=${apiUrl}\n`);
 
   for (let attempt = 1; attempt <= 2; attempt++) {
     try {
+      // Request log
+      fs.appendFileSync(
+        LOG_FILE,
+        `${new Date().toISOString()} - [${type}] attempt ${attempt} - sending payload: ${JSON.stringify(data).substring(0, 500)}...\n`
+      );
+
       const res = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 
+      // Response log
+      const respText = await res.text();
+      fs.appendFileSync(
+        LOG_FILE,
+        `${new Date().toISOString()} - [${type}] attempt=${attempt} status=${res.status} response=${respText}\n`
+      );
+
       if (res.ok) {
-        console.log(`${new Date().toISOString()} - ${type.toUpperCase()} işlemi başarılı (deneme ${attempt})`);
-        fs.appendFileSync(LOG_FILE, `${new Date().toISOString()} - type=${type} - attempt=${attempt} - success\n`);
+        console.log(`${new Date().toISOString()} - [${type}] SUCCESS on attempt ${attempt}`);
+        fs.appendFileSync(LOG_FILE, `${new Date().toISOString()} - [${type}] success attempt=${attempt}\n`);
         return true;
-      } else {
-        console.log(`${new Date().toISOString()} - ${type.toUpperCase()} işlemi başarısız (status: ${res.status}, deneme ${attempt})`);
-        fs.appendFileSync(LOG_FILE, `${new Date().toISOString()} - type=${type} - attempt=${attempt} - status=${res.status}\n`);
       }
     } catch (err) {
-      console.log(`${new Date().toISOString()} - ${type.toUpperCase()} işlemi hata verdi (deneme ${attempt}): ${err.message}`);
-      fs.appendFileSync(LOG_FILE, `${new Date().toISOString()} - type=${type} - attempt=${attempt} - error=${err.message}\n`);
+      console.log(`${new Date().toISOString()} - [${type}] attempt=${attempt} ERROR: ${err.stack}`);
+      fs.appendFileSync(
+        LOG_FILE,
+        `${new Date().toISOString()} - [${type}] attempt=${attempt} errorMessage=${err.message} stack=${err.stack}\n`
+      );
     }
   }
 
-  // Başarısızsa failed klasörüne taşı
+  // Başarısız ise failed'a taşı
   const failedPath = path.join(FAILED_DIR, path.basename(savedFilePath));
   fs.renameSync(savedFilePath, failedPath);
-  console.log(`${new Date().toISOString()} - ${type.toUpperCase()} işlemi başarısız, dosya failed klasörüne taşındı: ${failedPath}`);
-  fs.appendFileSync(LOG_FILE, `${new Date().toISOString()} - type=${type} - moved to failed: ${failedPath}\n`);
+
+  fs.appendFileSync(
+    LOG_FILE,
+    `${new Date().toISOString()} - [${type}] MOVED TO FAILED: ${failedPath}\n`
+  );
+
   return false;
 }
+
 
 export async function POST(request) {
   try {
