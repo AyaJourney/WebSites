@@ -291,41 +291,63 @@ return (
               className={`w-full p-3 rounded-lg border focus:outline-none focus:ring-2 ${formData.email && !isEmailValid ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"}`}
             />
           </div>
+<div ref={dropdownRef} className="relative w-full">
+  <label className="block mb-1 text-gray-700">Telefon*</label>
 
-          <div ref={dropdownRef} className="relative">
-            <label className="block mb-1 text-gray-700">Telefon*</label>
-            <div className={`flex rounded-lg border ${formData.phone && !isPhoneValid ? "border-red-500" : "border-gray-300"}`}>
-              <button type="button" onClick={() => setOpen(!open)} className="px-3 py-3 flex items-center gap-1">
-                <span className="text-lg">{selected?.flag}</span>
-                <span>{selected?.dial_code}</span>
-              </button>
+  <div
+    className={`flex items-center rounded-lg border ${
+      formData.phone && !isPhoneValid ? "border-red-500" : "border-gray-300"
+    }`}
+  >
+    {/* Ülke kodu */}
+    <button
+      type="button"
+      onClick={() => setOpen(!open)}
+      className="px-3 py-3 flex items-center gap-1 whitespace-nowrap"
+    >
+      <span className="text-lg">{selected?.flag}</span>
+      <span className="text-sm sm:text-base">{selected?.dial_code}</span>
+    </button>
 
-              {open && (
-                <ul className="absolute z-50 mt-1 w-56 max-h-60 overflow-auto bg-white border rounded-md shadow-lg text-sm">
-                  {countries.map((c, i) => (
-                    <li
-                      key={i}
-                      onClick={() => { setSelected(c); setOpen(false); }}
-                      className="flex items-center gap-2 px-3 py-2 hover:bg-gray-100 cursor-pointer"
-                    >
-                      <span>{c.flag}</span>
-                      <span className="flex-1">{c.name}</span>
-                      <span className="text-gray-500">{c.dial_code}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
+    {/* Dropdown */}
+    {open && (
+      <ul className="absolute z-50 mt-1 w-56 max-h-60 overflow-auto bg-white border rounded-md shadow-lg text-sm">
+        {countries.map((c, i) => (
+          <li
+            key={i}
+            onClick={() => {
+              setSelected(c);
+              setOpen(false);
+            }}
+            className="flex items-center gap-2 px-3 py-2 hover:bg-gray-100 cursor-pointer"
+          >
+            <span>{c.flag}</span>
+            <span className="flex-1">{c.name}</span>
+            <span className="text-gray-500">{c.dial_code}</span>
+          </li>
+        ))}
+      </ul>
+    )}
 
-              <input
-                required
-                type="tel"
-                placeholder="5xx xxx xx xx"
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="flex-1 p-3 bg-transparent focus:outline-none text-gray-900 rounded-r-lg"
-              />
-            </div>
-          </div>
+    {/* Telefon inputu */}
+    <input
+      required
+      type="tel"
+      placeholder="5xx xxx xx xx"
+      value={formData.phone}
+      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+      className="
+        flex-1 min-w-0     /* 🔥 Mobilde taşmayı engeller */
+        p-3 bg-transparent 
+        focus:outline-none 
+        text-gray-900 
+        rounded-r-lg
+        placeholder:text-sm sm:placeholder:text-base /* 🔥 Küçük ekranda daha küçük placeholder */
+      "
+    />
+  </div>
+</div>
+
         </div>
 
         <div>
