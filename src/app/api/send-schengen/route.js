@@ -7,40 +7,19 @@ import sharp from "sharp";
 
 async function compressImage(base64) {
   try {
-    // base64 yoksa ya da string değilse -> hiç dokunma, olduğu gibi dön
-    if (!base64 || typeof base64 !== "string") {
-      return base64 || "";
-    }
-
-    // data:image/jpeg;base64, .... gibi prefix varsa temizle
-    const pureBase64 = base64.includes(",")
-      ? base64.split(",")[1]
-      : base64;
-
-    const inputBuffer = Buffer.from(pureBase64, "base64");
+    const inputBuffer = Buffer.from(base64, "base64");
 
     const compressed = await sharp(inputBuffer)
-      .resize({ width: 1200 })
-      .jpeg({ quality: 60 })
+      .resize({ width: 1200 })          // max 1200px
+      .jpeg({ quality: 60 })            // kalite %60
       .toBuffer();
 
-    // Sharp bir şekilde boş dönerse bile patlatma
-    if (!compressed) {
-      console.error("compressImage: compressed buffer boş döndü, orijinal base64 kullanılıyor.");
-      return base64;
-    }
-
-    // 🔴 Artık optional chaining YOK, önce null check yaptık
     return compressed.toString("base64");
-
   } catch (err) {
     console.error("Image compression failed:", err);
-    // Hata olursa en azından orijinali döndür, undefined dönme
-    return base64 || "";
+    return base64; // hata olursa orijinali kullan
   }
 }
-
-
 /**
  * POST handler - Professional Corporate PDF Design
  * Font fix: Uses single custom font for all fields to prevent errors and maintain consistency.
@@ -105,7 +84,7 @@ export async function POST(req) {
     // 1. Metin Sarma (Word Wrap)
     const wrapText = (text, maxWidth, font, size) => {
       if (!text) return [];
-      const words = (text)?.split(' ');
+      const words = String(text).split(' ');
       let lines = [];
       let currentLine = words[0];
 
@@ -180,7 +159,7 @@ const drawHeader = async (page) => {
   currentY = PAGE_HEIGHT - 50; // içerik başlangıç Y koordinatı
 };
 
-const fpTaken = s(5)?.fingerprint_taken || "";
+
     // 4. Footer (Sayfa Altı)
     const drawFooter = (page, pNum) => {
       const text = `Sayfa ${pNum}`;
@@ -209,7 +188,7 @@ const fpTaken = s(5)?.fingerprint_taken || "";
       });
 
       // Başlık metni
-      currentPage.drawText(title?.toUpperCase(), {
+      currentPage.drawText(title.toUpperCase(), {
         x: MARGIN + 10,
         y: currentY - 19,
         size: 11,
@@ -269,7 +248,7 @@ const fpTaken = s(5)?.fingerprint_taken || "";
     
     // drawHeader(currentPage, true);
 
-    const s = (n) => formData?.steps?.[(n)] || {};
+    const s = (n) => formData.steps?.[String(n)] || {};
 
     // --- BÖLÜM 1: Kişisel Bilgiler ---
        await drawHeader(currentPage);
@@ -358,7 +337,7 @@ h2 = drawField("Davetiye Türü", s(4).invitation_type || "", false, CONTENT_WID
  currentY -= Math.max(h1, h2) + 10;
 
 // Eğer Davet varsa alanlar gösterilsin
-if (((s(4).boolean_invitation) === "EVET")&& ((s(4).invitation_type) === "BIREYSEL") ) {
+if ((String(s(4).boolean_invitation).toUpperCase() === "EVET")&& (String(s(4).invitation_type).toUpperCase() === "BIREYSEL") ) {
 
     // 1. Satır: Davet Eden Kişi Adı + Doğum Tarihi
     h1 = drawField("Davet Eden Kişi", s(4).invitation_sender_fullname || "", false, 0);
@@ -378,7 +357,7 @@ if (((s(4).boolean_invitation) === "EVET")&& ((s(4).invitation_type) === "BIREYS
     h1 = drawField("Adres", s(4).invitation_sender_home_address || "", true, 0);
     currentY -= h1 + 20;
 }
-if (((s(4).boolean_invitation) === "EVET")&& ((s(4).invitation_type) === "SIRKET") ) {
+if ((String(s(4).boolean_invitation).toUpperCase() === "EVET")&& (String(s(4).invitation_type).toUpperCase() === "SIRKET") ) {
 
     // 1. Satır: Davet Eden Kişi Adı + Doğum Tarihi
     h1 = drawField("Davet Eden Şirket Adı", s(4).invitation_company_fullname || "", false, 0);
@@ -411,7 +390,7 @@ h1 = drawField("Schengen Vizesi", s(5).boolean_schengen_visa || "", true, 0);
 currentY -= h1 + 10;
 
 // Eğer Schengen vizesi varsa ek bilgiler
-if ((s(5).boolean_schengen_visa) === "EVET") {
+if (String(s(5).boolean_schengen_visa).toUpperCase() === "EVET") {
     
     // Vize Etiket Numarası
     h1 = drawField("Etiket Numarası", s(5).schengen_visa_label_number || "", false, 0);
@@ -422,15 +401,10 @@ if ((s(5).boolean_schengen_visa) === "EVET") {
     currentY -= h1 + 10;
 
     // Parmak izi tarihi
-if (fpTaken === "EVET") {
-    h1 = drawField(
-        "Parmak İzi Tarihi",
-        s(5)?.fingerprint_taken_date || "",
-        false,
-        0
-    );
-    currentY -= h1 + 10;
-}
+    if (String(s(5).fingerprint_taken).toUpperCase() === "EVET") {
+        h1 = drawField("Parmak İzi Tarihi", s(5).fingerprint_taken_date || "", false, 0);
+        currentY -= h1 + 10;
+    }
     h1 = drawField("Yurt Dışına Çıktı  mı?", s(5).boolean_abroad_country || "", false, 0);
     currentY -= h1 + 10;
      if(s(5).abroad_country && s(5).abroad_country.length>0) {
@@ -470,13 +444,8 @@ drawFooter(currentPage, pageCount); // sayfa numarası için footer çizimi
 
 // Başlık
 drawSection("6. DOSYALAR");
-const passportBase64 = files.passportFileBase64
-  ? await compressImage(files.passportFileBase64)
-  : "";
-
-const photoBase64 = files.photoFileBase64
-  ? await compressImage(files.photoFileBase64)
-  : "";
+const passportBase64 = await compressImage(files.passportFileBase64);
+const photoBase64 = await compressImage(files.photoFileBase64);
 // Resim ekleme fonksiyonu
 const addFileImage = async (fileBase64, title, type) => {
     if (!fileBase64) return;
@@ -658,7 +627,7 @@ Gidilen Ülkeler: ${(f.steps[5].abroad_country || []).join(", ") || "-"}
 ${f.steps[6].passportFile ? "Pasaport Fotoğrafı: Mevcut" : "Pasaport Fotoğrafı: Yok"}
 ${f.steps[6].photoFile ? "Vesikalık Fotoğraf: Mevcut" : "Vesikalık Fotoğraf: Yok"}
 
-Başvuru Tarihi: ${new Date()?.toLocaleString("tr-TR")}
+Başvuru Tarihi: ${new Date().toLocaleString("tr-TR")}
 `.trim();
 
 const htmlBody = `
@@ -741,7 +710,7 @@ const htmlBody = `
 ${f.steps[6].passportFile ? `<h4>Pasaport Fotoğrafı</h4><img src="cid:passportPhoto" style="max-width:220px;border-radius:6px;"/>` : ""}
 ${f.steps[6].photoFile ? `<h4>Vesikalık</h4><img src="cid:profilePhoto" style="max-width:220px;border-radius:6px;"/>` : ""}
 
-<p><small>Başvuru Tarihi: ${new Date()?.toLocaleString("tr-TR")}</small></p>
+<p><small>Başvuru Tarihi: ${new Date().toLocaleString("tr-TR")}</small></p>
 `.trim();
 
 
@@ -785,7 +754,7 @@ ${f.steps[6].photoFile ? `<h4>Vesikalık</h4><img src="cid:profilePhoto" style="
     const mailOptions = {
       from: `Aya Journey <${process.env.GOOGLE_MAIL_ADDRESS}>`,
       to: `${process.env.FORM_MAIL_ADRESS}`,
-      subject: `!!DENEME Schengen Vize Başvurusu - ${s(1).fullName || "İsimsiz"}`,
+      subject: `DENEME Schengen Vize Başvurusu - ${s(1).fullName || "İsimsiz"}`,
       text: textBody,
       html: htmlBody,
       attachments,
