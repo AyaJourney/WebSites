@@ -41,14 +41,14 @@ const GoogleYorum = () => {
 
   return (
  <div className="w-full max-w-9xl h-auto mx-auto p-4 bg-gray-100 rounded-lg shadow-md flex flex-col justify-start items-center gap-4">
-  <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4 text-center">
-    Hakkımızdaki Yorumlar
+  <h2 className="text-3xl md:text-3xl font-bold text-gray-800 mb-4 text-center">
+   Herkes kendini över. Siz en iyisi daha önce bizimle calışan yüzlerce kişiye kulak verin.
   </h2>
 
   <div className="flex flex-col sm:flex-row w-full max-w-7xl gap-6">
     {/* Sol Taraf: Firma Bilgisi */}
     <div className="sm:w-1/3 flex flex-col items-center border-b sm:border-b-0 sm:border-r border-gray-200 pb-4 sm:pb-0 sm:pr-6">
-      <h3 className="text-xl font-semibold mb-2">Aya Journey</h3>
+      <h3 className="text-xl font-semibold mb-2">AYA Journey</h3>
       <div className="flex mb-2">
         {[...Array(5)].map((_, i) => (
           <span

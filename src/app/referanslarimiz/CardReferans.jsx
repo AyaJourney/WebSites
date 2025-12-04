@@ -43,11 +43,29 @@ return (
     ref={containerRef}
     className="w-full h-screen overflow-hidden bg-gray-100 flex items-center relative"
   >
+   <div className="absolute top-10 w-full flex justify-center z-10 px-4">
+  <div className="text-center">
+
+
+    {/* Ana başlık */}
+    <h1 className="text-3xl md:text-5xl font-bold mt-2 leading-tight">
+      <span className="bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+        AYA Journey’e Güvenenlerden Bazıları
+      </span>
+  
+     
+    </h1>
+
+
+
+  </div>
+</div>
+
     <div
       className="flex items-center absolute"
       style={{ transform: `translateX(${offset}px)` }}
     >
-      {references.concat(references).map((ref, idx) => (
+      {references?.concat(references).map((ref, idx) => (
        <div
   key={idx}
   className="flex flex-col items-center w-[200px] h-[200px] m-[100px] flex-shrink-0 bg-white rounded-xl shadow-md overflow-hidden"

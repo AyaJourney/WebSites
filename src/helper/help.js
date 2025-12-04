@@ -81,61 +81,61 @@ export const titleCase = [
 export const questionsAndAnswers = [
   {
     "id": 1,
-    "type": "Giriş Seviyesi",
+    "type": "Vize 101",
     "question": "Vize danışmanlığı nedir?",
     "answer": "Vize danışmanlığı, yurt dışı seyahatleri için gerekli vize başvurusunda kişilere profesyonel destek sağlayan bir hizmettir."
   },
   {
     "id": 2,
-    "type": "Giriş Seviyesi",
+    "type": "Vize 101",
     "question": "Vize danışmanlığı neden önemlidir?",
     "answer": "Vize danışmanlığı, eksik evrak veya yanlış başvuru nedeniyle ret alma riskini azaltır ve sürecin hızlı ilerlemesini sağlar."
   },
   {
     "id": 3,
-    "type": "Giriş Seviyesi",
+    "type": "Vize 101",
     "question": "Vize danışmanlık ücreti neye göre değişir?",
     "answer": "Ücret, gidilecek ülke, vize türü ve danışmanlık kapsamına göre değişiklik gösterir."
   },
   {
     "id": 4,
-    "type": "Giriş Seviyesi",
+    "type": "Vize 101",
     "question": "Vize danışmanlığı vize onayı garantisi verir mi?",
     "answer": "Hayır, vize onayı tamamen konsolosluk kararına bağlıdır. Danışmanlık sadece sürecin doğru yürütülmesini sağlar."
   },
   {
     "id": 5,
-    "type": "Giriş Seviyesi",
+    "type": "Vize 101",
     "question": "Vize başvurusu için hangi belgeler gerekir?",
     "answer": "Genellikle pasaport, biyometrik fotoğraf, banka dökümü, seyahat sağlık sigortası ve rezervasyon belgeleri gereklidir."
   },
   {
     "id": 6,
-    "type": "Giriş Seviyesi",
+    "type": "Vize 101",
     "question": "Vize başvuru süreci ne kadar sürer?",
     "answer": "Ülkeye göre değişmekle birlikte ortalama 7 ila 15 iş günü arasında sonuçlanır."
   },
   {
     "id": 7,
-    "type": "Giriş Seviyesi",
+    "type": "Vize 101",
     "question": "Danışmanlık firması randevu işlemini yapar mı?",
     "answer": "Evet, vize danışmanlık firmaları genellikle randevu planlama ve takip işlemlerini sizin adınıza yapar."
   },
   {
     "id": 8,
-    "type": "Giriş Seviyesi",
+    "type": "Vize 101",
     "question": "Ret alınırsa tekrar başvuru yapılabilir mi?",
     "answer": "Evet, eksik belgeler tamamlanarak veya gerekçeler düzeltilerek yeniden başvuru yapılabilir."
   },
   {
     "id": 9,
-    "type": "Giriş Seviyesi",
+    "type": "Vize 101",
     "question": "Hangi ülkelere vize danışmanlığı veriliyor?",
     "answer": "Schengen ülkeleri, Amerika, İngiltere, Kanada ve Avustralya gibi birçok ülke için danışmanlık hizmeti sunulur."
   },
   {
     "id": 10,
-    "type": "Giriş Seviyesi",
+    "type": "Vize 101",
     "question": "Online vize danışmanlığı mümkün mü?",
     "answer": "Evet, çoğu danışmanlık firması çevrim içi evrak gönderimi ve görüntülü görüşme ile uzaktan hizmet verir."
   },

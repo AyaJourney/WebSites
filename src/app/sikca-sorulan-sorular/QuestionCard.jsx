@@ -4,7 +4,7 @@ import { questionsAndAnswers } from "@/helper/help";
 
 const QuestionCard = () => {
   const [openId, setOpenId] = useState(null);
-  const [selectedType, setSelectedType] = useState("Giriş Seviyesi");
+  const [selectedType, setSelectedType] = useState("Vize 101");
 
   const toggleOpen = (id) => {
     setOpenId(openId === id ? null : id);
@@ -26,7 +26,7 @@ const QuestionCard = () => {
           <button
             key={type}
             onClick={() => setSelectedType(type)}
-            className={`px-4 py-2 rounded-full font-medium transition ${
+            className={`px-4 py-2 rounded-full font-medium cursor-pointer transition ${
               selectedType === type
                 ? "bg-blue-600 text-white shadow-lg"
                 : "bg-gray-200 text-gray-700 hover:bg-blue-100"
@@ -39,15 +39,17 @@ const QuestionCard = () => {
 
       {/* SSS Kartları */}
       <div className="max-w-4xl mx-auto space-y-4">
+         <h2 className="text-3xl font-bold text-start text-gray-800 mb-3">Avcı toplayıcılıktan yurtdışı seyahate...</h2>
         {filteredQuestions.map((item) => (
           <div
             key={item.id}
-            className="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-700 rounded-lg shadow-md overflow-hidden transition-all duration-300"
+            className="bg-white  border border-gray-200 dark:border-zinc-700 rounded-lg shadow-md overflow-hidden transition-all duration-300"
           >
+           
             {/* Soru Başlığı */}
             <button
               onClick={() => toggleOpen(item.id)}
-              className="cursor-pointer w-full px-6 py-4 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors"
+              className="cursor-pointer w-full px-6 py-4 flex justify-between items-center hover:bg-gray-50  transition-colors"
             >
               <h3 className="text-left text-gray-900 dark:text-gray-100 font-semibold text-base sm:text-lg">
                 {item.question}
@@ -87,7 +89,7 @@ const QuestionCard = () => {
 
             {/* Cevap - Açıldığında Gösterilecek */}
             {openId === item.id && (
-              <div className="border-t border-gray-200 dark:border-zinc-700 px-6 py-4 bg-gray-50 dark:bg-zinc-800/50">
+              <div className="border-t border-gray-200 dark:border-zinc-700 px-6 py-4 bg-gray-50 ">
                 <p className="text-gray-700 dark:text-gray-300 text-base leading-relaxed">
                   {item.answer}
                 </p>

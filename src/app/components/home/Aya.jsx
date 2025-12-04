@@ -28,8 +28,7 @@ const Aya = () => {
         {/* SOL TARAF — Başlık + Alt Metin */}
         <div>
           <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-snug">
-            Biz bu filmi daha önce gördük.
-            <br />Şimdiye kadar hazırladığımız binlerce dosyanın tecrübesini sizinle paylaşmaya hazırız.
+            Şimdi Başrol Sırası Sizde
           </h1>
 
           <p className="text-lg md:text-xl text-gray-700 max-w-xl">
