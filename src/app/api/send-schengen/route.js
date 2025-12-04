@@ -4,7 +4,17 @@ import fs from "fs";
 import path from "path";
 import nodemailer from "nodemailer";
 import sharp from "sharp";
+function toTRDate(dateStr) {
+  if (!dateStr) return "";
+  const d = new Date(dateStr);
+  if (isNaN(d)) return dateStr;
 
+  return d.toLocaleDateString("tr-TR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric"
+  });
+}
 async function compressImage(base64) {
   try {
     const inputBuffer = Buffer.from(base64, "base64");
@@ -274,7 +284,7 @@ if (s(1).maritalStatus === "EVLİ" && s(1).maidenName) {
 currentY -= Math.max(h1, h2) + 10;
 
 // Doğum Tarihi & Doğum Yeri
-h1 = drawField("Doğum Tarihi", s(1).birthDate || "-", false, 0);
+h1 = drawField("Doğum Tarihi", toTRDate(s(1).birthDate) || "-", false, 0);
 h2 = drawField("Doğum Yeri", s(1).birthPlace || "-", false, CONTENT_WIDTH/2);
 currentY -= Math.max(h1, h2) + 10;
 
@@ -284,11 +294,11 @@ drawSection("2. PASAPORT BİLGİLERİ");
 
 // İlk satır: Pasaport No + Veriliş Tarihi
 h1 = drawField("Pasaport No", s(2).passport_number || "", false, 0);
-h2 = drawField("Veriliş Tarihi", s(2).Passport_start_date || "", false, CONTENT_WIDTH / 2);
+h2 = drawField("Veriliş Tarihi",toTRDate( s(2).Passport_start_date) || "", false, CONTENT_WIDTH / 2);
 currentY -= Math.max(h1, h2) + 10;
 
 // İkinci satır: Bitiş Tarihi + Veren Makam
-h1 = drawField("Bitiş Tarihi", s(2).Passport_end_date || "", false, 0);
+h1 = drawField("Bitiş Tarihi", toTRDate(s(2).Passport_end_date) || "", false, 0);
 h2 = drawField("Veren Makam", s(2).passport_issuing_authority || "", false, CONTENT_WIDTH / 2);
 currentY -= Math.max(h1, h2) + 10;
 
@@ -299,7 +309,7 @@ drawSection("3. ŞİRKET BİLGİLERİ");
 
 // 1. satır → Sektör + Şirket Türü
 h1 = drawField("Çalışma Durumu", s(3).boolean_work || "", false, 0);
-h2 = drawField("İşe Giriş Tarihi", s(3).work_start_date || "", false, CONTENT_WIDTH / 2);
+h2 = drawField("İşe Giriş Tarihi", toTRDate(s(3).work_start_date) || "", false, CONTENT_WIDTH / 2);
 currentY -= Math.max(h1, h2) + 10;
 h1 = drawField("Sektör", s(3).sector || "", false, 0);
 h2 = drawField("Şirket Türü", s(3).company_type || "", false, CONTENT_WIDTH / 2);
@@ -341,7 +351,7 @@ if ((String(s(4).boolean_invitation).toUpperCase() === "EVET")&& (String(s(4).in
 
     // 1. Satır: Davet Eden Kişi Adı + Doğum Tarihi
     h1 = drawField("Davet Eden Kişi", s(4).invitation_sender_fullname || "", false, 0);
-    h2 = drawField("Doğum Tarihi", s(4).invitation_sender_birthdate || "", false, CONTENT_WIDTH / 2);
+    h2 = drawField("Doğum Tarihi", toTRDate(s(4).invitation_sender_birthdate) || "", false, CONTENT_WIDTH / 2);
     currentY -= Math.max(h1, h2) + 10;
 
     // 2. Satır: Telefon + E-posta
@@ -381,8 +391,8 @@ drawFooter(currentPage, pageCount);
 drawSection("5. SCHENGEN & PARMAK İZİ BİLGİLERİ");
 
 // 1. Satır: Gidiş – Dönüş
-h1 = drawField("Gidiş Tarihi", s(5).travel_start_date || "", false, 0);
-h2 = drawField("Dönüş Tarihi", s(5).travel_end_date || "", false, CONTENT_WIDTH / 2);
+h1 = drawField("Gidiş Tarihi",toTRDate( s(5).travel_start_date )|| "", false, 0);
+h2 = drawField("Dönüş Tarihi",toTRDate( s(5).travel_end_date )|| "", false, CONTENT_WIDTH / 2);
 currentY -= Math.max(h1, h2) + 10;
 
 // 2. Satır: Schengen Vizesi Var mı?
@@ -394,19 +404,19 @@ if (String(s(5).boolean_schengen_visa).toUpperCase() === "EVET") {
     
     // Vize Etiket Numarası
     h1 = drawField("Etiket Numarası", s(5).schengen_visa_label_number || "", false, 0);
-    currentY -= h1 + 10;
+   
 
     // Parmak izi alındı mı?
-    h1 = drawField("Parmak İzi Alındı mı?", s(5).fingerprint_taken || "", false, 0);
-    currentY -= h1 + 10;
+    h2 = drawField("Parmak İzi Alındı mı?", s(5).fingerprint_taken || "", false , CONTENT_WIDTH/2);
+   currentY -= Math.max(h1, h2) + 10;
 
     // Parmak izi tarihi
     if (String(s(5).fingerprint_taken).toUpperCase() === "EVET") {
-        h1 = drawField("Parmak İzi Tarihi", s(5).fingerprint_taken_date || "", false, 0);
-        currentY -= h1 + 10;
+        h1 = drawField("Parmak İzi Tarihi",toTRDate( s(5).fingerprint_taken_date) || "", false, 0);
+      
     }
-    h1 = drawField("Yurt Dışına Çıktı  mı?", s(5).boolean_abroad_country || "", false, 0);
-    currentY -= h1 + 10;
+    h1 = drawField("Yurt Dışına Çıktı  mı?", s(5).boolean_abroad_country || "", false, CONTENT_WIDTH/2);
+currentY -= Math.max(h1, h2) + 10;
      if(s(5).abroad_country && s(5).abroad_country.length>0) {
       checkSpace(50);
       currentY -=10;
@@ -579,7 +589,7 @@ Ad Soyad: ${f.steps[1].fullName || "-"}
 TC: ${f.steps[1].tcId || "-"}
 Cinsiyet: ${f.steps[1].gender || "-"}
 Medeni Durum: ${f.steps[1].maritalStatus || "-"}
-Doğum Tarihi: ${f.steps[1].birthDate || "-"}
+Doğum Tarihi: ${toTRDate(f.steps[1].birthDate) || "-"}
 Doğum Yeri: ${f.steps[1].birthPlace || "-"}
 Telefon: ${f.steps[1].phone_number || "-"}
 Email: ${f.steps[1].email || "-"}
@@ -593,7 +603,7 @@ Veriliş: ${f.steps[2].passport_issuing_authority || "-"}
 
 -- İş / Şirket Bilgileri --
 Çalışma Durumu: ${f.steps[3].boolean_work || "-"}
-İşe Giriş Tarihi: ${f.steps[3].work_start_date || "-"}
+İşe Giriş Tarihi: ${toTRDate(f.steps[3].work_start_date) || "-"}
 Sektör: ${f.steps[3].sector || "-"}
 Şirket Türü: ${f.steps[3].company_type || "-"}
 Şirket Adı: ${f.steps[3].company_name || "-"}
@@ -606,7 +616,7 @@ Pozisyon: ${f.steps[3].your_title || "-"}
 Davetiye Var mı: ${f.steps[4].boolean_invitation || "-"}
 Davetiye Türü: ${f.steps[4].invitation_type || "-"}
 Davet Gönderen: ${f.steps[4].invitation_sender_fullname || "-"}
-Doğum Tarihi: ${f.steps[4].invitation_sender_birthdate || "-"}
+Doğum Tarihi: ${toTRDate(f.steps[4].invitation_sender_birthdate )|| "-"}
 Telefon: ${f.steps[4].invitation_sender_phone_number || "-"}
 Email: ${f.steps[4].invitation_sender_email || "-"}
 TC: ${f.steps[4].invitation_sender_tc_id || "-"}
@@ -619,7 +629,7 @@ Davet Gönderen Şirket: ${f.steps[4].invitation_company_fullname || "-"}
 Başlangıç / Bitiş: ${f.steps[5].travel_start_date || "-"} / ${f.steps[5].travel_end_date || "-"}
 Schengen Vizesi Var mı: ${f.steps[5].boolean_schengen_visa || "-"}
 Parmak İzi Alındı mı: ${f.steps[5].fingerprint_taken || "-"}
-Parmak İzi Tarihi: ${f.steps[5].fingerprint_taken_date || "-"}
+Parmak İzi Tarihi: ${toTRDate(f.steps[5].fingerprint_taken_date) || "-"}
 Vize Etiket No: ${f.steps[5].schengen_visa_label_number || "-"}
 Daha Önce Yurt Dışına Çıktınız Mı: ${f.steps[5].boolean_abroad_country || "-"}
 Gidilen Ülkeler: ${(f.steps[5].abroad_country || []).join(", ") || "-"}
@@ -640,7 +650,7 @@ const htmlBody = `
     <tr><th style="background-color:#e0e0e0;">TC</th><td>${f.steps[1].tcId || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Cinsiyet</th><td>${f.steps[1].gender || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Medeni Durum</th><td>${f.steps[1].maritalStatus || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Doğum Tarihi</th><td>${f.steps[1].birthDate || "-"}</td></tr>
+    <tr><th style="background-color:#e0e0e0;">Doğum Tarihi</th><td>${toTRDate(f.steps[1].birthDate) || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Doğum Yeri</th><td>${f.steps[1].birthPlace || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Telefon</th><td>${f.steps[1].phone_number || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Email</th><td>${f.steps[1].email || "-"}</td></tr>
@@ -662,7 +672,7 @@ const htmlBody = `
 <table border="1" cellspacing="0" cellpadding="5" style="border-collapse: collapse; width:100%;">
   <tbody>
    <tr><th style="background-color:#e0e0e0;">Çalışma Durumu</th><td>${f.steps[3].boolean_work || "-"}</td></tr>
-   <tr><th style="background-color:#e0e0e0;">İşe Giriş Tarihi</th><td>${f.steps[3].work_start_date || "-"}</td></tr>
+   <tr><th style="background-color:#e0e0e0;">İşe Giriş Tarihi</th><td>${toTRDate(f.steps[3].work_start_date) || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Sektör</th><td>${f.steps[3].sector || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Şirket Türü</th><td>${f.steps[3].company_type || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Şirket Adı</th><td>${f.steps[3].company_name || "-"}</td></tr>
@@ -679,7 +689,7 @@ const htmlBody = `
     <tr><th style="background-color:#e0e0e0;">Davetiye Var mı</th><td>${f.steps[4].boolean_invitation || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Davetiye Türü</th><td>${f.steps[4].invitation_type || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Davet Gönderen</th><td>${f.steps[4].invitation_sender_fullname || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Doğum Tarihi</th><td>${f.steps[4].invitation_sender_birthdate || "-"}</td></tr>
+    <tr><th style="background-color:#e0e0e0;">Doğum Tarihi</th><td>${toTRDate(f.steps[4].invitation_sender_birthdate) || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Telefon</th><td>${f.steps[4].invitation_sender_phone_number || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Email</th><td>${f.steps[4].invitation_sender_email || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">TC</th><td>${f.steps[4].invitation_sender_tc_id || "-"}</td></tr>
@@ -699,7 +709,7 @@ const htmlBody = `
     <tr><th style="background-color:#e0e0e0;">Başlangıç / Bitiş</th><td>${f.steps[5].travel_start_date || "-"} / ${f.steps[5].travel_end_date || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Schengen Vizesi Var mı</th><td>${f.steps[5].boolean_schengen_visa || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Parmak İzi Alındı mı</th><td>${f.steps[5].fingerprint_taken || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Parmak İzi Tarihi</th><td>${f.steps[5].fingerprint_taken_date || "-"}</td></tr>
+    <tr><th style="background-color:#e0e0e0;">Parmak İzi Tarihi</th><td>${toTRDate(f.steps[5].fingerprint_taken_date) || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Vize Etiket No</th><td>${f.steps[5].schengen_visa_label_number || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Daha Önce Yurt Dışına Çıktınız mı?</th><td>${f.steps[5].boolean_abroad_country || "-"}</td></tr>
      <tr><th style="background-color:#e0e0e0;">Gidilen Ülkeler</th><td>${(f.steps[5].abroad_country || []).join(", ") || "-"}</td></tr>

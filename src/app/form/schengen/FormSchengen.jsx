@@ -197,6 +197,10 @@ async function sendForm(payload) {
   });
 if(res.ok){
   setResMessage(true)
+ setForm(prev => ({
+  ...prev,
+  currentStep: prev.currentStep + 1
+}));
 }
   if (!res.ok) {
     console.error("PDF oluşturulamadı");
@@ -298,10 +302,10 @@ const goNext = () => {
     const end = form.steps[5].travel_end_date;
     const fpStatus = form.steps[5].fingerprint_taken;
     const fpDate = form.steps[5].fingerprint_taken_date;
-
+const fpDateDetail= new Date(form.steps[5].fingerprint_taken_date)
     const today = new Date();
     today.setHours(0,0,0,0);
-
+fpDateDetail.setHours(0,0,0,0);
     // 1) Seyahat başlangıcı bugünden önce olamaz
     if (start && new Date(start) < today) {
       newErrors.travel_start_date = "Seyahat başlangıç tarihi bugünden önce olamaz";
@@ -324,7 +328,7 @@ const goNext = () => {
       }
 
       // b) tarih dolu ama bugünden sonra ise hata
-      else if (new Date(fpDate) > today) {
+      else if (fpDateDetail > today) {
         newErrors.fingerprint_taken_date = "Parmak izi alınma tarihi bugünden sonra olamaz";
         hasInlineError = true;
       }
@@ -649,7 +653,7 @@ const normalizeWithSuffix = (value, suffix) => {
    
 
         {/* Progress bar */}
-          <div className="mb-6">
+         {form?.currentStep <7 && (          <div className="mb-6">
 <div className="mb-6 sm:hidden"> {/* Mobilde göster */}
   <div className="flex items-center">
     {visibleSteps.map((s, i, arr) => {
@@ -686,6 +690,7 @@ const normalizeWithSuffix = (value, suffix) => {
 </div>
 
 {/* Desktop için normal tüm step */}
+
 <div className="hidden sm:block mb-6">
   <div className="flex items-center justify-between">
     {[1,2,3,4,5,6].map((s, i, arr) => {
@@ -714,10 +719,12 @@ const normalizeWithSuffix = (value, suffix) => {
   </div>
 </div>
 
-</div>
+</div>)}
+
 
         {/* Title like A4 form header */}
-<div className="mb-6">
+
+         {form?.currentStep <7 && (<div className="mb-6">
   {/* Logo Sol Üst */}
   <div className="w-full flex justify-start items-start mb-4">
     <img
@@ -728,7 +735,7 @@ const normalizeWithSuffix = (value, suffix) => {
   </div>
 
   {/* Başlık Ortada */}
-  <div className="text-center">
+<div className="text-center">
     <h2 className="text-xl font-semibold">Schengen Vize Başvuru Formu Bilgi Fişi</h2>
     <p className="text-sm text-gray-500">
      Schengen vize başvuru formu bilgi fişi 6(altı) bölümden oluşmaktadır.
@@ -739,8 +746,9 @@ const normalizeWithSuffix = (value, suffix) => {
        Lütfen bilgilerinizi dikkatli doldurunuz.
    
     </p>
-  </div>
-</div>
+  </div> 
+</div>)}
+
 
         {/* Form body */}
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -957,39 +965,7 @@ const normalizeWithSuffix = (value, suffix) => {
         )}
       </div>
     
-      {/* ADRES */}
-      {/* <div className="md:col-span-2">
-        <label className="text-sm font-medium">Ev Adresi</label>
-        <textarea
-          name="home_address"
-          rows={3}
-          className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
-          ${errors.home_address ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
-          value={form.steps[1].home_address}
-                      onChange={(e) => {
-                if (isMobile) {
-                    // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(1, "home_address", e.target.value);
-                } else {
-                    // Desktop/Diğer: Normalizasyon YAP
-                    updateField(1, "home_address", normalizeAddressInput(e.target.value));
-                }
-            }}
-            
-            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
-            onBlur={(e) => {
-                if (isMobile) {
-                    const normalizedValue = normalizeAddressInput(e.target.value);
-                    updateField(1, "home_address", normalizedValue);
-                }
-            }}
-          placeholder="Mahalle, Cadde, Sokak, No, İlçe, İl"
-        ></textarea>
-        {errors.home_address && (
-          <p className="text-red-500 text-xs mt-1">{errors.home_address}</p>
-        )}
-      </div> */}
- 
+    
 
       {/* POSTA KODU */}
   
@@ -2275,8 +2251,8 @@ if (endDate && endDate > today) {
           ) : (
             <>
        <img
-  src={passportPreview}
-  alt="Passport Preview"
+  src={passportPreview || null}
+  alt="Pasaport"
   className="w-full h-full object-cover rounded-lg transition-transform duration-200 hover:scale-105"
 />
               <button
@@ -2325,8 +2301,8 @@ if (endDate && endDate > today) {
             <>
 
            <img
-  src={photoPreview}
-  alt="Photo Preview"
+  src={photoPreview || null}
+  alt="Biometrik"
   className="w-full h-full object-cover rounded-lg transition-transform duration-200 hover:scale-105"
 />
               <button
@@ -2361,6 +2337,61 @@ if (endDate && endDate > today) {
     </div>
   </section>
 )}
+
+
+{form.currentStep === 7 && (
+  <section className="flex flex-col items-center justify-center py-16">
+
+    <div className=" p-10 max-w-md w-full text-center animate-fadeIn">
+
+      <div className="flex justify-center mb-6">
+        <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-12 w-12 text-green-600"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+      </div>
+
+      <h2 className="text-2xl font-bold text-gray-900 mb-3">
+        Form Başarıyla Gönderildi!
+      </h2>
+
+      <p className="text-gray-600 mb-8">
+        Bilgileriniz başarıyla alınmıştır.  
+        En kısa sürede sizinle iletişime geçilecektir.
+      </p>
+
+      <a
+        href="/"
+       className="bg-white text-gray-700 cursor-pointer mt-5 border border-blue-300 px-4 py-2 rounded-3xl transition duration-300 hover:text-blue-500 hover:bg-gray-100"
+      placeholder="Ana sayfa"
+      >
+        Ana Sayfaya Dön
+      </a>
+    </div>
+
+    {/* küçük animasyon efekti */}
+    <style jsx>{`
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fadeIn {
+        animation: fadeIn 0.4s ease-out forwards;
+      }
+    `}</style>
+  </section>
+)}
+
+
+
+
 
           {/* Navigation */}
 <div className="flex items-center justify-between mt-6">
