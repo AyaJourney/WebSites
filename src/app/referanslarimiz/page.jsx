@@ -17,7 +17,7 @@ const Referanslarimiz = () => {
     <main className="flex flex-col items-center justify-center min-h-screen bg-zinc-50 font-sans px-4 sm:px-8 py-10">
       <h1 className="text-4xl font-bold mb-10 text-center">Referanslarımız</h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-full max-w-7xl">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full max-w-7xl">
         {references.map((ref, index) => (
           <div
             key={index}

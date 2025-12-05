@@ -58,7 +58,7 @@ export default function Footer() {
               {/* Ankara */}
               <div className="flex items-start gap-3">
                 <FaMapMarkerAlt className="text-white text-xl mt-1" />
-                <div className="flex flex-col text-sm opacity-90 cursor-pointer" onClick={()=>{setLocation("ankara")}}>
+                <div className="flex flex-col text-md opacity-90 cursor-pointer" onClick={()=>{setLocation("ankara")}}>
                   <span className="font-semibold">Ankara Paragon Tower</span>
                   <span>Kızılırmak, Çukurambar, Ufuk Ünv. Cd No:3, 06510 Çankaya/Ankara</span>
                 </div>
@@ -66,13 +66,13 @@ export default function Footer() {
 
               <a href="tel:+903128701584" aria-label="Telefon numarasını ara" className="flex items-center gap-3  hover:opacity-80 transition">
                 <FiPhone className="text-white text-lg" />
-                <span className="text-sm opacity-90">+90 312 870 15 84</span>
+                <span className="text-md opacity-90">+90 312 870 15 84</span>
               </a>
 
               {/* İstanbul */}
               <div className="flex items-start gap-3 mt-2">
                 <FaMapMarkerAlt className="text-white text-xl mt-1" />
-                <div className="flex flex-col text-sm opacity-90 cursor-pointer" onClick={()=>{setLocation("istanbul")}}>
+                <div className="flex flex-col text-md opacity-90 cursor-pointer" onClick={()=>{setLocation("istanbul")}}>
                   <span className="font-semibold">İstanbul Sun Plaza</span>
                   <span>Maslak, Bilim Sk. No:5, 34398 Sarıyer/İstanbul</span>
                 </div>
@@ -80,7 +80,7 @@ export default function Footer() {
 
               <a href="tel:+903128701584" aria-label="Telefon numarasını ara" className="flex items-center gap-3  hover:opacity-80 transition">
                 <FiPhone className="text-white text-lg" />
-                <span className="text-sm opacity-90">+90 312 870 15 84</span>
+                <span className="text-md opacity-90">+90 312 870 15 84</span>
               </a>
 
               {/* Mail */}
@@ -90,12 +90,12 @@ export default function Footer() {
                 className="flex items-center gap-3 mt-2 hover:opacity-80 transition"
               >
                 <HiOutlineMail className="text-white text-xl" />
-                <span className="text-sm opacity-90">vizedestek@ayajourney.com</span>
+                <span className="text-md opacity-90">vizedestek@ayajourney.com</span>
               </a>
             </div>
 
             {/* Sosyal ikonlar */}
-            <div className="flex gap-6 mt-3 items-center justify-start w-full">
+            <div className="flex gap-6 mt-3 items-center justify-start w-full bg-black/30 rounded-md">
               {/* <a href="https://www.facebook.com/people/AYA-Journey-Vize/100095568336692/" aria-label="Aya Journey Facebook" target="_blank" rel="noopener noreferrer" className="group p-3 inline-flex items-center justify-center min-w-[44px] min-h-[44px]">
                 <FaFacebookF className="text-blue-600 w-10 h-10 transition-all group-hover:bg-white group-hover:text-blue-600 p-2 rounded-full border-2 border-transparent group-hover:border-blue-600" />
               </a> */}
