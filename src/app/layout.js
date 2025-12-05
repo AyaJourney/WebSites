@@ -48,7 +48,7 @@ export default function RootLayout({ children }) {
       "@type": "TravelAgency",
       "name": "AyaJourney",
       "url": "https://ayajourney.com",
-      "logo": "https://ayajourney.com/logo.png",
+      "logo": "https://ayajourney.com/images/logo.png",
       "description": "Kanada, ABD, İngiltere,Portekiz ve Schengen vizeleri için profesyonel danışmanlık hizmeti.",
       "telephone": "+90 312 870 15 84",
       "address": {
@@ -57,6 +57,8 @@ export default function RootLayout({ children }) {
         "addressLocality": "Ankara",
         "addressCountry": "TR"
       },
+      "image": "https://ayajourney.com/images/logo.png",
+      "priceRange": "$$",
       "sameAs": [
         "https://www.instagram.com/ayajourneyvize/",
         "https://www.linkedin.com/company/ayajourney/",
