@@ -40,6 +40,59 @@ const page = () => {
 
       {/* Modal */}
       <QuestionModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+
+        <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Vize başvurusu için hangi belgeler gereklidir?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Gerekli belgeler vize türüne göre değişmekle birlikte pasaport, banka hesap dökümleri, biyometrik fotoğraf, kimlik fotokopisi ve mesleki durum belgeleri temel olarak sunulmalıdır."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Vize başvurusu ne kadar sürede sonuçlanır?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Schengen vizeleri genellikle 7–15 iş günü içinde sonuçlanırken, İngiltere, ABD ve Kanada başvurularında bu süre 3–8 hafta arasında değişebilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Vize reddi durumunda yeniden başvuru yapılabilir mi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Evet, vize reddi sonrasında yeniden başvuru yapılabilir. Ancak önceki reddin nedenini analiz etmek ve eksik belgeleri tamamlamak başvurunun olumlu sonuçlanması açısından önemlidir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Danışmanlık hizmeti başvuru sonucunu etkiler mi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Doğrudan sonuç garantisi vermese de, profesyonel danışmanlık hizmeti belgelerin doğru hazırlanmasını ve sürecin daha sağlıklı ilerlemesini sağlar. Bu durum olumlu sonuç ihtimalini artırabilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Randevu bulamıyorum, ne yapmalıyım?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Bazı ülkelerde randevular yoğun olduğu için hızlı dolabilir. Alternatif konsolosluklar, ek başvuru merkezleri veya hızlandırılmış hizmetler değerlendirilerek çözüm üretilebilir."
+          }
+        }
+      ]
+    })
+  }}
+/>
+
     </main>
   );
 }

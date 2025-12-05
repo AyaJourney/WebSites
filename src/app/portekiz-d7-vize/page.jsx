@@ -176,6 +176,58 @@ const Page = () => {
         </button>
       </Link>
       </section>
+      <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Portekiz D7 Vizesine kimler başvurabilir?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Düzenli pasif geliri olan kişiler, emekliler ve uzaktan çalışanlar Portekiz D7 vizesine başvurabilir. Başvuru sahibinin Portekiz’de kendini ve ailesini geçindirecek geliri olması gerekmektedir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Portekiz D7 Vizesi için gerekli gelir şartı nedir?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Başvuran kişinin aylık en az 870 € pasif geliri veya yıllık 10.440 € gelir kaynağı olması gerekir. Eş için bu tutarın %50'si, çocuklar için ise %30'u eklenir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Portekiz D7 Vizesi ne kadar sürede çıkar?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Başvuru süreci genellikle 2–4 ay arasında sürer. Konsolosluk yoğunluğu ve ek belge talepleri süreci uzatabilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Portekiz D7 Vizesi ile oturma izni alınabilir mi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Evet. D7 vizesi onaylandıktan sonra Portekiz’e giriş yaparak SEF üzerinden 2 yıllık oturma izni alınır. Sonrasında bu süre 3 yıl daha uzatılabilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Portekiz D7 Vizesi için gerekli belgeler nelerdir?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pasaport, gelir belgeleri, banka hesap dökümleri, sabıka kaydı, Portekiz’de konaklama belgesi, sağlık sigortası ve finansal yeterlilik kanıtı başlıca belgelerdir."
+          }
+        }
+      ]
+    })
+  }}
+/>
+
     </main>
   );
 };

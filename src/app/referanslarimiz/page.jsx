@@ -32,6 +32,58 @@ const Referanslarimiz = () => {
           </div>
         ))}
       </div>
+      <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "AyaJourney hangi firmalara hizmet vermiştir?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AyaJourney; eğitim kurumları, uluslararası şirketler, bireysel başvuru sahipleri ve profesyonel danışmanlık hizmeti alan yüzlerce müşteriyle çalışmıştır. Referanslarımız arasında farklı sektörlerden firmalar bulunmaktadır."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Referans listesi neye göre belirleniyor?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Referans listesi, çalıştığımız kurumlar, eğitim partnerleri ve vize danışmanlığı hizmeti verdiğimiz güvenilir iş ortaklarından oluşmaktadır. Logolar sadece izinli iş ortaklarımızı temsil eder."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Referans olarak gösterilen firmalarla çalışma süreci nasıldır?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Çalışma süreci başvurunun türüne göre değişmekle birlikte, firma yetkilileri ile koordineli şekilde vize dosyaları hazırlanır ve gerekli bilgi akışı sağlanır. Büyük ölçekli firmalar için toplu başvuru desteği de sağlanabilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Yeni firmalar referans listesine eklenebilir mi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Evet. Hizmet alan yeni kurumlar ve iş ortaklarımızın isteği doğrultusunda referans listesi düzenli olarak güncellenir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Referanslar gerçek mi ve doğrulanabilir mi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Evet. Referanslarımız gerçektir ve firmaların izniyle yayınlanır. Talep halinde kurumsal doğrulama yapılabilir."
+          }
+        }
+      ]
+    })
+  }}
+/>
+
     </main>
   );
 };

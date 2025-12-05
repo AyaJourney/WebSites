@@ -23,6 +23,58 @@ const Page = () => {
       <div className="max-w-5xl w-full z-10">
         <Card />
       </div>
+      <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Vize randevusu nasıl alınır?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Vize randevusu almak için uygun temsilciyi seçip tarih ve saat belirlemeniz yeterlidir. Randevu sistemi üzerinden hızlı bir şekilde işlem tamamlanır."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Randevu oluşturmak ne kadar sürer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Randevu oluşturma işlemi genellikle 1–2 dakika sürer. Uygun temsilci seçildiğinde sistem otomatik olarak en yakın boş tarihleri gösterir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Randevu tarihimi değiştirebilir miyim?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Evet. Randevu tarihini, müsaitlik durumuna göre daha erken veya daha geç bir tarihle değiştirebilirsiniz."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Randevu ücreti iade edilir mi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Randevuya gelinmediği veya son dakika iptal edildiği durumlarda ücret iadesi yapılmaz. Bu nedenle randevu saatinize uygun şekilde planlama yapmanız önerilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hangi ülkeler için randevu oluşturabilirim?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Schengen, İngiltere, Kanada, ABD ve diğer birçok ülke için randevu oluşturabilirsiniz. Danışmanlarımız dosyanıza en uygun temsilciyi belirlemenize yardımcı olur."
+          }
+        }
+      ]
+    })
+  }}
+/>
+
     </main>
   );
 };

@@ -183,6 +183,58 @@ export default function EgitimCard() {
           </AnimatePresence>
         </div>
       </div>
+      <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Amerika'da staj programı için kimler başvurabilir?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "18–35 yaş arasında olan, en az lise mezunu, temel İngilizceye sahip öğrenciler ve yeni mezunlar staj programına başvurabilir. Bazı şirketler ek nitelik talep edebilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Amerika staj vizesi ne kadar sürede çıkar?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "DS-2019 sponsor onayı ve konsolosluk randevusuna bağlı olarak vize süreci genellikle 4–8 hafta arasında sonuçlanır."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Amerika staj programı için gerekli belgeler nelerdir?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pasaport, akademik transkript, CV, İngilizce niyet mektubu, referans mektupları ve DS-2019 başvuru formu staj programında temel belgelerdir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Amerika’da staj yaparken çalışma izni sağlanır mı?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Evet. J-1 staj vizesi, katılımcıya program boyunca sadece belirlenen kurumda yasal olarak çalışma izni sağlar."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Staj programı ücretli midir?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Bazı şirketler ücretli staj imkânı sunarken bazıları sadece eğitim odaklı programlar sunar. Ücretli olup olmadığı seçilen sektöre ve şirkete göre değişir."
+          }
+        }
+      ]
+    })
+  }}
+/>
+
     </section>
   );
 }

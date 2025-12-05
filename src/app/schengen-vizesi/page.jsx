@@ -351,6 +351,58 @@ export default function SchengenPage() {
           </Link>
         </div>
       </section>
+      <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi için gerekli belgeler nelerdir?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Schengen vizesi için pasaport, banka hesap dökümleri, iş/öğrenci belgeleri, seyahat sağlık sigortası, biyometrik fotoğraf, uçak ve konaklama rezervasyonları gereklidir. Bazı profiller için ek belgeler talep edilebilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi ne kadar sürede çıkar?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Schengen vizesi genellikle 7–15 iş günü içinde sonuçlanır. Ancak yoğun dönemlerde bu süre uzayabilir. Almanya ve Fransa’da başvuru yoğunluğuna bağlı olarak ek bekleme süresi olabilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi randevusu nasıl alınır?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Randevular aracı kurumlar üzerinden alınır. Başvuru formu doldurulduktan sonra vize türü seçilir ve uygun bir tarih belirlenir. Yoğun ülkelerde randevular hızla dolduğu için önceden planlama tavsiye edilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hangi ülkeye Schengen başvurusu yapmalıyım?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Başkıca kriter, en uzun konaklamanın yapılacağı ülkedir. Eğer tüm ülkelerde eşit kalacaksanız ilk giriş yapacağınız ülkeye başvurmalısınız. Profil, seyahat geçmişi ve meslek gibi durumlara göre en uygun ülke kişiye özel belirlenir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi reddi neden olur?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yetersiz finansal durum, şüpheli seyahat planı, eksik belge, hatalı rezervasyonlar, tutarsız banka hareketleri ve geçmiş reddler başlıca nedenlerdir. Profesyonel dosya hazırlığı reddi büyük ölçüde azaltır."
+          }
+        }
+      ]
+    })
+  }}
+/>
+
     </main>
   );
 }
