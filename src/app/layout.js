@@ -40,7 +40,37 @@ export default function RootLayout({ children }) {
      <footer>
         <Footer />
      </footer>
-      
+      <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "TravelAgency",
+      "name": "AyaJourney",
+      "url": "https://ayajourney.com",
+      "logo": "https://ayajourney.com/logo.png",
+      "description": "Kanada, ABD, İngiltere,Portekiz ve Schengen vizeleri için profesyonel danışmanlık hizmeti.",
+      "telephone": "+90 312 870 15 84",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Kızılırmak Mahallesi Ufuk Ünv. Caddesi No: 3 Paragon Tower",
+        "addressLocality": "Ankara",
+        "addressCountry": "TR"
+      },
+      "sameAs": [
+        "https://www.instagram.com/ayajourneyvize/",
+        "https://www.linkedin.com/company/ayajourney/",
+        "https://x.com/ayajourneyvize",
+        "https://www.youtube.com/@aya.journey"
+      ],
+      "areaServed": {
+        "@type": "Country",
+        "name": "Türkiye"
+      }
+    })
+  }}
+/>
+
       </body>
     </html>
   );
