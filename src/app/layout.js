@@ -55,6 +55,7 @@ export default function RootLayout({ children }) {
         "@type": "PostalAddress",
         "streetAddress": "Kızılırmak Mahallesi Ufuk Ünv. Caddesi No: 3 Paragon Tower",
         "addressLocality": "Ankara",
+        "postalCode": "06510",
         "addressCountry": "TR"
       },
       "image": "https://ayajourney.com/images/logo.png",
