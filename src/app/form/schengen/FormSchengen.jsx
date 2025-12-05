@@ -136,7 +136,7 @@ useEffect(() => {
             setIsMobile(isMobileOrAndroid());
         }
     }, []);
-    console.log(form)
+    // console.log(form)
 function base64ToBlob(base64, mimeType = "image/jpeg") {
   const byteString = atob(base64.split(",")[1] || base64);
   const ab = new ArrayBuffer(byteString.length);
@@ -190,7 +190,7 @@ const handleSubmit = async () => {
 
     await sendForm(formToSend);
   } catch (error) {
-    console.error(error);
+    // console.error(error);
   }
 
   setIsSubmitting(false);
@@ -213,7 +213,7 @@ if(res.ok){
 
 }
   if (!res.ok) {
-    console.error("PDF oluşturulamadı");
+    // console.error("PDF oluşturulamadı");
     setResMessage(false)
     return;
   }

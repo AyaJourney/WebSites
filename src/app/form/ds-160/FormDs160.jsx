@@ -101,7 +101,7 @@ function saveToLocal(data) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   } catch (e) {
-    console.warn("localStorage save failed", e);
+    // console.warn("localStorage save failed", e);
   }
 }
 
@@ -110,7 +110,7 @@ function readFromLocal() {
     const raw = localStorage.getItem(STORAGE_KEY);
     return raw ? JSON.parse(raw) : null;
   } catch (e) {
-    console.warn("localStorage read failed", e);
+    // console.warn("localStorage read failed", e);
     return null;
   }
 }
@@ -187,7 +187,7 @@ const handleSubmit = async () => {
 
     await sendForm(formToSend);
   } catch (error) {
-    console.error(error);
+    // console.error(error);
   }
 
   setIsSubmitting(false);
@@ -203,7 +203,7 @@ if(res.ok){
   setResMessage(true)
 }
   if (!res.ok) {
-    console.error("PDF oluşturulamadı");
+    // console.error("PDF oluşturulamadı");
     setResMessage(false)
     return;
   }

@@ -57,7 +57,7 @@ const RandevuCard = ({ person }) => {
         const data = await res.json();
         setReservations(data);
       } catch (err) {
-        console.error("Randevular yüklenemedi", err);
+//         console.error("Randevular yüklenemedi", err);
       }
     }
     fetchReservations();
@@ -129,7 +129,7 @@ if (res.ok) {
       setSubmitState("error");
     }
   } catch (err) {
-    console.error(err);
+//     console.error(err);
     setSubmitState("error");
   }
     setTimeout(() => setSubmitState("idle"), 3000);

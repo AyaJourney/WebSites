@@ -238,7 +238,7 @@ const handleSubmit = async () => {
 
     await sendForm(formToSend);
   } catch (error) {
-    console.error(error);
+    // console.error(error);
   }
 
   setIsSubmitting(false);
@@ -254,7 +254,7 @@ if(res.ok){
   setResMessage(true)
 }
   if (!res.ok) {
-    console.error("PDF oluşturulamadı");
+    // console.error("PDF oluşturulamadı");
     setResMessage(false)
     return;
   }

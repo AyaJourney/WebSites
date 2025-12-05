@@ -147,6 +147,41 @@ const UKVisaPage = () => {
           </button>
         </Link>
       </section>
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "İngiltere vizesi için gerekli belgeler nelerdir?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pasaport, banka dökümü, gelir belgeleri, konaklama ve uçuş bilgileri, biometrik fotoğraf ve vize başvuru formu gereklidir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "İngiltere vizesi kaç günde çıkar?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Standart başvurularda ortalama 15 iş günü sürer. Yoğunluk dönemlerinde süre uzayabilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "İngiltere vize ücreti ne kadar?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "2025 yılı İngiltere kısa süreli turistik vize ücreti ortalama 145 GBP'dir."
+          }
+        }
+      ]
+    })
+  }}
+/>
 
     </main>
   );
