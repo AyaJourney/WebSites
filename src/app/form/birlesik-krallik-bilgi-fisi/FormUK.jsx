@@ -2818,10 +2818,7 @@ onBlur={(e) => {
 
     </div>
   )}
-</div>
-
-
-<div className="flex justify-center mt-6">
+  <div className="flex justify-center mt-6">
  { !resMessage ? ( <button
     type="button"
     onClick={handleSubmit}
@@ -2880,6 +2877,10 @@ onBlur={(e) => {
   )} 
 
 </div>
+</div>
+
+
+
      {statusMessage && (
   <div
     className="
