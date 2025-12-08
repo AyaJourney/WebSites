@@ -101,3 +101,19 @@ body {
     
   }
 }
+
+
+@keyframes toast-slide {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px) translateX(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) translateX(0);
+  }
+}
+
+.animate-toast-slide {
+  animation: toast-slide 0.25s ease-out;
+}

@@ -229,6 +229,84 @@ export const questionsAndAnswers = [
     "type": "Schengen",
     "question": "Vize başvurum ret oldu, nasıl bir yol izleyeceğiz?",
     "answer": "Ret nedenlerine bağlı olarak itiraz gerçekleştirebilir veya eksikleri tamamlayıp tekrar başvuru yapılabilir."
+  },
+   {
+    "id": 26,
+    "type": "Amerika",
+    "question": "Amerika vize başvurusu nasıl yapılır?",
+    "answer": "Amerika vize başvurusu; DS-160 formunun online olarak doldurulması, ABD Konsolosluğu randevusunun oluşturulması, biyometrik işlemler ve mülakat aşamalarından oluşur. Eğitim amaçlı vizelerde okul tarafından düzenlenen I-20 belgesi, kültürel değişim veya staj programlarında ise DS-2019 formu gerekir. Her vize kategorisinin kendine özel evrak gereksinimleri bulunduğundan sürecin doğru yönetilmesi onay şansını artırır."
+  },
+  {
+    "id": 27,
+    "type": "Amerika",
+    "question": "Amerika vize görüşmesine Ankara’da mı İstanbul’da mı girmek daha avantajlı?",
+    "answer": "ABD Ankara Büyükelçiliği ve ABD İstanbul Başkonsolosluğu aynı prosedürleri uyguladığı için onay açısından herhangi bir fark bulunmaz. Farklılık yalnızca randevu yoğunluğu ve uygun tarih bulunabilirliğinden kaynaklanabilir."
+  },
+  {
+    "id": 28,
+    "type": "Amerika",
+    "question": "Amerika’da yaşamak ve çalışmak için ne yapmalıyım?",
+    "answer": "Amerika’da çalışmak için turist veya öğrenci vizeleri yeterli değildir. Genellikle işveren sponsorluğuna dayalı H1B, L1 veya üstün yetenek vizeleri olan O1 gibi çalışma vizelerinden biri alınmalıdır. Uzun vadede yaşamak için ise Green Card başvurusu yapılması gerekir."
+  },
+  {
+    "id": 29,
+    "type": "Amerika",
+    "question": "Amerika vizesi için bankada ne kadar para göstermeliyim?",
+    "answer": "ABD turist vizesinde belirli bir bakiye zorunluluğu yoktur. Konsolosluk hesabınızdaki paradan çok, finansal durumunuzun tutarlılığına ve Türkiye'ye olan bağlarınıza önem verir. Öğrenci vizelerinde ise I-20 formunda belirtilen eğitim ve yaşam giderlerinin karşılanabileceğinin belgelenmesi gerekir."
+  },
+  {
+    "id": 30,
+    "type": "Amerika",
+    "question": "Amerika vize ücreti ne kadar?",
+    "answer": "B1/B2 turist vizesi, F1 öğrenci vizesi ve J1 kültürel değişim vizelerinin ücreti 185 USD’dir. E-2, O-1, L-1 gibi diğer vizelerde ücret farklılık gösterebilir. Öğrenci ve değişim programlarında ayrıca SEVIS ücreti de ödenmelidir."
+  },
+  {
+    "id": 31,
+    "type": "Amerika",
+    "question": "Amerika vize başvurum reddedildi, itiraz edebilir miyim?",
+    "answer": "Amerika vizesinde resmi itiraz hakkı yoktur. Özellikle 214(b) kapsamındaki ret kararları kesindir. Konsolosluğa dilekçe yazarak veya itiraz başvurusu yaparak ret sonucunu değiştirmek mümkün değildir."
+  },
+  {
+    "id": 32,
+    "type": "Amerika",
+    "question": "Amerika vize mülakatında ne gibi sorular soruluyor?",
+    "answer": "Mülakat soruları vize türüne ve kişinin profiline göre değişir. Amaç seyahat amacınızı, finansal durumunuzu ve Türkiye ile bağlarınızı anlamaktır. AYA Journey profilinize göre kişiye özel mülakat hazırlığı sunmaktadır."
+  },
+  {
+    "id": 33,
+    "type": "Amerika",
+    "question": "Amerika vizesi kaç yıllık verilir?",
+    "answer": "Türk vatandaşları için Amerika turist vizesi (B1/B2) genellikle 10 yıllık verilir. Bazı durumlarda 1 yıllık veya daha kısa süreli vize de verilebilir. Bu durum başvurulan kategoriye ve memurun değerlendirmesine göre değişiklik gösterebilir."
+  },
+  {
+    "id": 34,
+    "type": "Amerika",
+    "question": "Amerika vizesi için pasaport geçerlilik süresi ne kadar olmalıdır?",
+    "answer": "Pasaportunuzun seyahat tarihinizden sonra en az 6 ay daha geçerli olması tavsiye edilir. Bu, vize sürecinin daha sorunsuz ilerlemesini sağlar."
+  },
+  {
+    "id": 35,
+    "type": "Amerika",
+    "question": "Vizem var fakat soyadım değişti. Vizem hâlâ geçerli mi?",
+    "answer": "Evlilik, boşanma veya mahkeme kararı ile soyadı değişse bile Amerika vizesi geçerliliğini korur. Eski pasaporttaki vize ile yeni pasaportu birlikte taşımanız yeterlidir."
+  },
+  {
+    "id": 36,
+    "type": "Amerika",
+    "question": "Amerika vizesinden ret aldım, sonraki başvurumu etkiler mi?",
+    "answer": "Bir ret kararı sonraki başvurunun kesin olarak reddedileceği anlamına gelmez. Ancak memur önceki ret gerekçesini göreceği için yeni başvuruda eksikliklerin giderilmiş olması önemlidir."
+  },
+  {
+    "id": 37,
+    "type": "Amerika",
+    "question": "Amerika'da start-up vizesi var mı?",
+    "answer": "ABD doğrudan bir start-up vizesi sunmaz. Ancak girişimciler E-2 Yatırımcı vizesi ile ABD’de şirket kurabilir ve işlerini aktif şekilde yönetebilirler. Bu vize kayda değer bir yatırım ve iş planı gerektirir."
+  },
+  {
+    "id": 38,
+    "type": "Amerika",
+    "question": "Amerika dijital göçebe vizesi sunuyor mu?",
+    "answer": "ABD’nin resmi bir dijital göçebe vizesi bulunmamaktadır. Uzaktan çalışan kişilere özel uzun süreli kalış hakkı tanıyan bir vize programı mevcut değildir."
   }
 ];
 

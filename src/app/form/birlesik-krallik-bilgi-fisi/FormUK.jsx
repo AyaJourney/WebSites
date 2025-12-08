@@ -27,7 +27,10 @@ const defaultForm = {
       home_address:"",
       post_code:"",
       home_owner:"",
-      residence_year:""
+      residence_duration:"",
+      maidenName:"",
+      past_addresses:"",
+      
     },
         2: {
           boolean_child:"",
@@ -248,7 +251,7 @@ if(res.ok){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form, storageMethod]);
 const requiredFields = {
-  1: ["tcId","fullName", "gender", "maritalStatus", "birthDate", "birthPlace","email","phone_number","home_owner"],
+  1: ["tcId","fullName", "gender", "maritalStatus", "birthDate", "birthPlace","email","phone_number","home_owner","post_code","home_address","residence_duration"],
   2: ["boolean_child", "mother_full_name", "mother_birth_date","father_full_name","father_birth_date"],
   3: ["passport_number", "Passport_start_date", "Passport_end_date","passport_issuing_authority","tc_card_end_date"],
   4: ["boolean_work","monthly_money","monthly_expenditure_amount"],
@@ -506,6 +509,76 @@ if (form.currentStep < start) {
 }
 
 const visibleSteps = Array.from({length: end - start +1}, (_, i) => start + i);
+function normalizeDurationInput(value) {
+  if (!value) return "";
+
+  let original = value; // önemli!
+
+  value = value.toLowerCase();
+
+  let years = 0;
+  let months = 0;
+
+  const yearMatch = value.match(/(\d+)\s*(yıl|yr|y)/i);
+  const monthMatch = value.match(/(\d+)\s*(ay|month|m)/i);
+
+  if (!yearMatch && !monthMatch) {
+    // ❗ hiçbir eşleşme yoksa normalize ETME, kullanıcının yazdığı değeri koru
+    return original;
+  }
+
+  if (yearMatch) years = parseInt(yearMatch[1]);
+  if (monthMatch) months = parseInt(monthMatch[1]);
+
+  let result = "";
+  if (years) result += `${years} yıl `;
+  if (months) result += `${months} ay`;
+
+  return result.trim().toUpperCase();
+}
+
+
+
+
+
+
+function extractMonthsFromDuration(value) {
+  if (!value) return null;
+
+  // MM/YY formatı
+  if (/^\d{2}\/\d{2}$/.test(value)) {
+    const [mm, yy] = value.split("/");
+    return parseInt(yy) * 12 + parseInt(mm);
+  }
+
+  // "5 yıl 3 ay" formatı
+  let years = 0;
+  let months = 0;
+  let valid = false;
+
+  const yearMatch = value.match(/(\d+)\s*(yıl|yr|y)/i);
+  const monthMatch = value.match(/(\d+)\s*(ay|month|m)/i);
+
+  if (yearMatch) {
+    years = parseInt(yearMatch[1]);
+    valid = true;
+  }
+  if (monthMatch) {
+    months = parseInt(monthMatch[1]);
+    valid = true;
+  }
+
+  if (!valid) return null;
+
+  return years * 12 + months;
+}
+
+
+
+
+
+
+
   return (
     <div className="min-h-screen bg-gray-100 p-6 flex items-start justify-center">
       {/* A4-like container */}
@@ -640,7 +713,7 @@ const visibleSteps = Array.from({length: end - start +1}, (_, i) => start + i);
 
       {/* AD SOYAD */}
       <div>
-        <label className="text-sm font-medium">Ad Soyad (Pasaport ile aynı)</label>
+        <label className="text-sm font-medium">Ad Soyad (Pasaportta yazan)</label>
         <input
           name="fullName"
           className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
@@ -707,7 +780,39 @@ const visibleSteps = Array.from({length: end - start +1}, (_, i) => start + i);
           <p className="text-red-500 text-xs mt-1">{errors.maritalStatus}</p>
         )}
       </div>
-
+      {form.steps[1].gender === "KADIN" &&
+        form.steps[1].maritalStatus === "EVLI" && (
+          <div className="transition-all duration-300">
+            <label className="text-sm font-medium">Evlenmeden Önceki Soyadı (Varsa)</label>
+            <input
+              name="maidenName"
+              className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+              ${errors.maidenName ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+              value={form.steps[1].maidenName || ""}
+               onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(1, "maidenName", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(1, "maidenName", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(1, "maidenName", normalizedValue);
+                }
+            }}
+              placeholder="Örn: KAYA"
+            />
+            {errors.maidenName && (
+              <p className="text-red-500 text-xs mt-1">{errors.maidenName}</p>
+            )}
+          </div>
+        )}
       {/* EŞ / ESKİ EŞ */}
       {form.steps[1].maritalStatus === "EVLI" && (
         <div>
@@ -776,23 +881,59 @@ const visibleSteps = Array.from({length: end - start +1}, (_, i) => start + i);
       )}
 
       {/* DOĞUM TARİHİ */}
-      <div>
-        <label className="text-sm font-medium">Doğum Tarihi</label>
-        <input
-          type="date"
-          name="birthDate"
-          className="w-full mt-1 p-3 border border-gray-300 rounded-xl shadow-sm outline-none focus:ring-2 focus:ring-blue-500"
-          value={form.steps[1].birthDate || ""}
-          onChange={(e) => updateField(1, "birthDate", e.target.value)}
-        />
-      </div>
+<div>
+  <label className="text-sm font-medium">Doğum Tarihi</label>
+<input
+  type="date"
+  name="birthDate"
+  max={new Date().toISOString().split("T")[0]}
+  min="1900-01-01"
+  className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+    ${errors.birthDate ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+  value={form.steps[1].birthDate || ""}
+  onChange={(e) => {
+    // ❗ Sadece değeri kaydediyoruz — HİÇBİR KONTROL yok
+    updateField(1, "birthDate", e.target.value);
+  }}
+  onBlur={(e) => {
+    const selected = e.target.value;
+
+    // Eğer tarih TAM değilse (YYYY-MM-DD), validation yapma!
+    if (selected.length < 10) return;
+
+    const today = new Date().toISOString().split("T")[0];
+
+    // Gelecek tarih kontrolü
+    if (selected > today) {
+      setErrors(prev => ({ ...prev, birthDate: "Doğum tarihi bugünden ileri olamaz." }));
+      return;
+    }
+
+    // Çok eski tarih kontrolü
+    if (selected < "1900-01-01") {
+      setErrors(prev => ({ ...prev, birthDate: "Lütfen geçerli bir tarih giriniz." }));
+      return;
+    }
+
+    // Her şey normalse hata sil
+    setErrors(prev => ({ ...prev, birthDate: "" }));
+  }}
+/>
+
+
+  {errors.birthDate && (
+    <p className="text-red-500 text-xs mt-1">{errors.birthDate}</p>
+  )}
+</div>
+
 
       {/* DOĞUM YERİ */}
       <div>
-        <label className="text-sm font-medium">Doğum Yeri</label>
+        <label className="text-sm font-medium">Doğum Yeri(Pasaportta yazan)</label>
         <input
           name="birthPlace"
-          className="w-full mt-1 p-3 border border-gray-300 rounded-xl shadow-sm outline-none focus:ring-2 focus:ring-blue-500"
+        className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+            ${errors.birthDate ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
           value={form.steps[1].birthPlace || ""}
        onChange={(e) => {
                 if (isMobile) {
@@ -813,6 +954,9 @@ const visibleSteps = Array.from({length: end - start +1}, (_, i) => start + i);
             }}
           placeholder="Örn: İstanbul"
         />
+         {errors.birthPlace && (
+            <p className="text-red-500 text-xs mt-1">{errors.birthPlace}</p>
+          )}
       </div>
 
       {/* TELEFON NUMARASI */}
@@ -898,64 +1042,117 @@ const visibleSteps = Array.from({length: end - start +1}, (_, i) => start + i);
       </div>
 
       {/* EV SAHİBİ */}
-      <div>
-        <label className="text-sm font-medium">Ev Sahibi</label>
-        <select
-          name="home_owner"
-          className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
-          ${errors.home_owner ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
-          value={form.steps[1].home_owner || ""}
-    onChange={(e) => {
-                if (isMobile) {
-                    // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(1, "home_owner", e.target.value);
-                } else {
-                    // Desktop/Diğer: Normalizasyon YAP
-                    updateField(1, "home_owner", normalizeAddressInput(e.target.value));
-                }
-            }}
-            
-            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
-            onBlur={(e) => {
-                if (isMobile) {
-                    const normalizedValue = normalizeAddressInput(e.target.value);
-                    updateField(1, "home_owner", normalizedValue);
-                }
-            }}
-        >
-          <option value="">Seçiniz</option>
-          <option value="KENDİSİ">KENDİSİ</option>
-          <option value="KİRA">KİRA</option>
-          <option value="ANNE">ANNE</option>
-          <option value="BABA">BABA</option>
-
-          <option value="EŞ">EŞ</option>
-        </select>
-        {errors.home_owner && (
-          <p className="text-red-500 text-xs mt-1">{errors.home_owner}</p>
-        )}
-      </div>
 <div>
-  <label className="text-sm font-medium">Bu evde kaç yıldır yaşıyorsunuz? (Ay/Yıl)</label>
-  <input
-    name="residence_year"
-    maxLength={7} // 2 hane ay + / + 4 hane yıl = 7
+  <label className="text-sm font-medium">Ev Sahibi</label>
+  <select
+    name="home_owner"
     className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
-    ${errors.residence_year ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
-    value={form.steps[1].residence_year || ""}
-    placeholder="MM/YY"
-    onChange={(e) => {
-      let val = e.target.value.replace(/\D/g, ""); // sadece rakamları al
-      if (val.length > 2) {
-        val = val.slice(0, 2) + "/" + val.slice(2, 4);
-      }
-      updateField(1, "residence_year", val);
-    }}
-  />
-  {errors.residence_year && (
-    <p className="text-red-500 text-xs mt-1">{errors.residence_year}</p>
+    ${errors.home_owner ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+    value={form.steps[1].home_owner || ""}
+    onChange={(e) => updateField(1, "home_owner", e.target.value)}
+  >
+    <option value="">Seçiniz</option>
+    <option value="KENDİSİ">KENDİSİ</option>
+    <option value="KİRA">KİRA</option>
+    <option value="ANNE">ANNE</option>
+    <option value="BABA">BABA</option>
+    <option value="EŞ">EŞ</option>
+  </select>
+
+  {errors.home_owner && (
+    <p className="text-red-500 text-xs mt-1">{errors.home_owner}</p>
   )}
 </div>
+
+<div>
+  <label className="text-sm font-medium">Bu evde ne kadar süredir yaşıyorsunuz?</label>
+
+  <input
+    name="residence_duration"
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+    ${errors.residence_duration ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+    value={form.steps[1].residence_duration || ""}
+    placeholder="Örn: 5 yıl 3 ay, 8 ay, 03/24"
+    onChange={(e) => {
+      const raw = e.target.value;
+
+      if (isMobile) {
+        // Mobile: raw değeri yaz
+        updateField(1, "residence_duration", raw);
+    
+      } else {
+        updateField(1, "residence_duration", normalizeDurationInput(raw));
+      }
+
+      if (!raw.trim()) {
+  
+
+        updateField(1, "residence_months_total", null);
+      }
+    }}
+onBlur={(e) => {
+  let value = form.steps[1].residence_duration || "";
+
+  if (isMobile) {
+    const normalized = normalizeDurationInput(value);
+    updateField(1, "residence_duration", normalized);
+    value = normalized;
+  }
+
+  const totalMonths = extractMonthsFromDuration(value);
+
+  if (totalMonths !== null) {
+    updateField(1, "residence_months_total", totalMonths);
+  } else {
+    // ❗ Burası residence_duration'ı ASLA SİLMEMELİ
+    console.warn("Geçersiz süre, ama duration korunuyor:", value);
+  }
+}}
+
+  />
+
+  {errors.residence_duration && (
+    <p className="text-red-500 text-xs mt-1">{errors.residence_duration}</p>
+  )}
+</div>
+{form.steps[1].residence_months_total !== null &&
+ form.steps[1].residence_months_total < 12 && (
+  <div className="mt-4">
+    <label className="text-sm font-medium">Geçmiş 2 yıldaki adreslerinizi yazınız</label>
+
+    <textarea
+      name="past_addresses"
+      className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300 focus:ring-2 focus:ring-blue-500 resize-none"
+      placeholder="Son 2 yıldaki önceki adreslerinizi yazınız"
+      rows={4}
+      
+      value={form.steps[1].past_addresses || ""}
+      onChange={(e) => {
+        const raw = e.target.value;
+
+        if (isMobile) {
+          updateField(1, "past_addresses", raw);
+        } else {
+          updateField(1, "past_addresses", normalizeAddressInput(raw));
+        }
+      }}
+      onBlur={(e) => {
+        if (isMobile) {
+          const normalized = normalizeAddressInput(e.target.value);
+          updateField(1, "past_addresses", normalized);
+        }
+      }}
+    />
+
+    {errors.past_addresses && (
+      <p className="text-red-500 text-xs mt-1">{errors.past_addresses}</p>
+    )}
+  </div>
+)}
+
+
+
+
     </div>
   </section>
 )}
@@ -1002,23 +1199,64 @@ const visibleSteps = Array.from({length: end - start +1}, (_, i) => start + i);
       </div>
 
       {/* Anne Doğum Tarihi */}
-      <div>
-        <label className="text-sm font-medium">Anne Doğum Tarihi</label>
-        <input
-          type="date"
-          name="mother_birth_date"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
-          value={form.steps[2].mother_birth_date || ""}
-          onChange={(e) => updateField(2, "mother_birth_date", e.target.value)}
-        />
-      </div>
+  <div>
+  <label className="text-sm font-medium">Anne Doğum Tarihi</label>
+  <input
+    type="date"
+    name="mother_birth_date"
+    max={new Date().toISOString().split("T")[0]}     // bugünden sonrası kapalı
+    min="1900-01-01"                                // saçma eski tarihler kapalı
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+      ${errors.mother_birth_date ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+    value={form.steps[2].mother_birth_date || ""}
+    onChange={(e) => {
+      // ❗ Sadece yazılan değeri sakla — validation burada yapılmayacak
+      updateField(2, "mother_birth_date", e.target.value);
+    }}
+    onBlur={(e) => {
+      const selected = e.target.value;
+
+      // ❗ Eğer kullanıcı tarihi TAM yazmadıysa (ör: "2023-" ya da "2") → validation yapma
+      if (selected.length < 10) return;
+
+      const today = new Date().toISOString().split("T")[0];
+
+      // 🔴 Gelecek tarih kontrolü
+      if (selected > today) {
+        setErrors(prev => ({
+          ...prev,
+          mother_birth_date: "Doğum tarihi bugünden ileri olamaz."
+        }));
+        return;
+      }
+
+      // 🔴 Çok eski tarih kontrolü
+      if (selected < "1900-01-01") {
+        setErrors(prev => ({
+          ...prev,
+          mother_birth_date: "Lütfen geçerli bir tarih giriniz."
+        }));
+        return;
+      }
+
+      // ✔ Hata yoksa hatayı temizle
+      setErrors(prev => ({ ...prev, mother_birth_date: "" }));
+    }}
+  />
+
+  {errors.mother_birth_date && (
+    <p className="text-red-500 text-xs mt-1">{errors.mother_birth_date}</p>
+  )}
+</div>
+
 
       {/* Baba Adı */}
       <div>
         <label className="text-sm font-medium">Baba Adı Soyadı</label>
         <input
           name="father_full_name"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+         className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+      ${errors.mother_birth_date ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
           value={form.steps[2].father_full_name || ""}
                onChange={(e) => {
                 if (isMobile) {
@@ -1039,19 +1277,62 @@ const visibleSteps = Array.from({length: end - start +1}, (_, i) => start + i);
             }}
           placeholder="Örn: MEHMET PARLAK"
         />
+        {errors.father_full_name && (
+    <p className="text-red-500 text-xs mt-1">{errors.father_full_name}</p>
+  )}
       </div>
 
       {/* Baba Doğum Tarihi */}
-      <div>
-        <label className="text-sm font-medium">Baba Doğum Tarihi</label>
-        <input
-          type="date"
-          name="father_birth_date"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
-          value={form.steps[2].father_birth_date || ""}
-          onChange={(e) => updateField(2, "father_birth_date", e.target.value)}
-        />
-      </div>
+   <div>
+  <label className="text-sm font-medium">Baba Doğum Tarihi</label>
+  <input
+    type="date"
+    name="father_birth_date"
+    max={new Date().toISOString().split("T")[0]}   // bugünden sonrası kapalı
+    min="1900-01-01"                                // saçma eski tarihler kapalı
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+      ${errors.father_birth_date ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+    value={form.steps[2].father_birth_date || ""}
+    onChange={(e) => {
+      // ❗ Sadece değeri sakla — validation burada çalışmayacak
+      updateField(2, "father_birth_date", e.target.value);
+    }}
+    onBlur={(e) => {
+      const selected = e.target.value;
+
+      // ❗ Eğer tarih TAM değilse validation yapma
+      if (selected.length < 10) return;
+
+      const today = new Date().toISOString().split("T")[0];
+
+      // 🔴 Gelecek tarih kontrolü
+      if (selected > today) {
+        setErrors(prev => ({
+          ...prev,
+          father_birth_date: "Doğum tarihi bugünden ileri olamaz."
+        }));
+        return;
+      }
+
+      // 🔴 Çok eski tarih kontrolü
+      if (selected < "1900-01-01") {
+        setErrors(prev => ({
+          ...prev,
+          father_birth_date: "Lütfen geçerli bir tarih giriniz."
+        }));
+        return;
+      }
+
+      // ✔ Hata yok → temizle
+      setErrors(prev => ({ ...prev, father_birth_date: "" }));
+    }}
+  />
+
+  {errors.father_birth_date && (
+    <p className="text-red-500 text-xs mt-1">{errors.father_birth_date}</p>
+  )}
+</div>
+
 
       {/* Çocuğunuz var mı? */}
       <div>
@@ -1141,35 +1422,138 @@ const visibleSteps = Array.from({length: end - start +1}, (_, i) => start + i);
       </div>
 
       {/* Pasaport Başlangıç Tarihi */}
-      <div>
-        <label className="text-sm font-medium">Pasaport Başlangıç Tarihi</label>
-        <input
-          type="date"
-          name="Passport_start_date"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
-          value={form.steps[3].Passport_start_date || ""}
-          onChange={(e) => updateField(3, "Passport_start_date", e.target.value)}
-        />
-      </div>
+  <div>
+  <label className="text-sm font-medium">Pasaport Başlangıç Tarihi</label>
+  <input
+    type="date"
+    name="Passport_start_date"
+    max={new Date().toISOString().split("T")[0]}   // gelecekteki tarihler kapalı
+    min="1900-01-01"                                // saçma eski tarihler kapalı
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+      ${errors.Passport_start_date ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+    value={form.steps[3].Passport_start_date || ""}
+    onChange={(e) => {
+      // ❗ Yazarken validation yapma, sadece değeri sakla
+      updateField(3, "Passport_start_date", e.target.value);
+    }}
+    onBlur={(e) => {
+      const selected = e.target.value;
+
+      // ❗ Tarih tam yazılmadıysa validation yapma
+      if (selected.length < 10) return;
+
+      const today = new Date().toISOString().split("T")[0];
+
+      // 🔴 Gelecek tarih kontrolü
+      if (selected > today) {
+        setErrors(prev => ({
+          ...prev,
+          Passport_start_date: "Pasaport başlangıç tarihi bugünden ileri olamaz."
+        }));
+        return;
+      }
+
+      // 🔴 Çok eski tarih kontrolü
+      if (selected < "1900-01-01") {
+        setErrors(prev => ({
+          ...prev,
+          Passport_start_date: "Lütfen geçerli bir tarih giriniz."
+        }));
+        return;
+      }
+
+      // ✔ Hata yok → temizle
+      setErrors(prev => ({ ...prev, Passport_start_date: "" }));
+    }}
+  />
+
+  {errors.Passport_start_date && (
+    <p className="text-red-500 text-xs mt-1">{errors.Passport_start_date}</p>
+  )}
+</div>
+
 
       {/* Pasaport Bitiş Tarihi */}
-      <div>
-        <label className="text-sm font-medium">Pasaport Bitiş Tarihi</label>
-        <input
-          type="date"
-          name="Passport_end_date"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
-          value={form.steps[3].Passport_end_date || ""}
-          onChange={(e) => updateField(3, "Passport_end_date", e.target.value)}
-        />
-      </div>
+<div>
+  <label className="text-sm font-medium">Pasaport Bitiş Tarihi</label>
+  <input
+    type="date"
+    name="Passport_end_date"
+    disabled={!form.steps[3].Passport_start_date}   // başlangıç yoksa seçilemez
+    min={
+      form.steps[3].Passport_start_date 
+        ? form.steps[3].Passport_start_date
+        : "1900-01-01"
+    }
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+      ${
+        errors.Passport_end_date
+          ? "border-red-500"
+          : "border-gray-300 focus:ring-2 focus:ring-blue-500"
+      }
+      ${!form.steps[3].Passport_start_date ? "opacity-50 cursor-not-allowed" : ""}
+    `}
+    value={form.steps[3].Passport_end_date || ""}
+    onChange={(e) => {
+      updateField(3, "Passport_end_date", e.target.value); // sadece yazılanı kaydet
+    }}
+    onBlur={(e) => {
+      const endDate = e.target.value;
+      const startDate = form.steps[3].Passport_start_date;
+
+      // tarih tam yazılmadıysa validation yapma
+      if (endDate.length < 10) return;
+
+      // Başlangıç seçilmemişse validation yapılmaz
+      if (!startDate) return;
+
+      // 🔴 Bitiş tarihi başlangıçtan ÖNCE olamaz
+      if (endDate < startDate) {
+        setErrors((prev) => ({
+          ...prev,
+          Passport_end_date:
+            "Pasaport bitiş tarihi, başlangıç tarihinden önce olamaz.",
+        }));
+        return;
+      }
+
+      // 🔴 Bitiş tarihi başlangıç tarihiyle AYNI da olamaz
+      if (endDate === startDate) {
+        setErrors((prev) => ({
+          ...prev,
+          Passport_end_date:
+            "Pasaport bitiş tarihi, başlangıç tarihinden büyük olmalıdır.",
+        }));
+        return;
+      }
+
+      // 🔴 Bitiş tarihi çok eski olamaz
+      if (endDate < "1900-01-01") {
+        setErrors((prev) => ({
+          ...prev,
+          Passport_end_date: "Lütfen geçerli bir tarih giriniz.",
+        }));
+        return;
+      }
+
+      // ✔ Hata yok
+      setErrors((prev) => ({ ...prev, Passport_end_date: "" }));
+    }}
+  />
+
+  {errors.Passport_end_date && (
+    <p className="text-red-500 text-xs mt-1">{errors.Passport_end_date}</p>
+  )}
+</div>
+
 
       {/* Pasaportu Veren Kurum */}
       <div>
-        <label className="text-sm font-medium">Pasaportu Veren Kurum</label>
+        <label className="text-sm font-medium">Pasaportu Veren Makam(Pasaportta yazan)</label>
         <input
           name="passport_issuing_authority"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+           className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+      ${errors.tc_card_end_date ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
           value={form.steps[3].passport_issuing_authority || ""}
            onChange={(e) => {
                 if (isMobile) {
@@ -1190,19 +1574,75 @@ const visibleSteps = Array.from({length: end - start +1}, (_, i) => start + i);
             }}
           placeholder="Örn: Nüfus Müdürlüğü"
         />
+          {errors.passport_issuing_authority && (
+    <p className="text-red-500 text-xs mt-1">{errors.passport_issuing_authority}</p>
+  )}
       </div>
 
       {/* T.C. Kimlik Kartı Bitiş Tarihi */}
-      <div>
-        <label className="text-sm font-medium">T.C. Kimlik Kartı Bitiş Tarihi</label>
-        <input
-          type="date"
-          name="tc_card_end_date"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
-          value={form.steps[3].tc_card_end_date || ""}
-          onChange={(e) => updateField(3, "tc_card_end_date", e.target.value)}
-        />
-      </div>
+<div>
+  <label className="text-sm font-medium">T.C. Kimlik Kartı Bitiş Tarihi</label>
+  <input
+    type="date"
+    name="tc_card_end_date"
+    min={new Date().toISOString().split("T")[0]}  // bugünden öncesi kapalı
+    max="2040-01-01"                              // saçma ileri tarihler engelleniyor (istersen değiştiririz)
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+      ${errors.tc_card_end_date ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+    value={form.steps[3].tc_card_end_date || ""}
+    onChange={(e) => {
+      // yazarken validation yok — sadece değer kaydedilir
+      updateField(3, "tc_card_end_date", e.target.value);
+    }}
+    onBlur={(e) => {
+      const selected = e.target.value;
+      const today = new Date().toISOString().split("T")[0];
+
+      if (selected.length < 10) return;  // tarih tam değilse validation yok
+
+      // 🔴 1900 öncesi saçma tarih
+      if (selected < "1900-01-01") {
+        setErrors(prev => ({
+          ...prev,
+          tc_card_end_date: "Lütfen geçerli bir tarih giriniz."
+        }));
+        return;
+      }
+
+      // 🔴 Bugünden önce olamaz
+      if (selected < today) {
+        setErrors(prev => ({
+          ...prev,
+          tc_card_end_date: "Kimlik kartı bitiş tarihi bugünden önce olamaz."
+        }));
+        return;
+      }
+
+      // 🔴 Çok ileri (20–30 yıl sonrası) tarihler engellensin
+      // İstersen bu kuralı kaldırabiliriz
+      const year = parseInt(selected.split("-")[0]);
+      const currentYear = new Date().getFullYear();
+      if (year - currentYear > 15) {
+        setErrors(prev => ({
+          ...prev,
+          tc_card_end_date: "Lütfen mantıklı bir bitiş tarihi seçiniz."
+        }));
+        return;
+      }
+
+      // ✔ Hata yok → temizle
+      setErrors(prev => ({
+        ...prev,
+        tc_card_end_date: ""
+      }));
+    }}
+  />
+
+  {errors.tc_card_end_date && (
+    <p className="text-red-500 text-xs mt-1">{errors.tc_card_end_date}</p>
+  )}
+</div>
+
 
     </div>
   </section>
@@ -1339,13 +1779,13 @@ const visibleSteps = Array.from({length: end - start +1}, (_, i) => start + i);
             <label className="text-sm font-medium">Kaç yıldır çalışıyorsunuz?</label> }       
 
             <input
-              type="number"
-              min="0"
+              type="text"
+              // min="0"
               name="work_year"
               className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
               value={form.steps[4].work_year || ""}
               onChange={(e) => updateField(4, "work_year",normalizeInput( e.target.value))}
-              placeholder="Örn: 5"
+              placeholder="Örn: 5 Yıl"
             />
           </div>
 
@@ -1544,7 +1984,7 @@ const visibleSteps = Array.from({length: end - start +1}, (_, i) => start + i);
           <div>
             <label className="text-sm font-medium">Kaç yıldır okuyor?</label>
             <input
-              type="number"
+              type="text"
               min="0"
               name="school_year"
               className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
@@ -2077,8 +2517,30 @@ const visibleSteps = Array.from({length: end - start +1}, (_, i) => start + i);
 
 
 
-          <div className="text-sm text-gray-500 mt-2">{statusMessage}</div>
+     
         </form>
+{statusMessage && (
+  <div
+    className="
+      fixed top-4 right-4
+      z-50
+      px-4 py-3
+      rounded-xl
+      shadow-xl
+      backdrop-blur-md
+      bg-white/90 
+      text-gray-800 
+      border border-gray-200/50 
+      animate-toast-slide
+      pointer-events-none
+      max-w-xs
+    "
+  >
+    {statusMessage}
+  </div>
+)}
+
+
       </div>
       <AydinlatmaFormu   open={openInfo}
         onClose={() => setOpenInfo(false)} />

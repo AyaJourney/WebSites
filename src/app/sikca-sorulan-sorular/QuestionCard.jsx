@@ -11,10 +11,10 @@ const QuestionCard = () => {
   };
 
   // Tüm kategorileri al
-  const types = [...new Set(questionsAndAnswers.map((q) => q.type))];
+  const types = [...new Set(questionsAndAnswers?.map((q) => q.type))];
 
   // Seçilen kategoriye göre filtrele
-  const filteredQuestions = questionsAndAnswers.filter(
+  const filteredQuestions = questionsAndAnswers?.filter(
     (q) => q.type === selectedType
   );
 
@@ -22,7 +22,7 @@ const QuestionCard = () => {
     <div className="w-full py-10">
       {/* Kategori Seçici */}
       <div className="flex flex-wrap justify-center gap-4 mb-8">
-        {types.map((type) => (
+        {types?.map((type) => (
           <button
             key={type}
             onClick={() => setSelectedType(type)}
