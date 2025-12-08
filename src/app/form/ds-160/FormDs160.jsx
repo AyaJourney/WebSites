@@ -1810,14 +1810,14 @@ onChange={(e) => {
                     updateField(7, "languages", e.target.value);
                 } else {
                     // Desktop/Diğer: Normalizasyon YAP
-                    updateField(7, "languages", normalizeInputr(e.target.value));
+                    updateField(7, "languages", normalizeInput(e.target.value));
                 }
             }}
             
             // Eğer **Mobilse** onBlur'da normalizasyonu uygula
             onBlur={(e) => {
                 if (isMobile) {
-                    const normalizedValue = normalizeInputr(e.target.value);
+                    const normalizedValue = normalizeInput(e.target.value);
                     updateField(7, "languages", normalizedValue);
                 }
             }}
