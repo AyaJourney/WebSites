@@ -2880,9 +2880,7 @@ onBlur={(e) => {
   )} 
 
 </div>
-     
-        </form>
-{statusMessage && (
+     {statusMessage && (
   <div
     className="
       fixed top-4 right-4
@@ -2902,6 +2900,8 @@ onBlur={(e) => {
     {statusMessage}
   </div>
 )}
+        </form>
+
 
 
       </div>
