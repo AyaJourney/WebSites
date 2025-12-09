@@ -87,12 +87,7 @@ function HoverCard({ item }) {
           duration: 0.45,
           ease: "easeOut",
         }}
-        className="
-          hidden md:flex relative mx-auto bg-white
-          border border-gray-200 shadow-md
-          flex-col items-center justify-center
-          cursor-pointer select-none
-        "
+        className="hidden md:flex relative mx-auto bg-white border border-gray-200 shadow-md flex-col items-center justify-center cursor-pointer select-none"
       >
         {/* İKON */}
         <motion.div

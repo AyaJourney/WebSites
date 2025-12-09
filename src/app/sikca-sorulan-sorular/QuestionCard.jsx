@@ -43,7 +43,7 @@ const QuestionCard = () => {
         {filteredQuestions.map((item) => (
           <div
             key={item.id}
-            className="bg-white  border border-gray-200 dark:border-zinc-700 rounded-lg shadow-md overflow-hidden transition-all duration-300"
+            className="bg-white  border border-gray-200  rounded-lg shadow-md overflow-hidden transition-all duration-300"
           >
            
             {/* Soru Başlığı */}
@@ -51,13 +51,13 @@ const QuestionCard = () => {
               onClick={() => toggleOpen(item.id)}
               className="cursor-pointer w-full px-6 py-4 flex justify-between items-center hover:bg-gray-50  transition-colors"
             >
-              <h3 className="text-left text-gray-900 dark:text-gray-100 font-semibold text-base sm:text-lg">
+              <h3 className="text-left text-gray-900  font-semibold text-base sm:text-lg">
                 {item.question}
               </h3>
               <div className="flex-shrink-0 ml-4">
                 {openId === item.id ? (
                   <svg
-                    className="w-6 h-6 text-blue-600 dark:text-blue-400 transition-transform"
+                    className="w-6 h-6 text-blue-600  transition-transform"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -71,7 +71,7 @@ const QuestionCard = () => {
                   </svg>
                 ) : (
                   <svg
-                    className="w-6 h-6 text-gray-400 dark:text-gray-500 transition-transform"
+                    className="w-6 h-6 text-gray-400  transition-transform"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -89,8 +89,8 @@ const QuestionCard = () => {
 
             {/* Cevap - Açıldığında Gösterilecek */}
             {openId === item.id && (
-              <div className="border-t border-gray-200 dark:border-zinc-700 px-6 py-4 bg-gray-50 ">
-                <p className="text-gray-700 dark:text-gray-300 text-base leading-relaxed">
+              <div className="border-t border-gray-200  px-6 py-4 bg-gray-50 ">
+                <p className="text-gray-700  text-base leading-relaxed">
                   {item.answer}
                 </p>
               </div>

@@ -13,13 +13,13 @@ const QuestionModal = ({ isOpen, onClose }) => {
         />
 
       {/* Modal İçeriği */}
-      <div className="relative bg-white dark:bg-zinc-900 rounded-lg shadow-2xl w-full max-w-xl md:max-w-2xl lg:max-w-3xl z-50 max-h-[90vh] overflow-auto">
+      <div className="relative bg-white  rounded-lg shadow-2xl w-full max-w-xl md:max-w-2xl lg:max-w-3xl z-50 max-h-[90vh] overflow-auto">
 
         {/* Kapatma ikonu - sağ üstte */}
         <button
           onClick={onClose}
           aria-label="Kapat"
-          className="cursor-pointer absolute right-3 top-3 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 z-50"
+          className="cursor-pointer absolute right-3 top-3 text-gray-500  hover:text-gray-700  transition-colors p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 z-50"
         >
           <svg
             className="w-5 h-5 md:w-6 md:h-6"

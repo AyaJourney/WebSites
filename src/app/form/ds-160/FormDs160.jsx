@@ -323,11 +323,13 @@ const goNext = () => {
       return { ...prev, currentStep: prevStep };
     });
   };
-
-  const jumpTo = (step) => {
+const jumpTo = (step) => {
+     console.log(errors)
+     if (Object.keys(errors).length === 0) {
     setForm((prev) => ({ ...prev, currentStep: step }));
-  };
+}
 
+  };
 const updateField = (step, field, value) => {
   setForm(prev => ({
     ...prev,

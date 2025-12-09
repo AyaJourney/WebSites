@@ -38,7 +38,7 @@ return (
 
     {/* ⭐ KAZANÇ FIRSATI BADGE ⭐ */}
 <div
-  className="absolute z-30 rounded-full px-6 py-8 text-[#2a2a2a] font-semiboldtext-md sm:text-xl md:text-2xlwhitespace-nowrapshadow-[0_0_12px_rgba(255,180,40,0.45)]backdrop-blur-mdflex items-centerbg-gradient-to-r from-amber-300 via-yellow-300 to-orange-300 /* Mobil: üst orta */top-6 left-1/2 -translate-x-1/2 /* Tablet & Desktop: sağ üst */ md:top-10 md:left-auto md:right-10 md:-translate-x-0 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,170,40,0.6)] "
+  className="absolute z-30 rounded-full px-6 py-8 text-[#2a2a2a] font-semiboldtext-md sm:text-xl md:text-2xlwhite space-nowrap shadow-[0_0_12px_rgba(255,180,40,0.45)] backdrop-blur-md flex items-center bg-gradient-to-r from-amber-300 via-yellow-300 to-orange-300 top-6 left-1/2 -translate-x-1/2 md:top-10 md:left-auto md:right-10 md:-translate-x-0 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,170,40,0.6)] "
 >
   <span className="font-bold tracking-wide">
     Aylık 4500$’a Kadar Kazanç Fırsatı!

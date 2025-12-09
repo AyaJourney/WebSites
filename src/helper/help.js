@@ -307,6 +307,198 @@ export const questionsAndAnswers = [
     "type": "Amerika",
     "question": "Amerika dijital göçebe vizesi sunuyor mu?",
     "answer": "ABD’nin resmi bir dijital göçebe vizesi bulunmamaktadır. Uzaktan çalışan kişilere özel uzun süreli kalış hakkı tanıyan bir vize programı mevcut değildir."
+  },
+   {
+    "id": 39,
+    "type": "İngiltere",
+    "question": "İngiltere turist vizeleri hangi sürelerde verilir?",
+    "answer": "İngiltere turist vizeleri genellikle 6 ay, 2 yıl, 5 yıl ve 10 yıllık olarak verilir."
+  },
+  {
+    "id": 40,
+    "type": "İngiltere",
+    "question": "İngiltere vize ücretleri ne kadardır?",
+    "answer": "Yaklaşık olarak 6 ay: 173 USD, 2 yıl: 647 USD, 5 yıl: 1155 USD, 10 yıl: 1443 USD’dir. Ücretler kur değişimine göre farklılık gösterebilir."
+  },
+  {
+    "id": 41,
+    "type": "İngiltere",
+    "question": "İngiltere vizesi başvurularında mülakat var mı?",
+    "answer": "Hayır, İngiltere vize başvuruları mülakatsızdır. Fotoğrafınız vize merkezinde çekilir."
+  },
+  {
+    "id": 42,
+    "type": "İngiltere",
+    "question": "İngiltere vizesi kaç günde sonuçlanır?",
+    "answer": "Çoğunlukla 2 hafta içinde sonuçlanır ancak bazı durumlarda 3 haftaya kadar uzayabilir."
+  },
+  {
+    "id": 43,
+    "type": "İngiltere",
+    "question": "İngiltere vizesi ile İrlanda’ya gidebilir miyim?",
+    "answer": "Evet, ancak sadece İngiltere üzerinden giriş yapmanız şartıyla İrlanda’ya seyahat edebilirsiniz."
+  },
+  {
+    "id": 44,
+    "type": "İngiltere",
+    "question": "Türkiye’de hangi şehirlerden İngiltere vizesi başvurusu yapılabilir?",
+    "answer": "İstanbul, Ankara, Bursa, Antalya, Adana ve İzmir’den başvuru yapılabilir."
+  },
+  {
+    "id": 45,
+    "type": "İngiltere",
+    "question": "İstanbul ve Ankara dışından yapılan başvurularda ek ücret var mı?",
+    "answer": "Evet, İstanbul ve Ankara dışındaki başvurularda yaklaşık 76,5 Pound ek hizmet ücreti alınmaktadır."
+  },
+  {
+    "id": 46,
+    "type": "İngiltere",
+    "question": "İngiltere vizesi için 'pasaport bende kalsın' hizmeti var mı?",
+    "answer": "Evet vardır, ancak tüm ek hizmetler gibi bu da ücretlidir."
+  },
+  {
+    "id": 47,
+    "type": "İngiltere",
+    "question": "İngiltere vizesi başvuru süreci nasıldır?",
+    "answer": "Süreç şu şekildedir: 1) Ön görüşme ve değerlendirme, 2) Form ve evrak listesi, 3) Belgelerin sisteme yüklenmesi, 4) Randevuya giriş ve takip."
+  },
+  {
+    "id": 48,
+    "type": "İngiltere",
+    "question": "AYA Journey’in danışmanlık ücreti ne kadardır?",
+    "answer": "Yetişkinler için 400 USD + KDV, 14 yaş altı çocuklar için 200 USD'dir. Konsolosluk harcı dahil değildir."
+  },
+  {
+    "id": 49,
+    "type": "İngiltere",
+    "question": "AYA Journey vize garantisi veriyor mu?",
+    "answer": "Hayır. AYA Journey hiçbir şekilde vize garantisi vermez."
+  },
+  {
+    "id": 50,
+    "type": "İngiltere",
+    "question": "İngiltere vizesi için gerekli belgeler nelerdir?",
+    "answer": "Pasaport, 3 aylık banka dökümü, vukuatlı nüfus kayıt örneği, kimlik, ikametgah, ek gelir belgeleri, eski-yeni pasaportlar ve durumunuza bağlı ek evraklardır."
+  },
+  {
+    "id": 51,
+    "type": "İngiltere",
+    "question": "Çalışanlar İngiltere vize başvurusu için hangi belgeleri sunmalıdır?",
+    "answer": "SGK hizmet dökümü, işe giriş bildirgesi, izin yazısı, 3 maaş bordrosu ve şirket evrakları gerekir."
+  },
+  {
+    "id": 52,
+    "type": "İngiltere",
+    "question": "Şirket sahipleri için gerekli İngiltere vize evrakları nelerdir?",
+    "answer": "Şirket belgeleri, SGK hizmet dökümü ve işletmeye dair resmi dokümanlardır."
+  },
+  {
+    "id": 53,
+    "type": "İngiltere",
+    "question": "Emekliler için İngiltere vize evrakları nelerdir?",
+    "answer": "SGK hizmet dökümü ve emekli aylık belgesidir."
+  },
+  {
+    "id": 54,
+    "type": "İngiltere",
+    "question": "Öğrenciler İngiltere vizesi için hangi belgeleri sunmalıdır?",
+    "answer": "Öğrenci belgesi gereklidir."
+  },
+  {
+    "id": 55,
+    "type": "İngiltere",
+    "question": "Sponsorlu İngiltere vize başvurusu için hangi belgeler gereklidir?",
+    "answer": "Sponsor dilekçesi, sponsorun iş evrakları, banka dökümü ve varsa tapu/araç ruhsatı."
+  },
+  {
+    "id": 56,
+    "type": "İngiltere",
+    "question": "Aile veya arkadaş ziyareti için hangi ek belge gerekir?",
+    "answer": "Davet eden kişinin kimlik bilgileri gereklidir."
+  },
+  {
+    "id": 57,
+    "type": "İngiltere",
+    "question": "İngiltere vizesinde en sık yapılan hata nedir?",
+    "answer": "Eksik veya tutarsız belgeler sunmaktır."
+  },
+  {
+    "id": 58,
+    "type": "İngiltere",
+    "question": "Banka hareketlerinde hangi durumlar İngiltere vizesinde sorun oluşturabilir?",
+    "answer": "Son dakika yüksek para girişleri, düzensiz hesap hareketleri ve seyahatle uyumsuz bakiye sorun oluşturabilir."
+  },
+  {
+    "id": 59,
+    "type": "İngiltere",
+    "question": "Niyet mektubunun önemi nedir?",
+    "answer": "Seyahat amacı ve finansal durumun açıklanması gerektiği için oldukça önemlidir."
+  },
+  {
+    "id": 60,
+    "type": "İngiltere",
+    "question": "İş belgelerindeki tutarsızlık İngiltere vizesini etkiler mi?",
+    "answer": "Evet, izin yazısı ve maaş bilgileri ile form uyumlu olmalıdır."
+  },
+  {
+    "id": 61,
+    "type": "İngiltere",
+    "question": "İngiltere vizesi başvurusunda yanlış bilgi vermek sonuçları etkiler mi?",
+    "answer": "Evet. Yanlış veya eksik bilgi ret sebebidir."
+  },
+  {
+    "id": 62,
+    "type": "İngiltere",
+    "question": "İngiltere Schengen vizesi midir?",
+    "answer": "Hayır. İngiltere Schengen bölgesinde değildir ve kendine ait vizesi vardır."
+  },
+  {
+    "id": 63,
+    "type": "İngiltere",
+    "question": "Yeşil pasaportla İngiltere’ye vizesiz gidilir mi?",
+    "answer": "Hayır, yeşil pasaport sahipleri de vize almak zorundadır."
+  },
+  {
+    "id": 64,
+    "type": "İngiltere",
+    "question": "İngiltere vizeleri multi-entry midir?",
+    "answer": "Evet, İngiltere vizeleri çok girişlidir."
+  },
+  {
+    "id": 65,
+    "type": "İngiltere",
+    "question": "İngiltere'de en fazla kaç gün kalabilirim?",
+    "answer": "Tek girişte maksimum 6 ay kalabilirsiniz."
+  },
+  {
+    "id": 66,
+    "type": "İngiltere",
+    "question": "İngiltere vizesi için banka hesabında ne kadar para olmalı?",
+    "answer": "Seyahat masraflarınızı karşılayacak ve dönüşte de yeterli bakiye kalacak bir tutar olmalıdır."
+  },
+  {
+    "id": 67,
+    "type": "İngiltere",
+    "question": "Hesabıma son dakika para girişi oldu, sorun olur mu?",
+    "answer": "Evet, genellikle şüpheli görünür. Paranın en az 1 ay önce yatırılması önerilir."
+  },
+  {
+    "id": 68,
+    "type": "İngiltere",
+    "question": "Hiç yurtdışına çıkmadım, İngiltere vizesi alabilir miyim?",
+    "answer": "Evet, boş pasaportla da İngiltere vizesi alınabilir."
+  },
+  {
+    "id": 69,
+    "type": "İngiltere",
+    "question": "Başvurumu iptal edersem ücret iadesi alabilir miyim?",
+    "answer": "Evet teknik olarak mümkündür ancak geri ödeme süreci oldukça uzun sürebilir."
+  },
+  {
+    "id": 70,
+    "type": "İngiltere",
+    "question": "İngiltere vizesi reddine itiraz hakkım var mı?",
+    "answer": "Hayır. Standart ziyaretçi vizelerinde itiraz hakkı yoktur."
   }
 ];
 

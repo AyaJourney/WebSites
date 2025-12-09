@@ -105,3 +105,190 @@
 2025-12-08T14:35:10.790Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"2025-12-08","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"CANKAYA","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"4 YIL","maidenName":"","past_addresses":"","residence_months_total":48},"2":{"boolean_child":"HAYIR","child_count":"1","mother_full_name":"IPEK ...
 2025-12-08T14:36:20.648Z - [uk] attempt=1 status=200 response={"success":true}
 2025-12-08T14:36:20.649Z - [uk] success attempt=1
+2025-12-09T02:33:00.705Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765247580695.json
+2025-12-09T02:33:00.709Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T02:33:00.709Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"MAMAK","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"5 YIL","maidenName":"","past_addresses":"","residence_months_total":60},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMINE PA...
+2025-12-09T02:34:27.242Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T02:34:27.245Z - [uk] success attempt=1
+2025-12-09T02:36:34.197Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765247794191.json
+2025-12-09T02:36:34.199Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T02:36:34.199Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"MAMAK","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"5 YIL","maidenName":"","past_addresses":"","residence_months_total":60},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMINE PA...
+2025-12-09T02:37:50.345Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765247870339.json
+2025-12-09T02:37:50.347Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T02:37:50.347Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"MAMAK","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"5 YIL","maidenName":"","past_addresses":"","residence_months_total":60},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMINE PA...
+2025-12-09T02:38:06.737Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T02:38:06.744Z - [uk] success attempt=1
+2025-12-09T02:38:58.685Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765247938682.json
+2025-12-09T02:38:58.686Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T02:38:58.686Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"MAMAK","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"5 YIL","maidenName":"","past_addresses":"","residence_months_total":60},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMINE PA...
+2025-12-09T02:39:54.463Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T02:39:54.465Z - [uk] success attempt=1
+2025-12-09T02:40:21.788Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T02:40:21.789Z - [uk] success attempt=1
+2025-12-09T02:44:42.687Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765248282681.json
+2025-12-09T02:44:42.689Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T02:44:42.690Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"MAMAK","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"5 YIL","maidenName":"","past_addresses":"","residence_months_total":60},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMINE PA...
+2025-12-09T02:46:08.373Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T02:46:08.375Z - [uk] success attempt=1
+2025-12-09T07:49:42.081Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765266582074.json
+2025-12-09T07:49:42.082Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T07:49:42.082Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"MAMAK","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"5 YIL","maidenName":"","past_addresses":"","residence_months_total":60},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMINE PA...
+2025-12-09T07:51:10.015Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T07:51:10.017Z - [uk] success attempt=1
+2025-12-09T07:52:25.492Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765266745484.json
+2025-12-09T07:52:25.493Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T07:52:25.494Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"MAMAK","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"5 YIL","maidenName":"","past_addresses":"","residence_months_total":60},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMINE PA...
+2025-12-09T07:53:47.548Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T07:53:47.550Z - [uk] success attempt=1
+2025-12-09T08:57:04.754Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765270624741.json
+2025-12-09T08:57:04.755Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T08:57:04.756Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"ANKARA","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"3 YIL","maidenName":"","past_addresses":"","residence_months_total":36},"2":{"boolean_child":"HAYIR","child_count":"","mother_full_name":"EMINE",...
+2025-12-09T08:58:15.641Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T08:58:15.642Z - [uk] success attempt=1
+2025-12-09T10:33:41.978Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765276421972.json
+2025-12-09T10:33:41.981Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T10:33:41.981Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"MAMAK","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"5 YIL","maidenName":"","past_addresses":"","residence_months_total":60},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMINE","...
+2025-12-09T10:33:49.183Z - [uk] attempt=1 status=500 response={"success":false,"error":"Cannot access 'h1' before initialization"}
+2025-12-09T10:33:49.187Z - [uk] attempt 2 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"MAMAK","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"5 YIL","maidenName":"","past_addresses":"","residence_months_total":60},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMINE","...
+2025-12-09T10:33:54.924Z - [uk] attempt=2 status=500 response={"success":false,"error":"Cannot access 'h1' before initialization"}
+2025-12-09T10:33:54.926Z - [uk] MOVED TO FAILED: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\failed\form_1765276421972.json
+2025-12-09T10:37:02.495Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765276622488.json
+2025-12-09T10:37:02.496Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T10:37:02.496Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"MAMAK","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"5 YIL","maidenName":"","past_addresses":"","residence_months_total":60},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMINE","...
+2025-12-09T10:37:26.438Z - [uk] attempt=1 status=500 response={"success":false,"error":"formatDatePretty is not defined"}
+2025-12-09T10:37:26.440Z - [uk] attempt 2 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"MAMAK","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"5 YIL","maidenName":"","past_addresses":"","residence_months_total":60},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMINE","...
+2025-12-09T10:37:50.275Z - [uk] attempt=2 status=500 response={"success":false,"error":"formatDatePretty is not defined"}
+2025-12-09T10:37:50.276Z - [uk] MOVED TO FAILED: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\failed\form_1765276622488.json
+2025-12-09T10:38:44.959Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765276724952.json
+2025-12-09T10:38:44.961Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T10:38:44.961Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"MAMAK","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"5 YIL","maidenName":"","past_addresses":"","residence_months_total":60},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMINE","...
+2025-12-09T10:40:25.397Z - [uk] attempt=1 status=500 response={"success":false,"error":"Cannot access 's1' before initialization"}
+2025-12-09T10:40:25.398Z - [uk] attempt 2 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"MAMAK","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"5 YIL","maidenName":"","past_addresses":"","residence_months_total":60},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMINE","...
+2025-12-09T10:42:16.651Z - [uk] attempt=2 status=500 response={"success":false,"error":"Cannot access 's1' before initialization"}
+2025-12-09T10:42:16.653Z - [uk] MOVED TO FAILED: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\failed\form_1765276724952.json
+2025-12-09T10:43:19.305Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765276999297.json
+2025-12-09T10:43:19.308Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T10:43:19.308Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"MAMAK","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"5 YIL","maidenName":"","past_addresses":"","residence_months_total":60},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMINE","...
+2025-12-09T10:43:40.729Z - [uk] attempt=1 status=500 response={"success":false,"error":"formatDatePretty is not defined"}
+2025-12-09T10:43:40.731Z - [uk] attempt 2 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"MAMAK","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"5 YIL","maidenName":"","past_addresses":"","residence_months_total":60},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMINE","...
+2025-12-09T10:44:03.001Z - [uk] attempt=2 status=500 response={"success":false,"error":"formatDatePretty is not defined"}
+2025-12-09T10:44:03.003Z - [uk] MOVED TO FAILED: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\failed\form_1765276999297.json
+2025-12-09T10:44:52.339Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765277092314.json
+2025-12-09T10:44:52.340Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T10:44:52.340Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"MAMAK","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"5 YIL","maidenName":"","past_addresses":"","residence_months_total":60},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMINE","...
+2025-12-09T10:46:58.698Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T10:46:58.699Z - [uk] success attempt=1
+2025-12-09T11:08:12.973Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765278492959.json
+2025-12-09T11:08:12.975Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T11:08:12.976Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"MAMAK","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"5 YIL","maidenName":"","past_addresses":"","residence_months_total":60},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMINE","...
+2025-12-09T11:09:59.966Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T11:09:59.967Z - [uk] success attempt=1
+2025-12-09T11:11:50.264Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765278710258.json
+2025-12-09T11:11:50.265Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T11:11:50.265Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"MAMAK","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"5 YIL","maidenName":"","past_addresses":"","residence_months_total":60},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMINE","...
+2025-12-09T11:13:49.651Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T11:13:49.656Z - [uk] success attempt=1
+2025-12-09T11:15:07.146Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765278907140.json
+2025-12-09T11:15:07.147Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T11:15:07.147Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"MAMAK","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"5 YIL","maidenName":"","past_addresses":"","residence_months_total":60},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMINE","...
+2025-12-09T11:16:59.861Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T11:16:59.863Z - [uk] success attempt=1
+2025-12-09T11:18:28.792Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765279108786.json
+2025-12-09T11:18:28.793Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T11:18:28.794Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"MAMAK","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"5 YIL","maidenName":"","past_addresses":"","residence_months_total":60},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMINE","...
+2025-12-09T11:20:31.623Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T11:20:31.624Z - [uk] success attempt=1
+2025-12-09T11:22:39.689Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765279359683.json
+2025-12-09T11:22:39.690Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T11:22:39.690Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"MAMAK","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"5 YIL","maidenName":"","past_addresses":"","residence_months_total":60},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMINE","...
+2025-12-09T11:24:10.137Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T11:24:10.139Z - [uk] success attempt=1
+2025-12-09T11:26:04.765Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765279564758.json
+2025-12-09T11:26:04.766Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T11:26:04.766Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"MAMAK","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"5 YIL","maidenName":"","past_addresses":"","residence_months_total":60},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMINE","...
+2025-12-09T11:27:38.630Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T11:27:38.633Z - [uk] success attempt=1
+2025-12-09T11:32:58.503Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765279978495.json
+2025-12-09T11:32:58.504Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T11:32:58.505Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"MAMAK","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"5 YIL","maidenName":"","past_addresses":"","residence_months_total":60},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMINE","...
+2025-12-09T11:33:26.177Z - [uk] attempt=1 status=500 response={"success":false,"error":"photoBase64 is not defined"}
+2025-12-09T11:33:26.178Z - [uk] attempt 2 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"MAMAK","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"5 YIL","maidenName":"","past_addresses":"","residence_months_total":60},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMINE","...
+2025-12-09T11:33:48.503Z - [uk] attempt=2 status=500 response={"success":false,"error":"photoBase64 is not defined"}
+2025-12-09T11:33:48.504Z - [uk] MOVED TO FAILED: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\failed\form_1765279978495.json
+2025-12-09T11:39:06.232Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765280346226.json
+2025-12-09T11:39:06.234Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T11:39:06.235Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"2025-12-09","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"ASDASDASD","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"4 YIL","maidenName":"","past_addresses":"","residence_months_total":48},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMIN...
+2025-12-09T11:40:34.443Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T11:40:34.447Z - [uk] success attempt=1
+2025-12-09T11:42:45.027Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765280565015.json
+2025-12-09T11:42:45.028Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T11:42:45.028Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"2025-12-09","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"ASDASDASD","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"4 YIL","maidenName":"","past_addresses":"","residence_months_total":48},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMIN...
+2025-12-09T11:44:46.754Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T11:44:46.760Z - [uk] success attempt=1
+2025-12-09T11:46:03.808Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765280763801.json
+2025-12-09T11:46:03.809Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T11:46:03.809Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"2025-12-09","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"ASDASDASD","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"4 YIL","maidenName":"","past_addresses":"","residence_months_total":48},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMIN...
+2025-12-09T11:48:05.474Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T11:48:05.481Z - [uk] success attempt=1
+2025-12-09T11:50:17.994Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765281017988.json
+2025-12-09T11:50:17.995Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T11:50:17.996Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"2025-12-09","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"ASDASDASD","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"4 YIL","maidenName":"","past_addresses":"","residence_months_total":48},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMIN...
+2025-12-09T11:50:26.294Z - [uk] attempt=1 status=500 response={"success":false,"error":"h3 is not defined"}
+2025-12-09T11:50:26.300Z - [uk] attempt 2 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"2025-12-09","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"ASDASDASD","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"4 YIL","maidenName":"","past_addresses":"","residence_months_total":48},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMIN...
+2025-12-09T11:50:36.423Z - [uk] attempt=2 status=500 response={"success":false,"error":"h3 is not defined"}
+2025-12-09T11:50:36.427Z - [uk] MOVED TO FAILED: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\failed\form_1765281017988.json
+2025-12-09T11:51:24.043Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765281084036.json
+2025-12-09T11:51:24.044Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T11:51:24.045Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"2025-12-09","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"ASDASDASD","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"4 YIL","maidenName":"","past_addresses":"","residence_months_total":48},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMIN...
+2025-12-09T11:52:52.947Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T11:52:52.952Z - [uk] success attempt=1
+2025-12-09T11:55:15.635Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765281315628.json
+2025-12-09T11:55:15.636Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T11:55:15.636Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"2025-12-09","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"ASDASDASD","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"4 YIL","maidenName":"","past_addresses":"","residence_months_total":48},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMIN...
+2025-12-09T11:57:19.720Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T11:57:19.728Z - [uk] success attempt=1
+2025-12-09T12:00:05.953Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765281605946.json
+2025-12-09T12:00:05.955Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T12:00:05.956Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"2025-12-09","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"ASDASDASD","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"4 YIL","maidenName":"","past_addresses":"","residence_months_total":48},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMIN...
+2025-12-09T12:01:48.032Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T12:01:48.037Z - [uk] success attempt=1
+2025-12-09T12:02:31.443Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765281751437.json
+2025-12-09T12:02:31.444Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T12:02:31.444Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"2025-12-09","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"ASDASDASD","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"4 YIL","maidenName":"","past_addresses":"","residence_months_total":48},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMIN...
+2025-12-09T12:04:13.077Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T12:04:13.081Z - [uk] success attempt=1
+2025-12-09T12:09:14.927Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765282154918.json
+2025-12-09T12:09:14.929Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T12:09:14.930Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"2025-12-09","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"ASDASDASD","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"4 YIL","maidenName":"","past_addresses":"","residence_months_total":48},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMIN...
+2025-12-09T12:11:01.328Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T12:11:01.335Z - [uk] success attempt=1
+2025-12-09T12:12:02.576Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765282322552.json
+2025-12-09T12:12:02.577Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T12:12:02.577Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"2025-12-09","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"ASDASDASD","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"4 YIL","maidenName":"","past_addresses":"","residence_months_total":48},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMIN...
+2025-12-09T12:13:34.739Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T12:13:34.743Z - [uk] success attempt=1
+2025-12-09T12:14:40.180Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765282480172.json
+2025-12-09T12:14:40.182Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T12:14:40.183Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"2025-12-09","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"ASDASDASD","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"4 YIL","maidenName":"","past_addresses":"","residence_months_total":48},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMIN...
+2025-12-09T12:16:19.765Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T12:16:19.776Z - [uk] success attempt=1
+2025-12-09T12:17:24.959Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765282644952.json
+2025-12-09T12:17:24.960Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T12:17:24.960Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"2025-12-09","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"ASDASDASD","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"4 YIL","maidenName":"","past_addresses":"","residence_months_total":48},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMIN...
+2025-12-09T12:19:31.676Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T12:19:31.679Z - [uk] success attempt=1
+2025-12-09T12:20:35.688Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765282835682.json
+2025-12-09T12:20:35.689Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T12:20:35.689Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","partner_full_name":"","birthDate":"2025-12-09","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"ASDASDASD","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"4 YIL","maidenName":"","past_addresses":"","residence_months_total":48},"2":{"boolean_child":"EVET","child_count":"1","mother_full_name":"EMIN...
+2025-12-09T12:22:23.441Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T12:22:23.442Z - [uk] success attempt=1
+2025-12-09T12:27:14.788Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765283234782.json
+2025-12-09T12:27:14.791Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T12:27:14.792Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"EVLI","partner_full_name":"AYCA PARLAK","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"ASDASDASD","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"3 YIL","maidenName":"","past_addresses":"","residence_months_total":36},"2":{"boolean_child":"EVET","child_count":"1","mother_full_n...
+2025-12-09T12:29:19.978Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T12:29:19.980Z - [uk] success attempt=1
+2025-12-09T12:32:09.063Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1765283529056.json
+2025-12-09T12:32:09.064Z - [uk] START apiUrl=http://localhost:3000/api/send-uk
+2025-12-09T12:32:09.065Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET METEHAN PARLAK","gender":"ERKEK","maritalStatus":"EVLI","partner_full_name":"AYCA PARLAK","birthDate":"1993-02-20","birthPlace":"ANKARA","phone_number":"+905546434917","email":"s.metehan.parlak@gmail.com","home_address":"ASDASDASD","post_code":"06280","home_owner":"KENDİSİ","residence_duration":"3 YIL","maidenName":"","past_addresses":"","residence_months_total":36},"2":{"boolean_child":"EVET","child_count":"1","mother_full_n...
+2025-12-09T12:34:25.980Z - [uk] attempt=1 status=200 response={"success":true}
+2025-12-09T12:34:25.982Z - [uk] success attempt=1

@@ -32,16 +32,25 @@ const defaultForm = {
       past_addresses:"",
       
     },
-        2: {
-          boolean_child:"",
-      child_count: "",
-      mother_full_name: "",
-      mother_birth_date: "",
-      father_full_name: "",
-      father_birth_date: "",
-      child_names:[]
+       2: {
+  boolean_child: "",
+  child_count: "",
 
-    },
+  // Anne
+  mother_full_name: "",
+  mother_birth_date: "",
+  mother_travel_with_you: "",
+
+  // Baba
+  father_full_name: "",
+  father_birth_date: "",
+  father_travel_with_you: "",
+
+  // Çocuklar
+  child_names: [],              
+  child_travel_with_you: []      
+},
+
     3: {
       passport_number: "",
       Passport_start_date: "",
@@ -86,7 +95,51 @@ have_invitation:"",
 inviter_fullname:"",
 inviter_phone:"",
 inviter_email:"",
+invitation_type:"",
+inviter_address:"",
+company_name:"",
+company_email:"",
+company_phone:"",
+company_address:"",
 invitation_reason:"",
+has_family_in_uk: "",
+uk_family_relation: "",
+uk_family_fullname: "",
+uk_family_nationality: "",
+uk_family_legal_status: "",
+uk_family_has_temp_visa: "",
+uk_family_is_resident: "",
+uk_family_passport: "",
+uk_family_visa_explanation: "",
+ travel_with_non_family: "",
+  travel_non_family_fullname: "",
+  travel_non_family_relation: "",
+  travel_non_family_phone: "",
+
+  uk_visited_last10: "",
+  uk_visited_count: "",
+  uk_visit_purpose: "",
+  uk_visit_dates: "",
+
+  medical_treatment_uk: "",
+  medical_treatment_details: "",
+
+  national_insurance_number_exist: "",
+  national_insurance_number: "",
+
+  uk_stay_application_last10: "",
+  uk_stay_application_explanation: "",
+
+  uk_visa_last10: "",
+  uk_visa_issue_date: "",
+
+  uk_public_funds: "",
+  uk_public_funds_details: "",
+
+  visa_refused_or_banned: "",
+  visa_refused_details: "",
+
+
 
 
     },
@@ -281,7 +334,7 @@ const validateStep = (step, formData) => {
     return val === undefined || val === null || String(val).trim() === "";
   });
 
-  return { valid: missing.length === 0, missing: missing || [] }; // <-- missing undefined olursa []
+  return { valid: missing.length === 0, missing: missing || [] };
 };
 
 const goNext = () => {
@@ -309,9 +362,38 @@ const goNext = () => {
     });
   };
 
-  const jumpTo = (step) => {
+const jumpTo = (step) => {
+  const current = form.currentStep;
+  const goingForward = step > current;
+  const goingBack = step < current;
+
+  // 1️⃣ Adımı doğrula (her zaman validateStep çağırıyoruz)
+  const { valid, missing = [] } = validateStep(current, form);
+
+  // Eğer ileri gidiyor ve valid değilse → Hataları yaz, ilerlemeyi durdur
+  if (goingForward && !valid) {
+    const newErrors = {};
+    missing.forEach((field) => {
+      newErrors[field] = "Bu alan zorunludur";
+    });
+    setErrors(newErrors);
+    return; // ← ileri gitmeyi tamamen engelle
+  }
+
+  // 2️⃣ Geri gidiyorsa → HER ZAMAN izin ver
+  if (goingBack) {
     setForm((prev) => ({ ...prev, currentStep: step }));
-  };
+    return;
+  }
+
+  // 3️⃣ İleri gidiyor ama valid → temizle ve geçir
+  if (goingForward && valid) {
+    setErrors({});
+    setForm((prev) => ({ ...prev, currentStep: step }));
+  }
+};
+
+
 
 const updateField = (step, field, value) => {
   setForm(prev => ({
@@ -673,18 +755,18 @@ function extractMonthsFromDuration(value) {
 <div className="mb-6">
   {/* Logo Sol Üst */}
   <div className="w-full flex justify-start items-start mb-4">
-    <img
-      src="/images/ayalogoxl.png"
-      alt="Logo"
-      className="h-12"
-    />
+<img
+  src="/images/ayalogoxl.png"
+  alt="Logo"
+  className="h-12"
+/>
   </div>
 
   {/* Başlık Ortada */}
   <div className="text-center">
     <h2 className="text-xl font-semibold">İngiltere Vize Başvuru Formu Bilgi Fişi</h2>
     <p className="text-sm text-gray-500">
-     İngiltere vize başvuru formu bilgi fişi 7(yedi) bölümden oluşmaktadır.
+     İngiltere vize başvuru formu bilgi fişi 6(altı) bölümden oluşmaktadır.
    
     </p>
        <p className="text-sm text-gray-500">
@@ -696,7 +778,7 @@ function extractMonthsFromDuration(value) {
 </div>
 
         {/* Form body */}
-        <form onSubmit={handleSubmit} className="space-y-6">
+   {!resMessage && (    <form onSubmit={handleSubmit} className="space-y-6">
           {/* Step 1 */}
 {form.currentStep === 1 && (
   <section className="space-y-6">
@@ -1259,7 +1341,19 @@ onBlur={(e) => {
   )}
 </div>
 
-
+<div>
+  <label className="text-sm font-medium">Anne sizinle seyahat edecek mi?</label>
+  <select
+    name="mother_travel_with_you"
+   className="w-full mt-1 p-3.5 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+    value={form.steps[2].mother_travel_with_you || ""}
+    onChange={(e) => updateField(2, "mother_travel_with_you", e.target.value)}
+  >
+    <option value="">Seçiniz</option>
+    <option value="EVET">Evet</option>
+    <option value="HAYIR">Hayır</option>
+  </select>
+</div>
       {/* Baba Adı */}
       <div>
         <label className="text-sm font-medium">Baba Adı Soyadı</label>
@@ -1342,7 +1436,19 @@ onBlur={(e) => {
     <p className="text-red-500 text-xs mt-1">{errors.father_birth_date}</p>
   )}
 </div>
-
+<div>
+  <label className="text-sm font-medium">Baba sizinle seyahat edecek mi?</label>
+  <select
+    name="father_travel_with_you"
+    className="w-full mt-1 p-3.5 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+    value={form.steps[2].father_travel_with_you || ""}
+    onChange={(e) => updateField(2, "father_travel_with_you", e.target.value)}
+  >
+    <option value="">Seçiniz</option>
+    <option value="EVET">Evet</option>
+    <option value="HAYIR">Hayır</option>
+  </select>
+</div>
 
       {/* Çocuğunuz var mı? */}
       <div>
@@ -1377,16 +1483,36 @@ onBlur={(e) => {
       {/* Çocuk isimleri */}
       {form.steps[2].boolean_child === "EVET" &&
         Array.from({ length: Number(form.steps[2].child_count || 0) }).map((_, i) => (
-          <div key={i}>
-            <label className="text-sm font-medium">{i + 1}. Çocuk  Adı</label>
-            <input
-              name={`child_name_${i}`}
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
-              value={form.steps[2].child_names?.[i] || ""}
-             onChange={(e) => handleChildNameChange(e, i)}
-    onBlur={(e) => handleChildNameBlur(e, i)}
-              placeholder="Örn: ALİ PARLAK"
-            />
+          <div key={i} >
+            <div>
+        <label className="text-sm font-medium">{i + 1}. Çocuk Adı</label>
+        <input
+          name={`child_name_${i}`}
+         className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          value={form.steps[2].child_names?.[i] || ""}
+          onChange={(e) => handleChildNameChange(e, i)}
+          onBlur={(e) => handleChildNameBlur(e, i)}
+          placeholder="Örn: ALİ PARLAK"
+        />
+      </div>
+
+      {/* 🔥 Çocuk Sizinle Seyahat Edecek mi? */}
+      <div>
+        <label className="text-sm font-medium">{i + 1}. Çocuk sizinle seyahat edecek mi?</label>
+        <select
+          name={`child_travel_with_you_${i}`}
+         className="w-full mt-1 p-3.5 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          value={form.steps[2].child_travel_with_you?.[i] || ""}
+          onChange={(e) => updateField(2, "child_travel_with_you", {
+            ...(form.steps[2].child_travel_with_you || {}),
+            [i]: e.target.value
+          })}
+        >
+          <option value="">Seçiniz</option>
+          <option value="EVET">Evet</option>
+          <option value="HAYIR">Hayır</option>
+        </select>
+      </div>
           </div>
         ))}
     </div>
@@ -1790,7 +1916,7 @@ onBlur={(e) => {
 
           <div>
              {form.steps[4].boolean_work === "CALISMAYAN" ?  <label className="text-sm font-medium">Kaç yıl çalıştınız? (varsa)</label>  :   
-            <label className="text-sm font-medium">Kaç yıldır çalışıyorsunuz?</label> }       
+            <label className="text-sm font-medium">Toplam çalışma süreniz</label> }       
 
             <input
               type="text"
@@ -2083,7 +2209,7 @@ onBlur={(e) => {
       // Eğer kullanıcı saçma/gün aşan tarih girerse engelle
       const today = new Date().toISOString().split("T")[0];
       const maxDate = new Date(
-        new Date().setFullYear(new Date().getFullYear() + 2)
+        new Date().setFullYear(new Date().getFullYear() + 5)
       )
         .toISOString()
         .split("T")[0];
@@ -2108,7 +2234,7 @@ onBlur={(e) => {
 </div>
 
 
-  <div>
+<div>
   <label className="text-sm font-medium">Seyahat Bitiş Tarihi</label>
   <input
     type="date"
@@ -2117,49 +2243,43 @@ onBlur={(e) => {
       ${errors.travel_end_date ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
     value={form.steps[5].travel_end_date || ""}
 
-    // 🔥 Başlangıç tarihinden önce seçilemez
-    min={
-      form.steps[5].travel_start_date
-        ? form.steps[5].travel_start_date
-        : new Date().toISOString().split("T")[0]
-    }
+    // Kullanıcı yazarken hiçbir şekilde engelleme yok
+    onChange={(e) => updateField(5, "travel_end_date", e.target.value)}
 
-    // 🔥 2 yıldan fazla ileri tarih seçilemez (istersen değiştiririm)
-    max={new Date(new Date().setFullYear(new Date().getFullYear() + 2))
-      .toISOString()
-      .split("T")[0]}
-
-    onChange={(e) => {
+    // Kullanıcı yazmayı bitirdiğinde (blur) kontrol et
+    onBlur={(e) => {
       const value = e.target.value;
+
+      // 🔥 Eğer tarih formatı değilse — kullanıcı elle yazarken silinmez
+      if (!value || isNaN(new Date(value).getTime())) {
+        return;
+      }
 
       const start = form.steps[5].travel_start_date;
       const today = new Date().toISOString().split("T")[0];
       const maxDate = new Date(
         new Date().setFullYear(new Date().getFullYear() + 2)
-      )
-        .toISOString()
-        .split("T")[0];
+      ).toISOString().split("T")[0];
 
-      // ❌ Saçma geçmiş tarih (bugünün bile öncesi)
+      // ❌ Bugünden önce olamaz
       if (value < today) {
         updateField(5, "travel_end_date", "");
         return;
       }
 
-      // ❌ Başlangıçtan önce bitiş olamaz
+      // ❌ Başlangıçtan önce olamaz
       if (start && value < start) {
         updateField(5, "travel_end_date", "");
         return;
       }
 
-      // ❌ Çok ileri tarih engeli
+      // ❌ Çok ileri tarih olamaz
       if (value > maxDate) {
         updateField(5, "travel_end_date", "");
         return;
       }
 
-      // ✔ Geçerli tarih
-      updateField(5, "travel_end_date", value);
+      // ✔ Geçerli tarih — hiçbir işlem yok
     }}
   />
 
@@ -2167,6 +2287,7 @@ onBlur={(e) => {
     <p className="text-red-500 text-xs mt-1">{errors.travel_end_date}</p>
   )}
 </div>
+
 
       {/* Daha önce yurtdışına çıktı mı */}
       <div className="md:col-span-2">
@@ -2198,30 +2319,88 @@ onBlur={(e) => {
         onChange={(e) => handleCountryChange(e, index)}
     onBlur={(e) => handleCountryBlur(e, index)}
         />
-        <input
-          type="date"
-          name={`abroad_country_start_${index}`}
-          placeholder="Gidiş Tarihi (Gün/Ay/Yıl)"
-          className="w-40 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
-          value={item.start || ""}
-          onChange={(e) => {
-            const newArray = [...form.steps[5].abroad_country];
-            newArray[index].start = e.target.value;
-            updateField(5, "abroad_country", newArray);
-          }}
-        />
-        <input
-          type="date"
-          name={`abroad_country_end_${index}`}
-          placeholder="Dönüş Tarihi (Gün/Ay/Yıl)"
-          className="w-40 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
-          value={item.end || ""}
-          onChange={(e) => {
-            const newArray = [...form.steps[5].abroad_country];
-            newArray[index].end = e.target.value;
-            updateField(5, "abroad_country", newArray);
-          }}
-        />
+  <input
+  type="date"
+  name={`abroad_country_start_${index}`}
+  placeholder="Gidiş Tarihi (Gün/Ay/Yıl)"
+  className="w-40 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+  value={item.start || ""}
+  onChange={(e) => {
+    const newArray = [...form.steps[5].abroad_country];
+    newArray[index].start = e.target.value;
+    updateField(5, "abroad_country", newArray);
+  }}
+  onBlur={(e) => {
+    const value = e.target.value;
+
+    // Eğer format tam değilse (örn: 2025-0, 2025-, 2025 vs.) → Hiçbir şey yapma
+    if (!value || value.length < 10) return;
+
+    const today = new Date().toISOString().split("T")[0];
+
+    // ❌ Gelecek tarih olamaz
+    if (value > today) {
+      const arr = [...form.steps[5].abroad_country];
+      arr[index].start = ""; // alanı temizle
+      updateField(5, "abroad_country", arr);
+      return;
+    }
+
+    // ❌ 1900 öncesi olamaz
+    if (value < "1900-01-01") {
+      const arr = [...form.steps[5].abroad_country];
+      arr[index].start = "";
+      updateField(5, "abroad_country", arr);
+      return;
+    }
+  }}
+/>
+<input
+  type="date"
+  name={`abroad_country_end_${index}`}
+  placeholder="Dönüş Tarihi (Gün/Ay/Yıl)"
+  className="w-40 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+  value={item.end || ""}
+  onChange={(e) => {
+    const newArray = [...form.steps[5].abroad_country];
+    newArray[index].end = e.target.value;
+    updateField(5, "abroad_country", newArray);
+  }}
+  onBlur={(e) => {
+    const value = e.target.value;
+
+    // Eğer format tam değilse → hiçbir şey yapma
+    if (!value || value.length < 10) return;
+
+    const today = new Date().toISOString().split("T")[0];
+    const startDate = form.steps[5].abroad_country[index]?.start || "";
+
+    // ❌ Bugünden ileri tarih olamaz
+    if (value > today) {
+      const arr = [...form.steps[5].abroad_country];
+      arr[index].end = "";
+      updateField(5, "abroad_country", arr);
+      return;
+    }
+
+    // ❌ 1900 öncesi olamaz
+    if (value < "1900-01-01") {
+      const arr = [...form.steps[5].abroad_country];
+      arr[index].end = "";
+      updateField(5, "abroad_country", arr);
+      return;
+    }
+
+    // ❌ Başlangıç tarihinden önce olamaz
+    if (startDate && value < startDate) {
+      const arr = [...form.steps[5].abroad_country];
+      arr[index].end = "";
+      updateField(5, "abroad_country", arr);
+      return;
+    }
+  }}
+/>
+
         <button
           type="button"
           onClick={() => {
@@ -2533,19 +2712,33 @@ onBlur={(e) => {
   </div>
 )}
 
-{/* 1. SATIR — Yan yana: Davet var mı + Adı Soyadı */}
+{/* 1. SATIR — Davet var mı + Davetiye türü */}
 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-
   {/* DAVET SORUSU */}
   <div>
-    <label className="text-sm font-medium">Davetiyeniz var mı?</label>
-
+    <label className="text-sm font-medium">Davetiyeniz Var mı?</label>
     <select
       name="have_invitation"
-      className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
-        `}
+      className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300 transition focus:ring-2 focus:ring-blue-500"
       value={form.steps[5].have_invitation || ""}
-      onChange={(e) => updateField(5, "have_invitation", e.target.value)}
+      onChange={(e) => {
+        const val = e.target.value;
+        updateField(5, "have_invitation", val);
+
+        // Hayır seçilince tüm davetiye alanlarını temizle
+        if (val !== "EVET") {
+          updateField(5, "invitation_type", "");
+          updateField(5, "inviter_fullname", "");
+          updateField(5, "inviter_email", "");
+          updateField(5, "inviter_phone", "");
+          updateField(5, "inviter_address", "");
+          updateField(5, "company_name", "");
+          updateField(5, "company_email", "");
+          updateField(5, "company_phone", "");
+          updateField(5, "company_address", "");
+          updateField(5, "invitation_reason", "");
+        }
+      }}
     >
       <option value="">Seçiniz</option>
       <option value="EVET">Evet</option>
@@ -2553,95 +2746,820 @@ onBlur={(e) => {
     </select>
   </div>
 
-  {/* ADI SOYADI — yanındaki input */}
+  {/* DAVETİYE TÜRÜ — sadece EVET ise */}
   {form.steps[5].have_invitation === "EVET" && (
     <div>
-      <label className="text-sm font-medium">Davetiyeyi Gönderen Adı Soyadı</label>
-      <input
-        name="inviter_fullname"
-        className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
-        value={form.steps[5].inviter_fullname || ""}
-        onChange={(e) =>
-          updateField(5, "inviter_fullname", isMobile ? e.target.value : normalizeInput(e.target.value))
-        }
-        onBlur={(e) => {
-          if (isMobile) {
-            updateField(5, "inviter_fullname", normalizeInput(e.target.value));
-          }
+      <label className="text-sm font-medium">Davetiye Türü</label>
+      <select
+        name="invitation_type"
+        className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300 transition focus:ring-2 focus:ring-blue-500"
+        value={form.steps[5].invitation_type || ""}
+        onChange={(e) => {
+          const val = e.target.value;
+          updateField(5, "invitation_type", val);
+
+          // Tür değişince alanları sıfırla
+          updateField(5, "inviter_fullname", "");
+          updateField(5, "inviter_email", "");
+          updateField(5, "inviter_phone", "");
+          updateField(5, "inviter_address", "");
+          updateField(5, "company_name", "");
+          updateField(5, "company_email", "");
+          updateField(5, "company_phone", "");
+          updateField(5, "company_address", "");
+          updateField(5, "invitation_reason", "");
         }}
-      />
+      >
+        <option value="">Seçiniz</option>
+        <option value="BIREYSEL">Bireysel</option>
+        <option value="SIRKET">Şirket</option>
+      </select>
     </div>
   )}
 </div>
 
+{/* BİREYSEL DAVETİYE ALANLARI */}
+{form.steps[5].have_invitation === "EVET" &&
+  form.steps[5].invitation_type === "BIREYSEL" && (
+    <>
+      {/* Adı Soyadı + Email */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div>
+          <label className="text-sm font-medium">
+            Davet Eden Adı Soyadı
+          </label>
+          <input
+            name="inviter_fullname"
+            className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+            value={form.steps[5].inviter_fullname || ""}
+            onChange={(e) =>
+              updateField(
+                5,
+                "inviter_fullname",
+                isMobile ? e.target.value : normalizeInput(e.target.value)
+              )
+            }
+            onBlur={(e) => {
+              if (isMobile) {
+                updateField(
+                  5,
+                  "inviter_fullname",
+                  normalizeInput(e.target.value)
+                );
+              }
+            }}
+          />
+        </div>
 
-{/* 2. SATIR — Telefon + Email yan yana */}
-{form.steps[5].have_invitation === "EVET" && (
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div>
+          <label className="text-sm font-medium">Davet Eden Email</label>
+          <input
+            type="email"
+            name="inviter_email"
+            className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+            value={form.steps[5].inviter_email || ""}
+            onChange={(e) =>
+              updateField(
+                5,
+                "inviter_email",
+                isMobile ? e.target.value : normalizeInput(e.target.value)
+              )
+            }
+            onBlur={(e) => {
+              if (isMobile) {
+                updateField(
+                  5,
+                  "inviter_email",
+                  normalizeInput(e.target.value)
+                );
+              }
+            }}
+          />
+        </div>
+      </div>
 
-    {/* TELEFON */}
-    <div>
-      <label className="text-sm font-medium">Telefon</label>
-      <input
-        name="inviter_phone"
-        className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
-        value={form.steps[5].inviter_phone || ""}
+      {/* Telefon + Adres */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div>
+          <label className="text-sm font-medium">Davet Eden Telefon</label>
+          <input
+            name="inviter_phone"
+            className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+            value={form.steps[5].inviter_phone || ""}
+            onChange={(e) =>
+              updateField(
+                5,
+                "inviter_phone",
+                isMobile ? e.target.value : normalizeInput(e.target.value)
+              )
+            }
+            onBlur={(e) => {
+              if (isMobile) {
+                updateField(
+                  5,
+                  "inviter_phone",
+                  normalizeInput(e.target.value)
+                );
+              }
+            }}
+          />
+        </div>
+
+        <div>
+          <label className="text-sm font-medium">Davet Eden Adres</label>
+          <input
+            name="inviter_address"
+            className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+            value={form.steps[5].inviter_address || ""}
+            onChange={(e) =>
+              updateField(
+                5,
+                "inviter_address",
+                isMobile ? e.target.value : normalizeAddressInput(e.target.value)
+              )
+            }
+            onBlur={(e) => {
+              if (isMobile) {
+                updateField(
+                  5,
+                  "inviter_address",
+                  normalizeAddressInput(e.target.value)
+                );
+              }
+            }}
+          />
+        </div>
+      </div>
+    </>
+  )}
+
+{/* ŞİRKET DAVETİYE ALANLARI */}
+{form.steps[5].have_invitation === "EVET" &&
+  form.steps[5].invitation_type === "SIRKET" && (
+    <>
+      {/* Şirket Adı + Şirket Email */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div>
+          <label className="text-sm font-medium">Şirket Adı</label>
+          <input
+            name="company_name"
+            className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+            value={form.steps[5].company_name || ""}
+            onChange={(e) =>
+              updateField(
+                5,
+                "company_name",
+                isMobile ? e.target.value : normalizeInput(e.target.value)
+              )
+            }
+            onBlur={(e) => {
+              if (isMobile) {
+                updateField(
+                  5,
+                  "company_name",
+                  normalizeInput(e.target.value)
+                );
+              }
+            }}
+          />
+        </div>
+
+        <div>
+          <label className="text-sm font-medium">Şirket Email</label>
+          <input
+            type="email"
+            name="company_email"
+            className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+            value={form.steps[5].company_email || ""}
+            onChange={(e) =>
+              updateField(
+                5,
+                "company_email",
+                isMobile ? e.target.value : normalizeInput(e.target.value)
+              )
+            }
+            onBlur={(e) => {
+              if (isMobile) {
+                updateField(
+                  5,
+                  "company_email",
+                  normalizeInput(e.target.value)
+                );
+              }
+            }}
+          />
+        </div>
+      </div>
+
+      {/* Şirket Telefon + Şirket Adres */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div>
+          <label className="text-sm font-medium">Şirket Telefon</label>
+          <input
+            name="company_phone"
+            className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+            value={form.steps[5].company_phone || ""}
+            onChange={(e) =>
+              updateField(
+                5,
+                "company_phone",
+                isMobile ? e.target.value : normalizeInput(e.target.value)
+              )
+            }
+            onBlur={(e) => {
+              if (isMobile) {
+                updateField(
+                  5,
+                  "company_phone",
+                  normalizeInput(e.target.value)
+                );
+              }
+            }}
+          />
+        </div>
+
+        <div>
+          <label className="text-sm font-medium">Şirket Adresi</label>
+          <input
+            name="company_address"
+            className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+            value={form.steps[5].company_address || ""}
+            onChange={(e) =>
+              updateField(
+                5,
+                "company_address",
+                isMobile ? e.target.value : normalizeAddressInput(e.target.value)
+              )
+            }
+            onBlur={(e) => {
+              if (isMobile) {
+                updateField(
+                  5,
+                  "company_address",
+                  normalizeAddressInput(e.target.value)
+                );
+              }
+            }}
+          />
+        </div>
+      </div>
+    </>
+  )}
+
+{/* ORTAK — Davet Sebebi (her iki türde de) */}
+{form.steps[5].have_invitation === "EVET" &&
+  form.steps[5].invitation_type && (
+    <div className="mt-4">
+      <label className="text-sm font-medium">Davet Sebebi</label>
+      <textarea
+        name="invitation_reason"
+        className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300 resize-none"
+        rows={3}
+        placeholder="Lütfen davet sebebini yazınız..."
+        value={form.steps[5].invitation_reason || ""}
         onChange={(e) =>
-          updateField(5, "inviter_phone", isMobile ? e.target.value : normalizeInput(e.target.value))
+          updateField(
+            5,
+            "invitation_reason",
+            isMobile ? e.target.value : normalizeInput(e.target.value)
+          )
         }
         onBlur={(e) => {
           if (isMobile) {
-            updateField(5, "inviter_phone", normalizeInput(e.target.value));
+            updateField(
+              5,
+              "invitation_reason",
+              normalizeInput(e.target.value)
+            );
           }
         }}
-      />
+      ></textarea>
     </div>
+  )}
 
-    {/* EMAIL */}
-    <div>
-      <label className="text-sm font-medium">Email</label>
-      <input
-        type="email"
-        name="inviter_email"
-        className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
-        value={form.steps[5].inviter_email || ""}
-        onChange={(e) =>
-          updateField(5, "inviter_email", isMobile ? e.target.value : normalizeInput(e.target.value))
-        }
-        onBlur={(e) => {
-          if (isMobile) {
-            updateField(5, "inviter_email", normalizeInput(e.target.value));
+
+{/* ===============================
+   BİRLEŞİK KRALLIKTA AİLE VAR MI?
+================================= */}
+<div className="mt-6">
+  <label className="text-sm font-medium">Birleşik Krallıkta ailenizden biri yaşıyor mu?</label>
+
+  <select
+    name="has_family_in_uk"
+    className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+    value={form.steps[5].has_family_in_uk || ""}
+    onChange={(e) => updateField(5, "has_family_in_uk", e.target.value)}
+  >
+    <option value="">Seçiniz</option>
+    <option value="EVET">Evet</option>
+    <option value="HAYIR">Hayır</option>
+  </select>
+</div>
+
+
+{/* ==========================================
+      Aile varsa gösterilecek tüm inputlar
+========================================== */}
+{form.steps[5].has_family_in_uk === "EVET" && (
+  <>
+
+    {/* Grid — Desktop 2, Mobile 1 */}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+
+      {/* Yakınlık Derecesi */}
+      <div>
+        <label className="text-sm font-medium">Yakınlık Derecesi</label>
+        <input
+          name="uk_family_relation"
+          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+          value={form.steps[5].uk_family_relation || ""}
+          onChange={(e) =>
+            updateField(5, "uk_family_relation", isMobile ? e.target.value : normalizeInput(e.target.value))
           }
-        }}
-      />
-    </div>
+        />
+      </div>
+
+      {/* Adı Soyadı */}
+      <div>
+        <label className="text-sm font-medium">Adı Soyadı</label>
+        <input
+          name="uk_family_fullname"
+          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+          value={form.steps[5].uk_family_fullname || ""}
+          onChange={(e) =>
+            updateField(5, "uk_family_fullname", isMobile ? e.target.value : normalizeInput(e.target.value))
+          }
+        />
+      </div>
+
+      {/* Uyruğu */}
+      <div>
+        <label className="text-sm font-medium">Uyruğu</label>
+        <input
+          name="uk_family_nationality"
+          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+          value={form.steps[5].uk_family_nationality || ""}
+          onChange={(e) =>
+            updateField(5, "uk_family_nationality", isMobile ? e.target.value : normalizeInput(e.target.value))
+          }
+        />
+      </div>
+
+      {/* Yasal Durumu */}
+      <div>
+        <label className="text-sm font-medium">Birleşik Krallıktaki Yasal Durumu</label>
+        <input
+          name="uk_family_legal_status"
+          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+          value={form.steps[5].uk_family_legal_status || ""}
+          onChange={(e) =>
+            updateField(5, "uk_family_legal_status", isMobile ? e.target.value : normalizeInput(e.target.value))
+          }
+        />
+      </div>
+
+      {/* Geçici vizeye sahip mi? */}
+      <div>
+        <label className="text-sm font-medium">Geçici vizeye sahip mi?</label>
+        <select
+          name="uk_family_has_temp_visa"
+          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+          value={form.steps[5].uk_family_has_temp_visa || ""}
+          onChange={(e) => updateField(5, "uk_family_has_temp_visa", e.target.value)}
+        >
+          <option value="">Seçiniz</option>
+          <option value="EVET">Evet</option>
+          <option value="HAYIR">Hayır</option>
+        </select>
+      </div>
+
+      {/* Temelli olarak UK’de mi? */}
+      <div>
+        <label className="text-sm font-medium">Temelli olarak Birleşik Krallıkta mı?</label>
+        <select
+          name="uk_family_is_resident"
+          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+          value={form.steps[5].uk_family_is_resident || ""}
+          onChange={(e) => updateField(5, "uk_family_is_resident", e.target.value)}
+        >
+          <option value="">Seçiniz</option>
+          <option value="EVET">Evet</option>
+          <option value="HAYIR">Hayır</option>
+        </select>
+      </div>
+
+    </div> {/* grid bitiş */}
+
+
+    {/* ==========================================
+         TEK ADET PASAPORT NUMARASI (ALTTA)
+       ========================================== */}
+
+    {(form.steps[5].uk_family_has_temp_visa === "EVET" ||
+      form.steps[5].uk_family_is_resident === "EVET") && (
+      <div className="mt-4">
+        <label className="text-sm font-medium">Pasaport Numarası</label>
+        <input
+          name="uk_family_passport"
+          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+          value={form.steps[5].uk_family_passport || ""}
+          onChange={(e) =>
+            updateField(5, "uk_family_passport", isMobile ? e.target.value : normalizeInput(e.target.value))
+          }
+        />
+      </div>
+    )}
+
+
+    {/* Vize Durumu Açıklaması - sadece geçici vize HAYIR ise */}
+    {form.steps[5].uk_family_has_temp_visa === "HAYIR" && (
+      <div className="mt-4">
+        <label className="text-sm font-medium">Vize Durumu Açıklaması</label>
+        <textarea
+          name="uk_family_visa_explanation"
+          rows={3}
+          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300 resize-none"
+          value={form.steps[5].uk_family_visa_explanation || ""}
+          onChange={(e) =>
+            updateField(5, "uk_family_visa_explanation", isMobile ? e.target.value : normalizeInput(e.target.value))
+          }
+        />
+      </div>
+    )}
+
+  </>
+)}
+
+{/* --------------------------------------------------- */}
+{/* 1) Aile bireyleri dışında biriyle seyahat edecek misiniz? */}
+{/* --------------------------------------------------- */}
+
+<label className="text-sm font-medium mt-4 block">Aile bireyleri dışında biriyle seyahat edecek misiniz?</label>
+<select
+  value={form.steps[5].travel_with_non_family || ""}
+  onChange={(e) => updateField(5, "travel_with_non_family", e.target.value)}
+  className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none"
+>
+  <option value="">Seçiniz</option>
+  <option value="EVET">Evet</option>
+  <option value="HAYIR">Hayır</option>
+</select>
+
+{form.steps[5].travel_with_non_family === "EVET" && (
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+    
+    <input
+      placeholder="Seyahat edeceğiniz kişinin adı soyadı"
+      className="p-3 border rounded-xl"
+      value={form.steps[5].travel_non_family_fullname || ""}
+      onChange={(e) => updateField(5, "travel_non_family_fullname", normalizeInput(e.target.value))}
+    />
+
+    <input
+      placeholder="Yakınlık Derecesi"
+      className="p-3 border rounded-xl"
+      value={form.steps[5].travel_non_family_relation || ""}
+      onChange={(e) => updateField(5, "travel_non_family_relation", normalizeInput(e.target.value))}
+    />
+
+    <input
+      placeholder="Telefon"
+      className="p-3 border rounded-xl"
+      value={form.steps[5].travel_non_family_phone || ""}
+      onChange={(e) => updateField(5, "travel_non_family_phone", e.target.value)}
+    />
+  </div>
+)}
+
+{/* --------------------------------------------------- */}
+{/* 2) Son 10 yıl UK'de bulundunuz mu? */}
+{/* --------------------------------------------------- */}
+
+<label className="text-sm font-medium mt-6 block">Son 10 yıl içinde Birleşik Krallık’ta bulundunuz mu?</label>
+<select
+  value={form.steps[5].uk_visited_last10 || ""}
+  onChange={(e) => updateField(5, "uk_visited_last10", e.target.value)}
+  className="w-full mt-1 p-3 border rounded-xl"
+>
+  <option value="">Seçiniz</option>
+  <option value="EVET">Evet</option>
+  <option value="HAYIR">Hayır</option>
+</select>
+
+{form.steps[5].uk_visited_last10 === "EVET" && (
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+<div>
+<label className="text-sm font-medium mt-6 block">Kaç kere bulundunuz?</label>
+
+   <input
+      placeholder="Kaç kere bulundunuz?"
+      type="number"
+      className="p-3 border rounded-xl"
+      value={form.steps[5].uk_visited_count || ""}
+      onChange={(e) => updateField(5, "uk_visited_count", e.target.value)}
+    />
+</div>
+   
+<div>
+  <label className="text-sm font-medium mt-6 block">Ziyaret Amacı</label>
+    <input
+      placeholder="Ziyaret Amacı"
+      className="p-3 border rounded-xl"
+      value={form.steps[5].uk_visit_purpose || ""}
+      onChange={(e) => updateField(5, "uk_visit_purpose", normalizeInput(e.target.value))}
+    />
+</div>
+<div>
+    <label className="text-sm font-medium mt-6 block">Ziyaret Tarihleri</label>
+        <input
+      placeholder=" (örn: 2019 Mart)"
+      className="p-3 border rounded-xl col-span-1 md:col-span-2"
+      value={form.steps[5].uk_visit_dates || ""}
+      onChange={(e) => updateField(5, "uk_visit_dates", e.target.value)}
+    />
+</div>
+
 
   </div>
 )}
 
+{/* --------------------------------------------------- */}
+{/* 3) İngiltere’de tıbbi tedavi gördünüz mü? */}
+{/* --------------------------------------------------- */}
 
-{/* 3. SATIR — Sebep (full width) */}
-{form.steps[5].have_invitation === "EVET" && (
-  <div className="mt-4">
-    <label className="text-sm font-medium">Davet Sebebi</label>
-    <textarea
-      name="invitation_reason"
-      className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300 resize-none"
-      rows={3}
-      placeholder="Lütfen davet sebebini yazınız..."
-      value={form.steps[5].invitation_reason || ""}
-      onChange={(e) =>
-        updateField(5, "invitation_reason", isMobile ? e.target.value : normalizeInput(e.target.value))
-      }
-      onBlur={(e) => {
-        if (isMobile) {
-          updateField(5, "invitation_reason", normalizeInput(e.target.value));
-        }
-      }}
-    ></textarea>
+<label className="text-sm font-medium mt-6 block">İngiltere’de daha önce tıbbi tedavi gördünüz mü?</label>
+<select
+  value={form.steps[5].medical_treatment_uk || ""}
+  onChange={(e) => updateField(5, "medical_treatment_uk", e.target.value)}
+  className="w-full mt-1 p-3 border rounded-xl"
+>
+  <option value="">Seçiniz</option>
+  <option value="EVET">Evet</option>
+  <option value="HAYIR">Hayır</option>
+</select>
+
+{form.steps[5].medical_treatment_uk === "EVET" && (
+  <div>
+        <label className="text-sm font-medium mt-6 block">Tedavi ile ilgili açıklama</label>
+          <textarea
+    placeholder="Tedavi ile ilgili açıklama"
+    className="w-full mt-3 p-3 border rounded-xl resize-none"
+    rows={3}
+    value={form.steps[5].medical_treatment_details || ""}
+     onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(5, "medical_treatment_details", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(5, "medical_treatment_details", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(5, "medical_treatment_details", normalizedValue);
+                }
+            }}
+  />
   </div>
+
 )}
 
+{/* --------------------------------------------------- */}
+{/* 4) Ulusal sigorta numaranız var mı? */}
+{/* --------------------------------------------------- */}
+
+<label className="text-sm font-medium mt-6 block">Ulusal Sigorta Numaranız var mı?</label>
+<select
+  value={form.steps[5].national_insurance_number_exist || ""}
+  onChange={(e) => updateField(5, "national_insurance_number_exist", e.target.value)}
+  className="w-full mt-1 p-3 border rounded-xl"
+>
+  <option value="">Seçiniz</option>
+  <option value="EVET">Evet</option>
+  <option value="HAYIR">Hayır</option>
+</select>
+
+{form.steps[5].national_insurance_number_exist === "EVET" && (
+  <div>
+      <label className="text-sm font-medium mt-6 block">Ulusal Sigorta Numarası</label>
+       <input
+    placeholder="Ulusal Sigorta Numarası"
+    className="mt-3 p-3 border rounded-xl w-full"
+    value={form.steps[5].national_insurance_number || ""}
+    onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(5, "national_insurance_number", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(5, "national_insurance_number", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(5, "national_insurance_number", normalizedValue);
+                }
+            }}
+  />
+  </div>
+ 
+)}
+
+{/* --------------------------------------------------- */}
+{/* 5) UK kalma izni başvurusu */}
+{/* --------------------------------------------------- */}
+
+<label className="text-sm font-medium mt-6 block">Son 10 yılda İngiltere'de kalma izni için başvuruda bulundunuz mu?</label>
+<select
+  value={form.steps[5].uk_stay_application_last10 || ""}
+  onChange={(e) => updateField(5, "uk_stay_application_last10", e.target.value)}
+  className="w-full mt-1 p-3 border rounded-xl"
+>
+  <option value="">Seçiniz</option>
+  <option value="EVET">Evet</option>
+  <option value="HAYIR">Hayır</option>
+</select>
+
+{form.steps[5].uk_stay_application_last10 === "EVET" && (
+  <div>
+    <label className="text-sm font-medium mt-6 block">Açıklama</label>
+   <textarea
+    className="w-full mt-3 p-3 border rounded-xl resize-none"
+    rows={3}
+    placeholder="Açıklama"
+    value={form.steps[5].uk_stay_application_explanation || ""}
+     onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(5, "uk_stay_application_explanation", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(5, "uk_stay_application_explanation", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(5, "uk_stay_application_explanation", normalizedValue);
+                }
+            }}
+  />
+ 
+  </div>
+ 
+)}
+
+{/* --------------------------------------------------- */}
+{/* 6) Son 10 yılda UK vizesi aldınız mı? */}
+{/* --------------------------------------------------- */}
+
+<label className="text-sm font-medium mt-6 block">Son 10 yılda İngiltere vizesi aldınız mı?</label>
+<select
+  value={form.steps[5].uk_visa_last10 || ""}
+  onChange={(e) => updateField(5, "uk_visa_last10", e.target.value)}
+  className="w-full mt-1 p-3 border rounded-xl"
+>
+  <option value="">Seçiniz</option>
+  <option value="EVET">Evet</option>
+  <option value="HAYIR">Hayır</option>
+</select>
+
+{form.steps[5].uk_visa_last10 === "EVET" && (
+  <div>
+    <label className="text-sm font-medium mt-6 block">Vize Veriliş Tarihi</label>
+<input
+  type="date"
+  className="mt-3 p-3 border rounded-xl w-full"
+  value={form.steps[5].uk_visa_issue_date || ""}
+
+  onChange={(e) => {
+    updateField(5, "uk_visa_issue_date", e.target.value);
+  }}
+
+  onBlur={(e) => {
+    const value = e.target.value;
+
+    // Eğer tarih tam yazılmamışsa (YYYY-AA-GG değilse) → kontrol yok
+    if (!value || value.length < 10) return;
+
+    const today = new Date().toISOString().split("T")[0];
+
+    // ❌ Bugünden ileri tarih olamaz
+    if (value > today) {
+      updateField(5, "uk_visa_issue_date", "");
+      return;
+    }
+
+    // ❌ 1900'den küçük tarih olamaz
+    if (value < "1900-01-01") {
+      updateField(5, "uk_visa_issue_date", "");
+      return;
+    }
+  }}
+/>
+
+  </div>
+  
+)}
+
+{/* --------------------------------------------------- */}
+{/* 7) Kamu fonu aldınız mı? */}
+{/* --------------------------------------------------- */}
+
+<label className="text-sm font-medium mt-6 block">İngiltere'de herhangi bir kamu fonu aldınız mı?</label>
+<select
+  value={form.steps[5].uk_public_funds || ""}
+  onChange={(e) => updateField(5, "uk_public_funds", e.target.value)}
+  className="w-full mt-1 p-3 border rounded-xl"
+>
+  <option value="">Seçiniz</option>
+  <option value="EVET">Evet</option>
+  <option value="HAYIR">Hayır</option>
+</select>
+
+{form.steps[5].uk_public_funds === "EVET" && (
+  <div>
+<label className="text-sm font-medium mt-6 block">Aldığınız fonu açıklayın</label>
+  <textarea
+    className="w-full mt-3 p-3 border rounded-xl resize-none"
+    rows={3}
+    placeholder="Aldığınız fonu açıklayın"
+    value={form.steps[5].uk_public_funds_details || ""}
+    onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(5, "uk_public_funds_details", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(5, "uk_public_funds_details", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(5, "uk_public_funds_details", normalizedValue);
+                }
+            }}
+  />
+  </div>
+
+)}
+
+{/* --------------------------------------------------- */}
+{/* 8) Vize reddi, sınır dışı, giriş yasağı vs */}
+{/* --------------------------------------------------- */}
+
+<label className="text-sm font-medium mt-6 block">Herhangi bir ülkede vize reddi, sınır dışı edilme veya giriş yasağı yaşadınız mı?</label>
+<select
+  value={form.steps[5].visa_refused_or_banned || ""}
+  onChange={(e) => updateField(5, "visa_refused_or_banned", e.target.value)}
+  className="w-full mt-1 p-3 border rounded-xl"
+>
+  <option value="">Seçiniz</option>
+  <option value="EVET">Evet</option>
+  <option value="HAYIR">Hayır</option>
+</select>
+
+{form.steps[5].visa_refused_or_banned === "EVET" && (
+  <div>
+<label className="text-sm font-medium mt-6 block">Açıklayınız (ülke, yıl, durum)</label>
+  <textarea
+    className="w-full mt-3 p-3 border rounded-xl resize-none"
+    rows={3}
+    placeholder="Açıklayınız (ülke, yıl, durum)"
+    value={form.steps[5].visa_refused_details || ""}
+    onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(5, "visa_refused_details", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(5, "visa_refused_details", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(5, "visa_refused_details", normalizedValue);
+                }
+            }}
+  />
+  </div>
+
+)}
 
 
   </section>
@@ -2674,11 +3592,13 @@ onBlur={(e) => {
             <span className="text-gray-400 text-center px-2">Dosya seçmek için tıklayın</span>
           ) : (
             <>
-       <img
-  src={passportPreview}
-  alt="Passport Preview"
-  className="w-full h-full object-cover rounded-lg transition-transform duration-200 hover:scale-105"
-/>
+{passportPreview && (
+  <img
+    src={passportPreview}
+    alt="Passport Preview"
+    className="w-full h-full object-cover rounded-lg transition-transform duration-200 hover:scale-105"
+  />
+)}
               <button
                 type="button"
                 title="Sil"
@@ -2762,8 +3682,34 @@ onBlur={(e) => {
 )}
 
           {/* Navigation */}
+
+
+
+     {statusMessage && (
+  <div
+    className="
+      fixed top-4 right-4
+      z-50
+      px-4 py-3
+      rounded-xl
+      shadow-xl
+      backdrop-blur-md
+      bg-white/90 
+      text-gray-800 
+      border border-gray-200/50 
+      animate-toast-slide
+      pointer-events-none
+      max-w-xs
+    "
+  >
+    {statusMessage}
+  </div>
+)}
+        </form>)}   
+ 
+
 <div className="flex items-center justify-between mt-6">
-  {form.currentStep < 6 && (
+  {form.currentStep <6 && (
     <div className="flex items-center gap-3">
       <button
         type="button"
@@ -2776,7 +3722,7 @@ onBlur={(e) => {
 
       <button
         type="button"
-        onClick={goNext}
+        onClick={()=>{goNext();window.scrollTo({ top: 0, behavior: "smooth" })}}
         disabled={!validateStep(form.currentStep, form)}
         className="px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50 cursor-pointer"
       >
@@ -2785,9 +3731,9 @@ onBlur={(e) => {
     </div>
   )}
 
-  {form.currentStep === 6 && validateStep(6, form) && (
+  {form.currentStep === 6 && validateStep(8, form) && (
     <div className="flex flex-col gap-4 w-full">
- <div className="flex items-center gap-3">
+{ (!resMessage) && ( <div className="flex items-center gap-3">
   <input
     type="checkbox"
     id="kvkkConsent"
@@ -2811,17 +3757,14 @@ onBlur={(e) => {
    
     .
   </label>
-</div>
+</div>)}
+
   
-
-
-
-    </div>
-  )}
-  <div className="flex justify-center mt-6">
- { !resMessage ? ( <button
+<div className="flex justify-center mt-6">
+ { !resMessage ?
+  ( <button
     type="button"
-    onClick={handleSubmit}
+    onClick={()=>{handleSubmit();window.scrollTo({ top: 30, behavior: "smooth" })}}
     disabled={!kvkkConsent || isSubmitting}
     className={`
       relative flex items-center justify-center px-8 py-3 rounded-xl font-semibold text-white transition-all duration-300 cursor-pointer
@@ -2832,8 +3775,9 @@ onBlur={(e) => {
       max-w-xs w-full sm:w-auto
     `}
   >
-    {    (isSubmitting ) ? (
-      <span className="flex items-center gap-3">
+    {    (isSubmitting ) ? 
+    (
+      <span className="flex flex-col items-center gap-3">
         <svg
           className="animate-spin h-5 w-5 text-white"
           xmlns="http://www.w3.org/2000/svg"
@@ -2862,8 +3806,8 @@ onBlur={(e) => {
     )}
   </button>) : (
  
-  <div className="bg-white  p-5 max-w-md text-center">
-    <h2 className="text-2xl font-bold text-gray-800 mb-6">
+  <div className="bg-white w-full h-screen p-5 max-w-md text-center flex items-center justify-center flex-col ">
+    <h2 className="text-xl font-bold text-gray-800 mb-6">
       Formunuz başarılı şekilde gönderilmiştir.
     </h2>
     <Link href="/">   <button className="bg-white text-gray-700 cursor-pointer mt-5 border border-blue-300 px-4 py-2 rounded-3xl transition duration-300 hover:text-blue-500 hover:bg-gray-100">
@@ -2877,38 +3821,18 @@ onBlur={(e) => {
   )} 
 
 </div>
+
+
+    </div>
+  )}
 </div>
 
-
-
-     {statusMessage && (
-  <div
-    className="
-      fixed top-4 right-4
-      z-50
-      px-4 py-3
-      rounded-xl
-      shadow-xl
-      backdrop-blur-md
-      bg-white/90 
-      text-gray-800 
-      border border-gray-200/50 
-      animate-toast-slide
-      pointer-events-none
-      max-w-xs
-    "
-  >
-    {statusMessage}
-  </div>
-)}
-        </form>
-
-
-
-      </div>
+      <div>
       <AydinlatmaFormu   open={openInfo}
         onClose={() => setOpenInfo(false)} />
     </div>
+    </div>
+      </div>
   );
 }
 
