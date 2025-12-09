@@ -7,7 +7,7 @@ const references = [
   { name: "Erenköy Çevre Koleji", logo: "/referans/cevre koleji.jpg" },
   { name: "Inavitas", logo: "/referans/inativas.png" },
   { name: "Alfa Solar", logo: "/referans/alfasolarlogo.webp" },
-  { name: "KonyaSpor", logo: "/referans/konya spor.jpg" },
+  { name: "Konyaspor", logo: "/referans/konya spor.jpg" },
   { name: "Kiler Holding", logo: "/referans/kiler holding.jpg" },
   { name: "Biletinial", logo: "/referans/bilet.png" },
 ];

@@ -4,25 +4,25 @@ import { VscWorkspaceTrusted } from "react-icons/vsc";
 import { FaQuestion,FaGoogle  } from "react-icons/fa";
 import { FaPersonRays } from "react-icons/fa6";
 import { motion } from "framer-motion";
-
+import Image from "next/image";
 const items = [
   {
-    icon: <FaPersonRays className="w-10 h-10 text-[#0d8cff]" />,
+    icon:"/images/terzi.webp",
     title: "Kişiye özel başvuru",
     desc: "Başvurunuz uzman ekibimiz tarafından hazırlanır.",
   },
   {
-    icon: <VscWorkspaceTrusted className="w-10 h-10 text-[#0d8cff]" />,
+     icon:"/images/whyaya.webp",
     title: "Binlerce başvurudan elde ettiğimiz deneyimi size sunmaya hazırız",
     desc: "Belgeleriniz doğru şekilde sunulur.",
   },
   {
-    icon: <FaGoogle  className="w-10 h-10 text-[#0d8cff]" />,
+   icon:"/images/google.webp",
     title: "Google yorumları bizim hakkımızda çok şey anlatır",
     desc: "Verileriniz tam güvenlik altındadır.",
   },
   {
-    icon: <FaQuestion className="w-10 h-10 text-[#0d8cff]" />,
+   icon:"/images/brains.webp",
     title: "Sorularınız yanıtsız kalmaz, ofislerimiz sizi ağırlamaya hazır",
     desc: "Süreçler hızlı bir şekilde ilerletilir.",
   },
@@ -97,7 +97,14 @@ function HoverCard({ item }) {
           // hovered değilken margin yok → tam merkezde durur
           // hovered iken ikon biraz yukarı kayar ama tavana yapışmaz
         >
-          {item.icon}
+               <Image
+              src={item.icon} 
+              alt="Tanıtım görseli"
+            width={100}
+            height={100}
+        
+              className="rounded-3xl"
+            />
         </motion.div>
 
         {/* YAZILAR */}

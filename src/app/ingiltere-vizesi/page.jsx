@@ -66,7 +66,7 @@ const UKVisaPage = () => {
             İngiltere vizesi için gerekli belgeler, süreç ve başvuru ipuçları.
           </p>
 
-          <Link href="/randevu-uk">
+          <Link href="/randevu">
             <button className="bg-white text-gray-700 cursor-pointer mt-5 border border-blue-300 px-4 py-2 rounded-3xl transition duration-300 hover:text-blue-500 hover:bg-gray-100">
               Hemen Başvur
             </button>
@@ -139,7 +139,7 @@ const UKVisaPage = () => {
 
       {/* CTA */}
       <section className="max-w-4xl mx-auto px-6 py-16 text-center">
-        <Link href="/randevu-uk">
+        <Link href="/randevu">
           <button
             className="bg-white text-gray-700 cursor-pointer mt-5 border border-blue-300 px-4 py-2 rounded-3xl transition duration-300 hover:text-blue-500 hover:bg-gray-100"
           >
