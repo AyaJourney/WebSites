@@ -1,13 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import {
-  AiFillCheckCircle,
-  AiFillSafetyCertificate,
-  AiOutlineThunderbolt,
-  AiOutlineFieldTime,
-} from "react-icons/ai";
 import { VscWorkspaceTrusted } from "react-icons/vsc";
-import { FaQuestion, FaGlobeAmericas,FaGoogle  } from "react-icons/fa";
+import { FaQuestion,FaGoogle  } from "react-icons/fa";
 import { FaPersonRays } from "react-icons/fa6";
 import { motion } from "framer-motion";
 
@@ -124,11 +118,7 @@ function HoverCard({ item }) {
       delay: hovered ? 0.35 : 0,
     }
   }}
-  className="
-    absolute bottom-15 left-0 right-0 
-    text-center px-4 pointer-events-none
-    flex flex-col items-center
-  "
+  className="absolute bottom-15 left-0 right-0  text-center px-4 pointer-events-none flex flex-col items-center"
 >
   <h3 className="text-xl font-semibold text-gray-800">{item.title}</h3>
   {/* <p className="text-sm text-gray-600 mt-2">{item.desc}</p> */}

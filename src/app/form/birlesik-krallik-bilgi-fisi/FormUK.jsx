@@ -684,7 +684,7 @@ function extractMonthsFromDuration(value) {
   
    
 
-          <div className="mb-6">
+    {!resMessage && ( <div className="mb-6">
 <div className="mb-6 sm:hidden"> {/* Mobilde göster */}
   <div className="flex items-center">
     {visibleSteps.map((s, i, arr) => {
@@ -750,9 +750,9 @@ function extractMonthsFromDuration(value) {
 </div>
 
 </div>
-
+)}     
         {/* Title like A4 form header */}
-<div className="mb-6">
+{!resMessage && (<div className="mb-6">
   {/* Logo Sol Üst */}
   <div className="w-full flex justify-start items-start mb-4">
 <img
@@ -775,7 +775,8 @@ function extractMonthsFromDuration(value) {
    
     </p>
   </div>
-</div>
+</div>)}
+
 
         {/* Form body */}
    {!resMessage && (    <form onSubmit={handleSubmit} className="space-y-6">
