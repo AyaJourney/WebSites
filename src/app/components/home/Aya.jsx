@@ -42,8 +42,7 @@ const Aya = () => {
           {steps.map((item, i) => (
             <div
               key={i}
-              className="group bg-white border border-gray-200 rounded-xl p-6 shadow
-              hover:shadow-xl transition transform hover:scale-[1.02] flex gap-4"
+              className="group bg-white rounded-xl p-6 transition transform flex gap-4"
             >
               {/* İkon */}
               <div className="text-blue-600 text-3xl mt-1 group-hover:scale-110 transition">

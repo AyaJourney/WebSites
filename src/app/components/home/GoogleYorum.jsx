@@ -40,7 +40,7 @@ const GoogleYorum = () => {
     return <div className="p-5 text-center">Yorumlar Yükleniyor...</div>;
 
   return (
- <div className="w-full max-w-9xl h-auto mx-auto p-4 bg-gray-100 rounded-lg shadow-md flex flex-col justify-start items-center gap-4">
+ <div className="w-full max-w-9xl h-auto mx-auto p-4 bg-white rounded-lg flex flex-col justify-start items-center gap-4">
   <h2 className="text-3xl md:text-3xl font-bold text-gray-800 mb-4 text-center">
    Herkes kendini över. Siz en iyisi daha önce bizimle calışan yüzlerce kişiye kulak verin.
   </h2>
@@ -91,7 +91,7 @@ const GoogleYorum = () => {
         return (
           <div
             key={index}
-            className="relative bg-gray-50 rounded-lg shadow-md p-4 flex flex-col min-w-[220px] sm:min-w-0 sm:w-[220px] md:w-[250px]"
+            className="relative bg-gray-50 rounded-lg shadow-md p-4 flex flex-col min-w-[220px] sm:min-w-0 sm:w-[220px] md:w-[250px] backdrop-blur border border-slate-200/70 transition-transform duration-500 hover:-translate-y-1 group shadow-none md:shadow-[0_20px_50px_-24px_rgba(15,23,42,0.45)] hover:shadow-[0_20px_40px_-26px_rgba(37,99,235,0.45)]"
           >
             <FaGoogle
               className="text-red-500 absolute top-3 right-3 text-lg"

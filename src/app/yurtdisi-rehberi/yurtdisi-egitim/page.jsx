@@ -310,9 +310,79 @@ export default function Page() {
             </div>
           </div>
         </section>
+      <section className="max-w-6xl mx-auto px-6 pb-20">
+        <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white/95 backdrop-blur shadow-2xl shadow-slate-200">
+          <div className="absolute -inset-10 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.12),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(16,185,129,0.14),transparent_30%),radial-gradient(circle_at_50%_80%,rgba(99,102,241,0.14),transparent_32%)]" />
+          <div className="relative p-6 md:p-8 space-y-6">
+            <div className="space-y-2">
+              <p className="text-sm font-semibold text-slate-700">Başvuru Akışı</p>
+              <h2 className="text-2xl md:text-3xl font-bold text-slate-900">
+               Doğru ülkeyi seçmek kritik.
+              </h2>
+              <p className="text-slate-700 max-w-3xl">
+                Her ülke farklı politika uygular. Doğru evrak, doğru planlama ve doğru kategori
+                süreci hızlandırır. Randevu, mülakat ve ek belge yönetimini bizimle planlayın.
+              </p>
+            </div>
 
+            <div className="grid md:grid-cols-3 gap-4">
+              {[
+                {
+                  title: "Başvuru Kanalları",
+                  desc: "Elçilik, aracı yetkili firma veya online platformlar.",
+                },
+                {
+                  title: "Belgeler & Randevu",
+                  desc: "Formlar, davetiyeler, gelir/konaklama kanıtları ve randevu planı.",
+                },
+                {
+                  title: "Aya Journey Desteği",
+                  desc: "Evrak kontrolü, başvuru, mülakat ve takipte uçtan uca destek.",
+                },
+              ].map((box) => (
+                <div
+                  key={box.title}
+                  className="p-5 rounded-2xl bg-white/85 border border-slate-200"
+                >
+                  <h4 className="font-semibold text-slate-900">{box.title}</h4>
+                  <p className="text-sm text-slate-700 mt-1 leading-relaxed">
+                    {box.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+              <p className="text-slate-900 font-semibold">
+                Aya Journey, kısa veya uzun dönem tüm vize süreçlerinizde yanınızda.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-2">
+                        <Link href="/randevu">
+              <button className="bg-white text-blue-600 cursor-pointer px-6 py-3 rounded-xl font-semibold shadow-lg hover:-translate-y-0.5 transition">
+                Randevu Al
+              </button>
+            </Link>
+                <a
+                  href="tel:+903128701584"
+                  className="inline-flex px-4 py-2.5 rounded-xl bg-slate-900 text-white font-semibold shadow-lg shadow-blue-500/20 hover:translate-y-[1px] transition"
+                >
+                  Hemen Ara
+                </a>
+                <a
+                  href="https://wa.me/903128701584"
+                  className="inline-flex px-4 py-2.5 rounded-xl bg-emerald-500 text-white font-semibold ring-1 ring-emerald-200/60 hover:bg-emerald-600 transition"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  WhatsApp’tan Yaz
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
         {/* CTA */}
-        <section className="max-w-5xl mx-auto px-5 py-16">
+        {/* <section className="max-w-5xl mx-auto px-5 py-16">
           <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white/95 backdrop-blur shadow-2xl shadow-slate-200">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.12),transparent_30%),radial-gradient(circle_at_80%_0%,rgba(16,185,129,0.12),transparent_25%)]" />
             <div className="relative p-10 text-center space-y-4">
@@ -340,7 +410,7 @@ export default function Page() {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
       </main>
     </>
   );

@@ -21,7 +21,7 @@ const Referanslarimiz = () => {
         {references.map((ref, index) => (
           <div
             key={index}
-            className="flex flex-col items-center justify-center bg-white rounded-xl shadow-md p-6 transition-transform hover:scale-105"
+            className="flex flex-col items-center justify-center bg-white rounded-xl shadow-md p-6backdrop-blur border border-slate-200/70 transition-transform duration-500 hover:-translate-y-1 group shadow-none md:shadow-[0_20px_50px_-24px_rgba(15,23,42,0.45)] hover:shadow-[0_20px_40px_-26px_rgba(37,99,235,0.45)]"
           >
             <img
               src={ref.logo}

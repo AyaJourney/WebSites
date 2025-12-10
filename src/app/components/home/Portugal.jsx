@@ -63,7 +63,7 @@ const Portugal = () => {
         <h1 className="text-3xl sm:text-4xl font-bold leading-snug md:leading-relaxed">
           <span className="relative italic px-2 py-1 rounded-2xl overflow-hidden text-white inline-flex items-center">
             <span
-              className="absolute top-0 left-0 h-full bg-blue-500"
+              className="absolute top-0 left-0 h-full bg-orange-500"
               style={{
                 width: `${width}%`,
                 transition: "width 3s ease",
@@ -93,6 +93,6 @@ const Portugal = () => {
 
     </main>
   );
-};  
+};
 
 export default Portugal;

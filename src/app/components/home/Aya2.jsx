@@ -24,7 +24,7 @@ const Aya2 = () => {
   ];
 
   return (
-    <section className="w-full bg-[#e7f5f8] text-black py-6 px-6">
+    <section className="w-full bg-[#ffff] text-black py-6 px-6">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
 
         {/* Sol: Görsel */}

@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 /* --- DATA --- */
 const shortVisas = [
@@ -293,6 +294,11 @@ export default function Page() {
                 Aya Journey, kısa veya uzun dönem tüm vize süreçlerinizde yanınızda.
               </p>
               <div className="flex flex-col sm:flex-row gap-2">
+                        <Link href="/randevu">
+              <button className="bg-white text-blue-600 cursor-pointer px-6 py-3 rounded-xl font-semibold shadow-lg hover:-translate-y-0.5 transition">
+                Randevu Al
+              </button>
+            </Link>
                 <a
                   href="tel:+903128701584"
                   className="inline-flex px-4 py-2.5 rounded-xl bg-slate-900 text-white font-semibold shadow-lg shadow-blue-500/20 hover:translate-y-[1px] transition"

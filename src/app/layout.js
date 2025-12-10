@@ -25,9 +25,9 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="tr" >
+    <html lang="tr" className="font-arboria">
       <body 
-        className={`${geistSans.variable} ${geistMono.variable} antialiased `}
+        
       >
        <nav className="fixed top-0 left-0 w-full h-20 md:h-24 z-50 bg-white shadow-md">
     <Navbar />

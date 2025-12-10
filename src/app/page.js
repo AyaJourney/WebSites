@@ -23,16 +23,18 @@ export default function Home() {
 return (
   <main className="flex flex-col w-full font-sans bg-gray-50 ">
     
-    <article className="flex flex-col w-full min-h-screen md:h-screen items-center justify-center">
-      <Portugal />
+    <article className="flex flex-col w-full min-h-screen md:h-screen items-center justify-center mb-30 mt-1">
+       <Giris />
     </article>
-
+      <article className="flex flex-col w-full min-h-screen md:h-screen items-center justify-center">
+      <Aya />
+    </article>
     <article className="flex flex-col w-full min-h-screen md:h-screen items-center justify-center">
       <CardEgitim />
     </article>
 
     <article className="flex flex-col w-full min-h-screen md:h-screen items-center justify-center">
-      <Giris />
+      <Portugal />
     </article>
 
     <article className="flex flex-col w-full items-start md:items-center justify-center py-10 md:py-0">
@@ -50,9 +52,7 @@ return (
     <article className="flex flex-col w-full min-h-screen md:h-screen items-center justify-center">
       <WhyAya />
     </article>
-        <article className="flex flex-col w-full min-h-screen md:h-screen items-center justify-center">
-      <Aya />
-    </article>
+  
           <article className="flex flex-col w-full min-h-screen md:h-screen items-center justify-center">
       <Aya2 />
     </article>
