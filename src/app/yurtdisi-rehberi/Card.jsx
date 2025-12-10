@@ -2,6 +2,7 @@
 import React from "react";
 import SmartImage from "../components/SmartImage";
 import { abroad } from "../../helper/help";
+import Link from "next/link";
 
 const Card = () => {
   return (
@@ -11,10 +12,12 @@ const Card = () => {
           {abroad.map((item) => (
             <div
               key={item.id}
-              className="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-md overflow-hidden w-full max-w-xs transition-all duration-300  hover:shadow-2xl"
+              className="relative cursor-pointer bg-white dark:bg-zinc-900 rounded-2xl shadow-md overflow-hidden w-full max-w-xs transition-all duration-300  hover:shadow-2xl"
+            
             >
-              {/* Resim */}
-              <div className="relative w-full h-44 overflow-hidden rounded-t-2xl">
+              <Link href={item.address} aria-placeholder={item.title}>
+
+                      <div className="relative w-full h-44 overflow-hidden rounded-t-2xl">
                 <SmartImage
                   src={item.image}
                   alt={item.title}
@@ -34,22 +37,34 @@ const Card = () => {
                     {item.shortDescription}
                   </p>
                   {/* Örnek etiket */}
-         <div className="mt-2 flex flex-wrap gap-2">
+       <div className="mt-2 flex flex-wrap gap-2">
   {item?.etiketler?.map((etiket, index) => {
-    // Renkleri sırayla atayalım
-    const renkler = ["bg-blue-700", "bg-green-700", "bg-orange-700"];
-    const renk = renkler[index % renkler.length]; 
+    // Renkleri sırayla atayalım (artık bg yerine text ve border için kullanacağız)
+    const renkler = [
+      { text: "text-blue-700", border: "border-blue-700" },
+      { text: "text-green-700", border: "border-green-700" },
+      { text: "text-orange-700", border: "border-orange-700" }
+    ];
+
+    const renk = renkler[index % renkler.length];
 
     return (
       <span
         key={index}
-        className={`${renk} text-white text-xs px-2 py-1 rounded-full  min-w-[60px] text-center`}
+        className={`
+          bg-white 
+          ${renk.text} 
+          ${renk.border}
+          border 
+          text-xs px-2 py-1 rounded-full min-w-[60px] text-center
+        `}
       >
         {etiket}
       </span>
     );
   })}
 </div>
+
 
                 </div>
 
@@ -59,6 +74,10 @@ const Card = () => {
                   Daha Fazla
                 </button> */}
               </div>
+              </Link> 
+         
+              {/* Resim */}
+          
             </div>
           ))}
         </div>

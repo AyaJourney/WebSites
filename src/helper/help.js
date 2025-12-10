@@ -517,23 +517,26 @@ export const abroad =[
     "shortDescription": "Eğitim, çalışma, turist veya ticari vizeler hakkında temel bilgileri keşfedin.",
     "image": "/images/1.webp",
     "etiketler": ["Vize", "Başvuru"],
-    "detailedDescription": "Vize türleri ülkeden ülkeye değişmekle birlikte, genel olarak kısa süreli (turistik, ticari, aile ziyareti) ve uzun süreli (eğitim, çalışma, oturum) vizeler olarak ikiye ayrılır. Başvuru süreci genellikle online form doldurma, gerekli belgelerin hazırlanması, biyometrik verilerin verilmesi ve mülakata katılım adımlarını içerir. Başvuru öncesi güncel evrak listesi mutlaka kontrol edilmelidir."
+    "detailedDescription": "Vize türleri ülkeden ülkeye değişmekle birlikte, genel olarak kısa süreli (turistik, ticari, aile ziyareti) ve uzun süreli (eğitim, çalışma, oturum) vizeler olarak ikiye ayrılır. Başvuru süreci genellikle online form doldurma, gerekli belgelerin hazırlanması, biyometrik verilerin verilmesi ve mülakata katılım adımlarını içerir. Başvuru öncesi güncel evrak listesi mutlaka kontrol edilmelidir.",
+    "address":"/yurtdisi-rehberi/vize-turleri"
   },
   {
     "id": 2,
     "title": "Popüler Eğitim Destinasyonları",
-    "shortDescription": "Yurtdışında eğitim için en çok tercih edilen ülkeler ve avantajları.",
+    "shortDescription": "Yurt dışında eğitim için en çok tercih edilen ülkeler ve avantajları.",
     "image": "/images/2.webp",
       "etiketler": ["Vize", "Başvuru","Eğitim"],
-    "detailedDescription": "İngiltere, Kanada, Almanya, Avustralya ve Hollanda; yüksek kaliteli eğitim sistemleri, uluslararası tanınırlıkları ve çalışma imkânlarıyla öne çıkmaktadır. Her ülkenin kendine özgü öğrenci vizesi şartları ve burs seçenekleri vardır. Eğitim planı yapmadan önce yaşam maliyetleri ve vize süresi dikkatlice değerlendirilmelidir."
+    "detailedDescription": "İngiltere, Kanada, Almanya, Avustralya ve Hollanda; yüksek kaliteli eğitim sistemleri, uluslararası tanınırlıkları ve çalışma imkânlarıyla öne çıkmaktadır. Her ülkenin kendine özgü öğrenci vizesi şartları ve burs seçenekleri vardır. Eğitim planı yapmadan önce yaşam maliyetleri ve vize süresi dikkatlice değerlendirilmelidir.",
+   "address":"/yurtdisi-rehberi/yurtdisi-egitim"
   },
   {
     "id": 3,
-    "title": "Yurtdışında İş Bulma Rehberi",
+    "title": "Yurt Dışında İş Bulma Rehberi",
     "shortDescription": "Çalışma vizesi ile yurtdışında kariyer yapmak isteyenlere özel ipuçları.",
      "image": "/images/3.webp",
       "etiketler": ["Vize", "Başvuru","İş"],
-    "detailedDescription": "Yurtdışında iş bulmak için öncelikle ülkenin çalışma izni politikaları incelenmeli ve dil yeterliliği sağlanmalıdır. Özellikle Almanya'nın Mavi Kart programı ve Kanada'nın Express Entry sistemi nitelikli çalışanlar için önemli fırsatlar sunar. CV formatı ve iş görüşmesi kültürü de ülkeye göre değişiklik gösterebilir."
+    "detailedDescription": "Yurt dışında iş bulmak için öncelikle ülkenin çalışma izni politikaları incelenmeli ve dil yeterliliği sağlanmalıdır. Özellikle Almanya'nın Mavi Kart programı ve Kanada'nın Express Entry sistemi nitelikli çalışanlar için önemli fırsatlar sunar. CV formatı ve iş görüşmesi kültürü de ülkeye göre değişiklik gösterebilir.",
+   "address":"/yurtdisi-rehberi/is-bulma-rehberi"
   },
   {
     "id": 4,
@@ -541,23 +544,26 @@ export const abroad =[
     "shortDescription": "Konsolosluk görüşmelerine hazırlık için ipuçları.",
      "image": "/images/4.jpg",
       "etiketler": ["Vize", "Başvuru"],
-    "detailedDescription": "Vize mülakatları, niyetinizi ve belgelerinizin doğruluğunu değerlendirmek içindir. Net, dürüst ve kendinizden emin bir iletişim tarzı benimseyin. Belgelerinizi önceden düzenleyin, planladığınız seyahatin nedenlerini açık şekilde ifade edin. Gereksiz detaylardan kaçının ve konsolosluk görevlisinin sorularını dikkatle dinleyin."
+    "detailedDescription": "Vize mülakatları, niyetinizi ve belgelerinizin doğruluğunu değerlendirmek içindir. Net, dürüst ve kendinizden emin bir iletişim tarzı benimseyin. Belgelerinizi önceden düzenleyin, planladığınız seyahatin nedenlerini açık şekilde ifade edin. Gereksiz detaylardan kaçının ve konsolosluk görevlisinin sorularını dikkatle dinleyin.",
+   "address":"/yurtdisi-rehberi/vize-turleri"
   },
   {
     "id": 5,
     "title": "Konaklama ve Ulaşım Rehberi",
-    "shortDescription": "Yurtdışında uygun konaklama ve ulaşım yöntemleri.",
+    "shortDescription": "Yurt dışında uygun konaklama ve ulaşım yöntemleri.",
      "image": "/images/5.webp",
       "etiketler": ["Vize", "Başvuru","Konaklama"],
-    "detailedDescription": "Yurtdışında konaklama seçenekleri; öğrenci yurtları, paylaşımlı evler, hosteller veya oteller olabilir. Uzun süreli kalışlarda kiralık daireler maliyet açısından daha avantajlıdır. Ulaşımda toplu taşıma kartları ve şehir içi indirim uygulamaları büyük kolaylık sağlar. Gideceğiniz ülkenin toplu taşıma sistemini önceden araştırmanız önemlidir."
+    "detailedDescription": "Yurt dışında konaklama seçenekleri; öğrenci yurtları, paylaşımlı evler, hosteller veya oteller olabilir. Uzun süreli kalışlarda kiralık daireler maliyet açısından daha avantajlıdır. Ulaşımda toplu taşıma kartları ve şehir içi indirim uygulamaları büyük kolaylık sağlar. Gideceğiniz ülkenin toplu taşıma sistemini önceden araştırmanız önemlidir.",
+     "address":"/yurtdisi-rehberi/vize-turleri"
   },
   {
     "id": 6,
-    "title": "Yurtdışında Sağlık Sigortası",
+    "title": "Yurt Dışında Sağlık Sigortası",
     "shortDescription": "Zorunlu sağlık sigortası ve kapsamı hakkında bilmeniz gerekenler.",
      "image": "/images/6.jpg",
       "etiketler": ["Vize", "Başvuru"],
-    "detailedDescription": "Birçok ülke vize başvurusu öncesi sağlık sigortası yaptırılmasını zorunlu kılar. Sigorta, acil durumlar, hastane masrafları ve ilaç giderlerini karşılar. Eğitim veya çalışma vizesi alacak kişiler, kapsamlı bir poliçe tercih etmelidir. Avrupa’da seyahat edenler için Schengen sağlık sigortası genellikle 30.000 Euro teminatlı olmalıdır."
+    "detailedDescription": "Birçok ülke vize başvurusu öncesi sağlık sigortası yaptırılmasını zorunlu kılar. Sigorta, acil durumlar, hastane masrafları ve ilaç giderlerini karşılar. Eğitim veya çalışma vizesi alacak kişiler, kapsamlı bir poliçe tercih etmelidir. Avrupa’da seyahat edenler için Schengen sağlık sigortası genellikle 30.000 Euro teminatlı olmalıdır.",
+     "address":"/yurtdisi-rehberi/vize-turleri"
   },
   {
     "id": 7,
@@ -565,15 +571,17 @@ export const abroad =[
     "shortDescription": "Yeni bir ülkeye taşınırken kültürel farklılıklara hazırlanın.",
      "image": "/images/7.webp",
       "etiketler": ["Vize", "Başvuru"],
-    "detailedDescription": "Yeni bir ülkeye yerleşmek yalnızca fiziksel değil, kültürel bir adaptasyon sürecidir. Farklı gelenekler, dil ve sosyal normlara uyum sağlamak zaman alabilir. Dil kurslarına katılmak, yerel etkinliklere gitmek ve yeni insanlarla iletişim kurmak uyum sürecini kolaylaştırır. Kültürel hassasiyetlere dikkat etmek önemlidir."
+    "detailedDescription": "Yeni bir ülkeye yerleşmek yalnızca fiziksel değil, kültürel bir adaptasyon sürecidir. Farklı gelenekler, dil ve sosyal normlara uyum sağlamak zaman alabilir. Dil kurslarına katılmak, yerel etkinliklere gitmek ve yeni insanlarla iletişim kurmak uyum sürecini kolaylaştırır. Kültürel hassasiyetlere dikkat etmek önemlidir.",
+     "address":"/yurtdisi-rehberi/vize-turleri"
   },
   {
     "id": 8,
-    "title": "Yurtdışı Burs ve Finansal Destekler",
+    "title": "Yurt Dışı Burs ve Finansal Destekler",
     "shortDescription": "Burs, hibe ve sponsorluk fırsatlarını değerlendirin.",
      "image": "/images/8.webp",
       "etiketler": ["Vize", "Başvuru","Eğitim"],
-    "detailedDescription": "Birçok ülke, uluslararası öğrencilere yönelik burslar sunmaktadır. Örneğin Almanya’da DAAD, İngiltere’de Chevening, ABD’de Fulbright programları öne çıkar. Başvuru süreci genellikle akademik başarı, niyet mektubu ve referans mektuplarına dayanır. Erken başvuru yapmak şansı artırır."
+    "detailedDescription": "Birçok ülke, uluslararası öğrencilere yönelik burslar sunmaktadır. Örneğin Almanya’da DAAD, İngiltere’de Chevening, ABD’de Fulbright programları öne çıkar. Başvuru süreci genellikle akademik başarı, niyet mektubu ve referans mektuplarına dayanır. Erken başvuru yapmak şansı artırır.",
+     "address":"/yurtdisi-rehberi/vize-turleri"
   },
   {
     "id": 9,
@@ -581,15 +589,17 @@ export const abroad =[
     "shortDescription": "Vize reddi sonrası itiraz ve yeniden başvuru yolları.",
     "image": "/images/9.jpg",
       "etiketler": ["Vize", "Başvuru"],
-    "detailedDescription": "Vize reddi almanız, gelecekte başvuru yapamayacağınız anlamına gelmez. Ret mektubunda belirtilen gerekçeleri dikkatle okuyun. Belgelerde eksik veya yanlış bilgi varsa düzeltin. Bazı ülkelerde belirli süre içinde itiraz hakkınız bulunur. Uygun bir danışman desteğiyle yeniden başvuruda bulunabilirsiniz."
+    "detailedDescription": "Vize reddi almanız, gelecekte başvuru yapamayacağınız anlamına gelmez. Ret mektubunda belirtilen gerekçeleri dikkatle okuyun. Belgelerde eksik veya yanlış bilgi varsa düzeltin. Bazı ülkelerde belirli süre içinde itiraz hakkınız bulunur. Uygun bir danışman desteğiyle yeniden başvuruda bulunabilirsiniz.",
+     "address":"/yurtdisi-rehberi/vize-turleri"
   },
   {
     "id": 10,
-    "title": "Yurtdışına Çıkmadan Önce Yapılması Gerekenler",
+    "title": "Yurt Dışına Çıkmadan Önce Yapılması Gerekenler",
     "shortDescription": "Valiz hazırlığından banka hesabına kadar her detayı planlayın.",
      "image": "/images/vize.jpg",
        "etiketler": ["Vize", "Başvuru"],
-    "detailedDescription": "Pasaport, vize, sağlık sigortası, konaklama belgeleri ve uçak biletinizi kontrol edin. Gidilen ülkenin para birimi ve banka işlemleri hakkında bilgi edinin. Elektrik priz adaptörü, ilaçlar ve temel ihtiyaçlarınızı yanınıza almayı unutmayın. Acil durum numaralarını kaydedin ve yakınlarınıza seyahat planınızı bildirin."
+    "detailedDescription": "Pasaport, vize, sağlık sigortası, konaklama belgeleri ve uçak biletinizi kontrol edin. Gidilen ülkenin para birimi ve banka işlemleri hakkında bilgi edinin. Elektrik priz adaptörü, ilaçlar ve temel ihtiyaçlarınızı yanınıza almayı unutmayın. Acil durum numaralarını kaydedin ve yakınlarınıza seyahat planınızı bildirin.",
+     "address":"/yurtdisi-rehberi/vize-turleri"
   }
 ]
 

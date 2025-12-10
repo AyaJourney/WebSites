@@ -9,7 +9,7 @@ const YurtDisiRehberi = () => {
 return (
    <main className="flex flex-col w-full min-h-screen items-center justify-center bg-zinc-50 font-sans ">
   {/* Navbar yüksekliği kadar boşluk */}
-  <article className="flex flex-col w-full  items-center justify-start bg-zinc-50 font-sans  mt-[65px]">
+  <article className="flex flex-col w-full  items-center justify-start bg-zinc-50 font-sans  ">
     <Giris />
   </article>
 

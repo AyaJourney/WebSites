@@ -36,7 +36,7 @@ return (
 
       {/* Açıklama Paragrafı */}
       <p className="text-gray-600 mt-4 text-base sm:text-lg md:text-base text-justify">
-        ABD, İngiltere, Portekiz ve tüm Schengen vizelerinde uzman ekibimizle, başvurularınızı en hızlı ve hatasız şekilde yönetiyoruz.
+        ABD, İngiltere, Portekiz, Kanada, Avustralya ve tüm Schengen vizelerinde uzman ekibimizle, başvurularınızı en hızlı ve hatasız şekilde yönetiyoruz.
       </p>
 
       {/* Buton */}

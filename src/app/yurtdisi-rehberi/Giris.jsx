@@ -4,7 +4,7 @@ const Giris = () => {
   return (
     <div className="w-full font-sans">
       {/* Üst görsel alanı */}
-      <div className="relative w-full h-[25vh]">
+      <div className="relative w-full h-[70vh]">
         <img
           src="./images/ornek.avif"
           alt="Aya Journey Arka Plan"
@@ -25,7 +25,7 @@ const Giris = () => {
 
       </div>
 
-      {/* Alt içerik (örnek) */}
+
     
     </div>
   );

@@ -49,7 +49,7 @@ export default function Navbar() {
 
       ],
     },
-    { name: "Yurtdışı Rehberi", href: "/yurtdisi-rehberi" },
+    { name: "Yurt Dışı Rehberi", href: "/yurtdisi-rehberi" },
    
     { name: "SSS", href: "/sikca-sorulan-sorular" },
     { name: "Hadi Başlayalım !", href: "/randevu" },
