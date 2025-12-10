@@ -48,7 +48,7 @@ const Hakkimizda = () => {
 
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-lg font-medium text-gray-800 bg-[#f9fafb] transition-all duration-300 hover:shadow-md">
               <li className="flex items-center gap-2">
-                <span className="text-[#0d8cff] text-2xl">•</span> ABD, BK, Kanada Vizeleri
+                <span className="text-[#0d8cff] text-2xl">•</span> ABD,İngiltere, Kanada Vizeleri
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-[#0d8cff] text-2xl">•</span> Schengen & Dubai Vizeleri

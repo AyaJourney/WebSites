@@ -135,7 +135,14 @@ function HoverCard({ item }) {
 
       {/* MOBILE — Direkt kart görünür */}
       <div className="md:hidden bg-white border border-gray-200 shadow-md rounded-2xl p-6 text-center flex flex-col items-center">
-        <div className="mb-3">{item.icon}</div>
+        <div className="mb-3">     <Image
+              src={item.icon} 
+              alt="Tanıtım görseli"
+            width={100}
+            height={100}
+        
+              className="rounded-3xl"
+            /></div>
         <h3 className="text-lg font-semibold text-gray-800">{item.title}</h3>
         {/* <p className="text-sm text-gray-600 mt-2">{item.desc}</p> */}
       </div>

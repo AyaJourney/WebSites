@@ -42,10 +42,10 @@ export default function Navbar() {
       href: "/formlar",
       description: "Vize başvurularında kullanılan formlar hakkında bilgiler.",
       submenu: [
-        { name: "DS-160", href: "/form/ds-160" },
-        { name: "Schengen", href: "/form/schengen" },
-        { name: "Birleşik Krallık Bilgi Fişi", href: "/form/birlesik-krallik-bilgi-fisi" },
-        { name: "Kanada Başvuru Formu", href: "/form/kanada-basvuru-formu" },
+        { name: "Amerika DS-160 Vize Başvuru Formu", href: "/form/ds-160" },
+        { name: "Schengen Vize Başvuru  Formu", href: "/form/schengen" },
+        { name: "Birleşik Krallık Vize Başvuru Formu", href: "/form/birlesik-krallik-bilgi-fisi" },
+        { name: "Kanada Vize Başvuru Formu", href: "/form/kanada-basvuru-formu" },
 
       ],
     },
