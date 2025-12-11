@@ -34,7 +34,7 @@ const Giris = () => {
       {/* --- VİDEO SADECE TABLET & DESKTOPTA --- */}
       {!isMobile && (
         <video
-          src="/images/pasaportvideo.webm"
+          src="/images/videopasaport.webm"
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700
             ${videoEnded ? "opacity-0" : "opacity-100"}`}
           autoPlay

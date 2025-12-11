@@ -45,7 +45,7 @@ const Aya = () => {
               className="group bg-white rounded-xl p-6 transition transform flex gap-4"
             >
               {/* İkon */}
-              <div className="text-blue-600 text-3xl mt-1 group-hover:scale-110 transition">
+              <div className="text-yellow-300 text-3xl mt-1 group-hover:scale-110 transition hover:text-yellow-600">
                 <FaCheckCircle />
               </div>
 
