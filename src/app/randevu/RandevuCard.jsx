@@ -137,7 +137,7 @@ if (res.ok) {
 
 
 return (
-  <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg p-6 flex flex-col space-y-8">
+  <div className="max-w-6xl mx-auto bg-white rounded-2xl p-6 flex flex-col space-y-8">
     {/* Level göstergesi */}
  <div className="grid grid-cols-2 grid-rows-2 gap-2 sm:flex sm:justify-center sm:items-center sm:gap-4">
   {[{label:"Randevu günü seç", state:selectedDay},{label:"Randevu saati seç", state:selectedTime},{label:"Bilgilerini doldur", state:isFormValid}].map((lvl,i)=>(
@@ -160,7 +160,7 @@ return (
 
 
     {/* Temsilci, Takvim ve Saatler */}
-    <div className="flex flex-col md:flex-row justify-between gap-6 border-b border-gray-200 pb-6">
+    <div className="flex flex-col md:flex-row justify-between gap-6 pb-6">
       {/* Temsilci */}
       <div className="flex items-center md:flex-col md:items-center md:justify-start space-x-4 md:space-x-0 md:space-y-4 md:w-1/4">
         <Image
@@ -180,7 +180,7 @@ return (
       {/* Takvim */}
 {/* Takvim */}
 {/* Takvim */}
-<div className="w-full md:w-1/3 lg:w-2/4 bg-gray-50 rounded-lg p-2 md:p-4 min-h-[320px] box-border mx-auto flex justify-center">
+<div className="w-full md:w-1/3 lg:w-2/4 bg-white rounded-lg p-2 md:p-4 min-h-[320px] box-border mx-auto flex justify-center">
   <div className="w-full h-full overflow-auto">
     <DayPicker
       mode="single"
@@ -197,7 +197,7 @@ return (
 
       {/* Saatler */}
    {/* Saatler */}
-<div className="md:w-5/12 flex flex-col bg-gray-50 rounded-lg p-4 min-h-[320px] sm:min-h-auto">
+<div className="md:w-5/12 flex flex-col bg-white rounded-lg p-4 min-h-[320px] sm:min-h-auto">
   <span className="text-md text-gray-600 mb-2">Saat Seçin</span>
   {selectedDay ? (
     <div className="grid grid-cols-3 gap-2 h-full">

@@ -1,153 +1,206 @@
 "use client";
-import React, { useState } from "react";
-import { VscWorkspaceTrusted } from "react-icons/vsc";
-import { FaQuestion,FaGoogle  } from "react-icons/fa";
-import { FaPersonRays } from "react-icons/fa6";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+
 const items = [
-  {
-    icon:"/images/terzi.webp",
-    title: "Kişiye özel başvuru",
-    desc: "Başvurunuz uzman ekibimiz tarafından hazırlanır.",
-  },
-  {
-     icon:"/images/whyaya.webp",
-    title: "Binlerce başvurudan elde ettiğimiz deneyimi size sunmaya hazırız",
-    desc: "Belgeleriniz doğru şekilde sunulur.",
-  },
-  {
-   icon:"/images/google.webp",
-    title: "Google yorumları bizim hakkımızda çok şey anlatır",
-    desc: "Verileriniz tam güvenlik altındadır.",
-  },
-  {
-   icon:"/images/brains.webp",
-    title: "Sorularınız yanıtsız kalmaz, ofislerimiz sizi ağırlamaya hazır",
-    desc: "Süreçler hızlı bir şekilde ilerletilir.",
-  },
-  // {
-  //   icon: <FaUsers className="w-10 h-10 text-[#0d8cff]" />,
-  //   title: "Uzman Danışmanlık",
-  //   desc: "Size özel strateji oluşturulur.",
-  // },
-  // {
-  //   icon: <FaGlobeAmericas className="w-10 h-10 text-[#0d8cff]" />,
-  //   title: "Küresel Vize Çözümleri",
-  //   desc: "Schengen, ABD, İngiltere ve daha fazlası.",
-  // },
-  // {
-  //   icon: <AiOutlineFieldTime className="w-10 h-10 text-[#0d8cff]" />,
-  //   title: "Kesintisiz Başvuru Desteği",
-  //   desc: "Her aşamada 7/24 destek.",
-  // },
+  { icon: "/images/terzi.webp", title: "Kişiye özel başvuru" },
+  { icon: "/images/whyaya.webp", title: "Binlerce başvurudan elde ettiğimiz deneyimi size sunmaya hazırız" },
+  { icon: "/images/google.webp", title: "Google yorumları bizim hakkımızda çok şey anlatır" },
+  { icon: "/images/brains.webp", title: "Sorularınız yanıtsız kalmaz, ofislerimiz sizi ağırlamaya hazır" },
 ];
 
 export default function WhyAya() {
+  const desktopRefs = useRef([]);
+  const mobileRefs = useRef([]);
+  const [shown, setShown] = useState(Array(items.length).fill(false));
+  const titleRef = useRef(null);
+  const [titleShown, setTitleShown] = useState(false);
+
+  /* BAŞLIK ANİMASYONU */
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) setTitleShown(true);
+      },
+      { threshold: 0.4 }
+    );
+    if (titleRef.current) obs.observe(titleRef.current);
+    return () => obs.disconnect();
+  }, []);
+
+  /* DESKTOP – Scroll görünümü (sekme + stagger) */
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            const idx = Number(e.target.dataset.index);
+            setShown((prev) => {
+              if (prev[idx]) return prev;
+              const updated = [...prev];
+              updated[idx] = true;
+              return updated;
+            });
+          }
+        }),
+      { threshold: 0.45 }
+    );
+
+    desktopRefs.current.forEach((el) => el && obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+
+  /* MOBİL – Slide-in animasyon */
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("show-why");
+          }
+        }),
+      { threshold: 0.3 }
+    );
+
+    mobileRefs.current.forEach((el) => el && obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-20">
-      <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
-        Neden Biz?
-      </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
+      {/* BAŞLIK */}
+      <motion.h2
+        ref={titleRef}
+        initial={{ scale: 0.85, opacity: 0 }}
+        animate={
+          titleShown
+            ? { scale: [0.85, 1.15, 1], opacity: 1 }
+            : {}
+        }
+        transition={{ duration: 0.9, ease: "easeOut" }}
+        className="text-3xl sm:text-4xl font-bold text-center mb-16"
+      >
+        Neden Biz?
+      </motion.h2>
+
+      {/* KART GRIDİ */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-16">
         {items.map((item, idx) => (
-          <HoverCard key={idx} item={item} />
+          <HoverCard
+            key={idx}
+            idx={idx}
+            item={item}
+            shown={shown[idx]}
+            desktopRefs={desktopRefs}
+            mobileRefs={mobileRefs}
+          />
         ))}
       </div>
     </div>
   );
 }
 
-/* -------------------------------------------
-   DESKTOP HOVER KARTI — TÜM ANİMASYON MOTION
---------------------------------------------*/
-function HoverCard({ item }) {
-  const [hovered, setHovered] = useState(false);
+function HoverCard({ item, idx, shown, desktopRefs, mobileRefs }) {
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="group">
-      {/* DESKTOP */}
+    <div className="flex justify-center">
+
+      {/* 🖥 DESKTOP CARD */}
       <motion.div
-        onHoverStart={() => setHovered(true)}
-        onHoverEnd={() => setHovered(false)}
-        initial={false}
-        animate={{
-          width: hovered ? 260 : 140,
-          height: hovered ? 260 : 140,
-          borderRadius: hovered ? "20px" : "999px",
+        ref={(el) => (desktopRefs.current[idx] = el)}
+        data-index={idx}
+        initial={{
+          width: 150,
+          height: 150,
+          borderRadius: "999px",
+          opacity: 0,
+          y: 40,
+          scale: 0.9,
         }}
+        animate={
+          shown
+            ? {
+                opacity: 1,
+                y: [40, -22, 12, -5, 0],   // ✔ SCROLL SEKME ANİMASYONU
+                scale: [0.9, 1.05, 1],
+              }
+            : {}
+        }
         transition={{
-          duration: 0.45,
+          duration: 1.0,
           ease: "easeOut",
+          delay: idx * 0.12,            // ✔ SIRAYLA GELME
         }}
-        className="hidden md:flex relative mx-auto bg-white border border-gray-200 shadow-md flex-col items-center justify-center cursor-pointer select-none"
+        whileHover={{
+          width: 260,
+          height: 260,
+          borderRadius: "22px",
+          transition: { duration: 0.5 }, // ✔ KART 1 SANİYEDE AÇILIR
+        }}
+        onHoverStart={() => setIsHovered(true)}
+        onHoverEnd={() => setIsHovered(false)}
+        className="hidden md:flex why-circle-card relative cursor-pointer flex-col items-center justify-center hover:justify-start p-8"
+        style={{
+          backdropFilter: isHovered ? "blur(14px)" : "blur(0px)",
+          WebkitBackdropFilter: isHovered ? "blur(14px)" : "blur(0px)",
+        }}
       >
-        {/* İKON */}
+        {/* RESİM */}
         <motion.div
-          layout
-          initial={false}
-          animate={
-            hovered
-              ? { y: 0, scale: 1.15 } // KART MODU → ikon yukarıda
-              : { y: 0, scale: 1 }     // DAİRE MODU → ikon tam ortada
-          }
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className={hovered ? "z-10 mb-30" : "z-10"} 
-          // hovered değilken margin yok → tam merkezde durur
-          // hovered iken ikon biraz yukarı kayar ama tavana yapışmaz
+          animate={isHovered ? { scale: 1.08 } : { scale: 1 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="flex items-center justify-center mb-3"
         >
-               <Image
-              src={item.icon} 
-              alt="Tanıtım görseli"
-            width={100}
-            height={100}
-        
-              className="rounded-3xl"
-            />
+          <Image
+            src={item.icon}
+            alt={item.title}
+            width={90}
+            height={90}
+            className="rounded-2xl"
+          />
         </motion.div>
 
-        {/* YAZILAR */}
-     <motion.div
-  initial={{ opacity: 0, y: 30 }}
-  animate={
-    hovered
-      ? { opacity: 1, y: 10 }   // giriş animasyonu
-      : { opacity: 0, y: 30 }   // çıkış animasyonu
-  }
-  transition={{
-    opacity: {
-      duration: hovered ? 0.6 : 0.05,   // ✔ giriş yavaş, çıkış hızlı
-      delay: hovered ? 0.35 : 0,        // ✔ giriş gecikmeli, çıkış hemen
-    },
-    y: {
-      duration: hovered ? 0.6 : 0.25,
-      delay: hovered ? 0.35 : 0,
-    }
-  }}
-  className="absolute bottom-15 left-0 right-0  text-center px-4 pointer-events-none flex flex-col items-center"
->
-  <h3 className="text-xl font-semibold text-gray-800">{item.title}</h3>
-  {/* <p className="text-sm text-gray-600 mt-2">{item.desc}</p> */}
-</motion.div>
-
+        {/* YAZI – 0.7 SANİYE GECİKME */}
+        <motion.h3
+          initial={{ opacity: 0, y: 20 }}
+          animate={
+            isHovered ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
+          }
+          transition={{
+            duration: 0.45,
+            ease: "easeOut",
+            delay: isHovered ? 0.5 : 0,   // ✔ YAZI 0.7’DE GELİR
+          }}
+          className="text-lg font-semibold text-gray-800 text-center absolute bottom-6 w-full px-4"
+        >
+          {item.title}
+        </motion.h3>
       </motion.div>
 
-      {/* MOBILE — Direkt kart görünür */}
-      <div className="md:hidden bg-white border border-gray-200 shadow-md rounded-2xl p-6 text-center flex flex-col items-center">
-        <div className="mb-3">     <Image
-              src={item.icon} 
-              alt="Tanıtım görseli"
-            width={100}
-            height={100}
-        
-              className="rounded-3xl"
-            /></div>
-        <h3 className="text-lg font-semibold text-gray-800">{item.title}</h3>
-        {/* <p className="text-sm text-gray-600 mt-2">{item.desc}</p> */}
-      </div>
+      {/* 📱 MOBİL CARD */}
+  <div
+  ref={(el) => (mobileRefs.current[idx] = el)}
+  className={`
+    md:hidden bg-white border border-gray-200 shadow-md rounded-xl
+    p-6 flex flex-col items-center text-center
+    w-[260px] mx-auto               /* ⭐ Sabit genişlik + ortalama */
+    ${idx % 2 === 0 ? "slide-left-init-why" : "slide-right-init-why"}
+  `}
+>
+  <Image
+    src={item.icon}
+    alt={item.title}
+    width={90}
+    height={90}
+    className="rounded-xl mb-3"
+  />
+  <h3 className="text-lg font-semibold text-gray-800">{item.title}</h3>
+</div>
+
+
     </div>
   );
 }
-
-

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import "../../globals.css";
@@ -11,15 +11,14 @@ const AppleStyleMedia = () => {
   const [showImage, setShowImage] = useState(false);
 
   return (
-    <div
-      className="relative w-full  h-[300px] md:h-full max-w-[700px] max-h-[475px]  overflow-hidden rounded-xl"
-    >
-
+    <div className="relative w-full h-[300px] md:h-full max-w-[700px] max-h-[475px] overflow-hidden rounded-xl">
       <Image
         src="/images/sehir.jpg"
         alt="Portekiz"
         fill
-        className={`object-cover transform transition-all duration-[1500ms] ease-out ${showImage ? "opacity-100 scale-100" : "opacity-0 scale-[1.002]"}`}
+        className={`object-cover transform transition-all duration-[1500ms] ease-out ${
+          showImage ? "opacity-100 scale-100" : "opacity-0 scale-[1]"
+        }`}
       />
 
       {!showImage && (
@@ -29,24 +28,42 @@ const AppleStyleMedia = () => {
           muted
           playsInline
           onEnded={() => setShowImage(true)}
-          className="w-full h-full object-cover transition-opacity duration-700"
+          className="w-full h-full object-cover duration-700"
         />
       )}
     </div>
   );
 };
 
-
 /* ----------------------------------------- */
 /* PORTUGAL ANA SAYFA */
 /* ----------------------------------------- */
-
 const Portugal = () => {
   const [width, setWidth] = useState(0);
 
+  const textRef = useRef(null); // YAZI ANİMASYONU BURADA
+
   useEffect(() => {
     const t = setTimeout(() => setWidth(100), 50);
-    return () => clearTimeout(t);
+
+    // Soldan giriş animasyonu
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("show");
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    if (textRef.current) observer.observe(textRef.current);
+
+    return () => {
+      clearTimeout(t);
+      observer.disconnect();
+    };
   }, []);
 
   return (
@@ -58,15 +75,17 @@ const Portugal = () => {
       </div>
 
       {/* --- SAĞ TARAF: METİNLER --- */}
-      <div className="w-full md:w-1/2 lg:w-[600px] h-full flex flex-col items-center md:items-start justify-center text-center md:text-left order-2 md:order-1">
-
+      <div
+        ref={textRef}
+        className="slide-left-init w-full md:w-1/2 lg:w-[600px] h-full flex flex-col items-center md:items-start justify-center text-center md:text-left order-2 md:order-1"
+      >
         <h1 className="text-3xl sm:text-4xl font-bold leading-snug md:leading-relaxed">
           <span className="relative italic px-2 py-1 rounded-2xl overflow-hidden text-white inline-flex items-center">
             <span
               className="absolute top-0 left-0 h-full bg-orange-500"
               style={{
                 width: `${width}%`,
-                transition: "width 3s ease",
+                transition: "width 6.5s ease",
               }}
             ></span>
             <span className="relative z-10">Portekiz D7 Vizesi</span>

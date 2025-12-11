@@ -1,4 +1,7 @@
-import React from "react";
+"use client";
+
+import Image from "next/image";
+import React, { useEffect, useRef } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 
 const steps = [
@@ -21,47 +24,97 @@ const steps = [
 ];
 
 const Aya = () => {
+  const rootRef = useRef(null);
+  const cardRefs = useRef([]);
+
+  useEffect(() => {
+    // Sol taraf animasyonu
+    if (rootRef.current) {
+      const observer1 = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("show");
+            }
+          });
+        },
+        { threshold: 0.3 }
+      );
+
+      observer1.observe(rootRef.current);
+    }
+
+    // Sağ kartlar
+    const observer2 = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("show");
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    cardRefs.current.forEach((c) => c && observer2.observe(c));
+
+    return () => {
+      observer2.disconnect();
+    };
+  }, []);
+
   return (
-    <main className="bg-white text-black font-sans px-6 py-16">
-      <section className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+    <section className="bg-white text-black font-sans px-6 py-16">
+      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-stretch">
 
-        {/* SOL TARAF — Başlık + Alt Metin */}
-        <div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-snug">
-            Şimdi Başrol Sırası Sizde
-          </h1>
+        {/* SOL TARAF */}
+        <div
+          ref={rootRef}
+          className="fade-up-init relative rounded-xl overflow-hidden min-h-[350px] md:min-h-[420px]"
+        >
+          <Image
+            src="/images/basrol.jpg"
+            alt="Hadi topla bavulları"
+            fill
+            className="object-cover"
+          />
 
-          <p className="text-lg md:text-xl text-gray-700 max-w-xl">
-            Belgelerinizin hazırlanmasından randevu sürecine kadar tüm aşamaları
-            sizin adınıza profesyonelce takip ediyoruz.
-          </p>
+          <div className="absolute inset-0 bg-black/40 flex flex-col justify-center p-8 md:p-10">
+            <h1 className="text-3xl md:text-5xl font-bold mb-4 md:mb-6 text-white leading-snug">
+              Şimdi Başrol Sırası Sizde
+            </h1>
+
+            <p className="text-base md:text-lg text-gray-200 max-w-xl">
+              Belgelerinizin hazırlanmasından randevu sürecine kadar tüm aşamaları
+              sizin adınıza profesyonelce takip ediyoruz.
+            </p>
+          </div>
         </div>
 
-        {/* SAĞ TARAF — Adım Kartları */}
-        <div className="grid gap-6">
+        {/* SAĞ TARAF */}
+        <div className="grid gap-6 bg-white p-4 rounded-xl">
           {steps.map((item, i) => (
             <div
               key={i}
-              className="group bg-white rounded-xl p-6 transition transform flex gap-4"
+              ref={(el) => (cardRefs.current[i] = el)}
+              className="step-init flex gap-4 p-6 bg-white rounded-xl shadow-sm  hakkimizda-hover-fill  hakkimizda-scale-init  relative p-8 rounded-2xl bg-[#f9fafb]  transition-all duration-300 hover:shadow-md"
+              style={{ transitionDelay: `${i * 0.25}s` }}
             >
-              {/* İkon */}
-              <div className="text-yellow-300 text-3xl mt-1 group-hover:scale-110 transition hover:text-yellow-600">
+              <div className="text-yellow-400 text-3xl mt-1">
                 <FaCheckCircle />
               </div>
 
-              {/* Metinler */}
               <div>
                 <h2 className="font-semibold text-xl mb-1">{item.title}</h2>
-                <p className="text-gray-700 text-sm leading-relaxed">{item.text}</p>
+                <p className="text-gray-700 text-sm leading-relaxed">
+                  {item.text}
+                </p>
               </div>
             </div>
           ))}
         </div>
 
-      </section>
-    </main>
+      </div>
+    </section>
   );
 };
 
 export default Aya;
-

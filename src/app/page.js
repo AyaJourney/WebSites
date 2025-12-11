@@ -21,7 +21,7 @@ export const metadata = {
 };
 export default function Home() {
 return (
-  <main className="flex flex-col w-full font-sans bg-gray-50 ">
+  <main className="flex flex-col w-full font-sans bg-white ">
     
     <article className="flex flex-col w-full min-h-screen md:h-screen items-center justify-center mb-30 mt-1">
        <Giris />

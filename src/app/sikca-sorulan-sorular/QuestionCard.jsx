@@ -89,7 +89,7 @@ const QuestionCard = () => {
 
             {/* Cevap - Açıldığında Gösterilecek */}
             {openId === item.id && (
-              <div className="border-t border-gray-200  px-6 py-4 bg-gray-50 ">
+              <div className="border-t border-gray-200  px-6 py-4 bg-white ">
                 <p className="text-gray-700  text-base leading-relaxed">
                   {item.answer}
                 </p>

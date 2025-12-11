@@ -16,7 +16,7 @@ const Giris = () => {
     // ekran genişliği kontrolü
     if (window.innerWidth < 768) {
       setIsMobile(true);
-      setVideoEnded(true); // mobilde video yok → direk fotoğraf + animasyon
+      // setVideoEnded(true); 
     }
   }, []);
 
@@ -32,8 +32,10 @@ const Giris = () => {
     <div className="relative w-full h-screen overflow-hidden font-sans">
 
       {/* --- VİDEO SADECE TABLET & DESKTOPTA --- */}
-      {!isMobile && (
-        <video
+      {/* {!isMobile && (
+     
+      )} */}
+   <video
           src="/images/videopasaport.webm"
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700
             ${videoEnded ? "opacity-0" : "opacity-100"}`}
@@ -41,11 +43,9 @@ const Giris = () => {
           muted
           onEnded={() => setVideoEnded(true)}
         />
-      )}
-
       {/* --- FOTOĞRAF (MOBİLDE HER ZAMAN, TABLET/DESKTOPTA VİDEODAN SONRA) --- */}
       <div
-        className={`absolute inset-0 transition-opacity duration-700 ease-out
+        className={`absolute inset-0 transition-opacity duration-50 ease-out
           ${videoEnded ? "opacity-100" : "opacity-0"}`}
       >
         <Image
@@ -58,8 +58,7 @@ const Giris = () => {
 
       {/* --- YAZILAR (Sadece fotoğraf göründüğünde) --- */}
       {videoEnded && (
-        <div className="absolute right-0 top-0 h-full flex flex-col justify-center 
-                        w-full md:w-1/2 p-6 md:p-12 text-white bg-gradient-to-l from-black/40 to-transparent">
+        <div className="absolute left-0 top-0 h-full flex flex-col justify-center w-full  p-6 md:p-12 text-white bg-gradient-to-l from-black/40 to-transparent">
 
           {/* BAŞLIK – Yukarıdan aşağı iner */}
           <h1
@@ -74,7 +73,7 @@ const Giris = () => {
             className={`mt-4 text-base md:text-lg drop-shadow-lg transition-all duration-700 
               ${showText ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}
           >
-            Eğitim, iş, ticaret ve diğer vize danışmanlık ihtiyaçlarınız için 
+           Yurt dışında eğitim, iş, ve diğer vize danışmanlık ihtiyaçlarınız için 
             AYA Journey olarak her zaman yanınızdayız.
           </p>
 

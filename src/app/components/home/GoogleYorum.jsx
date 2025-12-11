@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { FaGoogle, FaCheckCircle } from "react-icons/fa";
 import { MdOutlineReviews } from "react-icons/md";
 const MAX_CHAR = 120;
@@ -10,6 +10,7 @@ const GoogleYorum = () => {
   const [expanded, setExpanded] = useState({});
   const [companyInfo, setCompanyInfo] = useState({ rating: 0, totalReviews: 0 });
   const [loading, setLoading] = useState(true);
+  const cardRefs = useRef([]);
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -19,7 +20,7 @@ const GoogleYorum = () => {
         if (data.reviews) {
           setReviews(data.reviews.slice(0, 6)); // sadece ilk 6 yorum
           setCompanyInfo({
-            rating: 5, // Sabit, dilersen API’den çekebilirsin
+            rating: 5, // Sabit, dilersen API'den çekebilirsin
             totalReviews: data.total,
           });
         }
@@ -32,6 +33,25 @@ const GoogleYorum = () => {
     fetchReviews();
   }, []);
 
+  // Scroll reveal animasyonu
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry, idx) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              entry.target.classList.add("google-yorum-show");
+            }, idx * 100);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    cardRefs.current.forEach((el) => el && observer.observe(el));
+    return () => observer.disconnect();
+  }, [reviews]);
+
   const toggleExpand = (index) => {
     setExpanded((prev) => ({ ...prev, [index]: !prev[index] }));
   };
@@ -40,28 +60,30 @@ const GoogleYorum = () => {
     return <div className="p-5 text-center">Yorumlar Yükleniyor...</div>;
 
   return (
- <div className="w-full max-w-9xl h-auto mx-auto p-4 bg-white rounded-lg flex flex-col justify-start items-center gap-4">
-  <h2 className="text-3xl md:text-3xl font-bold text-gray-800 mb-4 text-center">
-   Herkes kendini över. Siz en iyisi daha önce bizimle calışan yüzlerce kişiye kulak verin.
+ <div className="w-full max-w-9xl h-auto mx-auto p-4 bg-gradient-to-b from-gray-50/50 to-white rounded-lg flex flex-col justify-start items-center gap-6 py-8 ">
+  <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 bg-clip-text text-transparent mb-2 text-center px-4 max-w-4xl leading-tight">
+   Herkes kendini över Siz en iyisi daha önce bizimle calışan yüzlerce kişiye kulak verin
   </h2>
 
-  <div className="flex flex-col sm:flex-row w-full max-w-7xl gap-6">
+  <div className="flex flex-col sm:flex-row w-full max-w-7xl gap-6 px-2">
     {/* Sol Taraf: Firma Bilgisi */}
-    <div className="sm:w-1/3 flex flex-col items-center border-b sm:border-b-0 sm:border-r border-gray-200 pb-4 sm:pb-0 sm:pr-6">
-      <h3 className="text-xl font-semibold mb-2">AYA Journey</h3>
-      <div className="flex mb-2">
+    <div className="sm:w-1/3 flex flex-col items-center border-b sm:border-b-0 sm:border-r border-gray-200/60 pb-6 sm:pb-0 sm:pr-8">
+      <h3 className="text-2xl font-bold mb-3 text-gray-800">AYA Journey</h3>
+      <div className="flex mb-3 gap-0.5">
         {[...Array(5)].map((_, i) => (
           <span
             key={i}
-            className={`text-lg ${
-              i < Math.round(companyInfo.rating) ? "text-yellow-400" : "text-gray-300"
-            }`}
+            className={`text-xl ${
+              i < Math.round(companyInfo.rating) 
+                ? "text-yellow-400 drop-shadow-sm" 
+                : "text-gray-300"
+            } transition-all duration-200`}
           >
             ★
           </span>
         ))}
       </div>
-      <p className="text-gray-700 mb-4">+500 yorum</p>
+      <p className="text-gray-600 font-medium mb-6 text-lg">+500 yorum</p>
 
       <button
         onClick={() =>
@@ -70,17 +92,17 @@ const GoogleYorum = () => {
             "_blank"
           )
         }
-        className="bg-white text-gray-700 cursor-pointer mt-5 border border-blue-300 px-5 py-2.5 rounded-3xl transition duration-300 hover:text-blue-500 hover:bg-gray-100 flex items-center justify-center gap-2"
+        className="bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 cursor-pointer mt-2 border border-blue-300/60 px-6 py-3 rounded-3xl transition-all duration-300 hover:text-blue-600 hover:bg-gradient-to-r hover:from-blue-100 hover:to-indigo-100 hover:border-blue-400 hover:shadow-md hover:scale-105 flex items-center justify-center gap-2 font-medium"
       >
         <span className="text-xl flex items-center">
           <MdOutlineReviews />
         </span>
-        <span className="font-medium">Yorum Yap</span>
+        <span>Yorum Yap</span>
       </button>
     </div>
 
     {/* Sağ Taraf: Kartlar */}
-    <div className="sm:w-2/3 flex flex-row sm:flex-wrap gap-4 overflow-x-auto scroll-smooth">
+    <div className="sm:w-2/3 flex flex-row sm:flex-wrap gap-4 overflow-x-auto scroll-smooth pb-2">
       {reviews.map((review, index) => {
         const isExpanded = expanded[index];
         const displayedText =
@@ -91,51 +113,68 @@ const GoogleYorum = () => {
         return (
           <div
             key={index}
-            className="relative bg-gray-50 rounded-lg shadow-md p-4 flex flex-col min-w-[220px] sm:min-w-0 sm:w-[220px] md:w-[250px] backdrop-blur border border-slate-200/70 transition-transform duration-500 hover:-translate-y-1 group shadow-none md:shadow-[0_20px_50px_-24px_rgba(15,23,42,0.45)] hover:shadow-[0_20px_40px_-26px_rgba(37,99,235,0.45)]"
+            ref={(el) => (cardRefs.current[index] = el)}
+            className="google-yorum-card-init google-yorum-hover-fill relative bg-white rounded-xl p-5 flex flex-col min-w-[220px] sm:min-w-0 sm:w-[220px] md:w-[250px] backdrop-blur border border-slate-200/80 transition-all duration-300 hover:-translate-y-2 group shadow-sm md:shadow-[0_8px_30px_rgba(0,0,0,0.12)] hover:shadow-[0_12px_40px_rgba(59,130,246,0.2)] hover:border-blue-300/60 pb-4"
           >
-            <FaGoogle
-              className="text-red-500 absolute top-3 right-3 text-lg"
-              title="Google Yorum"
-            />
+            {/* Bloom fill overlay */}
+<div className="google-yorum-content relative z-10 flex flex-col flex-1">
 
-            <div className="flex items-center gap-2 mb-2 mt-1">
-              <img
-                src={review.avatar || `https://i.pravatar.cc/50?img=${index + 1}`}
-                alt={review.author}
-                className="w-10 h-10 rounded-full"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = `https://i.pravatar.cc/50?img=${index + 10}`;
-                }}
-              />
-              <div className="flex flex-col">
-                <span className="font-semibold text-sm">{review.author}</span>
-                <span className="text-gray-500 text-xs">{review.date}</span>
-              </div>
-            </div>
+  <FaGoogle
+    className="text-red-500 absolute -top-2 -right-2 text-3xl bg-white rounded-full p-1.5 shadow-md group-hover:scale-110 transition-transform duration-300"
+    title="Google Yorum"
+  />
 
-            <div className="flex items-center gap-1 mb-2">
-              <div className="flex text-yellow-400 text-sm">
-                {[...Array(review.rating)].map((_, i) => (
-                  <span key={i}>★</span>
-                ))}
-              </div>
-              <FaCheckCircle
-                className="text-blue-500 text-sm"
-                title="Doğrulanmış kullanıcı"
-              />
-            </div>
+  {/* Kullanıcı Bilgisi */}
+  <div className="flex items-center gap-3 mb-3 mt-1">
+    <div className="relative">
+      <img
+        src={review.avatar || `https://i.pravatar.cc/50?img=${index + 1}`}
+        alt={review.author}
+        className="w-12 h-12 rounded-full border-2 border-gray-100 shadow-sm object-cover group-hover:border-blue-200 transition-colors duration-300"
+      />
+      <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-white rounded-full border-2 border-white flex items-center justify-center">
+        <FaGoogle className="text-red-500 text-md" />
+      </div>
+    </div>
 
-            <p className="text-gray-700 text-sm flex-1">{displayedText}</p>
+    <div className="flex flex-col flex-1 min-w-0">
+      <span className="font-semibold text-sm text-gray-800 truncate">{review.author}</span>
+      <span className="text-gray-500 text-xs">{review.date}</span>
+    </div>
+  </div>
 
-            {review.text.length > MAX_CHAR && (
-              <button
-                onClick={() => toggleExpand(index)}
-                className="self-end mt-2 text-blue-600 hover:underline text-xs"
-              >
-                {isExpanded ? "Gizle" : "Göster"}
-              </button>
-            )}
+  {/* Rating */}
+  <div className="flex items-center gap-2 mb-3">
+    <div className="flex text-yellow-400 text-base gap-0.5 drop-shadow-sm">
+      {[...Array(review.rating)].map((_, i) => (
+        <span key={i}>★</span>
+      ))}
+    </div>
+    <FaCheckCircle className="text-blue-500 text-sm" />
+  </div>
+
+  {/* Yorum Metni - ÜST DIV */}
+  <div className="flex-1 mb-3">
+    <p className="text-gray-700 text-sm leading-relaxed">
+      {displayedText}
+    </p>
+  </div>
+
+</div>
+
+{/* ALT SABİT BUTON — Ayrı DIV !!!! */}
+{review.text.length > MAX_CHAR && (
+  <div className="google-yorum-footer mt-auto pt-2">
+    <button
+      onClick={() => toggleExpand(index)}
+      className="text-blue-600 hover:text-blue-700 font-medium text-xs transition-colors duration-200 hover:underline"
+    >
+      {isExpanded ? "Gizle" : "Daha Fazla"}
+    </button>
+  </div>
+)}
+
+
           </div>
         );
       })}
@@ -144,7 +183,7 @@ const GoogleYorum = () => {
 
   {/* Tüm yorumlar sayfasına yönlendirme */}
   <Link href="/hakkimizdaki-yorumlar">
-    <button className="bg-white text-gray-700 cursor-pointer mt-3 border border-blue-300 px-4 py-2 rounded-3xl transition duration-300 hover:text-blue-500 hover:bg-gray-100">
+    <button className="bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 cursor-pointer mt-4 border border-blue-300/60 px-6 py-3 rounded-3xl transition-all duration-300 hover:text-blue-600 hover:bg-gradient-to-r hover:from-blue-100 hover:to-indigo-100 hover:border-blue-400 hover:shadow-md hover:scale-105 font-medium">
       Daha Fazla Yorum
     </button>
   </Link>

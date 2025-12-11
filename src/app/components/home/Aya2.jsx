@@ -1,70 +1,108 @@
-"use-client"
-import React from "react";
+"use client";
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { FaCheckCircle } from "react-icons/fa";
 
 const Aya2 = () => {
+  const cardRefs = useRef([]);
+  const imageRef = useRef(null);
+
   const maddeler = [
     {
       title: "Herkese ayrı fikir. Herkese ayrı söylem. Çünkü herkes ayrı.",
       desc: "Görmeye can attığınız filmin sonunu çok izledik.",
+      color: "#0ea5e9",
     },
     {
       title: "Olası zorluklar",
       desc: "Büyükelçiliklerin son dönemdeki yaklaşımları, eski onay ve retlerin bize öğrettiklerinden ders çıkarma…",
+      color: "#10b981",
     },
     {
       title: "Günceli takip etme",
       desc: "Süreci en güncel haliyle takip ederek doğru yönlendirme yapıyoruz.",
+      color: "#f59e0b",
     },
     {
       title: "Çok iyi bildiğimiz konular",
       desc: "Size yardım teklif ettiğimiz vizeleri bizzat kendimiz de aldık. Ekibimiz gerçekten işi bilen kişilerden oluşuyor.",
+      color: "#6366f1",
     },
   ];
 
+  /* Scroll reveal */
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("aya2-fade-up-show");
+          }
+        }),
+      { threshold: 0.3 }
+    );
+
+    cardRefs.current.forEach((el) => el && observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  /* Image reveal */
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          imageRef.current.classList.add("aya2-image-show");
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (imageRef.current) observer.observe(imageRef.current);
+  }, []);
+
   return (
-    <section className="w-full bg-[#ffff] text-black py-6 px-6">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
+    <section className="w-full bg-white text-black py-6 px-6">
+      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-stretch">
 
-        {/* Sol: Görsel */}
-<div className="flex-1 flex justify-center">
-  <div className="relative w-full h-full p-1">
-    <Image
-      src="/images/aya2.jpg" 
-      alt="Tanıtım görseli"
-    width={1000}
-    height={1000}
+        {/* SOL — RESİM */}
+        <div className="flex items-stretch h-full">
+          <div
+            ref={imageRef}
+            className="relative w-full rounded-2xl overflow-hidden aya2-image-init h-[300px] md:h-auto  md:max-h-[550px]"
+          >
+            <Image
+              src="/images/aya2.jpg"
+              alt="Aya Journey Visual"
+              fill
+              className="object-cover rounded-2xl shadow-lg"
+            />
+          </div>
+        </div>
 
-      className="rounded-2xl shadow-lg object-cover"
-    />
+        {/* SAĞ — METİN VE KARTLAR */}
+        <div className="flex flex-col justify-end h-full md:max-h-[550px] ">
+          <h1 className="text-3xl md:text-5xl font-bold mb-6 leading-snug aya2-fade-up-init">
+            Herkese ayrı fikir. Herkese ayrı söylem. Çünkü herkes ayrı.
+          </h1>
+
+          <div className="space-y-10">
+            {maddeler.map((item, i) => (
+           <div
+  key={i}
+  ref={(el) => (cardRefs.current[i] = el)}
+  className=" aya2-fade-up-init aya2-hover-fill bg-white p-5 rounded-xl shadow flex items-start gap-4 transition-all duration-700 hover:shadow-xl hover:scale-[1.03]"
+>
+  <FaCheckCircle
+    className="text-3xl shrink-0"
+    style={{ color: item.color }}
+  />
+
+  <div className="aya2-content">
+    <h2 className="font-semibold text-lg">{item.title}</h2>
+    <p className="text-gray-600 text-sm mt-1">{item.desc}</p>
   </div>
 </div>
 
-
-        {/* Sağ: Metin + Liste */}
-        <div className="flex-1">
-          <h1 className="text-3xl md:text-6xl font-bold mb-4 leading-snug">
-            Herkese ayrı fikir. Herkese ayrı söylem. Çünkü herkes ayrı.
-          </h1>
-   
-
-          {/* Maddeli Liste */}
-          <div className="space-y-5">
-            {maddeler.map((item, i) => (
-              <div
-                key={i}
-                className="bg-white p-4 rounded-xl shadow flex items-start gap-4 hover:shadow-lg hover:scale-[1.02] transition"
-              >
-                <div className="text-blue-600 text-3xl">
-                  <FaCheckCircle />
-                </div>
-
-                <div>
-                  <h2 className="font-semibold text-lg">{item.title}</h2>
-                  <p className="text-gray-600 text-sm mt-1">{item.desc}</p>
-                </div>
-              </div>
             ))}
           </div>
 
@@ -75,4 +113,3 @@ const Aya2 = () => {
 };
 
 export default Aya2;
-

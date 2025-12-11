@@ -18,14 +18,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="tr" className="font-arboria">
+    <html lang="tr" className="font-arboria bg-white">
       <body 
         
       >
        <nav className="fixed top-0 left-0 w-full h-20 md:h-24 z-50 bg-white shadow-md">
     <Navbar />
 </nav>
-     <main className="flex-1 mt-24 bg-gray-50 ">
+     <main className="flex-1 mt-24 bg-white ">
       {children}
       <Cookies/>
       <WhatsappButton/>

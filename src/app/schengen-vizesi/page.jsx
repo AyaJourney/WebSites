@@ -1,10 +1,16 @@
-// SchengenPage.jsx (Modern UI)
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { FaCheckCircle, FaRegFileAlt, FaRegClock, FaGlobeEurope, FaUserTie, FaEuroSign } from "react-icons/fa";
+import {
+  FaCheckCircle,
+  FaRegFileAlt,
+  FaRegClock,
+  FaGlobeEurope,
+  FaUserTie,
+  FaEuroSign,
+} from "react-icons/fa";
 
 // Mevcut veri yapısı korunmuştur.
 const basicInfo = {
@@ -114,163 +120,215 @@ const processSteps = [
   },
   {
     title: "Randevu Süreci",
-    desc: "İkamet iliniz başvuru şehrinizi etkiler. Uygun randevu bulunduğunda tarih/saat onayınız alınır ve randevunuz oluşturulur. Randevu ücretleri ülkeye göre değişir.",
+    desc: "İkamet iliniz başvuru şehrinizi etkiler. Uygun randevu bulunduğunda tarih/saat onayınız alınır ve randevunuz oluşturulur.",
   },
   {
     title: "Randevu Sonrası",
-    desc: "Randevunuz onaylandıktan sonra evrak listeniz, niyet mektubunuz ve diğer belgeler tarafınıza iletilir. Evrak teslimi için son 10 gün önceden hazırlığa başlamanızı öneririz.",
+    desc: "Randevunuz onaylandıktan sonra evrak listeniz, niyet mektubunuz ve diğer belgeler tarafınıza iletilir.",
   },
   {
     title: "Evrak Teslimi & Takip",
-    desc: "Evraklar aracı kuruma teslim edilir; parmak izi verilir, harç ödenir ve pasaport teslim edilir. Süreç boyunca SMS veya e-posta ile bilgilendirileceksiniz.",
+    desc: "Evraklar aracı kuruma teslim edilir; parmak izi verilir, harç ödenir ve pasaport teslim edilir.",
   },
 ];
 
-// Yeni, modernleştirilmiş bileşen
 export default function SchengenPage() {
-  // Renk ve tema ayarları
-  const primaryColor = "indigo-600";
-  const darkPrimary = "indigo-500";
-  const hoverColor = "indigo-700";
-  const shadowStyle = "shadow-xl hover:shadow-2xl transition duration-300";
+  const animRefs = useRef([]);
+
+  const register = (el) => {
+    if (el && !animRefs.current.includes(el)) {
+      animRefs.current.push(el);
+    }
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const anim = entry.target.dataset.anim;
+            if (anim) {
+              entry.target.classList.add(anim + "-show");
+            }
+          }
+        }),
+      { threshold: 0.25 }
+    );
+
+    animRefs.current.forEach((el) => el && observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <main className="min-h-screen bg-gray-50 text-gray-800 dark:bg-zinc-900 dark:text-gray-100 font-sans">
+    <main className="min-h-screen bg-white text-gray-800">
+
       {/* HERO */}
-      <section className="relative w-full bg-white dark:bg-zinc-800 border-b border-gray-200 dark:border-zinc-700">
+      <section
+        ref={register}
+        data-anim="schengen-fade-down"
+        className="schengen-fade-down-init relative w-full bg-white border-b border-gray-200"
+      >
         <div className="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
+          {/* Sol */}
           <div>
-     
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-snug mb-5">
               {basicInfo.heroTitle}
             </h1>
-            <p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl text-lg">
+            <p className="text-gray-600 mb-8 max-w-2xl text-lg">
               {basicInfo.heroSubtitle}
             </p>
+
             <Link href={basicInfo.cta.href}>
-              <button
-               className="bg-white text-gray-700 cursor-pointer mt-5 border border-blue-300 px-4 py-2 rounded-3xl transition duration-300 hover:text-blue-500 hover:bg-gray-100"
-              >
+              <button className="bg-blue-600 text-white cursor-pointer mt-2 px-5 py-3 rounded-3xl font-semibold shadow-md hover:bg-blue-500 transition">
                 {basicInfo.cta.label}
               </button>
             </Link>
-            <div className="mt-8 text-base text-gray-500 dark:text-gray-400 border-t border-gray-100 dark:border-zinc-700 pt-4">
+
+            <div className="mt-8 text-base text-gray-600 border-t border-gray-100 pt-4 space-y-3">
               <div className="flex items-center gap-3">
-                <FaRegFileAlt className={`text-${primaryColor} text-xl`} />
-                <span>Randevu ücretleri: **{fees.appointmentRange}**</span>
+                <FaRegFileAlt className="text-blue-600 text-xl" />
+                <span>Randevu ücretleri: {fees.appointmentRange}</span>
               </div>
-              <div className="flex items-center gap-3 mt-3">
-                <FaRegClock className={`text-${primaryColor} text-xl`} />
-                <span>
-                  Tahmini süreç: **3–8 ay** (ülke ve dosya türüne göre değişir)
-                </span>
+              <div className="flex items-center gap-3">
+                <FaRegClock className="text-blue-600 text-xl" />
+                <span>Tahmini süreç: 3–8 ay (ülke ve dosya türüne göre değişir)</span>
               </div>
             </div>
           </div>
 
-          <div className="w-full flex justify-center">
-            <Image
-              src="/images/vize.jpg"
-              alt="Schengen Vize Danışmanlığı"
-              width={560}
-              height={600}
-            
-              className="rounded-3xl object-cover border-4 border-white dark:border-zinc-700 shadow-2xl"
-              priority
-            />
+          {/* Sağ görsel */}
+          <div
+            ref={register}
+            data-anim="schengen-scale"
+            className="schengen-scale-init w-full flex justify-center"
+          >
+            <div className="relative">
+              <div className="absolute -inset-4 bg-gradient-to-br from-blue-500/15 via-indigo-500/10 to-fuchsia-500/10 blur-2xl" />
+              <div className="relative rounded-3xl overflow-hidden border-4 border-white shadow-2xl">
+                <Image
+                  src="/images/vize.jpg"
+                  alt="Schengen Vize Danışmanlığı"
+                  width={560}
+                  height={600}
+                  className="rounded-3xl object-cover"
+                  priority
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
-      
-      {/* PROFIL VE SUREC - Akış Şeması Görünümü */}
+
+      {/* BAŞVURU SÜRECİ */}
       <section className="max-w-7xl mx-auto px-6 py-20">
-        <h2 className="text-3xl font-bold mb-12 text-center text-gray-900 dark:text-white">
+        <h2
+          ref={register}
+          data-anim="schengen-fade-up"
+          className="schengen-fade-up-init text-3xl font-bold mb-12 text-center text-gray-900"
+        >
           Başvuru Süreci Adımları
         </h2>
-        <div className="grid lg:grid-cols-5 gap-8 relative">
-            {/* Dikey çizgi - mobil cihazlarda gizli, büyük ekranlarda görünür */}
-            <div className={`hidden lg:block absolute inset-y-0 left-1/2 w-0.5 bg-gray-200 dark:bg-zinc-700 -ml-0.5`}></div>
-            
-            {/* Yatay Çizgi - her bir adım arasında bağlantı */}
-            <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gray-200 dark:bg-zinc-700 hidden lg:block"></div>
 
-            {processSteps.map((step, i) => (
-                <div key={i} className="relative z-10 p-5 bg-white dark:bg-zinc-800 rounded-xl shadow-lg border border-gray-100 dark:border-zinc-700 flex flex-col items-center text-center lg:pt-16">
-                    {/* Dairesel Adım İndikatörü */}
-                    <div className={`absolute lg:top-[-1.25rem] top-[-1rem] lg:left-1/2 lg:-translate-x-1/2 bg-${primaryColor} text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg border-4 border-gray-50 dark:border-zinc-900 shadow-md`}>
-                        {i + 1}
-                    </div>
-                    
-                    <h4 className="font-semibold text-lg mt-0 mb-3">{step.title}</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">{step.desc}</p>
-                </div>
-            ))}
+        <div className="grid lg:grid-cols-5 gap-8">
+          {processSteps.map((step, i) => (
+            <div
+              key={i}
+              ref={register}
+              data-anim="schengen-slide"
+              className="schengen-slide-init relative z-10 p-5 bg-white rounded-xl shadow-lg border border-gray-100 flex flex-col items-center text-center"
+            >
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg shadow-md">
+                {i + 1}
+              </div>
+              <h4 className="font-semibold text-lg mt-4 mb-3">{step.title}</h4>
+              <p className="text-sm text-gray-600">{step.desc}</p>
+            </div>
+          ))}
         </div>
-        
-        {/* Profil Bilgisi - Yan Kutu olarak eklendi */}
-        <div className="mt-16 max-w-4xl mx-auto bg-white dark:bg-zinc-800 rounded-2xl p-8 shadow-inner border border-gray-100 dark:border-zinc-700">
-            <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                <FaUserTie className={`text-${primaryColor}`} />
-                Başvuru Stratejisi
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300 text-base">
-                Başvuru stratejisi kişinin profiline göre değişir. Mesleğiniz, medeni durumunuz, yaşınız ve seyahat geçmişiniz en uygun Schengen ülkesini ve başvuru taktiğini belirlemek için titizlikle değerlendirilir.
-            </p>
+
+        <div
+          ref={register}
+          data-anim="schengen-fade-up"
+          className="schengen-fade-up-init mt-16 max-w-4xl mx-auto bg-white rounded-2xl p-8 shadow-inner border border-gray-100"
+        >
+          <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+            <FaUserTie className="text-blue-600" />
+            Başvuru Stratejisi
+          </h3>
+          <p className="text-gray-700 text-base">
+            Başvuru stratejisi kişinin profiline göre değişir. Mesleğiniz, medeni
+            durumunuz, yaşınız ve seyahat geçmişiniz en uygun Schengen ülkesini ve
+            başvuru taktiğini belirlemek için titizlikle değerlendirilir.
+          </p>
         </div>
       </section>
-      
-      <div className="bg-gray-100 dark:bg-zinc-800">
-        {/* GEREKLİ BELGELER */}
-        <section className="max-w-7xl mx-auto px-6 py-20">
-          <h2 className="text-3xl font-bold mb-12 text-center text-gray-900 dark:text-white">
+
+      {/* GEREKLİ BELGELER */}
+      <section className="bg-gray-50">
+        <div className="max-w-7xl mx-auto px-6 py-20">
+          <h2
+            ref={register}
+            data-anim="schengen-fade-up"
+            className="schengen-fade-up-init text-3xl font-bold mb-12 text-center text-gray-900"
+          >
             Gerekli Belgeler Listesi
           </h2>
+
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {genelEvraklar.map((item, i) => {
               const Icon = item.icon || FaRegFileAlt;
               return (
                 <div
                   key={i}
-                  className="bg-white dark:bg-zinc-900 rounded-2xl p-6 shadow-md border border-gray-100 dark:border-zinc-700"
+                  ref={register}
+                  data-anim="schengen-fade-up"
+                  className="schengen-fade-up-init bg-white rounded-2xl p-6 shadow-md border border-gray-100"
                 >
                   <div className="flex items-center gap-4 mb-3">
-                    <div className={`text-xl text-${primaryColor}`}>
+                    <div className="text-xl text-blue-600">
                       <Icon />
                     </div>
                     <h3 className="font-semibold text-lg">{item.title}</h3>
                   </div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">{item.desc}</p>
+                  <p className="text-sm text-gray-600">{item.desc}</p>
                 </div>
               );
             })}
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
 
-      {/* EK BELGELER PROFİLLERE GÖRE */}
+      {/* PROFİLE GÖRE EK BELGELER */}
       <section className="max-w-7xl mx-auto px-6 py-20">
-        <h2 className="text-3xl font-bold mb-12 text-center text-gray-900 dark:text-white">
+        <h2
+          ref={register}
+          data-anim="schengen-fade-up"
+          className="schengen-fade-up-init text-3xl font-bold mb-12 text-center text-gray-900"
+        >
           Profile Göre Ek Belge Gereksinimleri
         </h2>
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {ekBelgelerByProfile.map((block, i) => {
-             const Icon = block.icon || FaRegFileAlt;
+            const Icon = block.icon || FaRegFileAlt;
             return (
               <div
                 key={i}
-                className="bg-white dark:bg-zinc-900 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-zinc-700"
+                ref={register}
+                data-anim="schengen-slide"
+                className="schengen-slide-init bg-white rounded-2xl p-6 shadow-lg border border-gray-100"
               >
                 <div className="flex items-center mb-4">
-                    <div className={`p-2 rounded-lg bg-${primaryColor} bg-opacity-10 text-${primaryColor} mr-3`}>
-                        <Icon className="text-2xl" />
-                    </div>
-                    <h3 className="font-bold text-xl">{block.profile}</h3>
+                  <div className="p-2 rounded-lg bg-blue-50 text-blue-600 mr-3">
+                    <Icon className="text-2xl" />
+                  </div>
+                  <h3 className="font-bold text-xl">{block.profile}</h3>
                 </div>
-                <ul className="text-sm text-gray-700 dark:text-gray-400 list-none space-y-3">
+                <ul className="text-sm text-gray-700 list-none space-y-3">
                   {block.items.map((it, j) => (
                     <li key={j} className="flex items-start">
-                        <FaCheckCircle className={`text-green-500 mr-2 mt-1 flex-shrink-0`} size={12}/>
-                        <span>{it}</span>
+                      <FaCheckCircle className="text-green-500 mr-2 mt-1 flex-shrink-0" size={12} />
+                      <span>{it}</span>
                     </li>
                   ))}
                 </ul>
@@ -280,35 +338,45 @@ export default function SchengenPage() {
         </div>
       </section>
 
-      {/* EVRAK HAZIRLIGI VE ÖNEMLI NOTLAR */}
-      <section className="max-w-7xl mx-auto px-6 py-20 bg-gray-50 dark:bg-zinc-800 rounded-t-3xl border-t border-gray-200 dark:border-zinc-700">
-        <div className="max-w-4xl mx-auto bg-white dark:bg-zinc-900 rounded-2xl p-8 shadow-2xl">
+      {/* EVRAK HAZIRLIĞI & NOTLAR */}
+      <section className="max-w-7xl mx-auto px-6 py-20 bg-white rounded-t-3xl border-t border-gray-200">
+        <div
+          ref={register}
+          data-anim="schengen-fade-up"
+          className="schengen-fade-up-init max-w-4xl mx-auto bg-white rounded-2xl p-8 shadow-2xl border border-gray-100"
+        >
           <h3 className="text-2xl font-bold mb-5 flex items-center gap-2">
-            <FaRegFileAlt className={`text-red-500`} />
+            <FaRegFileAlt className="text-red-500" />
             Evrak Hazırlığı & Önemli Notlar
           </h3>
-          <ul className="list-none pl-0 text-base space-y-4 text-gray-700 dark:text-gray-300">
+          <ul className="list-none pl-0 text-base space-y-4 text-gray-700">
             <li className="flex items-start">
-                <FaCheckCircle className="text-red-500 mr-3 mt-1 flex-shrink-0" />
-                <span>Randevu tarihinden **en az 10 gün önce** hazırlıklara başlayın; son dakikaya bırakmayın.</span>
+              <FaCheckCircle className="text-red-500 mr-3 mt-1 flex-shrink-0" />
+              <span>
+                Randevu tarihinden <strong>en az 10 gün önce</strong> hazırlıklara başlayın; son dakikaya
+                bırakmayın.
+              </span>
             </li>
             <li className="flex items-start">
-                <FaCheckCircle className="text-red-500 mr-3 mt-1 flex-shrink-0" />
-                <span>
-                    Banka dökümleri ve barkodlu e-devlet belgelerini **son hafta** alın; aracı kurum güncel tarihli talep edebilir.
-                </span>
+              <FaCheckCircle className="text-red-500 mr-3 mt-1 flex-shrink-0" />
+              <span>
+                Banka dökümleri ve barkodlu e-devlet belgelerini <strong>son hafta</strong> alın; aracı kurum
+                güncel tarihli talep edebilir.
+              </span>
             </li>
             <li className="flex items-start">
-                <FaCheckCircle className="text-red-500 mr-3 mt-1 flex-shrink-0" />
-                <span>
-                    Randevuya gitmeme durumunda randevu ücreti **yanar**; yeniden randevu alınması gerekir.
-                </span>
+              <FaCheckCircle className="text-red-500 mr-3 mt-1 flex-shrink-0" />
+              <span>
+                Randevuya gitmeme durumunda randevu ücreti <strong>yanar</strong>; yeniden randevu alınması
+                gerekir.
+              </span>
             </li>
             <li className="flex items-start">
-                <FaCheckCircle className="text-red-500 mr-3 mt-1 flex-shrink-0" />
-                <span>
-                    **Almanya randevu süreci** aracı kurum üzerinden farklı işlemektedir; onay e-postası ve ücret sonrası rezervasyon tamamlanır.
-                </span>
+              <FaCheckCircle className="text-red-500 mr-3 mt-1 flex-shrink-0" />
+              <span>
+                Almanya randevu süreci aracı kurum üzerinden farklı işlemektedir; onay e-postası ve ücret
+                sonrası rezervasyon tamamlanır.
+              </span>
             </li>
           </ul>
         </div>
@@ -316,93 +384,143 @@ export default function SchengenPage() {
 
       {/* ÜCRETLER */}
       <section className="max-w-3xl mx-auto px-6 py-20 text-center">
-        <h3 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">Ücret Bilgileri</h3>
+        <h3
+          ref={register}
+          data-anim="schengen-fade-up"
+          className="schengen-fade-up-init text-3xl font-bold mb-8 text-gray-900"
+        >
+          Ücret Bilgileri
+        </h3>
+
         <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-lg border border-gray-100 dark:border-zinc-700">
-                <FaEuroSign className={`text-4xl mx-auto mb-3 text-${primaryColor}`} />
-                <p className="font-semibold text-lg">Vize Harcı</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">{fees.visaFee}</p>
-            </div>
-            <div className="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-lg border border-gray-100 dark:border-zinc-700">
-                <FaRegClock className={`text-4xl mx-auto mb-3 text-${primaryColor}`} />
-                <p className="font-semibold text-lg">Randevu Bedeli</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">{fees.appointmentRange}</p>
-            </div>
-            <div className="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-lg border border-gray-100 dark:border-zinc-700">
-                <FaUserTie className={`text-4xl mx-auto mb-3 text-${primaryColor}`} />
-                <p className="font-semibold text-lg">Danışmanlık Ücreti</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">{fees.consultancy}</p>
-            </div>
+          <div
+            ref={register}
+            data-anim="schengen-scale"
+            className="schengen-scale-init bg-white p-6 rounded-xl shadow-lg border border-gray-100"
+          >
+            <FaEuroSign className="text-4xl mx-auto mb-3 text-blue-600" />
+            <p className="font-semibold text-lg">Vize Harcı</p>
+            <p className="text-2xl font-bold text-gray-900 mt-1">{fees.visaFee}</p>
+          </div>
+
+          <div
+            ref={register}
+            data-anim="schengen-scale"
+            className="schengen-scale-init bg-white p-6 rounded-xl shadow-lg border border-gray-100"
+          >
+            <FaRegClock className="text-4xl mx-auto mb-3 text-blue-600" />
+            <p className="font-semibold text-lg">Randevu Bedeli</p>
+            <p className="text-2xl font-bold text-gray-900 mt-1">{fees.appointmentRange}</p>
+          </div>
+
+          <div
+            ref={register}
+            data-anim="schengen-scale"
+            className="schengen-scale-init bg-white p-6 rounded-xl shadow-lg border border-gray-100"
+          >
+            <FaUserTie className="text-4xl mx-auto mb-3 text-blue-600" />
+            <p className="font-semibold text-lg">Danışmanlık Ücreti</p>
+            <p className="text-2xl font-bold text-gray-900 mt-1">{fees.consultancy}</p>
+          </div>
         </div>
       </section>
 
       {/* CTA FOOTER */}
-      <section className="w-full bg-white dark:bg-zinc-800 border-t border-gray-200 dark:border-zinc-700 mt-10">
-        <div className="max-w-7xl mx-auto px-6 py-12 text-center">
-          <p className="text-xl font-medium text-gray-700 dark:text-gray-300 mb-6">
-            Hazırsanız ilk adımı atalım — profilinizi paylaşın, size uygun planı hazırlayalım.
-          </p>
-          <Link href="/randevu">
-            <button  
-               className="bg-white text-gray-700 cursor-pointer mt-5 border border-blue-300 px-4 py-2 rounded-3xl transition duration-300 hover:text-blue-500 hover:bg-gray-100"
-            >
-              Hemen Başvur
-            </button>
-          </Link>
+      <section
+        ref={register}
+        data-anim="ukvisa-fade-up"
+        className="ukvisa-fade-up-init max-w-6xl mx-auto px-6 pb-20"
+      >
+        <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white/95 backdrop-blur shadow-xl">
+          
+          <div className="relative p-6 md:p-8 space-y-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-900">Başvuru Süreçleri</h2>
+
+            <div className="grid md:grid-cols-3 gap-4">
+              {[ "Başvuru Kanalları", "Belgeler & Randevu", "Aya Journey Desteği" ].map((t, i) => (
+                <div key={i} className="p-5 rounded-2xl bg-white/85 border border-slate-200">
+                  <h4 className="font-semibold text-slate-900">{t}</h4>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+              <p className="text-slate-900 font-semibold">Aya Journey her aşamada yanınızda.</p>
+
+              <div className="flex flex-col sm:flex-row gap-2">
+                <Link href="/randevu">
+                  <button className="bg-white text-blue-600 px-6 py-3 rounded-xl font-semibold shadow-lg hover:-translate-y-0.5 transition">
+                    Randevu Al
+                  </button>
+                </Link>
+                <a href="tel:+903128701584" className="px-4 py-2.5 rounded-xl bg-slate-900 text-white font-semibold">
+                  Hemen Ara
+                </a>
+                <a
+                  href="https://wa.me/903128701584"
+                  className="px-4 py-2.5 rounded-xl bg-emerald-500 text-white font-semibold"
+                  target="_blank"
+                >
+                  WhatsApp’tan Yaz
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
-      <script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Schengen vizesi için gerekli belgeler nelerdir?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Schengen vizesi için pasaport, banka hesap dökümleri, iş/öğrenci belgeleri, seyahat sağlık sigortası, biyometrik fotoğraf, uçak ve konaklama rezervasyonları gereklidir. Bazı profiller için ek belgeler talep edilebilir."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Schengen vizesi ne kadar sürede çıkar?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Schengen vizesi genellikle 7–15 iş günü içinde sonuçlanır. Ancak yoğun dönemlerde bu süre uzayabilir. Almanya ve Fransa’da başvuru yoğunluğuna bağlı olarak ek bekleme süresi olabilir."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Schengen vizesi randevusu nasıl alınır?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Randevular aracı kurumlar üzerinden alınır. Başvuru formu doldurulduktan sonra vize türü seçilir ve uygun bir tarih belirlenir. Yoğun ülkelerde randevular hızla dolduğu için önceden planlama tavsiye edilir."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hangi ülkeye Schengen başvurusu yapmalıyım?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Başkıca kriter, en uzun konaklamanın yapılacağı ülkedir. Eğer tüm ülkelerde eşit kalacaksanız ilk giriş yapacağınız ülkeye başvurmalısınız. Profil, seyahat geçmişi ve meslek gibi durumlara göre en uygun ülke kişiye özel belirlenir."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Schengen vizesi reddi neden olur?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yetersiz finansal durum, şüpheli seyahat planı, eksik belge, hatalı rezervasyonlar, tutarsız banka hareketleri ve geçmiş reddler başlıca nedenlerdir. Profesyonel dosya hazırlığı reddi büyük ölçüde azaltır."
-          }
-        }
-      ]
-    })
-  }}
-/>
 
+      {/* FAQ JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: "Schengen vizesi için gerekli belgeler nelerdir?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Schengen vizesi için pasaport, banka hesap dökümleri, iş/öğrenci belgeleri, seyahat sağlık sigortası, biyometrik fotoğraf, uçak ve konaklama rezervasyonları gereklidir. Bazı profiller için ek belgeler talep edilebilir.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "Schengen vizesi ne kadar sürede çıkar?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Schengen vizesi genellikle 7–15 iş günü içinde sonuçlanır. Ancak yoğun dönemlerde bu süre uzayabilir.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "Schengen vizesi randevusu nasıl alınır?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Randevular aracı kurumlar üzerinden alınır. Başvuru formu doldurulduktan sonra vize türü seçilir ve uygun bir tarih belirlenir.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "Hangi ülkeye Schengen başvurusu yapmalıyım?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "En uzun konaklamayı yapacağınız veya ilk giriş yapacağınız ülkeye başvuru yapılmalıdır. Profil, seyahat geçmişi ve meslek gibi durumlara göre en uygun ülke kişiye özel belirlenir.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "Schengen vizesi reddi neden olur?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Yetersiz finansal durum, şüpheli seyahat planı, eksik belge, hatalı rezervasyonlar, tutarsız banka hareketleri ve geçmiş reddler başlıca nedenlerdir.",
+                },
+              },
+            ],
+          }),
+        }}
+      />
     </main>
   );
 }
