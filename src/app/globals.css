@@ -957,3 +957,58 @@ body {
 .visa-stagger.visa-show > *:nth-child(2) { transition-delay: 80ms; }
 .visa-stagger.visa-show > *:nth-child(3) { transition-delay: 160ms; }
 .visa-stagger.visa-show > *:nth-child(4) { transition-delay: 240ms; }
+
+
+
+/* ===== YurtDisiRehberi Animations ===== */
+
+/* Fade Up */
+.ydr-fade-up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.ydr-fade-up.ydr-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Scale In */
+.ydr-scale {
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.ydr-scale.ydr-show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Stagger Delay */
+.ydr-delay-1 { transition-delay: 120ms; }
+.ydr-delay-2 { transition-delay: 240ms; }
+.ydr-delay-3 { transition-delay: 360ms; }
+
+/* ===== YurtDisiRehberi Card Animations ===== */
+
+.ydr-card {
+  opacity: 0;
+  transform: translateY(24px) scale(0.97);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease,
+    box-shadow 0.3s ease;
+}
+
+.ydr-card.ydr-show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Stagger */
+.ydr-card-delay-1 { transition-delay: 80ms; }
+.ydr-card-delay-2 { transition-delay: 160ms; }
+.ydr-card-delay-3 { transition-delay: 240ms; }
+.ydr-card-delay-4 { transition-delay: 320ms; }

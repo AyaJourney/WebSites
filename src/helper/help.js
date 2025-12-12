@@ -518,7 +518,8 @@ export const abroad =[
     "image": "/images/1.webp",
     "etiketler": ["Vize", "Başvuru"],
     "detailedDescription": "Vize türleri ülkeden ülkeye değişmekle birlikte, genel olarak kısa süreli (turistik, ticari, aile ziyareti) ve uzun süreli (eğitim, çalışma, oturum) vizeler olarak ikiye ayrılır. Başvuru süreci genellikle online form doldurma, gerekli belgelerin hazırlanması, biyometrik verilerin verilmesi ve mülakata katılım adımlarını içerir. Başvuru öncesi güncel evrak listesi mutlaka kontrol edilmelidir.",
-    "address":"/yurtdisi-rehberi/vize-turleri"
+    "address":"/yurtdisi-rehberi/vize-turleri",
+    "click":true,
   },
   {
     "id": 2,
@@ -527,7 +528,8 @@ export const abroad =[
     "image": "/images/2.webp",
       "etiketler": ["Vize", "Başvuru","Eğitim"],
     "detailedDescription": "İngiltere, Kanada, Almanya, Avustralya ve Hollanda; yüksek kaliteli eğitim sistemleri, uluslararası tanınırlıkları ve çalışma imkânlarıyla öne çıkmaktadır. Her ülkenin kendine özgü öğrenci vizesi şartları ve burs seçenekleri vardır. Eğitim planı yapmadan önce yaşam maliyetleri ve vize süresi dikkatlice değerlendirilmelidir.",
-   "address":"/yurtdisi-rehberi/yurtdisi-egitim"
+   "address":"/yurtdisi-rehberi/yurtdisi-egitim",
+   "click":true,
   },
   {
     "id": 3,
@@ -536,7 +538,8 @@ export const abroad =[
      "image": "/images/3.webp",
       "etiketler": ["Vize", "Başvuru","İş"],
     "detailedDescription": "Yurt dışında iş bulmak için öncelikle ülkenin çalışma izni politikaları incelenmeli ve dil yeterliliği sağlanmalıdır. Özellikle Almanya'nın Mavi Kart programı ve Kanada'nın Express Entry sistemi nitelikli çalışanlar için önemli fırsatlar sunar. CV formatı ve iş görüşmesi kültürü de ülkeye göre değişiklik gösterebilir.",
-   "address":"/yurtdisi-rehberi/is-bulma-rehberi"
+   "address":"/yurtdisi-rehberi/is-bulma-rehberi",
+   "click":true,
   },
   {
     "id": 4,
@@ -545,7 +548,8 @@ export const abroad =[
      "image": "/images/4.jpg",
       "etiketler": ["Vize", "Başvuru"],
     "detailedDescription": "Vize mülakatları, niyetinizi ve belgelerinizin doğruluğunu değerlendirmek içindir. Net, dürüst ve kendinizden emin bir iletişim tarzı benimseyin. Belgelerinizi önceden düzenleyin, planladığınız seyahatin nedenlerini açık şekilde ifade edin. Gereksiz detaylardan kaçının ve konsolosluk görevlisinin sorularını dikkatle dinleyin.",
-   "address":"/yurtdisi-rehberi/vize-turleri"
+   "address":"/yurtdisi-rehberi/vize-turleri",
+   "click":false,
   },
   {
     "id": 5,
@@ -554,7 +558,8 @@ export const abroad =[
      "image": "/images/5.webp",
       "etiketler": ["Vize", "Başvuru","Konaklama"],
     "detailedDescription": "Yurt dışında konaklama seçenekleri; öğrenci yurtları, paylaşımlı evler, hosteller veya oteller olabilir. Uzun süreli kalışlarda kiralık daireler maliyet açısından daha avantajlıdır. Ulaşımda toplu taşıma kartları ve şehir içi indirim uygulamaları büyük kolaylık sağlar. Gideceğiniz ülkenin toplu taşıma sistemini önceden araştırmanız önemlidir.",
-     "address":"/yurtdisi-rehberi/vize-turleri"
+     "address":"/yurtdisi-rehberi/vize-turleri",
+     "click":false,
   },
   {
     "id": 6,
@@ -563,7 +568,8 @@ export const abroad =[
      "image": "/images/6.jpg",
       "etiketler": ["Vize", "Başvuru"],
     "detailedDescription": "Birçok ülke vize başvurusu öncesi sağlık sigortası yaptırılmasını zorunlu kılar. Sigorta, acil durumlar, hastane masrafları ve ilaç giderlerini karşılar. Eğitim veya çalışma vizesi alacak kişiler, kapsamlı bir poliçe tercih etmelidir. Avrupa’da seyahat edenler için Schengen sağlık sigortası genellikle 30.000 Euro teminatlı olmalıdır.",
-     "address":"/yurtdisi-rehberi/vize-turleri"
+     "address":"/yurtdisi-rehberi/vize-turleri",
+     "click":false,
   },
   {
     "id": 7,
@@ -572,7 +578,8 @@ export const abroad =[
      "image": "/images/7.webp",
       "etiketler": ["Vize", "Başvuru"],
     "detailedDescription": "Yeni bir ülkeye yerleşmek yalnızca fiziksel değil, kültürel bir adaptasyon sürecidir. Farklı gelenekler, dil ve sosyal normlara uyum sağlamak zaman alabilir. Dil kurslarına katılmak, yerel etkinliklere gitmek ve yeni insanlarla iletişim kurmak uyum sürecini kolaylaştırır. Kültürel hassasiyetlere dikkat etmek önemlidir.",
-     "address":"/yurtdisi-rehberi/vize-turleri"
+     "address":"/yurtdisi-rehberi/vize-turleri",
+     "click":false,
   },
   {
     "id": 8,
@@ -581,7 +588,8 @@ export const abroad =[
      "image": "/images/8.webp",
       "etiketler": ["Vize", "Başvuru","Eğitim"],
     "detailedDescription": "Birçok ülke, uluslararası öğrencilere yönelik burslar sunmaktadır. Örneğin Almanya’da DAAD, İngiltere’de Chevening, ABD’de Fulbright programları öne çıkar. Başvuru süreci genellikle akademik başarı, niyet mektubu ve referans mektuplarına dayanır. Erken başvuru yapmak şansı artırır.",
-     "address":"/yurtdisi-rehberi/vize-turleri"
+     "address":"/yurtdisi-rehberi/vize-turleri",
+     "click":false,
   },
   {
     "id": 9,
@@ -590,7 +598,8 @@ export const abroad =[
     "image": "/images/9.jpg",
       "etiketler": ["Vize", "Başvuru"],
     "detailedDescription": "Vize reddi almanız, gelecekte başvuru yapamayacağınız anlamına gelmez. Ret mektubunda belirtilen gerekçeleri dikkatle okuyun. Belgelerde eksik veya yanlış bilgi varsa düzeltin. Bazı ülkelerde belirli süre içinde itiraz hakkınız bulunur. Uygun bir danışman desteğiyle yeniden başvuruda bulunabilirsiniz.",
-     "address":"/yurtdisi-rehberi/vize-turleri"
+     "address":"/yurtdisi-rehberi/vize-turleri",
+     "click":false,
   },
   {
     "id": 10,
@@ -599,7 +608,8 @@ export const abroad =[
      "image": "/images/vize.jpg",
        "etiketler": ["Vize", "Başvuru"],
     "detailedDescription": "Pasaport, vize, sağlık sigortası, konaklama belgeleri ve uçak biletinizi kontrol edin. Gidilen ülkenin para birimi ve banka işlemleri hakkında bilgi edinin. Elektrik priz adaptörü, ilaçlar ve temel ihtiyaçlarınızı yanınıza almayı unutmayın. Acil durum numaralarını kaydedin ve yakınlarınıza seyahat planınızı bildirin.",
-     "address":"/yurtdisi-rehberi/vize-turleri"
+     "address":"/yurtdisi-rehberi/vize-turleri",
+     "click":false,
   }
 ]
 
