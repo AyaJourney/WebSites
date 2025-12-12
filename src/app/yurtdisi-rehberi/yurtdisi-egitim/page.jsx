@@ -3,6 +3,7 @@ import Image from "next/image";
 import React from "react";
 import Head from "next/head";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 
 const trends = [
   {
@@ -33,6 +34,31 @@ const trends = [
 ];
 
 export default function Page() {
+  const animRefs = useRef([]);
+  useEffect(() => {
+  animRefs.current = animRefs.current.filter(Boolean);
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("edu-show");
+        }
+      });
+    },
+    { threshold: 0.15 }
+  );
+
+  animRefs.current.forEach((el) => observer.observe(el));
+
+  return () => observer.disconnect();
+}, []);
+const register = (el) => {
+  if (el && !animRefs.current.includes(el)) {
+    animRefs.current.push(el);
+  }
+};
+
   return (
     <>
       <Head>
@@ -47,7 +73,10 @@ export default function Page() {
 
       <main className="bg-white text-slate-900 min-h-screen">
         {/* Hero */}
-        <section className="relative w-full overflow-hidden">
+   <section
+  ref={register}
+  className="relative w-full overflow-hidden edu-scale-in"
+>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.12),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(16,185,129,0.12),transparent_30%),radial-gradient(circle_at_50%_80%,rgba(99,102,241,0.12),transparent_32%)]" />
           <div className="absolute inset-0">
             <Image
@@ -114,7 +143,11 @@ export default function Page() {
               </div>
               <div className="relative">
                 <div className="absolute -inset-4 bg-gradient-to-br from-blue-500/18 via-emerald-400/16 to-indigo-500/16 blur-3xl" />
-                <div className="relative p-6 rounded-3xl bg-white/90 ring-1 ring-slate-200 backdrop-blur space-y-4 shadow-2xl shadow-blue-500/10">
+               <div
+  ref={register}
+  className="relative p-6 rounded-3xl bg-white/90 ring-1 ring-slate-200 backdrop-blur space-y-4 shadow-2xl shadow-blue-500/10 edu-fade-up"
+>
+
                   <div className="flex items-center gap-3">
                     {/* <div className="h-10 w-10 rounded-2xl bg-white/10 flex items-center justify-center text-2xl">
                       🎓
@@ -158,7 +191,11 @@ export default function Page() {
         </section>
 
         {/* Intro */}
-        <section className="max-w-5xl mx-auto px-5 py-14 space-y-6">
+     <section
+  ref={register}
+  className="max-w-5xl mx-auto px-5 py-14 space-y-6 edu-fade-up"
+>
+
           <h2 className="text-2xl md:text-3xl font-bold text-slate-900">
             2026’da öğrencileri neler bekliyor?
           </h2>
@@ -174,7 +211,11 @@ export default function Page() {
 
         {/* Countries */}
         <section className="max-w-5xl mx-auto px-5 pb-12 space-y-14">
-          <div className="grid md:grid-cols-2 gap-10 items-center">
+         <div
+  ref={register}
+  className="grid md:grid-cols-2 gap-10 items-center edu-fade-up"
+>
+
             <div className="relative">
               <div className="absolute -inset-3 bg-blue-500/16 blur-2xl" />
               <Image
@@ -241,7 +282,11 @@ export default function Page() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-10 items-center">
+        <div
+  ref={register}
+  className="grid md:grid-cols-2 gap-10 items-center edu-fade-up"
+>
+
             <div className="relative">
               <div className="absolute -inset-3 bg-emerald-500/16 blur-2xl" />
               <Image
@@ -274,7 +319,10 @@ export default function Page() {
         </section>
 
         {/* Trends */}
-        <section className="bg-white border-t border-slate-200 py-14 px-5">
+       <section
+  ref={register}
+  className="bg-white border-t border-slate-200 py-14 px-5 edu-fade-up"
+>
           <div className="max-w-5xl mx-auto space-y-10">
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
               <div>
@@ -291,11 +339,13 @@ export default function Page() {
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
-              {trends.map((trend) => (
-                <article
-                  key={trend.title}
-                  className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white/95 backdrop-blur p-5 shadow-lg shadow-slate-200 transition hover:-translate-y-1 hover:shadow-emerald-200/60"
-                >
+              {trends.map((trend,index) => (
+               <article
+  ref={register}
+    key={`trend-${index}`}
+  className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white/95 backdrop-blur p-5 shadow-lg shadow-slate-200 transition hover:-translate-y-1 hover:shadow-emerald-200/60 edu-fade-up"
+>
+
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-gradient-to-br from-white/60 to-emerald-50" />
                   <div className="relative space-y-2">
                     <h3 className="text-lg font-semibold text-slate-900">
@@ -310,7 +360,11 @@ export default function Page() {
             </div>
           </div>
         </section>
-      <section className="max-w-6xl mx-auto px-6 pb-20">
+    <section
+  ref={register}
+  className="max-w-6xl mx-auto px-6 pb-20 edu-fade-up"
+>
+
         <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white/95 backdrop-blur shadow-2xl shadow-slate-200">
           <div className="absolute -inset-10 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.12),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(16,185,129,0.14),transparent_30%),radial-gradient(circle_at_50%_80%,rgba(99,102,241,0.14),transparent_32%)]" />
           <div className="relative p-6 md:p-8 space-y-6">

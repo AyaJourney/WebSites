@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -61,10 +61,31 @@ const longVisas = [
 
 /* --- COMPONENT --- */
 export default function Page() {
+    const animatedRefs = useRef([]);
+
+  useEffect(() => {
+    animatedRefs.current = animatedRefs.current.filter(Boolean);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visa-show");
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    animatedRefs.current.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  const register = (el) => el && animatedRefs.current.push(el);
   return (
-    <main className="min-h-screen bg-white text-slate-900">
+      <main className="min-h-screen bg-white text-slate-900">
       {/* HERO */}
-      <section className="relative isolate w-full overflow-hidden">
+      <section ref={register} className="visa-fade-up relative isolate w-full overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.12),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(16,185,129,0.12),transparent_30%),radial-gradient(circle_at_50%_80%,rgba(99,102,241,0.12),transparent_32%)]" />
         <div className="absolute inset-0">
           <Image
@@ -169,7 +190,10 @@ export default function Page() {
       </section>
 
       {/* SHORT VISA SECTION */}
-      <section className="max-w-6xl mx-auto px-6 py-16">
+      <section
+        ref={register}
+        className="visa-fade-up max-w-6xl mx-auto px-6 py-16"
+      >
         <header className="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
           <div>
             <p className="text-sm font-semibold text-emerald-600">Kısa Dönem</p>
@@ -185,7 +209,7 @@ export default function Page() {
           </span>
         </header>
 
-        <div className="grid gap-4 md:grid-cols-3 mt-8">
+        <div className="visa-stagger grid gap-4 md:grid-cols-3 mt-8">
           {shortVisas.map((v) => (
             <article
               key={v.title}
@@ -208,7 +232,10 @@ export default function Page() {
       </section>
 
       {/* LONG VISA SECTION */}
-      <section className="max-w-6xl mx-auto px-6 pb-16">
+          <section
+        ref={register}
+        className="visa-fade-up max-w-6xl mx-auto px-6 pb-20"
+      >
         <header className="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
           <div>
             <p className="text-sm font-semibold text-indigo-600">Uzun Dönem</p>
@@ -247,7 +274,10 @@ export default function Page() {
       </section>
 
       {/* PROCESS */}
-      <section className="max-w-6xl mx-auto px-6 pb-20">
+         <section
+        ref={register}
+        className="visa-fade-up max-w-6xl mx-auto px-6 pb-20"
+      >
         <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white/95 backdrop-blur shadow-2xl shadow-slate-200">
           <div className="absolute -inset-10 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.12),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(16,185,129,0.14),transparent_30%),radial-gradient(circle_at_50%_80%,rgba(99,102,241,0.14),transparent_32%)]" />
           <div className="relative p-6 md:p-8 space-y-6">
