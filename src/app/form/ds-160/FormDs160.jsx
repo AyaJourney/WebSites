@@ -116,6 +116,14 @@ function readFromLocal() {
 }
 
 
+function clearDs160Storage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(STORAGE_METHOD_KEY);
+  } catch (e) {
+    // sessiz geç
+  }
+}
 
 
 
@@ -194,7 +202,7 @@ const handleSubmit = async () => {
 };
 
 async function sendForm(payload) {
-  const res = await fetch("api/submit", {
+  const res = await fetch(process.env.NEXT_PUBLIC_SUBMIT_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
@@ -294,7 +302,7 @@ const requiredFields = {
   ],
    8: [
    
-    "passportFile",
+
    
   ]
 };
@@ -374,22 +382,7 @@ const markCompleted = (step) => {
   return validateStep(step, form);
 };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  
-  //   try {
-  //     localStorage.removeItem(STORAGE_KEY);
-     
-  //     setStatusMessage("Form başarıyla kaydedildi ve local storage temizlendi.");
-  //     // optional: reset
-  //     setForm(defaultForm);
-  //   } catch (err) {
-  //     console.warn(err);
-  //     setStatusMessage("Gönderimde hata oluştu.");
-  //   }
-  // };
-
-  // small helper to format step circle classes
+ 
   const stepCircleClass = (step) => {
     const completed = markCompleted(step);
     const isCurrent = form.currentStep === step;
@@ -2029,7 +2022,7 @@ onChange={(e) => {
 
           {/* Navigation */}
 <div className="flex items-center justify-between mt-6">
-  {form.currentStep <8 && (
+  {form.currentStep < 8 && (
     <div className="flex items-center gap-3">
       <button
         type="button"
@@ -2051,7 +2044,7 @@ onChange={(e) => {
     </div>
   )}
 
-  {form.currentStep === 8 && validateStep(8, form) && (
+  {form.currentStep == 8 && validateStep(8, form) && (
     <div className="flex flex-col gap-4 w-full">
  <div className="flex items-center gap-3">
   <input
@@ -2094,7 +2087,7 @@ onChange={(e) => {
     `}
   >
     {    (isSubmitting ) ? (
-      <span className="flex flex-col items-center gap-3">
+      <span className="flex items-center gap-3">
         <svg
           className="animate-spin h-5 w-5 text-white"
           xmlns="http://www.w3.org/2000/svg"
@@ -2123,11 +2116,11 @@ onChange={(e) => {
     )}
   </button>) : (
  
-  <div className="bg-white w-full  p-5 max-w-md text-center ">
-    <h2 className="text-xl font-bold text-gray-800 mb-6">
+  <div className="p-5 max-w-md text-center">
+    <h2 className="text-2xl font-bold text-gray-800 mb-6">
       Formunuz başarılı şekilde gönderilmiştir.
     </h2>
-    <Link href="/">   <button className="bg-white text-gray-700 cursor-pointer mt-5 border border-blue-300 px-4 py-2 rounded-3xl transition duration-300 hover:text-blue-500 hover:bg-gray-100">
+    <Link href="/">   <button className=" text-gray-700 cursor-pointer mt-5 border border-blue-300 px-4 py-2 rounded-3xl transition duration-300 hover:text-blue-500 hover:bg-gray-100">
     Ana Sayfa
     </button>
     </Link>
