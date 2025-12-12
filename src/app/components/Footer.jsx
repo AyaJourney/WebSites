@@ -78,9 +78,9 @@ export default function Footer() {
                 </div>
               </div>
 
-              <a href="tel:+903128701584" aria-label="Telefon numarasını ara" className="flex items-center gap-3  hover:opacity-80 transition">
+              <a href="tel:+905304853115" aria-label="Telefon numarasını ara" className="flex items-center gap-3  hover:opacity-80 transition">
                 <FiPhone className="text-white text-lg" />
-                <span className="text-md opacity-90">+90 5304853115</span>
+                <span className="text-md opacity-90">+90 530 485 31 15</span>
               </a>
 
               {/* Mail */}

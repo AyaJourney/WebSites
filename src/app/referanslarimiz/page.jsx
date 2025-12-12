@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 const references = [
   { name: "Speaker Agency", logo: "/referans/speaker_agency_home_url.webp" },
@@ -13,80 +13,88 @@ const references = [
 ];
 
 const Referanslarimiz = () => {
+  const titleRef = useRef(null);
+  const cardRefs = useRef([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("referanslar-show");
+          }
+        }),
+      { threshold: 0.2 }
+    );
+
+    if (titleRef.current) observer.observe(titleRef.current);
+    cardRefs.current.forEach((el) => el && observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-zinc-50 font-sans px-4 sm:px-8 py-10">
-      <h1 className="text-4xl font-bold mb-10 text-center">Referanslarımız</h1>
+      
+      {/* Başlık */}
+      <h1
+        ref={titleRef}
+        className="text-4xl font-bold mb-10 text-center referanslar-title-init"
+      >
+        Referanslarımız
+      </h1>
 
+      {/* Kartlar */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full max-w-7xl">
         {references.map((ref, index) => (
           <div
             key={index}
-            className="flex flex-col items-center justify-center bg-white rounded-xl shadow-md p-6backdrop-blur border border-slate-200/70 transition-transform duration-500 hover:-translate-y-1 group shadow-none md:shadow-[0_20px_50px_-24px_rgba(15,23,42,0.45)] hover:shadow-[0_20px_40px_-26px_rgba(37,99,235,0.45)]"
+            ref={(el) => (cardRefs.current[index] = el)}
+            style={{ transitionDelay: `${index * 80}ms` }} // stagger
+            className="referanslar-card-init flex flex-col items-center justify-center bg-white rounded-xl shadow-md p-6 backdrop-blur border border-slate-200/70 transition-all duration-500 hover:-translate-y-1 group md:shadow-[0_20px_50px_-24px_rgba(15,23,42,0.45)] hover:shadow-[0_20px_40px_-26px_rgba(37,99,235,0.45)]"
           >
             <img
               src={ref.logo}
               alt={ref.name}
-              className="w-24 h-24 object-contain mb-4"
+              className="w-24 h-24 object-contain mb-4 transition-transform duration-300 group-hover:scale-105"
             />
-            <p className="text-center text-gray-700 font-medium">{ref.name}</p>
+            <p className="text-center text-gray-700 font-medium">
+              {ref.name}
+            </p>
           </div>
         ))}
       </div>
-      <script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "AyaJourney hangi firmalara hizmet vermiştir?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "AyaJourney; eğitim kurumları, uluslararası şirketler, bireysel başvuru sahipleri ve profesyonel danışmanlık hizmeti alan yüzlerce müşteriyle çalışmıştır. Referanslarımız arasında farklı sektörlerden firmalar bulunmaktadır."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Referans listesi neye göre belirleniyor?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Referans listesi, çalıştığımız kurumlar, eğitim partnerleri ve vize danışmanlığı hizmeti verdiğimiz güvenilir iş ortaklarından oluşmaktadır. Logolar sadece izinli iş ortaklarımızı temsil eder."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Referans olarak gösterilen firmalarla çalışma süreci nasıldır?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Çalışma süreci başvurunun türüne göre değişmekle birlikte, firma yetkilileri ile koordineli şekilde vize dosyaları hazırlanır ve gerekli bilgi akışı sağlanır. Büyük ölçekli firmalar için toplu başvuru desteği de sağlanabilir."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Yeni firmalar referans listesine eklenebilir mi?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Evet. Hizmet alan yeni kurumlar ve iş ortaklarımızın isteği doğrultusunda referans listesi düzenli olarak güncellenir."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Referanslar gerçek mi ve doğrulanabilir mi?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Evet. Referanslarımız gerçektir ve firmaların izniyle yayınlanır. Talep halinde kurumsal doğrulama yapılabilir."
-          }
-        }
-      ]
-    })
-  }}
-/>
 
+      {/* FAQ Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: "AyaJourney hangi firmalara hizmet vermiştir?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "AyaJourney; eğitim kurumları, uluslararası şirketler ve bireysel danışanlarla çalışmıştır.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "Referanslar gerçek mi?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Evet. Referanslarımız firmaların izniyle yayınlanmaktadır.",
+                },
+              },
+            ],
+          }),
+        }}
+      />
     </main>
   );
 };
 
 export default Referanslarimiz;
-

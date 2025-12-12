@@ -10,7 +10,7 @@ export default function GlobalCareer() {
       {/* HERO */}
       <section className="relative w-full h-[80vh] flex items-center justify-center">
         <Image 
-          src="/images/work.jpg" 
+          src="/images/work.webp" 
           alt="Yurtdışında İş Bulma Rehberi" 
           fill 
           className="object-cover brightness-[80%]"
@@ -28,7 +28,7 @@ export default function GlobalCareer() {
       </section>
 
       {/* 3 ANA ÖZELLİK BLOĞU */}
-      <section className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-3 gap-6">
+      <section className="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-3 gap-6">
         {[
           {
             title: "Güçlü CV Stratejisi",
@@ -168,19 +168,19 @@ export default function GlobalCareer() {
               </p>
               <div className="flex flex-col sm:flex-row gap-2">
                  <Link href="/randevu">
-              <button className="bg-white text-blue-600 cursor-pointer px-6 py-3 rounded-xl font-semibold shadow-lg hover:-translate-y-0.5 transition">
+            <button className="bg-white text-blue-600 cursor-pointer px-6 py-3 rounded-xl font-semibold shadow-lg hover:-translate-y-0.5 transition">
                 Randevu Al
               </button>
             </Link>
                 <a
                   href="tel:+903128701584"
-                  className="inline-flex px-4 py-2.5 rounded-xl bg-slate-900 text-white font-semibold shadow-lg shadow-blue-500/20 hover:translate-y-[1px] transition"
+                  className="inline-flex px-4 py-2.5 rounded-xl bg-slate-900 text-white font-semibold shadow-lg shadow-blue-500/20 hover:-translate-y-0.5 transition"
                 >
                   Hemen Ara
                 </a>
                 <a
                   href="https://wa.me/903128701584"
-                  className="inline-flex px-4 py-2.5 rounded-xl bg-emerald-500 text-white font-semibold ring-1 ring-emerald-200/60 hover:bg-emerald-600 transition"
+                  className="inline-flex px-4 py-2.5 rounded-xl bg-emerald-500 text-white font-semibold ring-1 ring-emerald-200/60 hover:bg-emerald-600 hover:-translate-y-0.5 transition"
                   target="_blank"
                   rel="noreferrer"
                 >

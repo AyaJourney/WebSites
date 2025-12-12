@@ -77,7 +77,7 @@ export default function Page() {
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-white via-white/75 to-white/40" />
 
-        <div className="relative z-10 max-w-6xl mx-auto px-6 pt-28 pb-16 grid lg:grid-cols-2 gap-10 items-center">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 pt-28 pb-16 grid lg:grid-cols-2 gap-10 items-center">
           <div className="space-y-6">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/80 ring-1 ring-slate-200 backdrop-blur">
               <span className="h-2 w-2 rounded-full bg-emerald-400" />

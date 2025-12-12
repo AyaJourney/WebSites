@@ -59,7 +59,7 @@ export default function Page() {
             />
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-white via-white/75 to-white/35" />
-          <div className="max-w-6xl mx-auto px-5 pt-28 pb-16 relative z-10">
+          <div className="max-w-7xl mx-auto px-5 pt-28 pb-16 relative z-10">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/85 ring-1 ring-slate-200 backdrop-blur">
               <span className="h-2 w-2 rounded-full bg-emerald-400" />
               <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-800">

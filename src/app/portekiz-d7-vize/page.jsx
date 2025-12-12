@@ -9,7 +9,7 @@ import {
 } from "react-icons/fa";
 import { MdOutlineSchool } from "react-icons/md";
 import Link from "next/link";
-
+import { CgDanger } from "react-icons/cg";
 // export const metadata = {
 //   title: "Portekiz D7 Vizesi - Detaylı Rehber",
 //   description:
@@ -17,15 +17,15 @@ import Link from "next/link";
 // };
 
 const belgeler = [
-  { icon: <FaRegUserCircle />, title: "2 adet biyometrik fotoğraf" },
-  { icon: <FaRegUserCircle />, title: "En az 3 ay geçerliliği olan pasaport" },
-  { icon: <FaRegUserCircle />, title: "İkametgah belgesi" },
-  { icon: <FaRegUserCircle />, title: "Son 12 aylık banka hesap dökümü" },
-  { icon: <FaRegUserCircle />, title: "Adli sicil kaydı" },
-  { icon: <FaRegUserCircle />, title: "Pasif gelire kaynak teşkil eden belgeler" },
-  { icon: <FaRegUserCircle />, title: "Portekiz’de kiraladığınız evin kontratı" },
-  { icon: <FaRegUserCircle />, title: "Niyet mektubu" },
-  { icon: <FaRegUserCircle />, title: "Portekizce/İngilizce tercümeler" },
+  { icon: <CgDanger />, title: "2 adet biyometrik fotoğraf" },
+  { icon: <CgDanger />, title: "En az 3 ay geçerliliği olan pasaport" },
+  { icon: <CgDanger />, title: "İkametgah belgesi" },
+  { icon: <CgDanger />, title: "Son 12 aylık banka hesap dökümü" },
+  { icon: <CgDanger />, title: "Adli sicil kaydı" },
+  { icon: <CgDanger />, title: "Pasif gelire kaynak teşkil eden belgeler" },
+  { icon: <CgDanger />, title: "Portekiz’de kiraladığınız evin kontratı" },
+  { icon: <CgDanger />, title: "Niyet mektubu" },
+  { icon: <CgDanger />, title: "Portekizce/İngilizce tercümeler" },
 ];
 
 const basvuruAdimlari = [
@@ -87,7 +87,7 @@ export default function Page() {
   }, []);
 
   return (
-    <main className="bg-zinc-50 text-gray-900 dark:text-gray-100 font-sans mt-20">
+    <main className="bg-zinc-50 text-gray-900  font-sans mt-20">
 
       {/* HERO */}
       <section
@@ -99,7 +99,7 @@ export default function Page() {
           <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-snug">
             Portekiz D7 Vizesi: Sıcak İklim, Yüksek Yaşam Kalitesi, Güçlü Bir Gelecek
           </h1>
-          <p className="text-gray-700 dark:text-gray-300 text-lg md:text-xl mb-6 max-w-lg">
+          <p className="text-gray-700  text-lg md:text-xl mb-6 max-w-lg">
             Pasif gelir veya emekli maaşıyla Avrupa’da yaşamak isteyenler için en erişilebilir oturum yolu.
           </p>
 
@@ -149,11 +149,11 @@ export default function Page() {
             key={i}
             ref={addRef}
             data-anim="portekiz-fade-up"
-            className="portekiz-fade-up-init bg-white dark:bg-zinc-900 rounded-xl p-6 shadow hover:shadow-lg transition"
+            className="portekiz-fade-up-init bg-white  rounded-xl p-6 shadow hover:shadow-lg transition"
           >
             {item.icon}
             <h2 className="font-semibold text-xl mt-3 mb-2">{item.title}</h2>
-            <p className="text-gray-700 dark:text-gray-300 text-sm">{item.desc}</p>
+            <p className="text-gray-700  text-sm">{item.desc}</p>
           </div>
         ))}
       </section>
@@ -174,10 +174,10 @@ export default function Page() {
               key={i}
               ref={addRef}
               data-anim="portekiz-slide"
-              className="portekiz-slide-init flex flex-col items-center bg-white dark:bg-zinc-900 rounded-xl p-6 shadow hover:shadow-lg transition hover:scale-105"
+              className="portekiz-slide-init flex flex-col items-center bg-white  rounded-xl p-6 shadow hover:shadow-lg transition hover:scale-105 hakkimizda-hover-fill  hakkimizda-scale-init  relative p-8 rounded-2xl bg-[#f9fafb]  transition-all duration-300 hover:shadow-md"
             >
-              <div className="text-blue-500 text-4xl mb-3">{item.icon}</div>
-              <p className="text-center text-gray-700 dark:text-gray-300 text-sm">{item.title}</p>
+              <div className="text-red-500 text-4xl mb-3">{item.icon}</div>
+              <p className="text-center text-gray-700 text-sm">{item.title}</p>
             </div>
           ))}
         </div>
@@ -199,11 +199,11 @@ export default function Page() {
               key={step.step}
               ref={addRef}
               data-anim="portekiz-scale"
-              className="portekiz-scale-init flex flex-col items-center bg-white dark:bg-zinc-900 rounded-xl p-6 shadow hover:shadow-lg transition"
+              className="portekiz-scale-init flex flex-col items-center bg-white rounded-xl p-6 shadow hover:shadow-lg transition"
             >
-              <span className="text-blue-500 text-3xl font-bold mb-3">{step.step}</span>
+              <span className="text-orange-500 text-3xl font-bold mb-3">{step.step}</span>
               <h3 className="font-semibold mb-2">{step.title}</h3>
-              <p className="text-center text-gray-700 dark:text-gray-300 text-sm">{step.description}</p>
+              <p className="text-center text-gray-700 text-sm">{step.description}</p>
             </div>
           ))}
         </div>
@@ -225,11 +225,11 @@ export default function Page() {
               key={i}
               ref={addRef}
               data-anim="portekiz-slide"
-              className="portekiz-slide-init flex flex-col items-center bg-white dark:bg-zinc-900 rounded-xl p-6 shadow hover:shadow-xl transition hover:scale-105"
+              className="portekiz-slide-init flex flex-col items-center bg-white  rounded-xl p-6 shadow hover:shadow-xl transition hover:scale-105"
             >
               <FaCheckCircle className="text-green-500 text-4xl mb-3" />
               <h3 className="font-semibold mb-2 text-center">{item.title}</h3>
-              <p className="text-center text-gray-700 dark:text-gray-300 text-sm">
+              <p className="text-center text-gray-700  text-sm">
                 {item.description}
               </p>
             </div>

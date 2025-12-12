@@ -21,9 +21,14 @@ const basicInfo = {
 };
 
 const fees = {
-  visaFee: "90€ (yetişkinler)",
-  appointmentRange: "440–2000 TL (ülkeye göre değişir)",
-  consultancy: "200€ (14+), 100€ (0-14)",
+  visaFee0: "Ücretsiz",
+  visaFee6: "45€",
+  visaFee12: "90€",
+
+  appointmentRange: "440–2000 TL",
+  consultancy0: "100€ (0-14 Yaş)",
+  consultancy14: "200€ (14+)",
+
 };
 
 const genelEvraklar = [
@@ -179,7 +184,7 @@ export default function SchengenPage() {
             </p>
 
             <Link href={basicInfo.cta.href}>
-              <button className="bg-blue-600 text-white cursor-pointer mt-2 px-5 py-3 rounded-3xl font-semibold shadow-md hover:bg-blue-500 transition">
+              <button className="bg-white text-gray-700 cursor-pointer mt-5 border border-blue-300 px-4 py-2 rounded-3xl transition duration-300 hover:text-blue-500 hover:bg-gray-100">
                 {basicInfo.cta.label}
               </button>
             </Link>
@@ -191,7 +196,7 @@ export default function SchengenPage() {
               </div>
               <div className="flex items-center gap-3">
                 <FaRegClock className="text-blue-600 text-xl" />
-                <span>Tahmini süreç: 3–8 ay (ülke ve dosya türüne göre değişir)</span>
+                <span>Tahmini süreç: 3–8 ay (ülke ve dosya türüne göre değişkenlik gösterebilir)</span>
               </div>
             </div>
           </div>
@@ -237,7 +242,7 @@ export default function SchengenPage() {
               data-anim="schengen-slide"
               className="schengen-slide-init relative z-10 p-5 bg-white rounded-xl shadow-lg border border-gray-100 flex flex-col items-center text-center"
             >
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg shadow-md">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-600 text-white w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg shadow-md">
                 {i + 1}
               </div>
               <h4 className="font-semibold text-lg mt-4 mb-3">{step.title}</h4>
@@ -285,7 +290,7 @@ export default function SchengenPage() {
                   className="schengen-fade-up-init bg-white rounded-2xl p-6 shadow-md border border-gray-100"
                 >
                   <div className="flex items-center gap-4 mb-3">
-                    <div className="text-xl text-blue-600">
+                    <div className="text-xl text-rose-400">
                       <Icon />
                     </div>
                     <h3 className="font-semibold text-lg">{item.title}</h3>
@@ -319,7 +324,7 @@ export default function SchengenPage() {
                 className="schengen-slide-init bg-white rounded-2xl p-6 shadow-lg border border-gray-100"
               >
                 <div className="flex items-center mb-4">
-                  <div className="p-2 rounded-lg bg-blue-50 text-blue-600 mr-3">
+                  <div className="p-2 rounded-lg bg-blue-50 text-violet-400 mr-3">
                     <Icon className="text-2xl" />
                   </div>
                   <h3 className="font-bold text-xl">{block.profile}</h3>
@@ -396,31 +401,39 @@ export default function SchengenPage() {
           <div
             ref={register}
             data-anim="schengen-scale"
-            className="schengen-scale-init bg-white p-6 rounded-xl shadow-lg border border-gray-100"
+            className="schengen-scale-init bg-white p-6 rounded-xl shadow-lg border border-gray-100 g-2"
           >
-            <FaEuroSign className="text-4xl mx-auto mb-3 text-blue-600" />
+            <FaEuroSign className="text-4xl mx-auto mb-3 text-amber-600" />
             <p className="font-semibold text-lg">Vize Harcı</p>
-            <p className="text-2xl font-bold text-gray-900 mt-1">{fees.visaFee}</p>
+            <p className="text-xl font-bold text-gray-900 mt-1">{fees.visaFee0} (0-6 yaş)</p>
+            <p className="text-xl font-bold text-gray-900 mt-1">{fees.visaFee6} (6-12 Yaş)</p>
+            <p className="text-xl font-bold text-gray-900 mt-1">{fees.visaFee12} (12+)</p>
+
           </div>
 
           <div
             ref={register}
             data-anim="schengen-scale"
-            className="schengen-scale-init bg-white p-6 rounded-xl shadow-lg border border-gray-100"
+            className="schengen-scale-init bg-white p-6 rounded-xl shadow-lg border border-gray-100 g-2"
           >
-            <FaRegClock className="text-4xl mx-auto mb-3 text-blue-600" />
+            <FaRegClock className="text-4xl mx-auto mb-3 text-amber-600" />
             <p className="font-semibold text-lg">Randevu Bedeli</p>
-            <p className="text-2xl font-bold text-gray-900 mt-1">{fees.appointmentRange}</p>
+            <p className="font-semibold text-xs">(Ülkeye göre değişkenlik gösterebilir)</p>
+
+
+            <p className="text-xl font-bold text-gray-900 mt-1">{fees.appointmentRange}</p>
           </div>
 
           <div
             ref={register}
             data-anim="schengen-scale"
-            className="schengen-scale-init bg-white p-6 rounded-xl shadow-lg border border-gray-100"
+            className="schengen-scale-init bg-white p-6 rounded-xl shadow-lg border border-gray-100 g-2"
           >
-            <FaUserTie className="text-4xl mx-auto mb-3 text-blue-600" />
+            <FaUserTie className="text-4xl mx-auto mb-3 text-amber-600" />
             <p className="font-semibold text-lg">Danışmanlık Ücreti</p>
-            <p className="text-2xl font-bold text-gray-900 mt-1">{fees.consultancy}</p>
+            <p className="text-xl font-bold text-gray-900 mt-1">{fees.consultancy0}</p>
+            <p className="text-xl font-bold text-gray-900 mt-1">{fees.consultancy14}</p>
+
           </div>
         </div>
       </section>

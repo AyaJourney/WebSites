@@ -20,22 +20,48 @@ import { GoDotFill } from "react-icons/go";
 // Belgeler
 const documents = [
   { icon: <GoDotFill />, title: "Geçerli Pasaport" },
-  { icon: <GoDotFill />, title: "2 adet biyometrik fotoğraf" },
+  { icon: <GoDotFill />, title: "İş yeri belgeleri" },
   { icon: <GoDotFill />, title: "İkametgah belgesi" },
   { icon: <GoDotFill />, title: "Son 3 aylık banka hesap dökümü" },
   { icon: <GoDotFill />, title: "İngilizce vize dilekçesi" },
-  { icon: <GoDotFill />, title: "Seyahat sağlık sigortası" },
-  { icon: <GoDotFill />, title: "Otel ve uçak rezervasyonları" },
+  { icon: <GoDotFill />, title: "Seyahat sağlık sigortası (Zorunlu değil)" },
+  { icon: <GoDotFill />, title: "Otel ve uçak rezervasyonları (Zorunlu değil)" },
 ];
 
 // Başvuru adımları
 const processSteps = [
-  { step: 1, title: "Randevu Talebi", description: "İngiltere başkonsolosluğundan randevu alın." },
-  { step: 2, title: "Belgelerin Teslimi", description: "Gerekli tüm belgeleri teslim edin." },
-  { step: 3, title: "Biyometri & Ücret", description: "Parmak izi ve vize harcını ödeyin." },
-  { step: 4, title: "Başvuruyu Takip Edin", description: "Başvurunuzun durumunu online kontrol edin." },
-  { step: 5, title: "Pasaport Teslimi", description: "Sonuçlandıktan sonra pasaportunuzu alın." },
+  {
+    step: 1,
+    title: "Başvuru Formunun Doldurulması",
+    description:
+      "Vize başvurusu için gerekli olan online başvuru formu eksiksiz ve doğru bilgilerle doldurulur. Yanlış veya eksik bilgi başvurunun olumsuz sonuçlanmasına neden olabilir.",
+  },
+  {
+    step: 2,
+    title: "Vize Harcının Ödenmesi",
+    description:
+      "Başvuru formu tamamlandıktan sonra vize harcı online sistem üzerinden ödenir. Ödeme onayı, randevu oluşturma aşamasında zorunludur.",
+  },
+  {
+    step: 3,
+    title: "Randevu Tarihinin Belirlenmesi",
+    description:
+      "Vize harcı ödendikten sonra başvuru sahibine uygun tarih ve saat için randevu planlaması yapılır. Yoğunluk durumuna göre en yakın uygun tarih tercih edilir.",
+  },
+  {
+    step: 4,
+    title: "Evrakların Hazırlanması ve Online Yüklenmesi",
+    description:
+      "Randevu tarihine kadar gerekli tüm evraklar eksiksiz şekilde hazırlanır ve ilgili online başvuru sistemi üzerinden yüklenir. Evrakların güncel ve talep edilen formatta olması büyük önem taşır.",
+  },
+  {
+    step: 5,
+    title: "Randevuya Katılım",
+    description:
+      "Belirlenen randevu tarihinde başvuru merkezine gidilerek biyometri işlemleri tamamlanır ve evraklar teslim edilir. Randevuya katılım zorunludur.",
+  },
 ];
+
 
 // Bilgi Kartları
 const infoCards = [
@@ -104,7 +130,7 @@ const UKVisaPage = () => {
 
             <p className="text-slate-700 text-lg md:text-xl max-w-2xl">
               Belgeleri toparlayın, başvurunuzu planlayın ve süreci adım adım takip edin.
-              Tüm kritik kontrol listeleri ve ipuçları tek ekranda.
+              Tüm kritik noktalar ve ipuçları tek ekranda.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3">
@@ -122,28 +148,29 @@ const UKVisaPage = () => {
             </div>
 
             {/* İstatistikler */}
-            <div
-              ref={register}
-              data-anim="ukvisa-stagger"
-              className="ukvisa-stagger grid grid-cols-3 gap-4 max-w-lg"
-            >
-              {[
-                { label: "Ortalama sonuç", value: "15 iş günü", icon: <FaClock /> },
-                { label: "Ücret", value: "145 GBP", icon: <FaFileInvoiceDollar /> },
-                { label: "Onay oranı", value: "%95+", icon: <FaCheckCircle /> },
-              ].map((item, idx) => (
-                <div
-                  key={idx}
-                  className="bg-white border border-slate-200 rounded-xl px-4 py-3 flex items-center gap-3 shadow-sm"
-                >
-                  <div className="text-blue-500 text-xl">{item.icon}</div>
-                  <div>
-                    <p className="text-xs uppercase text-slate-500">{item.label}</p>
-                    <p className="font-semibold text-slate-900">{item.value}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+          <div
+  ref={register}
+  data-anim="ukvisa-stagger"
+  className="ukvisa-stagger grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-lg"
+>
+  {[
+    { label: "Ortalama sonuç", value: "15 iş günü", icon: <FaClock /> },
+    { label: "Ücret", value: "173 $", icon: <FaFileInvoiceDollar /> },
+    { label: "Onay oranı", value: "%95+", icon: <FaCheckCircle /> },
+  ].map((item, idx) => (
+    <div
+      key={idx}
+      className="bg-white border border-slate-200 rounded-xl px-4 py-3 flex items-center gap-3 shadow-sm"
+    >
+      <div className="text-lime-500 text-xl">{item.icon}</div>
+      <div>
+        <p className="text-xs uppercase text-slate-500">{item.label}</p>
+        <p className="font-semibold text-slate-900">{item.value}</p>
+      </div>
+    </div>
+  ))}
+</div>
+
           </div>
 
           {/* Sağ görsel */}
@@ -193,10 +220,10 @@ const UKVisaPage = () => {
               data-anim="ukvisa-slide"
               className="ukvisa-slide-init group bg-white border border-slate-200 rounded-2xl p-6 hover:border-blue-400/60 transition shadow-md"
             >
-              <div className="text-blue-500 text-3xl mb-4">{item.icon}</div>
+              <div className="text-amber-500 text-3xl mb-4">{item.icon}</div>
               <h3 className="font-semibold text-xl text-slate-900 mb-2">{item.title}</h3>
               <p className="text-slate-700 text-sm">{item.desc}</p>
-              <div className="mt-4 h-1 w-12 bg-blue-500 rounded-full group-hover:w-16 transition-all"></div>
+              <div className="mt-4 h-1 w-12 bg-green-300 rounded-full group-hover:w-32 transition-all duration-750"></div>
             </div>
           ))}
         </div>
@@ -219,7 +246,7 @@ const UKVisaPage = () => {
               data-anim="ukvisa-fade-up"
               className="ukvisa-fade-up-init bg-white border border-slate-200 rounded-2xl p-5 flex items-start gap-4 shadow-sm hover:border-blue-400/60 transition"
             >
-              <div className="text-blue-500 text-2xl">{doc.icon}</div>
+              <div className="text-rose-500 text-2xl">{doc.icon}</div>
               <p className="text-slate-800 text-sm">{doc.title}</p>
             </div>
           ))}
@@ -241,9 +268,9 @@ const UKVisaPage = () => {
               key={step.step}
               ref={register}
               data-anim="ukvisa-slide"
-              className="ukvisa-slide-init relative bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:border-blue-400/60 transition"
+              className="ukvisa-slide-init relative bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:border-blue-400/60 transition "
             >
-              <div className="absolute -top-3 -left-3 bg-blue-500 text-white w-10 h-10 rounded-xl flex items-center justify-center font-bold">
+              <div className="absolute -top-5 -left-2 bg-orange-500 text-white w-10 h-10 rounded-xl flex items-center justify-center font-bold ">
                 {step.step}
               </div>
               <h3 className="font-semibold text-slate-900 mb-2">{step.title}</h3>
@@ -262,7 +289,7 @@ const UKVisaPage = () => {
         <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white/95 backdrop-blur shadow-xl">
           
           <div className="relative p-6 md:p-8 space-y-6">
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-900">Başvuru Süreçleri</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-900">Sizinleyiz</h2>
 
             <div className="grid md:grid-cols-3 gap-4">
               {[ "Başvuru Kanalları", "Belgeler & Randevu", "Aya Journey Desteği" ].map((t, i) => (
@@ -275,23 +302,30 @@ const UKVisaPage = () => {
             <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
               <p className="text-slate-900 font-semibold">Aya Journey her aşamada yanınızda.</p>
 
-              <div className="flex flex-col sm:flex-row gap-2">
-                <Link href="/randevu">
-                  <button className="bg-white text-blue-600 px-6 py-3 rounded-xl font-semibold shadow-lg hover:-translate-y-0.5 transition">
-                    Randevu Al
-                  </button>
-                </Link>
-                <a href="tel:+903128701584" className="px-4 py-2.5 rounded-xl bg-slate-900 text-white font-semibold">
-                  Hemen Ara
-                </a>
-                <a
-                  href="https://wa.me/903128701584"
-                  className="px-4 py-2.5 rounded-xl bg-emerald-500 text-white font-semibold"
-                  target="_blank"
-                >
-                  WhatsApp’tan Yaz
-                </a>
-              </div>
+          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+  <Link href="/randevu" className="w-full sm:w-auto">
+    <button className="w-full sm:w-auto bg-white text-blue-600 px-6 py-3 rounded-xl font-semibold shadow-lg hover:-translate-y-0.5 transition">
+      Randevu Al
+    </button>
+  </Link>
+
+  <a
+    href="tel:+903128701584"
+    className="w-full sm:w-auto text-center px-4 py-2.5 rounded-xl bg-slate-900 text-white font-semibold hover:-translate-y-0.5 transition"
+  >
+    Hemen Ara
+  </a>
+
+  <a
+    href="https://wa.me/903128701584"
+    target="_blank"
+    rel="noreferrer"
+    className="w-full sm:w-auto text-center px-4 py-2.5 rounded-xl bg-emerald-500 text-white font-semibold hover:-translate-y-0.5 transition"
+  >
+    WhatsApp’tan Yaz
+  </a>
+</div>
+
             </div>
           </div>
         </div>

@@ -81,12 +81,22 @@ const IletisimClient = () => {
       <p className="text-sm text-gray-600 dark:text-gray-300">
         Kızılırmak, Çukurambar, Ufuk Ünv. Cd No:3, 06510 Çankaya/Ankara
       </p>
-      <p className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-200">
+       <a href="tel:+903128701584" aria-label="Telefon numarasını ara" className="flex items-center gap-3  hover:opacity-80 transition">
+              <p className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-200">
         <span className="text-blue-500">📞</span> +90 312 870 15 84
       </p>
-      <p className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-200">
+       </a>
+
+    <a
+                href="mailto:vizedestek@ayajourney.com"
+                aria-label="E-Posta gönder"
+                className="flex items-center gap-3 mt-2 hover:opacity-80 transition"
+              >
+                  <p className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-200">
         <span className="text-green-500">📧</span> vizedestek@ayajourneys.com
       </p>
+              </a>
+    
     </div>
   )}
 
@@ -96,12 +106,21 @@ const IletisimClient = () => {
       <p className="text-sm text-gray-600 dark:text-gray-300">
         Maslak, Bilim Sk. No:5, 34398 Sarıyer/İstanbul
       </p>
-      <p className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-200">
-        <span className="text-blue-500">📞</span> +90 312 870 15 84
-      </p>
-      <p className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-200">
+       <a href="tel:+905304853115" aria-label="Telefon numarasını ara" className="flex items-center gap-3  hover:opacity-80 transition">
+             <p className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-200">
+        <span className="text-blue-500">📞</span> +90 530 485 31 15
+      </p> 
+       </a>
+
+     <a
+                href="mailto:vizedestek@ayajourney.com"
+                aria-label="E-Posta gönder"
+                className="flex items-center gap-3 mt-2 hover:opacity-80 transition"
+              >
+                  <p className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-200">
         <span className="text-green-500">📧</span> vizedestek@ayajourneys.com
       </p>
+              </a>
     </div>
   )}
 </div>

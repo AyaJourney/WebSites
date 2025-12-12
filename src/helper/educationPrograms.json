@@ -1,0 +1,131 @@
+{
+  "programs": [
+    {
+      "id": "usa-internship",
+      "title": "Amerika Staj Programı",
+      "badge": "En Popüler Program",
+      "image": "/images/chefs.webp",
+      "theme": {
+        "bg": "bg-indigo-600/10",
+        "text": "text-indigo-700",
+        "soft": "rgba(79,70,229,0.25)"
+      },
+      "intro": "AYA Journey olarak, Amerika hayalinizi profesyonel bir kariyere dönüştüren 18 aya kadar maaşlı turizm ve aşçılık staj programlarını sunuyoruz. Program süresince hem çalışır hem kazanır hem de global bir kariyer altyapısı oluşturursunuz.",
+      "sections": [
+        {
+          "title": "Program Tanıtımı",
+          "content": "Amerika’da 12–18 ay süren bu program; turizm, otelcilik ve gastronomi alanlarında maaşlı staj imkânı sunar. Katılımcılar dünyanın önde gelen zincirlerinde çalışarak uluslararası deneyim kazanır."
+        },
+        {
+          "title": "Amerika'da Yaşam",
+          "content": "Amerika’da uzun süre yaşamak, farklı eyaletlerde çalışmak ve kültürel deneyim kazanmak mümkündür. Program boyunca kendi masraflarınızı karşılayabilir ve birikim yapabilirsiniz."
+        },
+        {
+          "title": "Bu Program Size Ne Katar?",
+          "content": "CV’nize Marriott, Hilton, Hyatt gibi global markaları ekleyebilir; dolar bazlı gelir elde edebilir ve uluslararası iş fırsatlarının kapısını aralayabilirsiniz."
+        },
+        {
+          "title": "Kimler Başvurabilir?",
+          "content": "Turizm veya gastronomi bölümü mezunları, orta seviye İngilizceye sahip, genellikle 18–34 yaş arası adaylar başvurabilir."
+        },
+        {
+          "title": "Vize ve Mülakat Desteği",
+          "content": "Sadece yerleştirme değil, vize mülakatı ve dosya stratejisini de profesyonel olarak planlıyoruz. Mülakat öncesi birebir hazırlık sağlanır."
+        }
+      ]
+    },
+
+    {
+      "id": "erasmus",
+      "title": "Erasmus+ Programı",
+      "badge": "Avrupa Deneyimi",
+      "image": "/images/erasmusimage.webp",
+      "theme": {
+        "bg": "bg-emerald-600/10",
+        "text": "text-emerald-700",
+        "soft": "rgba(16,185,129,0.25)"
+      },
+      "intro": "Erasmus+ programı, üniversite öğrencilerine Avrupa’da eğitim ve staj yapma imkânı sunar. Akademik gelişimin yanı sıra kültürel ve kişisel gelişim açısından büyük avantaj sağlar.",
+      "sections": [
+        {
+          "title": "Erasmus+ Nedir?",
+          "content": "Avrupa Birliği tarafından desteklenen Erasmus+, öğrencilerin başka bir Avrupa ülkesinde eğitim veya staj yapmasına olanak tanır."
+        },
+        {
+          "title": "Kimler Katılabilir?",
+          "content": "Üniversitelerin ön lisans, lisans, yüksek lisans ve doktora öğrencileri Erasmus+ programına başvurabilir."
+        },
+        {
+          "title": "Süre ve Destekler",
+          "content": "Program süresi genellikle 3–12 ay arasındadır. Katılımcılara aylık hibe desteği sağlanır."
+        },
+        {
+          "title": "Eğitim ve Staj Seçenekleri",
+          "content": "Dönemlik eğitim, yaz stajı veya mezuniyet sonrası staj gibi farklı seçenekler mevcuttur."
+        }
+      ]
+    },
+
+    {
+      "id": "language-school",
+      "title": "Yurtdışı Dil Okulları",
+      "badge": "Herkese Uygun",
+      "image": "/images/dilokulu.webp",
+      "theme": {
+        "bg": "bg-amber-500/10",
+        "text": "text-amber-700",
+        "soft": "rgba(245,158,11,0.25)"
+      },
+      "intro": "Yurtdışı dil okulları, kısa veya uzun süreli programlarla yabancı dili yerinde öğrenmek isteyenler için ideal bir seçenektir.",
+      "sections": [
+        {
+          "title": "Program İçeriği",
+          "content": "Genel İngilizce, yoğun İngilizce, akademik İngilizce ve sınav hazırlık programları sunulur."
+        },
+        {
+          "title": "Hangi Ülkeler?",
+          "content": "İngiltere, İrlanda, Kanada, Malta, Amerika ve Avustralya en çok tercih edilen ülkeler arasındadır."
+        },
+        {
+          "title": "Yaş ve Seviye Şartı",
+          "content": "Genellikle 16 yaş üstü herkes katılabilir. Dil seviyesi şartı yoktur."
+        },
+        {
+          "title": "Vize ve Konaklama",
+          "content": "Öğrenci vizesi, aile yanı veya yurt konaklama seçenekleri konusunda danışmanlık sağlanır."
+        }
+      ]
+    },
+
+    {
+      "id": "work-and-travel",
+      "title": "Work & Travel",
+      "badge": "Öğrenciler İçin",
+      "image": "/images/workandtravel.webp",
+      "theme": {
+        "bg": "bg-rose-500/10",
+        "text": "text-rose-700",
+        "soft": "rgba(244,63,94,0.25)"
+      },
+      "intro": "Work & Travel programı, üniversite öğrencilerinin yaz aylarında Amerika’da çalışıp seyahat etmesini sağlar.",
+      "sections": [
+        {
+          "title": "Program Süresi",
+          "content": "Genellikle yaz döneminde 3–4 ay sürer."
+        },
+        {
+          "title": "Kimler Katılabilir?",
+          "content": "Örgün öğretimde okuyan üniversite öğrencileri ve belirli not ortalamasını sağlayan adaylar başvurabilir."
+        },
+        {
+          "title": "Çalışma Alanları",
+          "content": "Otel, restoran, eğlence parkları ve perakende sektörlerinde çalışma imkânı sunulur."
+        },
+        {
+          "title": "Kültürel Deneyim",
+          "content": "Amerikan kültürünü yerinde deneyimleme ve uluslararası arkadaşlıklar kurma fırsatı sağlar."
+        }
+      ]
+    }
+  ]
+}

@@ -1,240 +1,170 @@
 "use client";
 
-import Image from "next/image";
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence, useAnimation } from "framer-motion";
-import {
-  FaGraduationCap,
-  FaUniversity,
-  FaAward,
-  FaUserGraduate,
-  FaLightbulb,
-  FaBalanceScale,
-  FaClipboardList,
-  FaStar,
-} from "react-icons/fa";
+import Image from "next/image";
+import data from "@/helper/educationPrograms.json";
 
-// Sekmeler ve içerikler + ikonları
-const sections = [
-  {
-    title: "Program Tanıtımı",
-    content:
-      "AYA Journey olarak, Amerika hayalinizi profesyonel bir kariyere dönüştürecek o büyük fırsatı sunmaktan gurur duyuyoruz: Amerika'da 18 aya kadar maaşlı turizm ve aşçılık stajı.",
-    icon: <FaGraduationCap className="text-xl" />,
-    color: "from-indigo-400 to-purple-500",
-  },
-  {
-    title: "Amerika'da Yaşam",
-    content:
-      "Amerika'da uzun süre yaşamak, global bir tecrübe edinmek ve bunu yaparken ailenize yük olmadan, kendi paranızı kazanmak... Bu artık uzak bir hayal değil.",
-    icon: <FaUniversity className="text-xl" />,
-    color: "from-green-400 to-teal-500",
-  },
-  {
-    title: "Bu Program Size Ne Katar?",
-    content:
-      "Kariyer Sıçraması: CV'nize Marriott, Westin, Hyatt ve Hilton gibi 5 yıldızlı dünya devlerinde edineceğiniz tecrübayı ekleyin.\n\nMaddi Kazanç: Emeğinizin karşılığını dolarla alın. 1 yılın sonunda, yaşam masraflarınızı çıktıktan sonra bile yaklaşık 20.000$ birikimle dönebilirsiniz.\n\nKültürel Deneyim: 7 farklı eyalette yaşam ve çalışma imkanı.",
-    icon: <FaAward className="text-xl" />,
-    color: "from-yellow-400 to-orange-500",
-  },
-  {
-    title: "Kimler Başvurabilir?",
-    content:
-      "2 veya 4 yıllık üniversitelerin Turizm veya Gastronomi bölümlerinden mezunsanız, orta seviye (Intermediate) veya üzeri İngilizceniz varsa, 34 yaşın altındaysanız başvurabilirsiniz.",
-    icon: <FaUserGraduate className="text-xl" />,
-    color: "from-pink-400 to-red-500",
-  },
-  {
-    title: "Farkımız",
-    content:
-      "Bizim farkımız, diğerlerinin sadece 'program sağlayıcı' olduğu yerde, bizim 'vize başarı uzmanı' olmamız. Diğer şirketler size sadece bir yerleştirme sunarken, biz size vize onayına giden en güvenli yolu sunuyoruz.",
-    icon: <FaLightbulb className="text-xl" />,
-    color: "from-cyan-400 to-blue-500",
-  },
-  {
-    title: "Tecrübeye Güven",
-    content:
-      "Amerika vize ret oranlarının arttığı bu dönemde, şansa değil, tecrübeye güvenmelisiniz. Ekibimizde eski konsolosluk çalışanları, avukatlar ve daha önce J1 yapmış danışmanlar var.",
-    icon: <FaBalanceScale className="text-xl" />,
-    color: "from-purple-400 to-pink-500",
-  },
-  {
-    title: "Mülakat Planlaması",
-    content:
-      "Size sadece bir form doldurtup 'bol şans' demiyoruz. Mülakatınızın her saniyesini birlikte planlıyor, olası tüm sorulara en doğru cevapları hazırlıyoruz.",
-    icon: <FaClipboardList className="text-xl" />,
-    color: "from-rose-400 to-red-500",
-  },
-  {
-    title: "Hayalleriniz",
-    content:
-      "Sizin görmeye can attığınız o filmin sonunu biz yüzlerce kez izledik. Şimdi başrol sırası sizde. Hayallerinizi riske atmayın, AYA Journey uzmanlığıyla yola çıkın.",
-    icon: <FaStar className="text-xl" />,
-    color: "from-yellow-300 to-yellow-500",
-  },
-];
+export default function EducationPage() {
+  const programs = data.programs ?? [];
 
-export default function EgitimCard() {
-  const [active, setActive] = useState(0);
-  const [scrollY, setScrollY] = useState(0);
-  const controls = useAnimation();
+  const [active, setActive] = useState(() =>
+    programs.length ? programs[0].id : null
+  );
 
+  const current = programs.find((p) => p.id === active);
+
+  /* scroll animation */
   useEffect(() => {
-    // component mount olduktan sonra scroll listener ekle
-    const handleScroll = () => {
-      const y = window.scrollY;
-      setScrollY(y);
-      // controls.start'ı doğrudan kullan
-      controls.start({
-        scale: y < 100 ? 1 + y / 1000 : 1.1,
-        opacity: y < 100 ? 1 - y / 500 : 0.85,
-      });
-    };
+    const els = document.querySelectorAll(".edu-animate");
 
-    // add listener
-    window.addEventListener("scroll", handleScroll);
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add("edu-show");
+        });
+      },
+      { threshold: 0.2 }
+    );
 
-    // cleanup
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, [active]);
+
+  if (!programs.length) return null;
 
   return (
-    <section className="relative w-full min-h-screen overflow-hidden">
-      {/* Hero Background */}
-      <motion.div  initial={{ opacity: 1, scale: 1 }} animate={controls} className="absolute inset-0 overflow-hidden">
-        <Image
-          src="/images/edu1.jpg"
-          alt="Amerika'da Staj Programı"
-          fill
-          priority
-          className="object-cover object-center scale-110"
-        />
-        <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
-      </motion.div>
+    <main className="w-full bg-white text-gray-900 font-sans overflow-hidden">
+      {/* HERO */}
+      <section className="max-w-7xl mx-auto px-6 pt-24 pb-16 text-center">
+        <h1 className="text-4xl md:text-5xl font-extrabold leading-tight edu-animate edu-fade-up">
+          Yurtdışı Eğitim & Kariyer Programları
+        </h1>
+        <p className="mt-6 text-lg text-gray-600 max-w-3xl mx-auto edu-animate edu-fade-up">
+          Amerika’dan Avrupa’ya, kısa dönem eğitimlerden uzun süreli kariyer
+          programlarına kadar tüm seçenekleri tek çatı altında sunuyoruz.
+          Programınızı seçin, süreci birlikte planlayalım.
+        </p>
+      </section>
 
-      {/* Hero Title */}
-      <motion.h1
-        className="absolute top-20 left-6 md:left-20 text-5xl md:text-6xl font-bold text-white z-10 drop-shadow-xl"
-        animate={{
-          scale: scrollY < 100 ? 1 : 0.95,
-          opacity: scrollY < 100 ? 1 : 0.9,
-        }}
-        transition={{ duration: 0.3 }}
-      >
-        Vize kolay, staj hazır.
-      </motion.h1>
-
-      {/* Tabs + Cards */}
-      <div className="relative z-10 flex flex-col md:flex-row justify-start md:justify-center items-start gap-6 px-6 py-12 mt-40 md:mt-60">
-        {/* Tabs */}
-   {/* Tabs */}
-<div
-  className={`
-    w-full flex gap-4 overflow-x-auto scrollbar-hide
-    md:flex-col md:w-1/4 md:overflow-x-visible
-  `}
->
-  {sections.map((sec, i) => (
-    <button
-      key={i}
-      onClick={() => setActive(i)}
-      className={`
-        flex-shrink-0 min-w-[45%] md:min-w-full 
-        px-4 py-3 rounded-xl font-semibold text-left transition-all duration-300 flex items-center gap-2
-        ${active === i
-          ? `bg-gradient-to-r ${sec.color} text-white shadow-2xl scale-105`
-          : "bg-white/10 text-white hover:bg-white/20"}
-      `}
-    >
-      {sec.icon} {sec.title}
-    </button>
-  ))}
-</div>
-
-
-        {/* Card Content */}
-        <div className="md:w-3/4 w-full">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={active}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-              className="bg-white/20 backdrop-blur-xl rounded-3xl p-8 shadow-2xl text-white max-h-[70vh] overflow-y-auto relative hover:scale-[1.03] transition-transform duration-300"
+      {/* PROGRAM SELECT */}
+      <section className="max-w-7xl mx-auto px-6">
+        {/* DESKTOP TABS */}
+        <div className="hidden md:flex gap-4 justify-center mb-12">
+          {programs.map((p) => (
+            <button
+              key={p.id}
+              onClick={() => setActive(p.id)}
+              className={`px-5 py-3 rounded-xl font-semibold transition-all duration-300
+                ${
+                  active === p.id
+                    ? `${p.theme.bg} ${p.theme.text} shadow-lg scale-105`
+                    : "bg-gray-100 hover:bg-gray-200 text-gray-700"
+                }
+              `}
             >
-              {/* Badge */}
-              {/* <motion.div
-                className={`absolute top-4 left-4 bg-gradient-to-r ${sections[active].color} px-3 py-1 rounded-full font-semibold shadow-lg text-black text-sm flex items-center gap-2`}
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 0.3 }}
-              >
-                {sections[active].icon} Öne Çıkan
-              </motion.div> */}
-
-              <h2 className="text-2xl md:text-3xl font-bold mb-4 flex items-center gap-2">
-                {sections[active].icon} {sections[active].title}
-              </h2>
-              <p className="whitespace-pre-line text-base md:text-lg leading-relaxed">
-                {sections[active].content}
-              </p>
-            </motion.div>
-          </AnimatePresence>
+              {p.title}
+            </button>
+          ))}
         </div>
-      </div>
-      <script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Amerika'da staj programı için kimler başvurabilir?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "18–35 yaş arasında olan, en az lise mezunu, temel İngilizceye sahip öğrenciler ve yeni mezunlar staj programına başvurabilir. Bazı şirketler ek nitelik talep edebilir."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Amerika staj vizesi ne kadar sürede çıkar?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "DS-2019 sponsor onayı ve konsolosluk randevusuna bağlı olarak vize süreci genellikle 4–8 hafta arasında sonuçlanır."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Amerika staj programı için gerekli belgeler nelerdir?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Pasaport, akademik transkript, CV, İngilizce niyet mektubu, referans mektupları ve DS-2019 başvuru formu staj programında temel belgelerdir."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Amerika’da staj yaparken çalışma izni sağlanır mı?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Evet. J-1 staj vizesi, katılımcıya program boyunca sadece belirlenen kurumda yasal olarak çalışma izni sağlar."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Staj programı ücretli midir?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Bazı şirketler ücretli staj imkânı sunarken bazıları sadece eğitim odaklı programlar sunar. Ücretli olup olmadığı seçilen sektöre ve şirkete göre değişir."
-          }
-        }
-      ]
-    })
-  }}
-/>
 
-    </section>
+        {/* MOBILE ACCORDION */}
+        <div className="md:hidden space-y-4 mb-12">
+          {programs.map((p) => (
+            <div
+              key={p.id}
+              className="border border-gray-200 rounded-xl overflow-hidden"
+            >
+              <button
+                onClick={() =>
+                  setActive(active === p.id ? null : p.id)
+                }
+                className="w-full flex justify-between items-center px-4 py-4 font-semibold"
+              >
+                {p.title}
+                <span>{active === p.id ? "−" : "+"}</span>
+              </button>
+
+              {active === p.id && (
+                <div className="px-4 pb-4 text-sm text-gray-600">
+                  {p.intro}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* CONTENT */}
+      {current && (
+        <section className="max-w-7xl mx-auto px-6 pb-24 grid md:grid-cols-2 gap-12 items-start ">
+          {/* TEXT */}
+          <div className="space-y-8">
+            <span
+              className={`inline-block px-4 py-1 rounded-full text-sm font-semibold ${current.theme.bg} ${current.theme.text} edu-animate edu-scale-in`}
+            >
+              {current.badge}
+            </span>
+
+            <p className="text-lg leading-relaxed text-gray-700 edu-animate edu-fade-up">
+              {current.intro}
+            </p>
+
+            <div className="space-y-6">
+              {current.sections.map((sec, i) => (
+                <div
+                  key={i}
+                  className="edu-animate edu-fade-up bg-gray-50 rounded-2xl p-6 border border-gray-200 hakkimizda-hover-fill  hakkimizda-scale-init  relative p-8 rounded-2xl bg-[#f9fafb]  transition-all duration-300 hover:shadow-md"
+                >
+                  <h3 className="font-semibold text-xl mb-2">
+                    {sec.title}
+                  </h3>
+                  <p className="text-gray-700 leading-relaxed text-sm">
+                    {sec.content}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* IMAGE */}
+          <div
+            className="edu-animate edu-scale-in edu-soft-glow"
+            style={{ "--edu-glow-color": current.theme.soft }}
+          >
+            <div className="relative h-[320px] md:h-[500px] rounded-3xl overflow-hidden shadow-xl">
+              <Image
+                src={current.image}
+                alt={current.title}
+                fill
+                priority
+                className="object-cover"
+              />
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* SEO SCHEMA */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "itemListElement": programs.map((p, i) => ({
+              "@type": "Course",
+              "position": i + 1,
+              "name": p.title,
+              "description": p.intro,
+              "provider": {
+                "@type": "Organization",
+                "name": "AYA Journey",
+                "url": "https://ayajourney.com"
+              }
+            }))
+          })
+        }}
+      />
+    </main>
   );
 }
