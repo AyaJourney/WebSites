@@ -2120,7 +2120,12 @@ onChange={(e) => {
     <h2 className="text-2xl font-bold text-gray-800 mb-6">
       Formunuz başarılı şekilde gönderilmiştir.
     </h2>
-    <Link href="/">   <button className=" text-gray-700 cursor-pointer mt-5 border border-blue-300 px-4 py-2 rounded-3xl transition duration-300 hover:text-blue-500 hover:bg-gray-100">
+    <Link href="/">   <button 
+     onClick={() => {
+    clearDs160Storage();
+    
+  }}
+    className=" text-gray-700 cursor-pointer mt-5 border border-blue-300 px-4 py-2 rounded-3xl transition duration-300 hover:text-blue-500 hover:bg-gray-100">
     Ana Sayfa
     </button>
     </Link>
