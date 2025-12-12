@@ -6,6 +6,17 @@ import nodemailer from "nodemailer";
 import sharp from "sharp";
 import heicConvert from "heic-convert";
 export const runtime = "nodejs";
+function toTRDate(dateStr) {
+  if (!dateStr) return "";
+  const d = new Date(dateStr);
+  if (isNaN(d)) return dateStr;
+
+  return d.toLocaleDateString("tr-TR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric"
+  });
+}
 function cleanBase64(b64) {
   return b64.replace(/^data:image\/\w+;base64,/, "");
 }
@@ -291,7 +302,7 @@ let h2 = drawField("T.C. Kimlik No", s(1).tcId, false, CONTENT_WIDTH / 2);
 currentY -= Math.max(h1, h2) + 10;
 
 // Doğum Tarihi ve Doğum Yeri
-h1 = drawField("Doğum Tarihi", s(1).birthDate, false, 0);
+h1 = drawField("Doğum Tarihi", toTRDate(s(1).birthDate), false, 0);
 h2 = drawField("Doğum Yeri", s(1).birthPlace, false, CONTENT_WIDTH / 2);
 currentY -= Math.max(h1, h2) + 10;
 
@@ -316,13 +327,13 @@ drawSection("2. BÖLÜM");
 
 // Medeni Durum ve Evlilik Tarihi
  h1 = drawField("Medeni Durum", s(2).maritalStatus, false, 0);
- h2 = s(2).maritalStatus === "EVLI" ? drawField("Evlilik Tarihi", s(2).marriageDate, false, CONTENT_WIDTH/2) : null;
+ h2 = s(2).maritalStatus === "EVLI" ? drawField("Evlilik Tarihi", toTRDate(s(2).marriageDate), false, CONTENT_WIDTH/2) : null;
 currentY -= Math.max(h1 || 0, h2 || 0) + 10;
 
 // Eş Bilgileri (Evli ise)
 if (s(2).maritalStatus === "EVLI") {
     h1 = drawField("Eş Adı-Soyadı", s(2).spouseFullName, false, 0);
-    h2 = drawField("Doğum Tarihi", s(2).spouseBirthDate, false, CONTENT_WIDTH/2);
+    h2 = drawField("Doğum Tarihi", toTRDate(s(2).spouseBirthDate), false, CONTENT_WIDTH/2);
     currentY -= Math.max(h1, h2) + 10;
 
     h1 = drawField("Doğum Yeri", s(2).spouseBirthPlace, false, 0);
@@ -337,7 +348,7 @@ if (s(2).maritalStatus === "EVLI") {
 // Önceki Evlilikler (Varsa)
 if (s(2).otherMarriages === "EVET") {
     h1 = drawField("Eski Eş Adı-Soyadı", s(2).exSpouseFullName, false, 0);
-    h2 = drawField("Eski Eş Doğum Tarihi", s(2).exSpouseBirthDate, false, CONTENT_WIDTH/2);
+    h2 = drawField("Eski Eş Doğum Tarihi", toTRDate(s(2).exSpouseBirthDate), false, CONTENT_WIDTH/2);
     currentY -= Math.max(h1, h2) + 10;
 }
 
@@ -350,7 +361,7 @@ if (s(2).childrenExist === "EVET" && s(2).children && s(2).children.length > 0) 
         currentY -= Math.max(h1, h2) + 10;
 
         h1 = drawField("Doğum Yeri", child.birthPlace, false, 0);
-        h2 = drawField("Doğum Tarihi", child.birthDate, false, CONTENT_WIDTH/2);
+        h2 = drawField("Doğum Tarihi", toTRDate(child.birthDate), false, CONTENT_WIDTH/2);
         currentY -= Math.max(h1, h2) + 10;
 
         h1 = drawField("Adres", child.address, false, 0, CONTENT_WIDTH);
@@ -379,7 +390,7 @@ if (s(2).childrenExist === "EVET" && s(2).children && s(2).children.length > 0) 
 currentY -= Math.max(h1, h2) + 10;
 
 h1 = drawField("Doğum Yeri", s(3).motherBirthPlace, false, 0);
-h2 = drawField("Doğum Tarihi", s(3).motherBirthDate, false, CONTENT_WIDTH/2);
+h2 = drawField("Doğum Tarihi", toTRDate(s(3).motherBirthDate), false, CONTENT_WIDTH/2);
 currentY -= Math.max(h1, h2) + 10;
 
 h1 = drawField("İkamet Adresi", s(3).motherAddress, false, 0, CONTENT_WIDTH);
@@ -394,7 +405,7 @@ h2 = drawField("Medeni Durumu", s(3).fatherMaritalStatus, false, CONTENT_WIDTH/2
 currentY -= Math.max(h1, h2) + 10;
 
 h1 = drawField("Doğum Yeri", s(3).fatherBirthPlace, false, 0);
-h2 = drawField("Doğum Tarihi", s(3).fatherBirthDate, false, CONTENT_WIDTH/2);
+h2 = drawField("Doğum Tarihi", toTRDate(s(3).fatherBirthDate), false, CONTENT_WIDTH/2);
 currentY -= Math.max(h1, h2) + 10;
 
 h1 = drawField("İkamet Adresi", s(3).fatherAddress, false, 0, CONTENT_WIDTH);
@@ -413,7 +424,7 @@ if (s(3).siblingsCount > 0 && s(3).siblings && s(3).siblings.length > 0) {
         currentY -= Math.max(h1, h2) + 10;
 
         h1 = drawField("Doğum Yeri", sibling.birthPlace, false, 0);
-        h2 = drawField("Doğum Tarihi", sibling.birthDate, false, CONTENT_WIDTH/2);
+        h2 = drawField("Doğum Tarihi", toTRDate(sibling.birthDate), false, CONTENT_WIDTH/2);
         currentY -= Math.max(h1, h2) + 10;
 
         h1 = drawField("Adres", sibling.address, false, 0, CONTENT_WIDTH);
@@ -447,7 +458,7 @@ currentY -= h1 + 2;
 
 if (s(4).beenToUS === "EVET") {
     checkPageOverflow(40);
-    h1 = drawField("Gittiğiniz Günün Tarihi", s(4).lastVisitDate, false, 0);
+    h1 = drawField("Gittiğiniz Günün Tarihi", toTRDate(s(4).lastVisitDate), false, 0);
     h2 = drawField("ABD’de Kaldığınız Süre", s(4).lastVisitDuration, false, 0);
     currentY -= Math.max(h1, h2) + 2;
 }
@@ -458,7 +469,7 @@ currentY -= h1 + 2;
 
 if (s(4).hadUSVisa === "EVET") {
     checkPageOverflow(40);
-    h1 = drawField("Vize Tarihi", s(4).visaDate, false, 0);
+    h1 = drawField("Vize Tarihi", toTRDate(s(4).visaDate), false, 0);
     h2 = drawField("Vize Numarası", s(4).visaNumber, false, 0);
     currentY -= Math.max(h1, h2) + 2;
 }
@@ -484,7 +495,7 @@ if (s(4).exams && s(4).exams.length > 0) {
     s(4).exams.forEach((exam, index) => {
         checkPageOverflow(60);
         h1 = drawField(`Sınav ${index + 1} Adı`, exam.examName, false, 0);
-        h2 = drawField("Sınav Tarihi", exam.examDate, false, CONTENT_WIDTH / 2);
+        h2 = drawField("Sınav Tarihi", toTRDate(exam.examDate), false, CONTENT_WIDTH / 2);
         currentY -= Math.max(h1, h2) + 2;
 
         h1 = drawField("Skor", exam.score, false, 0);
@@ -508,8 +519,8 @@ if (s(4).postSecondaryEducation === "EVET") {
     h2 = drawField("Eğitim Ülkesi", s(4).educationCountry, false, CONTENT_WIDTH / 2);
     currentY -= Math.max(h1, h2) + 2;
 
-    h1 = drawField("Başlangıç Tarihi", s(4).educationStartDate, false, 0);
-    h2 = drawField("Mezuniyet Tarihi", s(4).educationEndDate, false, CONTENT_WIDTH / 2);
+    h1 = drawField("Başlangıç Tarihi", toTRDate(s(4).educationStartDate), false, 0);
+    h2 = drawField("Mezuniyet Tarihi", toTRDate(s(4).educationEndDate), false, CONTENT_WIDTH / 2);
     currentY -= Math.max(h1, h2) +2;
 }
 
@@ -522,10 +533,10 @@ currentY -= h1 + 2;
 if (s(4).boolean_military === "EVET") {
     checkPageOverflow(60);
     h1 = drawField("Askerlik yapılan şehir", s(4).military_city, false, 0);
-    h2 = drawField("Başlangıç Tarihi", s(4).military_start_date, false, CONTENT_WIDTH / 2);
+    h2 = drawField("Başlangıç Tarihi", toTRDate(s(4).military_start_date), false, CONTENT_WIDTH / 2);
     currentY -= Math.max(h1, h2) + 2;
 
-    h1 = drawField("Bitiş Tarihi", s(4).military_end_date, false, 0);
+    h1 = drawField("Bitiş Tarihi", toTRDate(s(4).military_end_date), false, 0);
     currentY -= h1 + 2;
 }
 
@@ -549,7 +560,7 @@ if (s(5).employmentStatus?.toUpperCase() === "ÇALIŞIYOR") {
      h2 = drawField("Pozisyon", s(5).currentPosition || "-", false, CONTENT_WIDTH / 2);
     currentY -= Math.max(h1, h2) + 10;
 
-    h1 = drawField("İşe Başlangıç Tarihi", s(5).currentJobStartDate || "-", false, 0);
+    h1 = drawField("İşe Başlangıç Tarihi", toTRDate(s(5).currentJobStartDate) || "-", false, 0);
     h2 = drawField("Şehir / Ülke", `${s(5).currentWorkCity || "-"} / ${s(5).currentWorkCountry || "-"}`, false, CONTENT_WIDTH / 2);
     currentY -= Math.max(h1, h2) + 10;
 }
@@ -562,7 +573,7 @@ if (s(5).last10YearsWorkExperience?.length) {
         h2 = drawField("Pozisyon", job.position || "-", false, CONTENT_WIDTH / 2);
         currentY -= Math.max(h1, h2) + 10;
 
-        h1 = drawField("Başlangıç / Bitiş Tarihi", `${job.startDate || "-"} / ${job.endDate || "-"}`, false, 0);
+        h1 = drawField("Başlangıç / Bitiş Tarihi", `${toTRDate(job.startDate) || "-"} / ${toTRDate(job.endDate) || "-"}`, false, 0);
         h2 = drawField("Şehir / Ülke", `${job.city || "-"} / ${job.country || "-"}`, false, CONTENT_WIDTH / 2);
         currentY -= Math.max(h1, h2) + 10;
     });
@@ -592,7 +603,7 @@ if (s(6).last5YearsTravel?.length) {
     drawSection("Son 5 Yılda Seyahatler");
     s(6).last5YearsTravel.forEach((trip, index) => {
         h1 = drawField(`Seyahat ${index + 1} Ülke`, trip.country || "-", false, 0);
-         h2 = drawField("Tarih", `${trip.travelStartDate || "-"} / ${trip.travelEndDate || "-"}`, false, CONTENT_WIDTH / 2);
+         h2 = drawField("Tarih", `${toTRDate(trip.travelStartDate) || "-"} / ${toTRDate(trip.travelEndDate) || "-"}`, false, CONTENT_WIDTH / 2);
         currentY -= Math.max(h1, h2) + 10;
 
         h1 = drawField("Seyahat Amacı", trip.travelPurpose || "-", true, 0);
@@ -686,7 +697,7 @@ KANADA VİZE BAŞVURU FORMU
 Ad Soyad: ${s(1).fullName || "-"}
 T.C. Kimlik No: ${s(1).tcId || "-"}
 Cinsiyet: ${s(1).gender || "-"}
-Doğum Tarihi: ${s(1).birthDate || "-"}
+Doğum Tarihi: ${toTRDate(s(1).birthDate) || "-"}
 Doğum Yeri: ${s(1).birthPlace || "-"}
 Ev Adresi: ${s(1).home_address || "-"}
 Email: ${s(1).email || "-"}
@@ -694,15 +705,15 @@ Telefon: ${s(1).phone_number || "-"}
 
 -- 2. AİLE / EVLİLİK BİLGİLERİ --
 Medeni Durum: ${s(2).maritalStatus || "-"}
-Evlilik Tarihi: ${s(2).marriageDate || "-"}
+Evlilik Tarihi: ${toTRDate(s(2).marriageDate) || "-"}
 Eş Adı-Soyadı: ${s(2).spouseFullName || "-"}
-Eş Doğum Tarihi: ${s(2).spouseBirthDate || "-"}
+Eş Doğum Tarihi: ${toTRDate(s(2).spouseBirthDate) || "-"}
 Eş Doğum Yeri: ${s(2).spouseBirthPlace || "-"}
 Eş Adresi: ${s(2).spouseAddress || "-"}
 Eş Meslek: ${s(2).spouseOccupation || "-"}
 Başka Evlilik: ${s(2).otherMarriages || "-"}
 Eski Eş Adı-Soyadı: ${s(2).exSpouseFullName || "-"}
-Eski Eş Doğum Tarihi: ${s(2).exSpouseBirthDate || "-"}
+Eski Eş Doğum Tarihi: ${toTRDate(s(2).exSpouseBirthDate) || "-"}
 Çocuk Var mı: ${s(2).childrenExist || "-"}
 Çocuk Sayısı: ${s(2).childrenCount || "-"}
 Çocuklar: ${s(2).children.map(c => c.fullName ? `${c.fullName} (${c.birthDate || "-"})` : "-").join(", ")}
@@ -711,13 +722,13 @@ Eski Eş Doğum Tarihi: ${s(2).exSpouseBirthDate || "-"}
 Anne Adı-Soyadı: ${s(3).motherFullName || "-"}
 Anne Medeni Durum: ${s(3).motherMaritalStatus || "-"}
 Anne Doğum Yeri: ${s(3).motherBirthPlace || "-"}
-Anne Doğum Tarihi: ${s(3).motherBirthDate || "-"}
+Anne Doğum Tarihi: ${toTRDate(s(3).motherBirthDate) || "-"}
 Anne Adresi: ${s(3).motherAddress || "-"}
 Anne Mesleği: ${s(3).motherOccupation || "-"}
 Baba Adı-Soyadı: ${s(3).fatherFullName || "-"}
 Baba Medeni Durum: ${s(3).fatherMaritalStatus || "-"}
 Baba Doğum Yeri: ${s(3).fatherBirthPlace || "-"}
-Baba Doğum Tarihi: ${s(3).fatherBirthDate || "-"}
+Baba Doğum Tarihi: ${toTRDate(s(3).fatherBirthDate) || "-"}
 Baba Adresi: ${s(3).fatherAddress || "-"}
 Baba Mesleği: ${s(3).fatherOccupation || "-"}
 Kardeş Sayısı: ${s(3).siblingsCount || "-"}
@@ -734,7 +745,7 @@ Program/Bölüm: ${s(4).programName || "-"}
 Şehir/Ülke: ${s(4).educationCity || "-"} / ${s(4).educationCountry || "-"}
 Başlangıç / Bitiş: ${s(4).educationStartDate || "-"} / ${s(4).educationEndDate || "-"}
 Askerlik Durumu: ${s(4).boolean_military || "-"}
-Askerlik Şehir / Tarih: ${s(4).military_city || "-"} / ${s(4).military_start_date || "-"} - ${s(4).military_end_date || "-"}
+Askerlik Şehir / Tarih: ${s(4).military_city || "-"} / ${toTRDate(s(4).military_start_date) || "-"} - ${toTRDate(s(4).military_end_date) || "-"}
 
 -- 5. İŞ DENEYİMİ --
 Çalışma Durumu: ${s(5).employmentStatus || "-"}
@@ -765,7 +776,7 @@ const htmlBody = `
     <tr><th style="background-color:#e0e0e0;">Ad Soyad</th><td>${s(1).fullName || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">T.C. Kimlik No</th><td>${s(1).tcId || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Cinsiyet</th><td>${s(1).gender || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Doğum Tarihi</th><td>${s(1).birthDate || "-"}</td></tr>
+    <tr><th style="background-color:#e0e0e0;">Doğum Tarihi</th><td>${toTRDate(s(1).birthDate) || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Doğum Yeri</th><td>${s(1).birthPlace || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Adres</th><td>${s(1).home_address || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Email</th><td>${s(1).email || "-"}</td></tr>
@@ -777,9 +788,9 @@ const htmlBody = `
 <table border="1" cellspacing="0" cellpadding="5" style="border-collapse: collapse; width:100%;">
   <tbody>
     <tr><th style="background-color:#e0e0e0;">Medeni Durum</th><td>${s(2).maritalStatus || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Evlilik Tarihi</th><td>${s(2).marriageDate || "-"}</td></tr>
+    <tr><th style="background-color:#e0e0e0;">Evlilik Tarihi</th><td>${toTRDate(s(2).marriageDate) || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Eş Adı-Soyadı</th><td>${s(2).spouseFullName || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Eş Doğum Tarihi</th><td>${s(2).spouseBirthDate || "-"}</td></tr>
+    <tr><th style="background-color:#e0e0e0;">Eş Doğum Tarihi</th><td>${toTRDate(s(2).spouseBirthDate) || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Eş Doğum Yeri</th><td>${s(2).spouseBirthPlace || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Eş Adresi</th><td>${s(2).spouseAddress || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Eş Meslek</th><td>${s(2).spouseOccupation || "-"}</td></tr>
@@ -902,7 +913,7 @@ ${s(4).exams.length ? `
 <p><strong>Şehir / Ülke:</strong> ${s(4).educationCity || "-"} / ${s(4).educationCountry || "-"}</p>
 <p><strong>Başlangıç / Bitiş:</strong> ${s(4).educationStartDate || "-"} / ${s(4).educationEndDate || "-"}</p>
 <p><strong>Askerlik Durumu:</strong> ${s(4).boolean_military || "-"}</p>
-<p><strong>Askerlik Şehir / Tarih:</strong> ${s(4).military_city || "-"} / ${s(4).military_start_date || "-"} - ${s(4).military_end_date || "-"}</p>
+<p><strong>Askerlik Şehir / Tarih:</strong> ${s(4).military_city || "-"} / ${toTRDate(s(4).military_start_date) || "-"} - ${toTRDate(s(4).military_end_date) || "-"}</p>
 
 <h3>5. İş Deneyimi</h3>
 <p><strong>Çalışma Durumu:</strong> ${s(5).employmentStatus || "-"}</p>

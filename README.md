@@ -28,3 +28,7 @@ randevu kısmında renklendirme
 arama kısmı konulacak
 
 
+
+
+
+amerika formu için öğrenci vizesini ali ile koordine et

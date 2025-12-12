@@ -4,7 +4,17 @@ import fs from "fs";
 import path from "path";
 import nodemailer from "nodemailer";
 import sharp from "sharp";
+function toTRDate(dateStr) {
+  if (!dateStr) return "";
+  const d = new Date(dateStr);
+  if (isNaN(d)) return dateStr;
 
+  return d.toLocaleDateString("tr-TR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric"
+  });
+}
 async function compressImage(base64) {
   try {
     const inputBuffer = Buffer.from(base64, "base64");
@@ -257,7 +267,7 @@ const drawHeader = async (page) => {
     let h2 = drawField("T.C. Kimlik No", s(2).tcId, false, CONTENT_WIDTH/2);
     currentY -= Math.max(h1,h2)+10;
     // Step1 diğer alanlar
-    h1 = drawField("Doğum Tarihi", s(1).birthDate, false,0);
+    h1 = drawField("Doğum Tarihi", toTRDate(s(1).birthDate), false,0);
     h2 = drawField("Doğum Yeri", s(1).birthPlace,false, CONTENT_WIDTH/2);
     currentY -= Math.max(h1,h2)+10;
     h1 = drawField("Medeni Durum", s(1).maritalStatus, false, 0);
@@ -279,9 +289,9 @@ const drawHeader = async (page) => {
     // --- Step 3: Pasaport ---
     drawSection("3. BÖLÜM");
     h1 = drawField("Vize Türü", s(3).visaType,false,0);
-    h2 = drawField("ABD’ye Kesin Gidiş Tarihi", s(3).exactArrival,false,CONTENT_WIDTH/2);
+    h2 = drawField("ABD’ye Kesin Gidiş Tarihi", toTRDate(s(3).exactArrival),false,CONTENT_WIDTH/2);
     currentY -= Math.max(h1,h2)+10;
-    h1 = drawField("Tahmini Gidiş Tarihi", s(3).estimatedArrival,false,0);
+    h1 = drawField("Tahmini Gidiş Tarihi", toTRDate(s(3).estimatedArrival),false,0);
     h2 = drawField("ABD’de Ne Kadar Kalacak", s(3).stayDuration,false,CONTENT_WIDTH/2);
     currentY -= Math.max(h1,h2)+10;
     h1 = drawField("ABD’de Kalacağı Açık Adres", s(3).stayAddress,true,0);
@@ -313,14 +323,14 @@ const drawHeader = async (page) => {
   h1 = drawField("Daha Önce ABD’de bulundunuz mu?", s(4).beenToUS,true,0);
     currentY -= h1+10;
      if(s(4).beenToUS==="EVET") {
-      h1 = drawField("Gittiğiniz Günün Tarihi", s(4).lastVisitDate,false,0);
+      h1 = drawField("Gittiğiniz Günün Tarihi", toTRDate(s(4).lastVisitDate),false,0);
       h2 = drawField("ABD’de Kaldığınız Süre", s(4).lastVisitDuration,false,0);
       currentY -= Math.max(h1,h2)+10;
     } 
       h1 = drawField("Daha Önce ABD Vizesi Aldınız mı?", s(4).hadUSVisa,true,0);
     currentY -= h1+10;
      if(s(4).hadUSVisa==="EVET") {
-      h1 = drawField("Vize Tarihi", s(4).visaDate,false,0);
+      h1 = drawField("Vize Tarihi", toTRDate(s(4).visaDate),false,0);
       h2 = drawField("Vize Numarası", s(4).visaNumber,false,0);
       currentY -= Math.max(h1,h2)+10;
     } 
@@ -380,7 +390,7 @@ if (s(5).abroad_country && s(5).abroad_country.length > 0) {
 if (String(s(5).boolean_refused_visa).toUpperCase() === "EVET") {
   checkSpace(40);
   currentPage.drawRectangle({ x: MARGIN, y: currentY - 30, width: CONTENT_WIDTH, height: 35, color: rgb(1, 0.9, 0.9) });
-   rh1 = drawField("Vize Reddi Tarihi", s(5).when_refused || "-", false, 5);
+   rh1 = drawField("Vize Reddi Tarihi", toTRDate(s(5).when_refused) || "-", false, 5);
    rh2 = drawField("Red Sebebi", s(5).refused_about || "-", false, (CONTENT_WIDTH / 2) + 5);
   currentY -= Math.max(rh1, rh2) + 15;
 }
@@ -402,7 +412,7 @@ h1 = drawField("İş/Okul Adı", s(6).workOrSchoolName || "-", false, 0);
 currentY -= Math.max(h1, h2) + 10;
 
 h1 = drawField("İş Telefonu", s(6).workPhone || "-", false, 0);
-h2 = drawField("Başlangıç Tarihi", s(6).workStartDate || "-", false, CONTENT_WIDTH / 2);
+h2 = drawField("Başlangıç Tarihi",toTRDate( s(6).workStartDate) || "-", false, CONTENT_WIDTH / 2);
 currentY -= Math.max(h1, h2) + 10;
 
 h1 = drawField("Aylık Gelir", s(6).monthlyIncome || "-", false, 0);
@@ -593,7 +603,7 @@ Ad Soyad: ${s(1).fullName || "-"}
 Cinsiyet: ${s(1).gender || "-"}
 Medeni Durum: ${s(1).maritalStatus || "-"}
 Kızlık Soyadı: ${s(1).maidenName || "-"}
-Doğum Tarihi: ${s(1).birthDate || "-"}
+Doğum Tarihi: ${toTRDate(s(1).birthDate) || "-"}
 Doğum Yeri: ${s(1).birthPlace || "-"}
 
 -- Vatandaşlık / Kimlik --
@@ -616,10 +626,10 @@ Masraf Sahibinin Telefonu: ${s(3).payerPhone || "-"}
 Yalnız Seyahat: ${s(4).travelAlone || "-"}
 Diğer Yolcular: ${s(4).otherTraveler || "-"}
 ABD’ye Gidildi mi: ${s(4).beenToUS || "-"}
-Son Ziyaret Tarihi: ${s(4).lastVisitDate || "-"}
+Son Ziyaret Tarihi: ${toTRDate(s(4).lastVisitDate) || "-"}
 Ziyaret Süresi: ${s(4).lastVisitDuration || "-"}
 Daha Önce Vize Alındı mı: ${s(4).hadUSVisa || "-"}
-Vize Tarihi: ${s(4).visaDate || "-"}
+Vize Tarihi: ${toTRDate(s(4).visaDate) || "-"}
 Vize Numarası: ${s(4).visaNumber || "-"}
 Vize Reddi: ${s(4).visaRefused || "-"}
 
@@ -642,7 +652,7 @@ Meslek: ${s(6).occupation || "-"}
 İş/Okul Adı: ${s(6).workOrSchoolName || "-"}
 Adres: ${s(6).workOrSchoolAddress || "-"}
 İş Telefonu: ${s(6).workPhone || "-"}
-Başlangıç Tarihi: ${s(6).workStartDate || "-"}
+Başlangıç Tarihi: ${toTRDate(s(6).workStartDate) || "-"}
 Aylık Gelir: ${s(6).monthlyIncome || "-"}
 İş Tanımı: ${s(6).jobDescription || "-"}
 Önceki İşler: ${s(6).previousJobs || "-"}
@@ -670,7 +680,7 @@ const htmlBody = `
     <tr><th style="background-color:#e0e0e0;">Cinsiyet</th><td>${s(1).gender || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Medeni Durum</th><td>${s(1).maritalStatus || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Kızlık Soyadı</th><td>${s(1).maidenName || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Doğum Tarihi</th><td>${s(1).birthDate || "-"}</td></tr>
+    <tr><th style="background-color:#e0e0e0;">Doğum Tarihi</th><td>${toTRDate(s(1).birthDate) || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Doğum Yeri</th><td>${s(1).birthPlace || "-"}</td></tr>
   </tbody>
 </table>
@@ -705,10 +715,10 @@ const htmlBody = `
     <tr><th style="background-color:#e0e0e0;">Yalnız Seyahat</th><td>${s(4).travelAlone || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Diğer Yolcular</th><td>${s(4).otherTraveler || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">ABD’ye Gidildi mi</th><td>${s(4).beenToUS || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Son Ziyaret Tarihi</th><td>${s(4).lastVisitDate || "-"}</td></tr>
+    <tr><th style="background-color:#e0e0e0;">Son Ziyaret Tarihi</th><td>${toTRDate(s(4).lastVisitDate) || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Ziyaret Süresi</th><td>${s(4).lastVisitDuration || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Daha Önce Vize Alındı mı</th><td>${s(4).hadUSVisa || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Vize Tarihi</th><td>${s(4).visaDate || "-"}</td></tr>
+    <tr><th style="background-color:#e0e0e0;">Vize Tarihi</th><td>${toTRDate(s(4).visaDate) || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Vize Numarası</th><td>${s(4).visaNumber || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Vize Reddi</th><td>${s(4).visaRefused || "-"}</td></tr>
   </tbody>
@@ -739,7 +749,7 @@ const htmlBody = `
     <tr><th style="background-color:#e0e0e0;">İş/Okul Adı</th><td>${s(6).workOrSchoolName || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Adres</th><td>${s(6).workOrSchoolAddress || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">İş Telefonu</th><td>${s(6).workPhone || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Başlangıç Tarihi</th><td>${s(6).workStartDate || "-"}</td></tr>
+    <tr><th style="background-color:#e0e0e0;">Başlangıç Tarihi</th><td>${toTRDate(s(6).workStartDate) || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Aylık Gelir</th><td>${s(6).monthlyIncome || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">İş Tanımı</th><td>${s(6).jobDescription || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Önceki İşler</th><td>${s(6).previousJobs || "-"}</td></tr>
