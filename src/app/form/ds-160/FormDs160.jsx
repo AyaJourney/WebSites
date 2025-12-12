@@ -208,7 +208,12 @@ async function sendForm(payload) {
     body: JSON.stringify(payload),
   });
 if(res.ok){
-  setResMessage(true)
+  // clearLocalStorage()
+ setResMessage(true)
+ setForm(prev => ({
+  ...prev,
+  currentStep: prev.currentStep + 1
+}));
 }
   if (!res.ok) {
     // console.error("PDF oluşturulamadı");
@@ -301,7 +306,7 @@ const requiredFields = {
    
   ],
    8: [
-   
+
 
    
   ]
@@ -311,18 +316,34 @@ const requiredFields = {
 
 const validateStep = (step, formData) => {
   const fields = requiredFields[step] || [];
-  return fields.every(field => {
+  if (!formData.steps[step]) return { valid: false, missing: fields };
+
+
+  const missing = fields.filter(field => {
     const val = formData.steps[step][field];
-    return val !== undefined && val !== null && String(val).trim() !== "";
+    return val === undefined || val === null || String(val).trim() === "";
   });
+
+  return { valid: missing.length === 0, missing: missing || [] }; 
 };
 const goNext = () => {
-  if (!validateStep(form.currentStep, form)) {
-
-    return;
+     const { valid, missing = [] } = validateStep(form.currentStep, form);
+  let newErrors = { ...errors };
+ console.log(newErrors)
+    if (!valid) {
+    missing.forEach(field => {
+      newErrors[field] = "Bu alan zorunludur";
+    });
   }
-
-  setForm(prev => ({ ...prev, currentStep: prev.currentStep + 1 }));
+    if (!valid) {
+    setErrors(newErrors);
+    return;
+  } 
+    setErrors({});
+  setForm(prev => ({
+    ...prev,
+    currentStep: prev.currentStep + 1
+  }));
 };
 
   const goPrev = () => {
@@ -379,7 +400,8 @@ const updateFileField = async (step, key, file) => {
 };
 
 const markCompleted = (step) => {
-  return validateStep(step, form);
+  // Kullanıcı bu adımı geçtiyse -> tamamlandı
+  return form.currentStep > step;
 };
 
  
@@ -491,7 +513,7 @@ const visibleSteps = Array.from({length: end - start +1}, (_, i) => start + i);
    
 
         {/* Progress bar */}
-      <div className="mb-6">
+         {form?.currentStep < 9 && (          <div className="mb-6">
 <div className="mb-6 sm:hidden"> {/* Mobilde göster */}
   <div className="flex items-center">
     {visibleSteps.map((s, i, arr) => {
@@ -528,6 +550,7 @@ const visibleSteps = Array.from({length: end - start +1}, (_, i) => start + i);
 </div>
 
 {/* Desktop için normal tüm step */}
+
 <div className="hidden sm:block mb-6">
   <div className="flex items-center justify-between">
     {[1,2,3,4,5,6,7,8].map((s, i, arr) => {
@@ -556,7 +579,7 @@ const visibleSteps = Array.from({length: end - start +1}, (_, i) => start + i);
   </div>
 </div>
 
-</div>
+</div>)}
 
 
         {/* Title like A4 form header */}
@@ -571,7 +594,7 @@ const visibleSteps = Array.from({length: end - start +1}, (_, i) => start + i);
   </div>
 
   {/* Başlık Ortada */}
-  <div className="text-center">
+ {!resMessage && (<div className="text-center">
     <h2 className="text-xl font-semibold">DS-160 Form</h2>
     <p className="text-sm text-gray-500">
      Amerika vize başvurularında istenen DS-160 formu 8(Sekiz) bölümden oluşmaktadır.
@@ -582,7 +605,7 @@ const visibleSteps = Array.from({length: end - start +1}, (_, i) => start + i);
        Lütfen bilgilerinizi dikkatli doldurunuz.
    
     </p>
-  </div>
+  </div>)} 
 </div>
 
         {/* Form body */}
@@ -691,10 +714,12 @@ onChange={(e) => {
       <input
       name="birthDate"
         type="date"
-        className="w-full mt-1 p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+         className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.birthDate ? "border-red-500" : "border-gray-300"}`}
         value={form.steps[1].birthDate || ""}
         onChange={(e) => updateField(1, "birthDate", e.target.value)}
       />
+      {errors.birthDate && <p className="text-red-500 text-xs mt-1">{errors.birthDate}</p>}
     </div>
 
     {/* DOĞUM YERİ */}
@@ -702,7 +727,8 @@ onChange={(e) => {
       <label className="text-sm font-medium">Doğum Yeri (Pasaportta yazan)</label>
       <input
       name="birthPlace"
-        className="w-full mt-1 p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+      className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.birthPlace ? "border-red-500" : "border-gray-300"}`}
         value={form.steps[1].birthPlace || ""}
 onChange={(e) => {
                 if (isMobile) {
@@ -723,6 +749,7 @@ onChange={(e) => {
             }}
         placeholder="Örn: İstanbul"
       />
+       {errors.birthPlace && <p className="text-red-500 text-xs mt-1">{errors.birthPlace}</p>}
     </div>
   </div>
 </section>
@@ -908,7 +935,9 @@ onChange={(e) => {
         <label className="text-sm font-medium">Almak İstediğiniz Vize Türü</label>
         <input
           name="visaType"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.visaType ? "border-red-500" : "border-gray-300"}`}
+
           value={form.steps[3].visaType || ""}
           onChange={(e) => {
                 if (isMobile) {
@@ -929,6 +958,8 @@ onChange={(e) => {
             }}
           placeholder="Örn: B1/B2"
         />
+           {errors.visaType && <p className="text-red-500 text-xs mt-1">{errors.visaType}</p>}
+
       </div>
 
       {/* Kesin Gidiş Tarihi */}
@@ -960,7 +991,9 @@ onChange={(e) => {
         <label className="text-sm font-medium">ABD’de Ne Kadar Kalacaksınız?</label>
         <input
           name="stayDuration"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.stayDuration ? "border-red-500" : "border-gray-300"}`}
+
           value={form.steps[3].stayDuration || ""}
                onChange={(e) => {
                 if (isMobile) {
@@ -981,6 +1014,8 @@ onChange={(e) => {
             }}
           placeholder="Örn: 2 Hafta, 1 Ay, 10 gün gibi"
         />
+        {errors.stayDuration && <p className="text-red-500 text-xs mt-1">{errors.stayDuration}</p>}
+
       </div>
 
       {/* ABD’de Kalacağınız Açık Adres */}
@@ -988,7 +1023,9 @@ onChange={(e) => {
         <label className="text-sm font-medium">ABD’de Kalacağınız Açık Adres</label>
         <textarea
           name="stayAddress"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          className={`w-full resize-none mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.stayAddress ? "border-red-500" : "border-gray-300"}`}
+
           value={form.steps[3].stayAddress || ""}
               onChange={(e) => {
                 if (isMobile) {
@@ -1010,6 +1047,8 @@ onChange={(e) => {
           placeholder="Posta kodu ve şehir dahil"
           rows={3}
         />
+           {errors.stayAddress && <p className="text-red-500 text-xs mt-1">{errors.stayAddress}</p>}
+
       </div>
 
       {/* Masrafı Karşılayacak */}
@@ -1017,7 +1056,9 @@ onChange={(e) => {
         <label className="text-sm font-medium">ABD Gezinizin Masraflarını Kim Karşılayacak?</label>
         <select
           name="whoPays"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.whoPays ? "border-red-500" : "border-gray-300"}`}
+
           value={form.steps[3].whoPays || ""}
           onChange={(e) => updateField(3, "whoPays", e.target.value)}
         >
@@ -1058,6 +1099,8 @@ onChange={(e) => {
             }}
               placeholder="Örn: Arkadaş / Kuzen"
             />
+            {errors.whoPays && <p className="text-red-500 text-xs mt-1">{errors.whoPays}</p>}
+
           </div>
           <div>
             <label className="text-sm font-medium">Adres</label>
@@ -1113,14 +1156,17 @@ onChange={(e) => {
         <label className="text-sm font-medium">Tek Mi Seyahat Edeceksiniz?</label>
         <select
           name="travelAlone"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
-          value={form.steps[4].travelAlone || ""}
+           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.travelAlone ? "border-red-500" : "border-gray-300"}`}
+
           onChange={(e) => updateField(4, "travelAlone", e.target.value)}
         >
           <option value="">Seçiniz</option>
           <option value="EVET">Evet</option>
           <option value="HAYIR">Hayır</option>
         </select>
+        {errors.travelAlone && <p className="text-red-500 text-xs mt-1">{errors.travelAlone}</p>}
+
       </div>
 
       {/* Başka birisi varsa adı, soyadı ve ilişkiniz */}
@@ -1151,6 +1197,7 @@ onChange={(e) => {
             }}
             placeholder="Örn: Ayşe Yılmaz – Kuzen"
           />
+          
         </div>
       )}
 
@@ -1159,7 +1206,9 @@ onChange={(e) => {
         <label className="text-sm font-medium">Daha Önce ABD’de bulundunuz mu?</label>
         <select
           name="beenToUS"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+        className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.beenToUS ? "border-red-500" : "border-gray-300"}`}
+
           value={form.steps[4].beenToUS || ""}
           onChange={(e) => updateField(4, "beenToUS", e.target.value)}
         >
@@ -1167,6 +1216,8 @@ onChange={(e) => {
           <option value="EVET">Evet</option>
           <option value="HAYIR">Hayır</option>
         </select>
+        {errors.beenToUS && <p className="text-red-500 text-xs mt-1">{errors.beenToUS}</p>}
+
       </div>
 
       {/* Evet ise gittiğiniz gün ve kaldığınız süre */}
@@ -1216,7 +1267,9 @@ onChange={(e) => {
         <label className="text-sm font-medium">Daha Önce ABD Vizesi Aldınız mı?</label>
         <select
           name="hadUSVisa"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.hadUSVisa ? "border-red-500" : "border-gray-300"}`}
+
           value={form.steps[4].hadUSVisa || ""}
           onChange={(e) => updateField(4, "hadUSVisa", e.target.value)}
         >
@@ -1224,6 +1277,8 @@ onChange={(e) => {
           <option value="EVET">Evet</option>
           <option value="HAYIR">Hayır</option>
         </select>
+         {errors.hadUSVisa && <p className="text-red-500 text-xs mt-1">{errors.hadUSVisa}</p>}
+
       </div>
 
       {/* Evet ise tarihi ve vize numarası */}
@@ -1273,7 +1328,9 @@ onChange={(e) => {
         <label className="text-sm font-medium">Daha Önce ABD Vizesi Başvurusunda Ret Aldınız mı?</label>
         <select
           name="visaRefused"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+         className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.visaRefused ? "border-red-500" : "border-gray-300"}`}
+
           value={form.steps[4].visaRefused || ""}
           onChange={(e) => updateField(4, "visaRefused", e.target.value)}
         >
@@ -1281,6 +1338,8 @@ onChange={(e) => {
           <option value="EVET">Evet</option>
           <option value="HAYIR">Hayır</option>
         </select>
+         {errors.visaRefused && <p className="text-red-500 text-xs mt-1">{errors.visaRefused}</p>}
+
       </div>
 
     </div>
@@ -1329,11 +1388,15 @@ onChange={(e) => {
         <label className="text-sm font-medium">İletişim Numarası 1</label>
         <input
           name="phone1"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+         className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.phone1 ? "border-red-500" : "border-gray-300"}`}
+
           value={form.steps[5].phone1 || ""}
           onChange={(e) => updateField(5, "phone1", e.target.value)}
           placeholder="Örn: +90 555 123 45 67"
         />
+        {errors.phone1 && <p className="text-red-500 text-xs mt-1">{errors.phone1}</p>}
+
       </div>
       <div>
         <label className="text-sm font-medium">İletişim Numarası 2</label>
@@ -1364,11 +1427,15 @@ onChange={(e) => {
         <input
           type="email"
           name="email"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.email ? "border-red-500" : "border-gray-300"}`}
+
           value={form.steps[5].email || ""}
           onChange={(e) => updateField(5, "email", e.target.value)}
           placeholder="Örn: ornek@mail.com"
         />
+        {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+
       </div>
 
       {/* Sosyal Medya */}
@@ -1404,7 +1471,9 @@ onChange={(e) => {
         <label className="text-sm font-medium">Pasaport Türünüz</label>
         <select
           name="passportType"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.passportType ? "border-red-500" : "border-gray-300"}`}
+
           value={form.steps[5].passportType || ""}
           onChange={(e) => updateField(5, "passportType", e.target.value)}
         >
@@ -1415,6 +1484,8 @@ onChange={(e) => {
           <option value="UMUMA MAHSUS">UMUMA MAHSUS (BORDO)</option>
           <option value="GECICI">GECICI (PEMBE)</option>
         </select>
+        {errors.passportType && <p className="text-red-500 text-xs mt-1">{errors.passportType}</p>}
+
       </div>
 
       {/* Pasaport Numarası */}
@@ -1422,7 +1493,9 @@ onChange={(e) => {
         <label className="text-sm font-medium">Pasaport Numaranız</label>
         <input
           name="passportNumber"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+         className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.passportNumber ? "border-red-500" : "border-gray-300"}`}
+
           value={form.steps[5].passportNumber || ""}
             onChange={(e) => {
                 if (isMobile) {
@@ -1443,6 +1516,8 @@ onChange={(e) => {
             }}
           placeholder="Örn: A1234567"
         />
+        {errors.passportNumber && <p className="text-red-500 text-xs mt-1">{errors.passportNumber}</p>}
+
       </div>
 
       {/* Pasaportu Veren Makam */}
@@ -1450,7 +1525,9 @@ onChange={(e) => {
         <label className="text-sm font-medium">Pasaportu Veren Makam</label>
         <input
           name="passportAuthority"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.passportAuthority ? "border-red-500" : "border-gray-300"}`}
+
           value={form.steps[5].passportAuthority || ""}
      onChange={(e) => {
                 if (isMobile) {
@@ -1471,6 +1548,8 @@ onChange={(e) => {
             }}
           placeholder="Örn: Nüfus Müdürlüğü"
         />
+         {errors.passportAuthority && <p className="text-red-500 text-xs mt-1">{errors.passportAuthority}</p>}
+
       </div>
 
       {/* Pasaport Başlangıç ve Bitiş Tarihi */}
@@ -1479,20 +1558,26 @@ onChange={(e) => {
         <input
           type="date"
           name="passportStart"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+         className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.passportStart ? "border-red-500" : "border-gray-300"}`}
           value={form.steps[5].passportStart || ""}
           onChange={(e) => updateField(5, "passportStart", e.target.value)}
         />
+         {errors.passportStart && <p className="text-red-500 text-xs mt-1">{errors.passportStart}</p>}
+
       </div>
       <div>
         <label className="text-sm font-medium">Pasaport Bitiş Tarihi</label>
         <input
           type="date"
           name="passportEnd"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+         className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.passportEnd ? "border-red-500" : "border-gray-300"}`}
           value={form.steps[5].passportEnd || ""}
           onChange={(e) => updateField(5, "passportEnd", e.target.value)}
         />
+          {errors.passportEnd && <p className="text-red-500 text-xs mt-1">{errors.passportEnd}</p>}
+
       </div>
 
       {/* Daha önce kayıp pasaport */}
@@ -1537,7 +1622,9 @@ onChange={(e) => {
         <label className="text-sm font-medium">Mesleğiniz</label>
         <input
           name="occupation"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+         className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.occupation ? "border-red-500" : "border-gray-300"}`}
+
           value={form.steps[6].occupation || ""}
     onChange={(e) => {
                 if (isMobile) {
@@ -1558,6 +1645,8 @@ onChange={(e) => {
             }}
           placeholder="Örn: Yazılım Mühendisi / Öğrenci"
         />
+          {errors.occupation && <p className="text-red-500 text-xs mt-1">{errors.occupation}</p>}
+
       </div>
 
       {/* İşyerinizin/Okul Adı */}
@@ -1565,8 +1654,9 @@ onChange={(e) => {
         <label className="text-sm font-medium">İşyerinizin Tam Adı / Okul Adı</label>
         <input
           name="workOrSchoolName"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
-          value={form.steps[6].workOrSchoolName || ""}
+         className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.workOrSchoolName ? "border-red-500" : "border-gray-300"}`}
+ value={form.steps[6].workOrSchoolName || ""}
            onChange={(e) => {
                 if (isMobile) {
                     // Mobile: Normalizasyon YOK, sadece değeri sakla
@@ -1586,6 +1676,8 @@ onChange={(e) => {
             }}
           placeholder="Örn: ABC Şirketi / XYZ Üniversitesi"
         />
+           {errors.workOrSchoolName && <p className="text-red-500 text-xs mt-1">{errors.workOrSchoolName}</p>}
+
       </div>
 
       {/* İşyeri Adresi */}
@@ -1593,7 +1685,8 @@ onChange={(e) => {
         <label className="text-sm font-medium">İşyeri / Okul Adresi (Posta Kodu, Mah., Sk.)</label>
         <input
           name="workOrSchoolAddress"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.workOrSchoolAddress ? "border-red-500" : "border-gray-300"}`}
           value={form.steps[6].workOrSchoolAddress || ""}
             onChange={(e) => {
                 if (isMobile) {
@@ -1614,6 +1707,8 @@ onChange={(e) => {
             }}
           placeholder="Örn: Mahalle, Sokak, No, Posta Kodu"
         />
+           {errors.workOrSchoolAddress && <p className="text-red-500 text-xs mt-1">{errors.workOrSchoolAddress}</p>}
+
       </div>
 
       {/* İşyeri Telefon */}
@@ -1634,10 +1729,13 @@ onChange={(e) => {
         <input
           type="date"
           name="workStartDate"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.workStartDate ? "border-red-500" : "border-gray-300"}`}
           value={form.steps[6].workStartDate || ""}
           onChange={(e) => updateField(6, "workStartDate", e.target.value)}
         />
+        {errors.workStartDate && <p className="text-red-500 text-xs mt-1">{errors.workStartDate}</p>}
+
       </div>
 
       {/* Aylık Gelir */}
@@ -1645,7 +1743,9 @@ onChange={(e) => {
         <label className="text-sm font-medium">Aylık Geliriniz (Yan gelirler dahil)</label>
         <input
           name="monthlyIncome"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.monthlyIncome ? "border-red-500" : "border-gray-300"}`}
+
           value={form.steps[6].monthlyIncome || ""}
       onChange={(e) => {
                 if (isMobile) {
@@ -1666,6 +1766,8 @@ onChange={(e) => {
             }}
           placeholder="Örn: 15.000 TL"
         />
+        {errors.monthlyIncome && <p className="text-red-500 text-xs mt-1">{errors.monthlyIncome}</p>}
+
       </div>
 
       {/* İş Tanımı & Ünvan */}
@@ -1673,7 +1775,9 @@ onChange={(e) => {
         <label className="text-sm font-medium">Açık İş Tanımınız, Görevleriniz ve Ünvanınız</label>
         <textarea
           name="jobDescription"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.jobDescription ? "border-red-500" : "border-gray-300"}`}
+
           value={form.steps[6].jobDescription || ""}
               onChange={(e) => {
                 if (isMobile) {
@@ -1695,6 +1799,8 @@ onChange={(e) => {
           placeholder="Örn: Yazılım geliştirme, proje yönetimi, takım liderliği"
           rows={3}
         />
+        {errors.jobDescription && <p className="text-red-500 text-xs mt-1">{errors.jobDescription}</p>}
+
       </div>
 
       {/* Önceki İşler (isteğe bağlı) */}
@@ -1702,7 +1808,9 @@ onChange={(e) => {
         <label className="text-sm font-medium">Daha Önce Çalıştığınız Yerler</label>
         <textarea
           name="previousJobs"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.previousJobs ? "border-red-500" : "border-gray-300"}`}
+
           value={form.steps[6].previousJobs || ""}
                 onChange={(e) => {
                 if (isMobile) {
@@ -1724,6 +1832,8 @@ onChange={(e) => {
           placeholder="Meslek, işyeri ünvanı, açık adres, amir adı, telefon, iş tanımı, işe giriş-çıkış tarihleri"
           rows={3}
         />
+        {errors.previousJobs && <p className="text-red-500 text-xs mt-1">{errors.previousJobs}</p>}
+
       </div>
 
       {/* Lise */}
@@ -1731,7 +1841,9 @@ onChange={(e) => {
         <label className="text-sm font-medium">Okuduğunuz Lisenin Adı,Tarihleri ve Adresi</label>
         <input
           name="highSchool"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.highSchool ? "border-red-500" : "border-gray-300"}`}
+
           value={form.steps[6].highSchool || ""}
                   onChange={(e) => {
                 if (isMobile) {
@@ -1752,6 +1864,8 @@ onChange={(e) => {
             }}
           placeholder="Okul Adı, Başlangıç ve Mezuniyet Tarihi, Adres"
         />
+        {errors.highSchool && <p className="text-red-500 text-xs mt-1">{errors.highSchool}</p>}
+
       </div>
 
       {/* Üniversite */}
@@ -1759,7 +1873,9 @@ onChange={(e) => {
         <label className="text-sm font-medium">Okuduğunuz Üniversite Adı,Tarihleri ve Adresi</label>
         <input
           name="university"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.university ? "border-red-500" : "border-gray-300"}`}
+
           value={form.steps[6].university || ""}
                 onChange={(e) => {
                 if (isMobile) {
@@ -1780,6 +1896,8 @@ onChange={(e) => {
             }}
           placeholder="Üniversite Adı, Başlangıç ve Mezuniyet Tarihi, Adres"
         />
+        {errors.university && <p className="text-red-500 text-xs mt-1">{errors.university}</p>}
+
       </div>
 
     </div>
@@ -2036,7 +2154,7 @@ onChange={(e) => {
       <button
         type="button"
         onClick={goNext}
-        disabled={!validateStep(form.currentStep, form)}
+        // disabled={!validateStep(form.currentStep, form)}
         className="px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50 cursor-pointer"
       >
         İleri
@@ -2044,9 +2162,9 @@ onChange={(e) => {
     </div>
   )}
 
-  {form.currentStep == 8 && validateStep(8, form) && (
+  {form.currentStep >= 8 && validateStep(8, form) && (
     <div className="flex flex-col gap-4 w-full">
- <div className="flex items-center gap-3">
+ {!resMessage && (<div className="flex items-center gap-3">
   <input
     type="checkbox"
     id="kvkkConsent"
@@ -2070,10 +2188,11 @@ onChange={(e) => {
    
     .
   </label>
-</div>
+</div>)}
   
 <div className="flex justify-center mt-6">
- { !resMessage ? ( <button
+ { !resMessage ? 
+ ( <button
     type="button"
     onClick={handleSubmit}
     disabled={!kvkkConsent || isSubmitting}
