@@ -617,8 +617,8 @@ export const abroad =[
      "image": "/images/4.jpg",
       "etiketler": ["Vize", "Başvuru"],
     "detailedDescription": "Vize mülakatları, niyetinizi ve belgelerinizin doğruluğunu değerlendirmek içindir. Net, dürüst ve kendinizden emin bir iletişim tarzı benimseyin. Belgelerinizi önceden düzenleyin, planladığınız seyahatin nedenlerini açık şekilde ifade edin. Gereksiz detaylardan kaçının ve konsolosluk görevlisinin sorularını dikkatle dinleyin.",
-   "address":"/yurtdisi-rehberi/vize-turleri",
-   "click":false,
+   "address":"/yurtdisi-rehberi/vize-mulakatinda-basari-icin-tuyolar",
+   "click":true,
   },
   {
     "id": 5,
