@@ -20,48 +20,52 @@ export const metadata = {
   description: "Aya Journey ile vize reddi riskini azaltın! Portekiz, ABD, İngiltere ve Schengen vize başvurularınızda kişiye özel, hızlı ve hatasız danışmanlık hizmeti alın.",
 };
 export default function Home() {
-return (
-  <main className="flex flex-col w-full font-sans bg-white ">
-    
-    <article className="flex flex-col w-full min-h-screen md:h-screen items-center justify-center mb-30 mt-1">
-       <Giris />
-    </article>
-      <article className="flex flex-col w-full min-h-screen md:h-screen items-center justify-center">
-      <Aya />
-    </article>
-    <article className="flex flex-col w-full min-h-screen md:h-screen items-center justify-center">
-      <CardEgitim />
-    </article>
+  return (
+    <main className="flex flex-col w-full font-sans bg-white">
 
-    <article className="flex flex-col w-full min-h-screen md:h-screen items-center justify-center">
-      <Portugal />
-    </article>
+      {/* HERO */}
+      <section className="w-full min-h-[100svh]">
+        <Giris />
+      </section>
 
-    <article className="flex flex-col w-full items-start md:items-center justify-center py-10 md:py-0">
-      <CardHizmet />
-    </article>
+      {/* CONTENT SECTIONS */}
+      <section className="w-full py-20">
+        <Aya />
+      </section>
 
-    <article className="flex flex-col w-full min-h-screen md:h-screen items-center justify-center">
-      <CardReferans />
-    </article>
+      <section className="w-full py-20">
+        <CardEgitim />
+      </section>
 
-    <article className="flex flex-col w-full min-h-screen md:h-screen items-center justify-center">
-      <CardBizKimiz />
-    </article>
+      <section className="w-full py-20">
+        <Portugal />
+      </section>
 
-    <article className="flex flex-col w-full min-h-screen md:h-screen items-center justify-center">
-      <WhyAya />
-    </article>
-  
-          <article className="flex flex-col w-full min-h-screen md:h-screen items-center justify-center">
-      <Aya2 />
-    </article>
+      <section className="w-full py-20">
+        <CardHizmet />
+      </section>
 
-    <article className="flex flex-col w-full min-h-screen md:h-screen items-center justify-center">
-      <GoogleYorum />
-    </article>
+      <section className="w-full py-20">
+        <CardReferans />
+      </section>
 
-  </main>
-)
+      <section className="w-full py-20">
+        <CardBizKimiz />
+      </section>
 
+      <section className="w-full py-20">
+        <WhyAya />
+      </section>
+
+      <section className="w-full py-20">
+        <Aya2 />
+      </section>
+
+      <section className="w-full py-20">
+        <GoogleYorum />
+      </section>
+
+    </main>
+  );
 }
+

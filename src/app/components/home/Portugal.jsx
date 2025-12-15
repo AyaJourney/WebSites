@@ -2,23 +2,30 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import "../../globals.css";
 
 /* ----------------------------------------- */
-/* APPLE STYLE VİDEO → FOTOĞRAF GEÇİŞ COMPONENTİ */
+/* APPLE STYLE VIDEO → IMAGE */
 /* ----------------------------------------- */
 const AppleStyleMedia = () => {
   const [showImage, setShowImage] = useState(false);
 
   return (
-    <div className="relative w-full h-[300px] md:h-full max-w-[700px] max-h-[475px] overflow-hidden rounded-xl">
+    <div
+      className="
+        relative w-full overflow-hidden rounded-2xl
+        h-[260px] sm:h-[300px] md:h-[360px] lg:h-[420px]
+        max-w-[700px]
+      "
+    >
       <Image
         src="/images/sehir.jpg"
         alt="Portekiz"
         fill
-        className={`object-cover transform transition-all duration-[1500ms] ease-out ${
-          showImage ? "opacity-100 scale-100" : "opacity-0 scale-[1]"
-        }`}
+        priority
+        className={`
+          object-cover transition-all duration-[1500ms] ease-out
+          ${showImage ? "opacity-100 scale-100" : "opacity-0 scale-105"}
+        `}
       />
 
       {!showImage && (
@@ -28,7 +35,7 @@ const AppleStyleMedia = () => {
           muted
           playsInline
           onEnded={() => setShowImage(true)}
-          className="w-full h-full object-cover duration-700"
+          className="absolute inset-0 w-full h-full object-cover"
         />
       )}
     </div>
@@ -36,17 +43,15 @@ const AppleStyleMedia = () => {
 };
 
 /* ----------------------------------------- */
-/* PORTUGAL ANA SAYFA */
+/* PORTUGAL SECTION */
 /* ----------------------------------------- */
 const Portugal = () => {
   const [width, setWidth] = useState(0);
-
-  const textRef = useRef(null); // YAZI ANİMASYONU BURADA
+  const textRef = useRef(null);
 
   useEffect(() => {
     const t = setTimeout(() => setWidth(100), 50);
 
-    // Soldan giriş animasyonu
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -67,50 +72,49 @@ const Portugal = () => {
   }, []);
 
   return (
-    <main className="flex flex-col md:flex-row w-full min-h-screen items-stretch font-sans gap-8 p-4 md:p-20">
-
-      {/* --- SOL TARAF: VIDEO → FOTOĞRAF --- */}
-      <div className="w-full md:w-1/2 h-full flex items-center justify-center order-1 md:order-2">
+    <section
+      className="w-full overflow-hidden flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-16 px-4 sm:px-6 md:px-12 lg:px-20 py-16 max-w-[1320px] mx-auto"
+    >
+      {/* MEDYA */}
+      <div className="w-full md:w-1/2 flex justify-center order-1 md:order-2">
         <AppleStyleMedia />
       </div>
 
-      {/* --- SAĞ TARAF: METİNLER --- */}
+      {/* METİN */}
       <div
         ref={textRef}
-        className="slide-left-init w-full md:w-1/2 lg:w-[600px] h-full flex flex-col items-center md:items-start justify-center text-center md:text-left order-2 md:order-1"
+        className="slide-left-init w-full md:w-1/2 flex flex-col justify-center text-center md:text-left items-center md:items-start order-2 md:order-1"
       >
-        <h1 className="text-3xl sm:text-4xl font-bold leading-snug md:leading-relaxed">
-          <span className="relative italic px-2 py-1 rounded-2xl overflow-hidden text-white inline-flex items-center">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-snug">
+          <span className="relative italic px-2 py-1 rounded-2xl overflow-hidden text-white inline-flex">
             <span
-              className="absolute top-0 left-0 h-full bg-orange-500"
-              style={{
-                width: `${width}%`,
-                transition: "width 6.5s ease",
+              className="absolute inset-0 bg-orange-500"
+              style={{width: `${width}%`, transition: "width 6.5s ease",
               }}
-            ></span>
+            />
             <span className="relative z-10">Portekiz D7 Vizesi</span>
           </span>
           <br className="block md:hidden" />
-          Sıcak İklim, Yüksek Yaşam Kalitesi ve Zengin Kültürle Portekiz’de Hayatınızı Değiştirin
+          <span className="block mt-2">
+            Sıcak İklim, Yüksek Yaşam Kalitesi ve Zengin Kültür
+          </span>
         </h1>
 
-        <div className="w-full mt-4">
-          <p className="text-gray-700 text-base md:text-lg mb-4 text-justify">
-            Portekiz D7 Vizesi ile hayalinizdeki hayatı gerçeğe dönüştürün.
-            Sıcak iklimi, zengin kültürü ve yüksek yaşam kalitesi ile Portekiz,
-            hem yerleşim hem de yatırım için ideal bir seçenek sunuyor.
-            Ekonomik yaşam maliyeti ve dost canlısı insanları ile yeni bir başlangıç için doğru adres.
-          </p>
+        <p className="mt-4 text-gray-700 text-sm sm:text-base md:text-lg text-justify max-w-xl">
+          Portekiz D7 Vizesi ile hayalinizdeki hayatı gerçeğe dönüştürün.
+          Sıcak iklimi, zengin kültürü ve yüksek yaşam kalitesi ile Portekiz,
+          hem yerleşim hem de yatırım için ideal bir seçenek sunuyor.
+        </p>
 
-          <Link href="/portekiz-d7-vize">
-            <button className="bg-white text-gray-700 cursor-pointer mt-5 border border-blue-300 px-4 py-2 rounded-3xl transition duration-300 hover:text-blue-500 hover:bg-gray-100">
-              Hemen Öğren
-            </button>
-          </Link>
-        </div>
+        <Link href="/portekiz-d7-vize">
+          <button
+            className="mt-6 bg-white text-gray-700 border border-blue-300 px-5 py-2 rounded-3xl font-medium hover:text-blue-600 hover:bg-gray-100 transition"
+          >
+            Hemen Öğren
+          </button>
+        </Link>
       </div>
-
-    </main>
+    </section>
   );
 };
 

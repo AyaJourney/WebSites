@@ -22,6 +22,10 @@ export default function RootLayout({ children }) {
       <body 
         
       >
+        <meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, maximum-scale=1"
+/>
        <nav className="fixed top-0 left-0 w-full h-20 md:h-24 z-50 bg-white shadow-md">
     <Navbar />
 </nav>

@@ -32,7 +32,7 @@ const CardHizmet = () => {
   return (
     <div className="w-full px-6 py-12 bg-zinc-50" ref={containerRef}>
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center">
+       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center">
           
           {hizmetlerimiz.map((item) => (
             <FlipCard key={item.id} item={item} />

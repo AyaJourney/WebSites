@@ -25,7 +25,7 @@ export default function NavbarİletisimCard({
       >
         <div className="mb-4 w-full flex items-start justify-start">
             
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-900 ">
+        <h3 className="text-lg font-semibold text-gray-900 ">
           Bize Ulaşın
         </h3>
         </div>
@@ -90,7 +90,7 @@ export default function NavbarİletisimCard({
             <span
               className="
               text-sm font-medium 
-              text-gray-800 dark:text-gray-900 
+              text-gray-800
               group-hover:text-blue-600 transition
             "
             >

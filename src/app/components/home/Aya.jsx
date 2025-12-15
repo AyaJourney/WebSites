@@ -61,60 +61,63 @@ const Aya = () => {
     };
   }, []);
 
-  return (
-    <section className="bg-white text-black font-sans px-6 py-16">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-stretch">
+return (
+  <section className="bg-white text-black font-sans px-4 sm:px-6 py-12 xl:py-16">
+    <div className="max-w-[1130px] mx-auto flex flex-col xl:flex-row gap-10 items-stretch">
 
-        {/* SOL TARAF */}
-        <div
-          ref={rootRef}
-          className="fade-up-init relative rounded-xl overflow-hidden min-h-[350px] md:min-h-[420px]"
-        >
-          <Image
-            src="/images/basrol.jpg"
-            alt="Hadi topla bavulları"
-            fill
-            className="object-cover"
-          />
+      {/* SOL TARAF */}
+      <div
+        ref={rootRef}
+        className="fade-up-init relative w-full xl:w-1/2 rounded-xl overflow-hidden min-h-[300px] sm:min-h-[350px] md:min-h-[420px]"
+      >
+        <Image
+          src="/images/basrol.jpg"
+          alt="Hadi topla bavulları"
+          fill
+          className="object-cover"
+        />
 
-          <div className="absolute inset-0 bg-black/40 flex flex-col justify-center p-8 md:p-10">
-            <h1 className="text-3xl md:text-5xl font-bold mb-4 md:mb-6 text-white leading-snug">
-              Şimdi Başrol Sırası Sizde
-            </h1>
+        <div className="absolute inset-0 bg-black/40 flex flex-col justify-center p-6 sm:p-8 md:p-10">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-bold mb-4 text-white leading-snug">
+            Şimdi Başrol Sırası Sizde
+          </h1>
 
-            <p className="text-base md:text-lg text-gray-200 max-w-xl">
-              Belgelerinizin hazırlanmasından randevu sürecine kadar tüm aşamaları
-              sizin adınıza profesyonelce takip ediyoruz.
-            </p>
-          </div>
+          <p className="text-sm sm:text-base md:text-lg text-gray-200 max-w-xl">
+            Belgelerinizin hazırlanmasından randevu sürecine kadar tüm aşamaları
+            sizin adınıza profesyonelce takip ediyoruz.
+          </p>
         </div>
-
-        {/* SAĞ TARAF */}
-        <div className="grid gap-6 bg-white p-4 rounded-xl">
-          {steps.map((item, i) => (
-            <div
-              key={i}
-              ref={(el) => (cardRefs.current[i] = el)}
-              className="step-init flex gap-4 p-6 bg-white rounded-xl shadow-sm  hakkimizda-hover-fill  hakkimizda-scale-init  relative p-8 rounded-2xl bg-[#f9fafb]  transition-all duration-300 hover:shadow-md"
-              style={{ transitionDelay: `${i * 0.25}s` }}
-            >
-              <div className="text-yellow-400 text-3xl mt-1">
-                <FaCheckCircle />
-              </div>
-
-              <div>
-                <h2 className="font-semibold text-xl mb-1">{item.title}</h2>
-                <p className="text-gray-700 text-sm leading-relaxed">
-                  {item.text}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-
       </div>
-    </section>
-  );
+
+      {/* SAĞ TARAF */}
+      <div className="w-full xl:w-1/2 grid gap-5 sm:gap-6 p-2 sm:p-4">
+        {steps.map((item, i) => (
+          <div
+            key={i}
+            ref={(el) => (cardRefs.current[i] = el)}
+            style={{ transitionDelay: `${i * 0.25}s` }}
+            className="step-init flex gap-4 p-6 rounded-2xl bg-[#f9fafb] transition-all duration-300 hover:shadow-md"
+          >
+            <div className="text-yellow-400 text-2xl sm:text-3xl mt-1">
+              <FaCheckCircle />
+            </div>
+
+            <div>
+              <h2 className="font-semibold text-lg sm:text-xl mb-1">
+                {item.title}
+              </h2>
+              <p className="text-gray-700 text-sm leading-relaxed">
+                {item.text}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </section>
+);
+
 };
 
 export default Aya;
