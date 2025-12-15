@@ -154,20 +154,41 @@ const UKVisaPage = () => {
   className="ukvisa-stagger grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-lg"
 >
   {[
-    { label: "Ortalama sonuç", value: "15 iş günü", icon: <FaClock /> },
-    { label: "Ücret", value: "173 $", icon: <FaFileInvoiceDollar /> },
-    { label: "Onay oranı", value: "%95+", icon: <FaCheckCircle /> },
+    { label: "Ortalama randevu bulma süresi", value: "15 iş günü", icon: <FaClock /> },
+    { label: "6 aylık harç bedeli", value: "173 $",desc:"İstenen süreye göre harç miktarı değişmektedir", icon: <FaFileInvoiceDollar /> },
+    { label: "Başarı ihtimali", value: "Yüksek", icon: <FaCheckCircle /> },
+    { label: "Açıklanma / değerlendirme süresi", value: "12 gün", icon: <FaClock /> },
+    { label: "Hizmet bedeli", value: "400 $", icon: <FaFileInvoiceDollar /> },
+
+
+
   ].map((item, idx) => (
     <div
       key={idx}
-      className="bg-white border border-slate-200 rounded-xl px-4 py-3 flex items-center gap-3 shadow-sm"
+      className="bg-white border border-slate-200 rounded-xl px-1 py-3 flex flex-col items-center justify-center  shadow-sm"
     >
-      <div className="text-lime-500 text-xl">{item.icon}</div>
-      <div>
+      <div className=" px-2 py-3 flex items-center gap-4">
+<div className="text-lime-500 text-xl">{item.icon}</div>
+      <div className="flex flex-col gap-2">
         <p className="text-xs uppercase text-slate-500">{item.label}</p>
-        <p className="font-semibold text-slate-900">{item.value}</p>
+<p
+  className={`font-semibold text-md ${
+    item.value === "Yüksek"
+      ? "text-orange-600"
+      : "text-slate-900"
+  }`}
+>
+  {item.value}
+</p>
+
+       
+ 
       </div>
+      </div>
+      
+      <p className="text-[10px]">{item.desc || ""}</p>
     </div>
+    
   ))}
 </div>
 
@@ -195,7 +216,7 @@ const UKVisaPage = () => {
                 <FaPlaneDeparture className="text-blue-500 text-2xl" />
                 <div>
                   <p className="text-xs text-slate-600">Hazırlık Tamamlandı</p>
-                  <p className="font-semibold text-slate-900">Uçuş planı doğrulandı</p>
+                  <p className="font-semibold text-slate-900">Bavulları toplamaya başlayabilirsiniz</p>
                 </div>
               </div>
             </div>

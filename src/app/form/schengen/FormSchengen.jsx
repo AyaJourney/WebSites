@@ -384,7 +384,7 @@ fpDateDetail.setHours(0,0,0,0);
   };
 
   const jumpTo = (step) => {
-     console.log(errors)
+    
      if (Object.keys(errors).length === 0) {
     setForm((prev) => ({ ...prev, currentStep: step }));
 }
@@ -401,7 +401,7 @@ const updateField = (step, field, value) => {
       },
     };
 
-    // SADECE ADRES ALANLARINDA home_address otomatik oluşsun
+
 if (step === 1) {
   const s = updatedSteps[1];
 
