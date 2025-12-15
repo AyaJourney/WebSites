@@ -27,6 +27,10 @@ const typeStyles = {
     active: "bg-rose-600 text-white shadow-lg",
     passive: "bg-rose-100 text-rose-700 hover:bg-rose-200",
   },
+    "Rusya": {
+    active: "bg-sky-600 text-white shadow-lg",
+    passive: "bg-sky-100 text-sky-700 hover:bg-sky-200",
+  },
 };
 
   const toggleOpen = (id) => {

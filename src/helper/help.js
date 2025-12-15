@@ -505,7 +505,76 @@ export const questionsAndAnswers = [
     "type": "İngiltere",
     "question": "Belgeleri ne zaman hazırlamalıyım?",
     "answer": "Başvuru formu tamamlanıp vize harcı ödendikten sonra, randevu tarihine kadar belgeler hazırlanabilir."
+  },
+  
+  {
+    "id": 72,
+    "type": "Rusya",
+    "question": "Rusya E-Vizesi nedir?",
+    "answer": "Rusya E-vizesi, 64 ülke vatandaşına sunulan ve tamamen online başvuru ile alınabilen elektronik bir vizedir. Davetiye, otel rezervasyonu veya konsolosluk başvurusu gerekmez."
+  },
+  {
+    "id": 73,
+    "type": "Rusya",
+    "question": "Rusya E-vizesi için hangi belgeler gerekir?",
+    "answer": "Dijital biyometrik fotoğraf ve pasaportun makine tarafından okunabilir sayfasının taraması yeterlidir. Bunun dışında ek evrak istenmez."
+  },
+  {
+    "id": 74,
+    "type": "Rusya",
+    "question": "E-vize ile konsolosluk vizesi arasındaki fark nedir?",
+    "answer": "E-vize tamamen online alınır ve pasaporta etiket basılmaz. Konsolosluk vizesi ise davetiye gerektirir, pasaporta basılır ve uzun süreli ya da çok girişli seçenekler sunar."
+  },
+  {
+    "id": 75,
+    "type": "Rusya",
+    "question": "Rusya E-vizesinin avantajları nelerdir?",
+    "answer": "Başvuru süreci hızlıdır, evrak yükü yoktur, randevu gerektirmez ve tamamen online olarak tamamlanır."
+  },
+  {
+    "id": 76,
+    "type": "Rusya",
+    "question": "Rusya E-vizesinin sınırlamaları nelerdir?",
+    "answer": "En fazla 30 gün kalış hakkı tanır, uzatılamaz ve eğitim, çalışma veya aile birleşimi gibi uzun süreli amaçlarla kullanılamaz."
+  },
+  {
+    "id": 77,
+    "type": "Rusya",
+    "question": "Rusya E-vizesi ne zaman başvurulmalıdır?",
+    "answer": "Planlanan Rusya giriş tarihinden en geç 4 takvim günü önce başvuru yapılmalıdır. Başvurular hafta sonu ve resmi tatiller dahil 4 gün içinde sonuçlanır."
+  },
+  {
+    "id": 78,
+    "type": "Rusya",
+    "question": "Rusya E-vizesi ücreti ne kadardır?",
+    "answer": "2025 yılı için toplam maliyet yaklaşık 52 ABD dolarıdır. 6 yaş altı çocuklar için yalnızca yaklaşık 2 ABD doları sistem işlem ücreti alınır."
+  },
+  {
+    "id": 79,
+    "type": "Rusya",
+    "question": "Rusya E-vizesi ile kaç kez giriş yapılabilir?",
+    "answer": "Rusya E-vizesi tek girişlidir ve turistik, ticari veya kısa süreli etkinlik katılımları için kullanılabilir."
+  },
+  {
+    "id": 80,
+    "type": "Rusya",
+    "question": "Rusya E-vizesi ile ne kadar süre kalınabilir?",
+    "answer": "E-vize 120 gün geçerlidir ancak Rusya’da en fazla 30 gün kalış hakkı verir. Giriş ve çıkış günleri ayrı gün olarak sayılır."
+  },
+  {
+    "id": 81,
+    "type": "Rusya",
+    "question": "Rusya E-vizesi tüm sınır kapılarında geçerli midir?",
+    "answer": "Hayır. E-vize yalnızca Rusya Federasyonu tarafından belirlenmiş hava, kara, deniz, demiryolu ve yaya sınır kapılarında geçerlidir."
+  },
+  {
+    "id": 82,
+    "type": "Rusya",
+    "question": "E-vize onaylandıktan sonra ne yapılmalıdır?",
+    "answer": "Onaylanan e-vize e-posta yoluyla gönderilir. Barkodlu belge dijital olarak saklanabilir veya çıktı alınabilir ve sınır kapısında ibraz edilmesi yeterlidir."
   }
+
+
 ];
 
 
@@ -578,8 +647,8 @@ export const abroad =[
      "image": "/images/7.webp",
       "etiketler": ["Vize", "Başvuru"],
     "detailedDescription": "Yeni bir ülkeye yerleşmek yalnızca fiziksel değil, kültürel bir adaptasyon sürecidir. Farklı gelenekler, dil ve sosyal normlara uyum sağlamak zaman alabilir. Dil kurslarına katılmak, yerel etkinliklere gitmek ve yeni insanlarla iletişim kurmak uyum sürecini kolaylaştırır. Kültürel hassasiyetlere dikkat etmek önemlidir.",
-     "address":"/yurtdisi-rehberi/vize-turleri",
-     "click":false,
+     "address":"/yurtdisi-rehberi/kulturel-uyum-dil-egitimi",
+     "click":true,
   },
   {
     "id": 8,

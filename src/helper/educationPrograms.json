@@ -35,36 +35,45 @@
       ]
     },
 
+{
+  "id": "erasmus",
+  "title": "Erasmus Vize Rehberi",
+  "badge": "Avrupa Deneyimi",
+  "image": "/images/erasmusimage.webp",
+  "theme": {
+    "bg": "bg-emerald-600/10",
+    "text": "text-emerald-700",
+    "soft": "rgba(16,185,129,0.25)"
+  },
+  "intro": "Erasmus+, Avrupa Birliği tarafından finanse edilen bir öğrenci ve eğitim hareketliliği programıdır. Öğrencilere ve stajyerlere Avrupa ülkelerinde eğitim ve staj yapma imkânı sunar. Program, uzun dönem ve kısa dönem olmak üzere iki ana başlık altında değerlendirilir.",
+  "sections": [
     {
-      "id": "erasmus",
-      "title": "Erasmus+ Programı",
-      "badge": "Avrupa Deneyimi",
-      "image": "/images/erasmusimage.webp",
-      "theme": {
-        "bg": "bg-emerald-600/10",
-        "text": "text-emerald-700",
-        "soft": "rgba(16,185,129,0.25)"
-      },
-      "intro": "Erasmus+ programı, üniversite öğrencilerine Avrupa’da eğitim ve staj yapma imkânı sunar. Akademik gelişimin yanı sıra kültürel ve kişisel gelişim açısından büyük avantaj sağlar.",
-      "sections": [
-        {
-          "title": "Erasmus+ Nedir?",
-          "content": "Avrupa Birliği tarafından desteklenen Erasmus+, öğrencilerin başka bir Avrupa ülkesinde eğitim veya staj yapmasına olanak tanır."
-        },
-        {
-          "title": "Kimler Katılabilir?",
-          "content": "Üniversitelerin ön lisans, lisans, yüksek lisans ve doktora öğrencileri Erasmus+ programına başvurabilir."
-        },
-        {
-          "title": "Süre ve Destekler",
-          "content": "Program süresi genellikle 3–12 ay arasındadır. Katılımcılara aylık hibe desteği sağlanır."
-        },
-        {
-          "title": "Eğitim ve Staj Seçenekleri",
-          "content": "Dönemlik eğitim, yaz stajı veya mezuniyet sonrası staj gibi farklı seçenekler mevcuttur."
-        }
-      ]
+      "title": "Erasmus Öğrenim Hareketliliği (Study Mobility)",
+      "content": "Bir üniversite öğrencisinin dönemlik veya yıllık olarak yurt dışındaki partner bir üniversitede eğitim almasıdır. Genellikle 1 dönem veya 1 akademik yıl sürer. Alınan dersler ECTS kredisine göre Türkiye’de sayılır. Öğrenci ülkeye göre değişen miktarlarda hibe alabilir ya da hibesiz katılım sağlayabilir. Akademik ders alma, farklı bir eğitim sistemini deneyimleme ve dil gelişimi açısından avantaj sağlar."
     },
+    {
+      "title": "Erasmus Staj Hareketliliği (Internship Mobility)",
+      "content": "Bir öğrencinin veya yeni mezunun yurt dışında bir şirket, kurum, laboratuvar ya da organizasyonda staj yapmasıdır. Süre 2 aydan başlayıp 12 aya kadar uzayabilir. Mezuniyet sonrası 12 aya kadar staj hakkı bulunur (başvurunun öğrenci iken yapılması şartıyla). Kariyer gelişimi, CV güçlendirme ve uluslararası iş deneyimi kazanmak isteyenler için idealdir."
+    },
+    {
+      "title": "Erasmus Vize Türleri",
+      "content": "Altı aydan uzun sürecek Erasmus eğitim veya staj programları için Uzun Dönem (D Tipi / Ulusal) vize gereklidir ve ülkeye girişten sonra oturum iznine çevrilebilir. İki ila altı ay arasındaki programlar için ise Kısa Dönem (C Tipi) vizeye başvurulur."
+    },
+    {
+      "title": "Erasmus Vizesi İçin Gerekli Evraklar",
+      "content": "Geçerli pasaport, eksiksiz doldurulmuş vize başvuru formu, biyometrik fotoğraf, İngilizce ve ıslak imzalı öğrenci belgesi, Erasmus kabul mektubu, Learning Agreement veya Learning Agreement for Traineeship belgesi, maddi durum belgeleri ve Erasmus hibe yazısı, seyahat sağlık sigortası, ulaşım ve konaklama bilgileri ile motivasyon mektubu başvuru için gereklidir."
+    },
+    {
+      "title": "Dikkat Edilmesi Gerekenler",
+      "content": "Vize başvurusu en az 1,5–2 ay önceden planlanmalıdır. Belgelerdeki imza ve tarihlerin eksiksiz olması, maddi belgelerin güncel ve tutarlı sunulması önemlidir. Konsolosluğun talep ettiği dile uygun evrak hazırlanmalı ve tüm belgelerin birer kopyası saklanmalıdır."
+    },
+    {
+      "title": "Erasmus Vize Başvuru Süreci",
+      "content": "Randevu alınması, evrakların hazırlanması, biyometrik işlemlerin tamamlanması ve vize sonucunun beklenmesi sürecin temel adımlarıdır. Başvurular ülkeye göre 15 ila 60 gün arasında sonuçlanabilir. Bazı ülkeler ek mülakat veya e-posta yoluyla ek bilgi talep edebilir."
+    }
+  ]
+},
+
 
     {
       "id": "language-school",

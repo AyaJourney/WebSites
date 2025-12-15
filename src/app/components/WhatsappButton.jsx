@@ -14,6 +14,7 @@ const findReply = (msg) => {
 };
 
 export default function WhatsAppChatWithIcon() {
+const [showScrollTop, setShowScrollTop] = useState(false);
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([
@@ -25,11 +26,9 @@ export default function WhatsAppChatWithIcon() {
     },
   ]);
   const [typing, setTyping] = useState(false);
-  const audioRef = useRef(null);
 
-  const playSound = () => {
-    if (audioRef.current) audioRef.current.play();
-  };
+
+
 
   const sendMessage = () => {
     if (!input.trim()) return;
@@ -82,47 +81,67 @@ export default function WhatsAppChatWithIcon() {
       playSound();
     }, 1000 + Math.random() * 1000);
   };
+useEffect(() => {
+  const onScroll = () => {
+    setShowScrollTop(window.scrollY > 300);
+  };
 
+  window.addEventListener("scroll", onScroll, { passive: true });
+  return () => window.removeEventListener("scroll", onScroll);
+}, []);
   return (
     <div>
 
 
       {/* SADECE WHATSAPP İKONU */}
-     {!open && (
-  <div className="fixed bottom-6 right-6 z-50 flex gap-3 items-end">
-    {/* Scroll to Top Butonu */}
-    <button
-      aria-label="Sayfanın başına git"
-      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className="bg-gray-700 w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition cursor-pointer"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-6 w-6 text-white"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
+{/* SAĞ ALT SABİT ALAN */}
+{!open && (
+  <div className="fixed bottom-6 right-6 z-50 flex flex-row gap-4 items-end">
+    
+    {/* Scroll to Top – sadece aşağıdaysa */}
+    {showScrollTop && (
+      <div className="group">
+ <button
+        aria-label="Sayfanın başına git"
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        className="bg-gray-700 w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition"
       >
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-      </svg>
-    </button>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6 text-white"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M5 15l7-7 7 7"
+          />
+        </svg>
+      </button>
+      </div>
+     
+    )}
 
-
-    {/* WhatsApp Butonu */}
-    <div className="group relative">
+    {/* WhatsApp – HER ZAMAN GÖRÜNÜR */}
+    <div className="group">
       <button
-         aria-label="Whatsapp"
+        aria-label="Whatsapp"
         onClick={() => setOpen(true)}
         className="bg-green-500 w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition"
       >
         <FaWhatsapp className="text-white text-4xl" />
       </button>
-      <span className="absolute bottom-20 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-sm rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition">
+
+      <span className="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-gray-800 text-white text-sm rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
         WhatsApp
       </span>
     </div>
   </div>
 )}
+
 
 
       {/* CHAT KUTUSU */}
