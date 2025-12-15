@@ -10,37 +10,33 @@ const AppleStyleMedia = () => {
   const [showImage, setShowImage] = useState(false);
 
   return (
-    <div
-      className="
-        relative w-full overflow-hidden rounded-2xl
-        h-[260px] sm:h-[300px] md:h-[360px] lg:h-[420px]
-        max-w-[700px]
-      "
-    >
+    <div className="relative w-full overflow-hidden rounded-2xl h-[260px] sm:h-[300px] md:h-[360px] lg:h-[420px] max-w-[700px]">
+
+      {/* VIDEO – HER ZAMAN DOM'DA */}
+      <video
+        src="/images/videomaker.mp4"
+        autoPlay
+        muted
+        playsInline
+        onEnded={() => setShowImage(true)}
+        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
+        style={{ opacity: showImage ? 0 : 1 }}
+      />
+
+      {/* IMAGE – HER ZAMAN DOM'DA */}
       <Image
         src="/images/sehir.jpg"
         alt="Portekiz"
         fill
         priority
-        className={`
-          object-cover transition-all duration-[1500ms] ease-out
-          ${showImage ? "opacity-100 scale-100" : "opacity-0 scale-105"}
-        `}
+        className="object-cover transition-opacity duration-[1500ms] ease-out"
+        style={{ opacity: showImage ? 1 : 0 }}
       />
 
-      {!showImage && (
-        <video
-          src="/images/videomaker.mp4"
-          autoPlay
-          muted
-          playsInline
-          onEnded={() => setShowImage(true)}
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-      )}
     </div>
   );
 };
+
 
 /* ----------------------------------------- */
 /* PORTUGAL SECTION */
