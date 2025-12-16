@@ -28,7 +28,7 @@ const YurtDisiRehberi = () => {
 }, []);
 
 return (
-   <main className="flex flex-col w-full min-h-screen items-center justify-center  font-sans bg-gradient-to-b from-white via-slate-50 to-white text-slate-900 ">
+   <main className="flex flex-col w-full min-h-screen items-center justify-center  font-sans ">
     
   {/* Navbar yüksekliği kadar boşluk */}
 <article
