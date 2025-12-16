@@ -32,7 +32,8 @@ const defaultForm = {
       home_building_no: "",
       home_apartment_no: "",
       home_address: "", 
-      previousSurname:"",    // Residential Address zorunlu
+      previousSurname:"",
+      tcEndDate:"",   // Residential Address zorunlu
     },
 2: {
   maritalStatus: "",        // BEKAR | EVLI | DUL | BOSANMIS
@@ -151,7 +152,14 @@ const defaultForm = {
     6: {
       previousVisaRefusal: "",        // Kanada veya başka bir ülke için vize reddi yaşadınız mı? (EVET/HAYIR) zorunlu
       refusalReason: "",              // Reddedildiyse nedeni
-      previousCanadaApplication: "",  // Daha önce Kanada'ya giriş yapmak için başvurdunuz mu? (EVET/HAYIR) zorunlu
+      previousCanadaApplication: "",
+      travelStartDate:"",
+      travelEndDate:"",
+      travelAddress:"",
+      totalMoney:"",  
+
+                          
+                                  // Daha önce Kanada'ya giriş yapmak için başvurdunuz mu? (EVET/HAYIR) zorunlu
       last5YearsTravel: [             // Son 5 yılda hangi ülkelere seyahat ettiniz (Dizi)
         {
           country: "",                // Ülke adı
@@ -194,8 +202,14 @@ function readFromLocal() {
   }
 }
 
-
-
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(STORAGE_METHOD_KEY);
+  } catch (e) {
+    // sessiz geç
+  }
+}
 
 
 export default function FormKanada() {
@@ -207,6 +221,8 @@ export default function FormKanada() {
   const [statusMessage, setStatusMessage] = useState("");
   const [kvkkConsent, setKvkkConsent] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+ const today = new Date().toISOString().split("T")[0];
+
   useEffect(() => {
     // Next.js'in client tarafında çalıştığından emin olmak için
     if (typeof window !== 'undefined') {
@@ -279,11 +295,11 @@ export default function FormKanada() {
       body: JSON.stringify(payload),
     });
  if(res.ok){
-  clearLocalStorage()
+  // clearLocalStorage()
   setResMessage(true)
  setForm(prev => ({
   ...prev,
-  currentStep: prev.currentStep + 1
+  currentStep: 8
 }));
 
 
@@ -335,7 +351,7 @@ export default function FormKanada() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form, storageMethod]);
   const requiredFields = {
-    1: ["tcId", "fullName", "gender", "birthDate", "birthPlace", "email", "phone_number","home_city","home_district","home_neighborhood","home_building_no","home_apartment_no","post_code"],
+    1: ["tcId","tcEndDate", "fullName", "gender", "birthDate", "birthPlace", "email", "phone_number","home_city","home_district","home_neighborhood","home_building_no","home_apartment_no","post_code"],
     2: ["maritalStatus"],  // Evlilik tarihi ve eş bilgileri opsiyonel olabilir
     3: [
       "motherFullName", "motherMaritalStatus", "motherBirthPlace", "motherBirthDate",
@@ -349,7 +365,7 @@ export default function FormKanada() {
   };
 
 
-console.log(form)
+
 
 const validateStep = (step, formData) => {
   const fields = requiredFields[step] || [];
@@ -923,7 +939,7 @@ const removeMarriage = (index) => {
                     maxLength={11}
                     className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
           ${errors.tcId ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
-                    value={form.steps[1].tcId}
+                    value={form.steps[1].tcId || ""}
                     onChange={(e) => updateField(1, "tcId", e.target.value)}
                     placeholder="Örn: 12345678901"
                   />
@@ -937,7 +953,7 @@ const removeMarriage = (index) => {
                     name="fullName"
                     className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
           ${errors.fullName ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
-                    value={form.steps[1].fullName}
+                    value={form.steps[1].fullName || ""}
                     onChange={(e) => {
                       if (isMobile) {
                         // Mobile: Normalizasyon YOK, sadece değeri sakla
@@ -998,7 +1014,7 @@ const removeMarriage = (index) => {
                     name="birthPlace"
                     className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
           ${errors.birthPlace ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
-                    value={form.steps[1].birthPlace}
+                    value={form.steps[1].birthPlace || ""}
                     onChange={(e) => {
                       if (isMobile) {
                         // Mobile: Normalizasyon YOK, sadece değeri sakla
@@ -1020,7 +1036,18 @@ const removeMarriage = (index) => {
                   />
                   {errors.birthPlace && <p className="text-red-500 text-xs mt-1">{errors.birthPlace}</p>}
                 </div>
-
+       <div>
+                  <label className="text-sm font-medium">TC Kimlik Kartı Son Geçerlilik Tarihi</label>
+                  <input
+                    type="date"
+                    name="tcEndDate"
+                    className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+          ${errors.tcEndDate ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+                    value={form.steps[1].tcEndDate || ""}
+                    onChange={(e) => updateField(1, "tcEndDate", e.target.value)}
+                  />
+                  {errors.tcEndDate && <p className="text-red-500 text-xs mt-1">{errors.tcEndDate}</p>}
+                </div>
                 {/* Telefon */}
                 <div>
                   <label className="text-sm font-medium">Telefon Numarası</label>
@@ -1028,7 +1055,7 @@ const removeMarriage = (index) => {
                     name="phone_number"
                     className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
           ${errors.phone_number ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
-                    value={form.steps[1].phone_number}
+                    value={form.steps[1].phone_number || ""}
                     onChange={(e) => updateField(1, "phone_number", e.target.value)}
                     placeholder="+90 5XX XXX XX XX"
                   />
@@ -1043,7 +1070,7 @@ const removeMarriage = (index) => {
                     type="email"
                     className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
           ${errors.email ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
-                    value={form.steps[1].email}
+                    value={form.steps[1].email || ""}
                     onChange={(e) => updateField(1, "email", e.target.value)}
                     placeholder="ornek@mail.com"
                   />
@@ -1094,7 +1121,7 @@ const removeMarriage = (index) => {
       className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition 
         ${errors.home_city ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
      
-      value={form.steps[1].home_city}
+      value={form.steps[1].home_city || ""}
                       onChange={(e) => {
                 if (isMobile) {
                     // Mobile: Normalizasyon YOK, sadece değeri sakla
@@ -1316,7 +1343,7 @@ const removeMarriage = (index) => {
           name="post_code"
           className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
           ${errors.post_code ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
-          value={form.steps[1].post_code}
+          value={form.steps[1].post_code || ""}
                            onChange={(e) => {
                 if (isMobile) {
                     // Mobile: Normalizasyon YOK, sadece değeri sakla
@@ -1665,45 +1692,112 @@ const removeMarriage = (index) => {
             />
           </div>
 
-          {Array.from({ length: form.steps[2].childrenCount }).map((_, idx) => (
-            <div
-              key={idx}
-              className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6 border p-4 rounded-xl"
-            >
-              <h4 className="md:col-span-2 font-semibold">
-                Çocuk {idx + 1} Bilgileri
-              </h4>
+        {Array.from({ length: form.steps[2].childrenCount }).map((_, idx) => (
+  <div
+    key={idx}
+    className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6 border p-4 rounded-xl"
+  >
+    <h4 className="md:col-span-2 font-semibold">
+      Çocuk {idx + 1} Bilgileri
+    </h4>
 
-              <div>
-                <label className="text-sm font-medium">Ad Soyad</label>
-                <input
-                  className="w-full mt-1 p-3 border rounded-xl"
-                  value={form.steps[2].children[idx]?.fullName || ""}
-                  onChange={(e) =>
-                    updateChildField(
-                      idx,
-                      "fullName",
-                      isMobile
-                        ? e.target.value
-                        : normalizeInput(e.target.value)
-                    )
-                  }
-                />
-              </div>
+    {/* AD SOYAD */}
+    <div>
+      <label className="text-sm font-medium">Ad Soyad</label>
+      <input
+        className="w-full mt-1 p-3 border rounded-xl"
+        value={form.steps[2].children[idx]?.fullName || ""}
+        onChange={(e) =>
+          updateChildField(
+            idx,
+            "fullName",
+            isMobile ? e.target.value : normalizeInput(e.target.value)
+          )
+        }
+      />
+    </div>
 
-              <div>
-                <label className="text-sm font-medium">Doğum Tarihi</label>
-                <input
-                  type="date"
-                  className="w-full mt-1 p-3 border rounded-xl"
-                  value={form.steps[2].children[idx]?.birthDate || ""}
-                  onChange={(e) =>
-                    updateChildField(idx, "birthDate", e.target.value)
-                  }
-                />
-              </div>
-            </div>
-          ))}
+    {/* MEDENİ DURUM */}
+    <div>
+      <label className="text-sm font-medium">Medeni Durum</label>
+      <select
+        className="w-full mt-1 p-3 border rounded-xl"
+        value={form.steps[2].children[idx]?.maritalStatus || ""}
+        onChange={(e) =>
+          updateChildField(idx, "maritalStatus", e.target.value)
+        }
+      >
+        <option value="">SEÇİNİZ</option>
+        <option value="BEKAR">BEKAR</option>
+        <option value="EVLI">EVLİ</option>
+        <option value="DUL">DUL</option>
+        <option value="BOSANMIS">BOŞANMIŞ</option>
+      </select>
+    </div>
+
+    {/* DOĞUM YERİ */}
+    <div>
+      <label className="text-sm font-medium">Doğum Yeri</label>
+      <input
+        className="w-full mt-1 p-3 border rounded-xl"
+        value={form.steps[2].children[idx]?.birthPlace || ""}
+        onChange={(e) =>
+          updateChildField(
+            idx,
+            "birthPlace",
+            isMobile ? e.target.value : normalizeInput(e.target.value)
+          )
+        }
+      />
+    </div>
+
+    {/* DOĞUM TARİHİ */}
+    <div>
+      <label className="text-sm font-medium">Doğum Tarihi</label>
+      <input
+        type="date"
+        className="w-full mt-1 p-3 border rounded-xl"
+        value={form.steps[2].children[idx]?.birthDate || ""}
+        onChange={(e) =>
+          updateChildField(idx, "birthDate", e.target.value)
+        }
+      />
+    </div>
+
+    {/* ADRES */}
+    <div className="md:col-span-2">
+      <label className="text-sm font-medium">Adres</label>
+      <input
+        className="w-full mt-1 p-3 border rounded-xl"
+        value={form.steps[2].children[idx]?.address || ""}
+        onChange={(e) =>
+          updateChildField(
+            idx,
+            "address",
+            isMobile ? e.target.value : normalizeInput(e.target.value)
+          )
+        }
+      />
+    </div>
+
+    {/* MESLEK */}
+    <div>
+      <label className="text-sm font-medium">Meslek</label>
+      <input
+        className="w-full mt-1 p-3 border rounded-xl"
+        value={form.steps[2].children[idx]?.occupation || ""}
+        onChange={(e) =>
+          updateChildField(
+            idx,
+            "occupation",
+            isMobile ? e.target.value : normalizeInput(e.target.value)
+          )
+        }
+      />
+    </div>
+  </div>
+))}
+
         </>
       )}
     </div>
@@ -3032,7 +3126,137 @@ const removeMarriage = (index) => {
     )}
 
                 </div>
+ <div>
+      <label className="text-sm font-medium">
+        Seyahat Başlangıç Tarihi *
+      </label>
+      <input
+        type="date"
+        min={today}
+        className={`w-full mt-1 p-3 border rounded-xl 
+          ${errors.travelStartDate ? "border-red-500" : ""}`}
+        value={form.steps[6].travelStartDate || ""}
+        onChange={(e) => {
+          const value = e.target.value;
 
+          updateField(6, "travelStartDate", value);
+
+          if (value < today) {
+            updateField(6, "errors", {
+              ...form.steps[6].errors,
+              travelStartDate: "Başlangıç tarihi bugünden önce olamaz"
+            });
+          } else {
+            updateField(6, "errors", {
+              ...form.steps[6].errors,
+              travelStartDate: ""
+            });
+          }
+
+          // Bitiş tarihi varsa tekrar kontrol et
+          if (
+            form.steps[6].travelEndDate &&
+            form.steps[6].travelEndDate < value
+          ) {
+            updateField(6, "errors", {
+              ...form.steps[6].errors,
+              travelEndDate: "Bitiş tarihi başlangıçtan önce olamaz"
+            });
+          }
+        }}
+      />
+      {errors.travelStartDate && (
+        <p className="text-red-500 text-xs mt-1">
+          {errors.travelStartDate}
+        </p>
+      )}
+    </div>
+
+    {/* SEYAHAT BİTİŞ */}
+    <div>
+      <label className="text-sm font-medium">
+        Seyahat Bitiş Tarihi *
+      </label>
+      <input
+        type="date"
+        min={form.steps[6].travelStartDate || today}
+        className={`w-full mt-1 p-3 border rounded-xl 
+          ${errors.travelEndDate ? "border-red-500" : ""}`}
+        value={form.steps[6].travelEndDate || ""}
+        onChange={(e) => {
+          const value = e.target.value;
+          const start = form.steps[6].travelStartDate;
+
+          updateField(6, "travelEndDate", value);
+
+          if (value < today) {
+            updateField(6, "errors", {
+              ...form.steps[6].errors,
+              travelEndDate: "Bitiş tarihi bugünden önce olamaz"
+            });
+          } else if (start && value < start) {
+            updateField(6, "errors", {
+              ...form.steps[6].errors,
+              travelEndDate: "Bitiş tarihi başlangıçtan önce olamaz"
+            });
+          } else {
+            updateField(6, "errors", {
+              ...form.steps[6].errors,
+              travelEndDate: ""
+            });
+          }
+        }}
+      />
+      {errors.travelEndDate && (
+        <p className="text-red-500 text-xs mt-1">
+          {errors.travelEndDate}
+        </p>
+      )}
+    </div>
+
+    {/* KALINAN ADRES */}
+    <div>
+      <label className="text-sm font-medium">
+       Konaklama Adresi
+      </label>
+      <input
+        className="w-full mt-1 p-3 border rounded-xl"
+        value={form.steps[6].travelAddress || ""}
+        onChange={(e) =>
+          updateField(
+            6,
+            "travelAddress",
+            isMobile ? e.target.value : normalizeInput(e.target.value)
+          )
+        }
+        onBlur={(e) => {
+          if (isMobile) {
+            updateField(
+              6,
+              "travelAddress",
+              normalizeInput(e.target.value)
+            );
+          }
+        }}
+      />
+    </div>
+
+    {/* TOPLAM PARA */}
+    <div>
+      <label className="text-sm font-medium">
+        Toplam Birikim Miktarı(Banka Hesaplarındaki)
+      </label>
+      <input
+        type="text"
+        placeholder="100000 TL"
+        min={0}
+        className="w-full mt-1 p-3 border rounded-xl"
+        value={form.steps[6].totalMoney || ""}
+        onChange={(e) =>
+          updateField(6, "totalMoney", e.target.value)
+        }
+      />
+    </div>
               </div>
 
               {/* -------------------------------------------------- */}
@@ -3377,7 +3601,7 @@ const removeMarriage = (index) => {
         </h2>
         <Link href="/">   <button 
          onClick={() => {
-        clearDs160Storage();
+        clearLocalStorage();
         
       }}
         className=" text-gray-700 cursor-pointer mt-5 border border-blue-300 px-4 py-2 rounded-3xl transition duration-300 hover:text-blue-500 hover:bg-gray-100">

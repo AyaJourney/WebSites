@@ -233,49 +233,61 @@ const drawHeader = async (page) => {
     };
 
     // 6. Alan Çizimi (Grid Yapısı - Label/Value)
-    const drawField = (label, value, isFullWidth = false, xOffset = 0) => {
-      const colWidth = isFullWidth ? CONTENT_WIDTH : (CONTENT_WIDTH / 2) - 10;
-      const valStr = value ? String(value) : "-";
-      const labelSize = 8;
-      const valueSize = 10;
-      
-      // Value kaç satır tutuyor?
-      const valueLines = wrapText(valStr, colWidth, regularFont, valueSize);
-      const heightNeeded = (valueLines.length * (valueSize + 4)) + 15; 
+ const drawField = (label, value, isFullWidth = false, xOffset = 0) => {
 
-      // Sayfa sonu kontrolü
-      if (xOffset === 0) {
-         if (checkSpace(heightNeeded)) {
-             // Sayfa değiştiyse Y sıfırlandı
-         }
-      }
+  // 🔹 kolon sayısını otomatik belirle
+  const colWidth = isFullWidth
+    ? CONTENT_WIDTH
+    : xOffset === 0
+      ? (CONTENT_WIDTH / 3) - 10
+      : xOffset === CONTENT_WIDTH / 3
+        ? (CONTENT_WIDTH / 3) - 10
+        : xOffset === (CONTENT_WIDTH / 3) * 2
+          ? (CONTENT_WIDTH / 3) - 10
+          : (CONTENT_WIDTH / 2) - 10;
 
-      const drawX = MARGIN + xOffset;
-      
-      // Label
-      currentPage.drawText(label, {
-        x: drawX,
-        y: currentY,
-        size: labelSize,
-        font: boldFont, // Senin fontun (Bold olmadığı için regular görünecek ama stilimiz aynı kalacak)
-        color: COLORS.textLabel
-      });
+  const valStr = value ? String(value) : "-";
+  const labelSize = 8;
+  const valueSize = 10;
 
-      // Value (Wrapped)
-      let textY = currentY - 12;
-      valueLines.forEach(line => {
-        currentPage.drawText(line, {
-            x: drawX,
-            y: textY,
-            size: valueSize,
-            font: regularFont,
-            color: COLORS.textMain
-        });
-        textY -= (valueSize + 4);
-      });
-      
-      return heightNeeded; 
-    };
+  // Value kaç satır tutuyor?
+  const valueLines = wrapText(valStr, colWidth, regularFont, valueSize);
+  const heightNeeded = (valueLines.length * (valueSize + 4)) + 15;
+
+  // Sayfa sonu kontrolü (sadece ilk kolon kontrol eder)
+  if (xOffset === 0) {
+    if (checkSpace(heightNeeded)) {
+      // sayfa değişmiş olabilir
+    }
+  }
+
+  const drawX = MARGIN + xOffset;
+
+  // Label
+  currentPage.drawText(label, {
+    x: drawX,
+    y: currentY,
+    size: labelSize,
+    font: boldFont,
+    color: COLORS.textLabel
+  });
+
+  // Value (Wrapped)
+  let textY = currentY - 12;
+  valueLines.forEach(line => {
+    currentPage.drawText(line, {
+      x: drawX,
+      y: textY,
+      size: valueSize,
+      font: regularFont,
+      color: COLORS.textMain
+    });
+    textY -= (valueSize + 4);
+  });
+
+  return heightNeeded;
+};
+
 
     // --- Veri İşleme ve Çizim Başlangıcı ---
     const checkPageOverflow = (neededHeight = 0) => {
@@ -297,14 +309,56 @@ const drawHeader = async (page) => {
 drawSection("1. KİŞİSEL BİLGİLER");
 
 // Ad Soyad ve T.C. Kimlik No
-let h1 = drawField("Ad Soyad", s(1).fullName, false, 0);
-let h2 = drawField("T.C. Kimlik No", s(1).tcId, false, CONTENT_WIDTH / 2);
-currentY -= Math.max(h1, h2) + 10;
+let h1 = drawField(
+  "T.C. Kimlik No",
+  s(1).tcId,
+  false,
+  0
+);
+
+let h2 = drawField(
+  "Ad Soyad",
+  s(1).fullName,
+  false,
+  CONTENT_WIDTH / 3
+);
+
+let h3 = drawField(
+  "Önceki Adı Soyadı",
+  s(1).previousSurname,
+  false,
+  (CONTENT_WIDTH / 3) * 2
+);
+
+// satırı aşağı indir
+currentY -= Math.max(h1, h2, h3) + 10;
+
 
 // Doğum Tarihi ve Doğum Yeri
-h1 = drawField("Doğum Tarihi", toTRDate(s(1).birthDate), false, 0);
-h2 = drawField("Doğum Yeri", s(1).birthPlace, false, CONTENT_WIDTH / 2);
-currentY -= Math.max(h1, h2) + 10;
+h1 = drawField(
+  "T.C. Kimlik Son Geçerlilik Tarihi",
+  toTRDate(s(1).tcEndDate),
+  false,
+  0
+);
+
+ h2 = drawField(
+  "Doğum Tarihi",
+  (toTRDate(s(1).birthDate)),
+  false,
+  CONTENT_WIDTH / 3
+);
+
+h3 = drawField(
+  "Doğum Yeri",
+ s(1).birthPlace,
+  false,
+  (CONTENT_WIDTH / 3) * 2
+);
+
+// satırı aşağı indir
+currentY -= Math.max(h1, h2, h3) + 10;
+
 
 // Cinsiyet ve Medeni Durum
 h1 = drawField("Cinsiyet", s(1).gender, false, 0);
@@ -438,46 +492,11 @@ if (s(3).siblingsCount > 0 && s(3).siblings && s(3).siblings.length > 0) {
     pageCount++;
     currentY = PAGE_HEIGHT - MARGIN;
     await drawHeader(currentPage);
+
+
 drawSection("4.BÖLÜM");
 checkPageOverflow(20);
 currentY -= 20;
-
-// Seyahat durumu
- h1 = drawField("Tek Mi Seyahat Edeceksiniz?", s(4).travelAlone, true, 0);
-currentY -= h1 + 2;
-
-if (s(4).travelAlone === "HAYIR") {
-    checkPageOverflow(30);
-    h1 = drawField("Başka birisi varsa adı, soyadı ve ilişkiniz", s(4).otherTraveler, false, 0);
-    currentY -= h1 + 2;
-}
-
-// Daha önce ABD'de bulunma
-h1 = drawField("Daha Önce ABD’de bulundunuz mu?", s(4).beenToUS, true, 0);
-currentY -= h1 + 2;
-
-if (s(4).beenToUS === "EVET") {
-    checkPageOverflow(40);
-    h1 = drawField("Gittiğiniz Günün Tarihi", toTRDate(s(4).lastVisitDate), false, 0);
-    h2 = drawField("ABD’de Kaldığınız Süre", s(4).lastVisitDuration, false, 0);
-    currentY -= Math.max(h1, h2) + 2;
-}
-
-// Daha önce ABD vizesi alma durumu
-h1 = drawField("Daha Önce ABD Vizesi Aldınız mı?", s(4).hadUSVisa, true, 0);
-currentY -= h1 + 2;
-
-if (s(4).hadUSVisa === "EVET") {
-    checkPageOverflow(40);
-    h1 = drawField("Vize Tarihi", toTRDate(s(4).visaDate), false, 0);
-    h2 = drawField("Vize Numarası", s(4).visaNumber, false, 0);
-    currentY -= Math.max(h1, h2) + 2;
-}
-
-// Daha önce vize başvurusunda ret alma
-h1 = drawField("Daha Önce ABD Vizesi Başvurusunda Ret Aldınız mı?", s(4).visaRefused, true, 0);
-currentY -= h1 + 2;
-
 // Dil bilgisi
 drawSection("Dil Bilgisi");
 checkPageOverflow(20);
@@ -598,6 +617,16 @@ if (s(6).previousVisaRefusal?.toUpperCase() === "EVET") {
 h1 = drawField("Daha Önce Kanada Başvurusunda Bulundunuz mu?", s(6).previousCanadaApplication || "-", false, 0);
 currentY -= h1 + 10;
 
+ h1 = drawField("Seyahat Başlangıç Tarihi", toTRDate(s(6).travelStartDate) || "-", false, 0);
+ h2 = drawField("Seyahat Bitiş Tarihi", `${toTRDate(s(6).travelEndDate) || "-"}`, false, CONTENT_WIDTH / 2);
+    currentY -= Math.max(h1, h2) + 10;
+
+ h1 = drawField("Konaklama Adresi", s(6).travelAddress || "-", false, 0);
+ h2 = drawField("Toplam Birikim", s(6).totalMoney || "-", false, CONTENT_WIDTH / 2);
+    currentY -= Math.max(h1, h2) + 10;
+
+
+
 // Son 5 yıldaki seyahatler
 if (s(6).last5YearsTravel?.length) {
     drawSection("Son 5 Yılda Seyahatler");
@@ -694,9 +723,12 @@ const textBody = `
 KANADA VİZE BAŞVURU FORMU
 
 -- 1. KİŞİSEL BİLGİLER --
-Ad Soyad: ${s(1).fullName || "-"}
 T.C. Kimlik No: ${s(1).tcId || "-"}
+Ad Soyad: ${s(1).fullName || "-"}
+Önceki Adı veya Soyadı: ${s(1).previousSurname || "-"}
 Cinsiyet: ${s(1).gender || "-"}
+T.C. Kimlik Son Geçerlilik Tarihi: ${toTRDate(s(1).tcEndDate) || "-"}
+
 Doğum Tarihi: ${toTRDate(s(1).birthDate) || "-"}
 Doğum Yeri: ${s(1).birthPlace || "-"}
 Ev Adresi: ${s(1).home_address || "-"}
@@ -759,6 +791,10 @@ Son 10 Yıl İş Deneyimleri: ${s(5).last10YearsWorkExperience.map(w => w.compan
 Önceki Vize Reddı: ${s(6).previousVisaRefusal || "-"}
 Red Nedeni: ${s(6).refusalReason || "-"}
 Daha Önce Kanada Başvurusu: ${s(6).previousCanadaApplication || "-"}
+Seyahat Başlangıç Tarihi:  ${toTRDate(s(6).travelStartDate) || "-"}
+Seyahat Bitiş Tarihi:  ${toTRDate(s(6).travelEndDate) || "-"}
+Konaklama Adresi: ${s(6).travelAddress || "-"}
+Toplam Birikim: ${s(6).totalMoney || "-"}
 Son 5 Yıl Seyahatler: ${s(6).last5YearsTravel.map(t => t.country ? `${t.country} (${t.travelStartDate || "-"} / ${t.travelEndDate || "-"}) - ${t.travelPurpose || "-"}` : "-").join(", ")}
 
 Başvuru Tarihi: ${new Date().toLocaleString("tr-TR")}
@@ -773,9 +809,12 @@ const htmlBody = `
 <h3>1. Kişisel Bilgiler</h3>
 <table border="1" cellspacing="0" cellpadding="5" style="border-collapse: collapse; width:100%; background-color:#f9f9f9;">
   <tbody>
+      <tr><th style="background-color:#e0e0e0;">T.C. Kimlik No</th><td>${s(1).tcId || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Ad Soyad</th><td>${s(1).fullName || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">T.C. Kimlik No</th><td>${s(1).tcId || "-"}</td></tr>
+    <tr><th style="background-color:#e0e0e0;">Önceki Ad veya Soyad</th><td>${s(1).previousSurname || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Cinsiyet</th><td>${s(1).gender || "-"}</td></tr>
+      <tr><th style="background-color:#e0e0e0;">T.C. Kimlik Son Geçerlilik Tarihi</th><td>${toTRDate(s(1).tcEndDate) || "-"}</td></tr>
+
     <tr><th style="background-color:#e0e0e0;">Doğum Tarihi</th><td>${toTRDate(s(1).birthDate) || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Doğum Yeri</th><td>${s(1).birthPlace || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Adres</th><td>${s(1).home_address || "-"}</td></tr>
@@ -954,7 +993,10 @@ ${s(5).last10YearsWorkExperience.length ? `
 <p><strong>Önceki Vize Reddi:</strong> ${s(6).previousVisaRefusal || "-"}</p>
 <p><strong>Red Nedeni:</strong> ${s(6).refusalReason || "-"}</p>
 <p><strong>Daha Önce Kanada Başvurusu:</strong> ${s(6).previousCanadaApplication || "-"}</p>
-
+<p><strong>Seyahat Başlangıç Tarihi:</strong>${toTRDate(s(6).travelStartDate) || "-"}</p>
+<p><strong>Seyahat Bitiş Tarihi:</strong> ${toTRDate(s(6).travelEndDate)  || "-"}</p>
+<p><strong>Konaklama Adresi:</strong> ${s(6).travelAddress || "-"}</p>
+<p><strong>Toplam Birikim:</strong>  ${s(6).totalMoney || "-"}</p>
 ${s(6).last5YearsTravel.length ? `
 <h4>Son 5 Yıl Seyahatler</h4>
 <table border="1" cellspacing="0" cellpadding="5" style="border-collapse: collapse; width:100%;">
