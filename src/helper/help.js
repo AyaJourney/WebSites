@@ -627,8 +627,8 @@ export const abroad =[
      "image": "/images/5.webp",
       "etiketler": ["Vize", "Başvuru","Konaklama"],
     "detailedDescription": "Yurt dışında konaklama seçenekleri; öğrenci yurtları, paylaşımlı evler, hosteller veya oteller olabilir. Uzun süreli kalışlarda kiralık daireler maliyet açısından daha avantajlıdır. Ulaşımda toplu taşıma kartları ve şehir içi indirim uygulamaları büyük kolaylık sağlar. Gideceğiniz ülkenin toplu taşıma sistemini önceden araştırmanız önemlidir.",
-     "address":"/yurtdisi-rehberi/vize-turleri",
-     "click":false,
+     "address":"/yurtdisi-rehberi/konaklama-ve-ulasim-rehberi",
+     "click":true,
   },
   {
     "id": 6,
