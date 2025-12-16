@@ -999,6 +999,7 @@ const removeMarriage = (index) => {
                   <input
                     type="date"
                     name="birthDate"
+                    max={new Date().toISOString().split("T")[0]}
                     className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
           ${errors.birthDate ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
                     value={form.steps[1].birthDate || ""}
@@ -1041,6 +1042,7 @@ const removeMarriage = (index) => {
                   <input
                     type="date"
                     name="tcEndDate"
+                    min={new Date().toISOString().split("T")[0]}
                     className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
           ${errors.tcEndDate ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
                     value={form.steps[1].tcEndDate || ""}
@@ -1404,6 +1406,7 @@ const removeMarriage = (index) => {
             <label className="text-sm font-medium">Evlilik Tarihi</label>
             <input
               type="date"
+              min={new Date().toISOString().split("T")[0]}
               className="w-full mt-1 p-3 border rounded-xl"
               value={form.steps[2].marriageDate}
               onChange={(e) => updateField(2, "marriageDate", e.target.value)}
@@ -1433,6 +1436,7 @@ const removeMarriage = (index) => {
             <label className="text-sm font-medium">Eş Doğum Tarihi</label>
             <input
               type="date"
+              min={new Date().toISOString().split("T")[0]}
               className="w-full mt-1 p-3 border rounded-xl"
               value={form.steps[2].spouseBirthDate}
               onChange={(e) =>
@@ -1598,6 +1602,7 @@ const removeMarriage = (index) => {
       <label className="text-sm font-medium">Eski Eş Doğum Tarihi</label>
       <input
         type="date"
+        max={new Date().toISOString().split("T")[0]}
         className="w-full mt-1 p-3 border rounded-xl"
         value={m.spouseBirthDate}
         onChange={(e) =>
@@ -1613,6 +1618,7 @@ const removeMarriage = (index) => {
       </label>
       <input
         type="date"
+        // min={new Date().toISOString().split("T")[0]}
         className="w-full mt-1 p-3 border rounded-xl"
         value={m.marriageStartDate}
         max={
@@ -1625,11 +1631,11 @@ const removeMarriage = (index) => {
           updateMarriageField(i, "marriageStartDate", e.target.value)
         }
       />
-      {form.steps[2].maritalStatus === "EVLI" && (
+      {/* {form.steps[2].maritalStatus === "EVLI" && (
         <p className="text-xs text-gray-500 mt-1">
           Şimdiki evlilikten önce olmalıdır
         </p>
-      )}
+      )} */}
     </div>
 
     {/* ESKİ EVLİLİK BİTİŞ */}
@@ -1652,9 +1658,9 @@ const removeMarriage = (index) => {
           updateMarriageField(i, "marriageEndDate", e.target.value)
         }
       />
-      <p className="text-xs text-gray-500 mt-1">
+      {/* <p className="text-xs text-gray-500 mt-1">
         Başlangıçtan sonra ve şimdiki evlilikten önce olmalıdır
-      </p>
+      </p> */}
     </div>
   </div>
 ))}
@@ -1756,6 +1762,7 @@ const removeMarriage = (index) => {
       <label className="text-sm font-medium">Doğum Tarihi</label>
       <input
         type="date"
+      max={new Date().toISOString().split("T")[0]}
         className="w-full mt-1 p-3 border rounded-xl"
         value={form.steps[2].children[idx]?.birthDate || ""}
         onChange={(e) =>
