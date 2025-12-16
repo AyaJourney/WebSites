@@ -33,7 +33,7 @@ export default function EducationPage() {
   if (!programs.length) return null;
 
   return (
-    <main className="w-full bg-white text-gray-900 font-sans overflow-hidden">
+    <main className="w-full bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.14),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(16,185,129,0.14),transparent_30%)] text-gray-900 font-sans overflow-hidden">
       {/* HERO */}
       <section className="max-w-7xl mx-auto px-6 pt-24 pb-16 text-center">
         <h1 className="text-4xl md:text-5xl font-extrabold leading-tight edu-animate edu-fade-up">

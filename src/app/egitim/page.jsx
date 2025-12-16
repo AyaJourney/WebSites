@@ -16,7 +16,7 @@ export default function EgitimPage() {
       {/* <HeroEgitim /> */}
 
       {/* CARD LIST */}
-      <section className="w-full max-w-10xl mx-auto px-4 py-16">
+      <section className="w-full max-w-8xl">
         <EgitimCards />
       </section>
 

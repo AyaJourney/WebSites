@@ -106,35 +106,56 @@
       ]
     },
 
+   {
+  "id": "au-pair",
+  "title": "Au Pair Programı",
+  "badge": "Kültürel Değişim",
+  "image": "/images/aupair.webp",
+  "theme": {
+    "bg": "bg-rose-500/10",
+    "text": "text-rose-700",
+    "soft": "rgba(244,63,94,0.25)"
+  },
+  "intro": "Au Pair Programı, gençlerin Amerika Birleşik Devletleri’nde bir ev sahibi aileyle birlikte yaşayarak çocuk bakımında destek olduğu, kültürel değişim temelli resmi bir programdır. Konaklama, cep harçlığı ve eğitim bursu sunmasıyla uzun süreli yurt dışı yaşam hayali kuranlar için en ideal seçeneklerden biridir.",
+  "sections": [
     {
-      "id": "work-and-travel",
-      "title": "Work & Travel",
-      "badge": "Öğrenciler İçin",
-      "image": "/images/workandtravel.webp",
-      "theme": {
-        "bg": "bg-rose-500/10",
-        "text": "text-rose-700",
-        "soft": "rgba(244,63,94,0.25)"
-      },
-      "intro": "Work & Travel programı, üniversite öğrencilerinin yaz aylarında Amerika’da çalışıp seyahat etmesini sağlar.",
-      "sections": [
-        {
-          "title": "Program Süresi",
-          "content": "Genellikle yaz döneminde 3–4 ay sürer."
-        },
-        {
-          "title": "Kimler Katılabilir?",
-          "content": "Örgün öğretimde okuyan üniversite öğrencileri ve belirli not ortalamasını sağlayan adaylar başvurabilir."
-        },
-        {
-          "title": "Çalışma Alanları",
-          "content": "Otel, restoran, eğlence parkları ve perakende sektörlerinde çalışma imkânı sunulur."
-        },
-        {
-          "title": "Kültürel Deneyim",
-          "content": "Amerikan kültürünü yerinde deneyimleme ve uluslararası arkadaşlıklar kurma fırsatı sağlar."
-        }
-      ]
+      "title": "Au Pair Programı Nedir?",
+      "content": "Günlük kullanımda dadı veya bebek bakıcılığı ile karıştırılsa da Au Pair, esasen bir kültürel değişim programıdır. Program kapsamında katılımcılar, seçilmiş bir Amerikalı ev sahibi aile ile birlikte yaşar ve çocuk bakımında destek olur. Amaç yalnızca çalışmak değil; aile ortamında yaşayarak Amerikan kültürünü birebir deneyimlemektir. Au Pair Programı, Amerika’da hem konaklama hem çalışma hem de eğitim bursu sunan nadir programlardan biridir."
+    },
+    {
+      "title": "Au Pair Olmanın Avantajları",
+      "content": "Au Pair Programı, yurt dışında uzun süre yaşamak isteyen gençler için birçok avantaj sunar. Bunlar arasında 12 aya kadar düşük maliyetle ABD’de yaşama imkânı, yerel bir ailenin parçası olma, İngilizce dil becerilerini günlük hayatta geliştirme, uluslararası arkadaşlıklar kurma, farklı bir kültürü yakından tanıma ve kendi kültürünü paylaşma yer alır. Aynı zamanda kişisel gelişimi destekler, bağımsızlık kazandırır ve CV’ye güçlü bir uluslararası deneyim ekler."
+    },
+    {
+      "title": "Au Pair Programına Kimler Başvurabilir?",
+      "content": "Programa başvuracak kadın adayların 18–26 yaş aralığında olması gerekir (26 yaşını doldurmadan yaklaşık 8 ay önce başvuru yapılabilir). Üniversite öğrencisi veya mezunu olmak (önlisans kabul edilir), fiziksel ve mental olarak sağlıklı olmak, sigara kullanmamak, aktif araç kullanabilen ehliyete sahip olmak ve en az B1 seviyesinde İngilizce konuşabilmek temel şartlardandır. Ayrıca çocukları sevmek, bakım deneyimine sahip olmak, sorumluluk sahibi ve uyumlu olmak da önemli kriterler arasındadır."
+    },
+    {
+      "title": "Ev Sahibi Ailenin Sorumlulukları",
+      "content": "Ev sahibi aileler Au Pair katılımcılarına özel bir oda, günlük yemekler, haftalık cep harçlığı ve belirlenen saatler dahilinde çalışma düzeni sunar. Bunun yanında dil eğitimi için yıllık eğitim bursu sağlar, kültürel değişimi destekler ve Au Pair’in güvenliği ile refahından sorumludur. Açık iletişim ve rehberlik, programın temel taşlarındandır."
+    },
+    {
+      "title": "Bir Bakışta Au Pair Programı",
+      "content": "Au Pair Programı, J-1 Au Pair vizesi ile 12 ila 24 ay ABD’de kalma imkânı sunar. Katılımcılar ev sahibi aileyle birlikte yaşar, haftada en fazla 45 saat çalışır ve günde 10 saati aşmayacak şekilde yalnızca çocuk bakımıyla ilgili görevleri yerine getirir. Esnek çalışma saatleri ve kültürel değişim odaklı bir yapı sunar."
+    },
+    {
+      "title": "Adım Adım Au Pair Süreci",
+      "content": "Süreç başvuru ve kayıt ile başlar, ardından mülakat aşaması gelir. Gerekli belgelerle Au Pair dosyası oluşturulur, ev sahibi aile ile eşleşme sağlanır. Daha sonra vize süreci tamamlanır ve seyahat planlaması yapılır. ABD’ye varış sonrası oryantasyon süreciyle program resmi olarak başlar."
+    },
+    {
+      "title": "J-1 Vizesi Nedir?",
+      "content": "J-1 vizesi, ABD Dışişleri Bakanlığı tarafından yürütülen kültürel değişim programları kapsamında verilen özel bir vize türüdür. Öğrenci değişimi, staj, araştırma ve Au Pair gibi programları kapsar. Bu vize ile katılımcılar belirlenen şartlar altında ABD’de çalışabilir ve program sonunda ülkelerine dönmekle yükümlüdür."
+    },
+    {
+      "title": "J-1 Vizesi İçin Gerekli Belgeler",
+      "content": "J-1 Kültürel Değişim Ziyaretçi Vizesi için pasaport (seyahat sonrası en az 6 ay geçerli), DS-160 formu, biyometrik fotoğraf, vize randevu onayı, DS-2019 formu, SEVIS ücret ödeme belgesi, vize ücret ödeme belgesi, Au Pair – ev sahibi aile anlaşması ve davet mektubu gereklidir."
+    },
+    {
+      "title": "Adım Adım J-1 Vize Başvurusu",
+      "content": "Öncelikle size uygun J-1 değişim programı seçilir. Ardından sponsor kontrolü yapılır ve sponsor ile iletişime geçilir. DS-2019 formu alınır, SEVIS ücreti ödenir ve DS-160 formu doldurulur. Konsolosluktan mülakat randevusu alınır, gerekli belgeler hazırlanır ve vize mülakatı gerçekleştirilir."
     }
+  ]
+}
+
   ]
 }

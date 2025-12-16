@@ -28,7 +28,7 @@ export default function Navbar() {
       href: "/hizmetlerimiz",
       description: "Aya Journey tarafından sunulan hizmetler.",
       submenu: [
-        { name: "Eğitim", href: "/egitim" },
+        { name: "Yurt Dışı Eğitim & Kariyer Programları", href: "/egitim" },
         { name: "Schengen Vizesi", href: "/schengen-vizesi" },
         { name: "İngiltere Vizesi", href: "/ingiltere-vizesi" },
         { name: "Portekiz D7 Vizesi", href: "/portekiz-d7-vize" },
@@ -46,7 +46,7 @@ export default function Navbar() {
       ],
     },
     { name: "Yurt Dışı Rehberi", href: "/yurtdisi-rehberi" },
-    { name: "SSS", href: "/sikca-sorulan-sorular" },
+    { name: "Sıkça Sorulan Sorular", href: "/sikca-sorulan-sorular" },
     { name: "Hadi Başlayalım !", href: "/randevu" },
   ];
 
@@ -56,7 +56,7 @@ export default function Navbar() {
       onMouseLeave={() => setOpenMega(null)}
     >
       {/* BAR */}
-      <div className="w-full max-w-[1130px] mx-auto px-4 flex justify-between h-24 items-center">
+      <div className="w-full max-w-[1320px] mx-auto px-4 flex justify-between h-24 items-center">
         {/* Logo */}
         <Link href="/">
           <img
