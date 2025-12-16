@@ -752,7 +752,7 @@ const normalizeWithSuffix = (value, suffix) => {
 <div className="text-center">
     <h2 className="text-xl font-semibold">Schengen Vize Başvuru Formu Bilgi Fişi</h2>
     <p className="text-sm text-gray-500">
-     Schengen vize başvuru formu bilgi fişi 6(altı) bölümden oluşmaktadır.
+     Schengen vize başvuru formu 6(altı) bölümden oluşmaktadır.
    
     </p>
        <p className="text-sm text-gray-500">

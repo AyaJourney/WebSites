@@ -766,7 +766,7 @@ function extractMonthsFromDuration(value) {
   <div className="text-center">
     <h2 className="text-xl font-semibold">İngiltere Vize Başvuru Formu Bilgi Fişi</h2>
     <p className="text-sm text-gray-500">
-     İngiltere vize başvuru formu bilgi fişi 6(altı) bölümden oluşmaktadır.
+     İngiltere vize başvuru formu 6(altı) bölümden oluşmaktadır.
    
     </p>
        <p className="text-sm text-gray-500">

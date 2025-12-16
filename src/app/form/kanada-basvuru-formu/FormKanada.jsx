@@ -908,7 +908,7 @@ const removeMarriage = (index) => {
           <div className="text-center">
             <h2 className="text-xl font-semibold">Kanada Vize Başvuru Formu Bilgi Fişi</h2>
             <p className="text-sm text-gray-500">
-              Kanada vize başvuru formu bilgi fişi 6(altı) bölümden oluşmaktadır.
+              Kanada vize başvuru formu 7(Yedi) bölümden oluşmaktadır.
 
             </p>
             <p className="text-sm text-gray-500">
