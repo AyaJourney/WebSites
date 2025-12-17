@@ -81,8 +81,8 @@ const Aya2 = () => {
 
         {/* SAĞ — METİN VE KARTLAR */}
         <div className="flex flex-col justify-end h-full md:max-h-[550px] ">
-          <h1 className="text-3xl md:text-5xl font-bold mb-6 leading-snug aya2-fade-up-init">
-            Herkese ayrı fikir. Herkese ayrı söylem. Çünkü herkes ayrı.
+         <h1 className="text-[4rem] md:text-[3rem] font-bold mb-6 leading-snug">
+           Diğerlerinden farkımız
           </h1>
 
           <div className="space-y-10">

@@ -637,8 +637,8 @@ export const abroad =[
      "image": "/images/6.jpg",
       "etiketler": ["Vize", "Başvuru"],
     "detailedDescription": "Birçok ülke vize başvurusu öncesi sağlık sigortası yaptırılmasını zorunlu kılar. Sigorta, acil durumlar, hastane masrafları ve ilaç giderlerini karşılar. Eğitim veya çalışma vizesi alacak kişiler, kapsamlı bir poliçe tercih etmelidir. Avrupa’da seyahat edenler için Schengen sağlık sigortası genellikle 30.000 Euro teminatlı olmalıdır.",
-     "address":"/yurtdisi-rehberi/vize-turleri",
-     "click":false,
+     "address":"/yurtdisi-rehberi/yurt-disinda-saglik-sigortasi",
+     "click":true,
   },
   {
     "id": 7,
@@ -657,8 +657,8 @@ export const abroad =[
      "image": "/images/8.webp",
       "etiketler": ["Vize", "Başvuru","Eğitim"],
     "detailedDescription": "Birçok ülke, uluslararası öğrencilere yönelik burslar sunmaktadır. Örneğin Almanya’da DAAD, İngiltere’de Chevening, ABD’de Fulbright programları öne çıkar. Başvuru süreci genellikle akademik başarı, niyet mektubu ve referans mektuplarına dayanır. Erken başvuru yapmak şansı artırır.",
-     "address":"/yurtdisi-rehberi/vize-turleri",
-     "click":false,
+     "address":"/yurtdisi-rehberi/yurt-disinda-burs",
+     "click":true,
   },
   {
     "id": 9,
@@ -667,19 +667,19 @@ export const abroad =[
     "image": "/images/9.jpg",
       "etiketler": ["Vize", "Başvuru"],
     "detailedDescription": "Vize reddi almanız, gelecekte başvuru yapamayacağınız anlamına gelmez. Ret mektubunda belirtilen gerekçeleri dikkatle okuyun. Belgelerde eksik veya yanlış bilgi varsa düzeltin. Bazı ülkelerde belirli süre içinde itiraz hakkınız bulunur. Uygun bir danışman desteğiyle yeniden başvuruda bulunabilirsiniz.",
-     "address":"/yurtdisi-rehberi/vize-turleri",
-     "click":false,
+     "address":"/yurtdisi-rehberi/vize-reddi-durumunda-ne-yapilmali",
+     "click":true,
   },
-  {
-    "id": 10,
-    "title": "Yurt Dışına Çıkmadan Önce Yapılması Gerekenler",
-    "shortDescription": "Valiz hazırlığından banka hesabına kadar her detayı planlayın.",
-     "image": "/images/vize.jpg",
-       "etiketler": ["Vize", "Başvuru"],
-    "detailedDescription": "Pasaport, vize, sağlık sigortası, konaklama belgeleri ve uçak biletinizi kontrol edin. Gidilen ülkenin para birimi ve banka işlemleri hakkında bilgi edinin. Elektrik priz adaptörü, ilaçlar ve temel ihtiyaçlarınızı yanınıza almayı unutmayın. Acil durum numaralarını kaydedin ve yakınlarınıza seyahat planınızı bildirin.",
-     "address":"/yurtdisi-rehberi/vize-turleri",
-     "click":false,
-  }
+  // {
+  //   "id": 10,
+  //   "title": "Yurt Dışına Çıkmadan Önce Yapılması Gerekenler",
+  //   "shortDescription": "Valiz hazırlığından banka hesabına kadar her detayı planlayın.",
+  //    "image": "/images/vize.jpg",
+  //      "etiketler": ["Vize", "Başvuru"],
+  //   "detailedDescription": "Pasaport, vize, sağlık sigortası, konaklama belgeleri ve uçak biletinizi kontrol edin. Gidilen ülkenin para birimi ve banka işlemleri hakkında bilgi edinin. Elektrik priz adaptörü, ilaçlar ve temel ihtiyaçlarınızı yanınıza almayı unutmayın. Acil durum numaralarını kaydedin ve yakınlarınıza seyahat planınızı bildirin.",
+  //    "address":"/yurtdisi-rehberi/vize-turleri",
+  //    "click":false,
+  // }
 ]
 
 export const hizmetlerimiz = 
@@ -702,7 +702,7 @@ export const hizmetlerimiz =
   },
   {
     "id": 3,
-    "title": "Portekiz Vize Danışmanlığı",
+    "title": "Portekiz D7 Vize Danışmanlığı",
     "description": "Portekiz vize başvurularında profesyonel yönlendirme.",
     "longDescription": "Portekiz vize başvuruları için belgelerin doğru ve eksiksiz hazırlanması çok önemlidir. Biz, her adımı takip ederek reddedilme riskinizi en aza indiriyoruz ve başvuru sürecinizi kolaylaştırıyoruz.",
     "etiketler": ["Eğitim", "Aile", "İş"],

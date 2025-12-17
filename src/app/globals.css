@@ -1015,3 +1015,15 @@ body {
 .ydr-card-delay-2 { transition-delay: 160ms; }
 .ydr-card-delay-3 { transition-delay: 240ms; }
 .ydr-card-delay-4 { transition-delay: 320ms; }
+
+
+.ava-fade-init {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.ava-show {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 1s ease, transform 1s ease;
+}

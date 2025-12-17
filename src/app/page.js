@@ -9,6 +9,7 @@ import Portugal from "./components/home/Portugal";
 import CardEgitim from "./egitim/CardEgitim";
 import Aya from "./components/home/Aya";
 import Aya2 from "./components/home/Aya2";
+import AmericaVisa from "./components/home/AmericaVisa";
 
 
 
@@ -24,9 +25,13 @@ export default function Home() {
     <main className="flex flex-col w-full font-sans bg-white">
 
       {/* HERO */}
+          <section className="w-full mb-20">
+        <AmericaVisa />
+      </section>
       <section className="w-full min-h-[100svh]">
         <Giris />
       </section>
+
 
       {/* CONTENT SECTIONS */}
       <section className="w-full py-20">

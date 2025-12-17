@@ -6,12 +6,12 @@ import { FaCheckCircle } from "react-icons/fa";
 
 const bullets = [
   "Kişiye özel strateji ve belge hazırlığı",
-  "Randevu, formlar ve takvim tek ekranda",
+  // "Randevu, formlar ve takvim tek ekranda",
   "24 saat içinde ön geri dönüş garantisi",
 ];
 
 const stats = [
-  { label: "Onay oranı", value: "%95*" },
+  { label: "Onay oranı", value: "Yüksek" },
   { label: "Deneyim", value: "15+ yıl" },
   { label: "Ülke", value: "30+" },
 ];
@@ -101,7 +101,7 @@ return (
               data-anim="biz-fade"
               className="biz-fade-init rounded-2xl border border-gray-100 bg-gray-50/60 py-4 shadow-sm"
             >
-              <div className="text-lg sm:text-xl font-bold">{item.value}</div>
+              <div className="text-lg sm:text-xl font-bold text-orange-500">{item.value}</div>
               <div className="text-xs uppercase tracking-wide text-gray-500">
                 {item.label}
               </div>
@@ -167,9 +167,12 @@ return (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
             {[
               "Belge kontrolü tamamlandı",
-              "Randevu takibi açık",
-              "Danışman atandı",
-              "Güncel liste paylaşıldı",
+               "Danışman atandı",
+              "Vize alındı",
+              
+              "Hazırlıklar başlasın",
+             
+             
             ].map((text, i) => (
               <div
                 key={i}

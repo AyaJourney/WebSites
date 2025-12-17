@@ -6,15 +6,15 @@ import { FaCheckCircle } from "react-icons/fa";
 
 const steps = [
   {
-    title: "Profil Analizi",
+    title: "Analiz",
     text: "Vize başvurusunda en kritik adımlardan biri, başvuru sahibinin mevcut durumunun doğru şekilde değerlendirilmesidir.",
   },
   {
-    title: "İyi Bir Plan",
+    title: "Plan",
     text: "Yurtdışında eğitim, çalışma ya da yatırım yapmayı hedefleyen herkes için en kritik unsur doğru plandır.",
   },
   {
-    title: "Adım Adım Uygulama",
+    title: "Uygulama",
     text: "Başarılı bir vize başvurusu veya yurtdışı kariyer yolculuğu, sistematik bir uygulama süreciyle mümkün olur.",
   },
   {

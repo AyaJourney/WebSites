@@ -19,7 +19,7 @@ const Giris = () => {
 
   return (
     <section
-      className="relative w-full overflow-hidden font-sans h-[80svh] md:h-[90svh] lg:h-[100svh]"
+      className="relative w-full overflow-hidden font-sans h-[80svh] md:h-[90svh] lg:h-[85svh]"
     >
       {/* VIDEO – TÜM EKRANLARDA */}
       <video
