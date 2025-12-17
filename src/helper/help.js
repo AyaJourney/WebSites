@@ -703,8 +703,8 @@ export const hizmetlerimiz =
   {
     "id": 3,
     "title": "Portekiz D7 Vize Danışmanlığı",
-    "description": "Portekiz vize başvurularında profesyonel yönlendirme.",
-    "longDescription": "Portekiz vize başvuruları için belgelerin doğru ve eksiksiz hazırlanması çok önemlidir. Biz, her adımı takip ederek reddedilme riskinizi en aza indiriyoruz ve başvuru sürecinizi kolaylaştırıyoruz.",
+    "description": "Portekiz d7 vize başvurularında profesyonel yönlendirme.",
+    "longDescription": "Portekiz d7 vize başvuruları için belgelerin doğru ve eksiksiz hazırlanması çok önemlidir. Biz, her adımı takip ederek reddedilme riskinizi en aza indiriyoruz ve başvuru sürecinizi kolaylaştırıyoruz.",
     "etiketler": ["Eğitim", "Aile", "İş"],
      "image":"/images/portekiz.jpg"
   },
