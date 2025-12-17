@@ -50,7 +50,7 @@ const CardEgitim = () => {
         priority
         sizes="100vw"
         className="object-cover object-center"
-        placeholder="blur"
+        // placeholder="blur"
         // blurDataURL="/images/placeholder-small.jpg"
       />
 
