@@ -184,9 +184,9 @@ return (
     {/* CTA */}
     <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10">
       <Link href="/amerika-vizesi">
-        {/* <button className="bg-white text-gray-700 cursor-pointer mt-6 border border-blue-300 px-8 py-2.5 rounded-3xl transition duration-300 hover:text-blue-500 hover:bg-gray-100">
+        <button className="bg-white text-gray-700 cursor-pointer mt-6 border border-blue-300 px-8 py-2.5 rounded-3xl transition duration-300 hover:text-blue-500 hover:bg-gray-100">
           İncele
-        </button> */}
+        </button>
       </Link>
     </div>
   </section>
