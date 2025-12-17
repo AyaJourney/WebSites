@@ -28,10 +28,12 @@ export default function Navbar() {
       href: "/hizmetlerimiz",
       description: "Aya Journey tarafından sunulan hizmetler.",
       submenu: [
-        { name: "Yurt Dışı Eğitim & Kariyer Programları", href: "/egitim" },
+        { name: "Amerika Vizesi", href: "/amerika-vizesi" },
         { name: "Schengen Vizesi", href: "/schengen-vizesi" },
         { name: "İngiltere Vizesi", href: "/ingiltere-vizesi" },
         { name: "Portekiz D7 Vizesi", href: "/portekiz-d7-vize" },
+        { name: "Yurt Dışı Eğitim & Kariyer Programları", href: "/egitim" },
+
       ],
     },
     {

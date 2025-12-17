@@ -216,7 +216,7 @@ export default function GlobalCareer() {
                   Hemen Ara
                 </a>
                 <a
-                  href="https://wa.me/903128701584"
+                  href="https://wa.me/905302199056"
                   className="inline-flex px-4 py-2.5 rounded-xl bg-emerald-500 text-white font-semibold ring-1 ring-emerald-200/60 hover:bg-emerald-600 hover:-translate-y-0.5 transition"
                   target="_blank"
                   rel="noreferrer"

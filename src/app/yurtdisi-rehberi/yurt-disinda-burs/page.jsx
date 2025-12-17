@@ -221,7 +221,7 @@ export default function ScholarshipsAbroad() {
               </button>
             </Link>
             <a
-              href="https://wa.me/903128701584"
+              href="https://wa.me/905302199056"
               target="_blank"
               rel="noreferrer"
               className="bg-emerald-500 px-6 py-3 rounded-xl font-semibold"

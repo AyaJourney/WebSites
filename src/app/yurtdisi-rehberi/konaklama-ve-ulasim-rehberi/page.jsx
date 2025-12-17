@@ -199,7 +199,7 @@ export default function AccommodationTransportAbroad() {
               Ücretsiz Görüşme Al
             </Link>
             <a
-              href="https://wa.me/903128701584"
+              href="https://wa.me/905302199056"
               target="_blank"
               rel="noreferrer"
               className="px-6 py-3 rounded-xl bg-emerald-500 text-white font-semibold"

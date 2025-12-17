@@ -67,7 +67,7 @@ export default function LanguageAbroad() {
               Ücretsiz Ön Görüşme
             </Link>
             <a
-              href="https://wa.me/903128701584"
+              href="https://wa.me/905302199056"
               target="_blank"
               rel="noreferrer"
               className="px-6 py-3 rounded-xl bg-emerald-500 text-white font-semibold hover:bg-emerald-600 transition"
@@ -234,7 +234,7 @@ export default function LanguageAbroad() {
                 </a>
 
                 <a
-                  href="https://wa.me/903128701584"
+                  href="https://wa.me/905302199056"
                   className="px-4 py-2.5 rounded-xl bg-emerald-500 text-white font-semibold"
                   target="_blank"
                   rel="noreferrer"

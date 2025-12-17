@@ -338,7 +338,7 @@ const UKVisaPage = () => {
   </a>
 
   <a
-    href="https://wa.me/903128701584"
+    href="https://wa.me/905302199056"
     target="_blank"
     rel="noreferrer"
     className="w-full sm:w-auto text-center px-4 py-2.5 rounded-xl bg-emerald-500 text-white font-semibold hover:-translate-y-0.5 transition"

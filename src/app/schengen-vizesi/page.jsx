@@ -470,7 +470,7 @@ export default function SchengenPage() {
                   Hemen Ara
                 </a>
                 <a
-                  href="https://wa.me/903128701584"
+                  href="https://wa.me/905302199056"
                   className="px-4 py-2.5 rounded-xl bg-emerald-500 text-white font-semibold"
                   target="_blank"
                 >

@@ -114,7 +114,7 @@ const register = (el) => {
                     0312 870 15 84’ü Ara
                   </a>
                   <a
-                    href="https://wa.me/903128701584"
+                    href="https://wa.me/905302199056"
                     className="inline-flex items-center justify-center px-4 py-2.5 rounded-xl bg-emerald-500 text-white font-semibold ring-1 ring-emerald-200/60 hover:bg-emerald-600 transition"
                     target="_blank"
                     rel="noreferrer"
@@ -423,7 +423,7 @@ const register = (el) => {
                   Hemen Ara
                 </a>
                 <a
-                  href="https://wa.me/903128701584"
+                  href="https://wa.me/905302199056"
                   className="inline-flex px-4 py-2.5 rounded-xl bg-emerald-500 text-white font-semibold ring-1 ring-emerald-200/60 hover:bg-emerald-600 transition"
                   target="_blank"
                   rel="noreferrer"
