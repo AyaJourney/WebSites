@@ -51,7 +51,7 @@ const CardEgitim = () => {
         sizes="100vw"
         className="object-cover object-center"
         placeholder="blur"
-        blurDataURL="/images/placeholder-small.jpg"
+        // blurDataURL="/images/placeholder-small.jpg"
       />
 
       {/* Overlay */}
