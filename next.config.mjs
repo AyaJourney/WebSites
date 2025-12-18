@@ -11,6 +11,7 @@ const nextConfig = {
 
   experimental: {
     optimizePackageImports: ["react", "lodash"],
+    trustHostHeader: true, // 🔥 KRİTİK
   },
 
   output: "standalone",
