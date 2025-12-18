@@ -32,7 +32,19 @@ export async function GET() {
 export async function POST(request) {
   try {
     const newReservation = await request.json();
+const consultantMailMap = {
+  "Ahmet Yavuz AYBAŞ": process.env.YAVUZ_MAIL_ADDRESS,
+  "Ahmet Gani KÜÇÜK": process.env.AHMET_MAIL_ADDRESS,
+  "Ali EREN": process.env.ALI_MAIL_ADDRESS,
+  "İdil EREK": process.env.IDIL_MAIL_ADDRESS,
+  "Pınar Aleyna DOĞAN": process.env.PINAR_MAIL_ADDRESS,
+  "Selin ÇAKAR": process.env.SELIN_MAIL_ADDRESS,
+  "Tuğba KARASARI": process.env.TUGBA_MAIL_ADDRESS,
+};
+const consultantName = newReservation.personName;
 
+const consultantMail =
+  consultantMailMap[consultantName] || "teknikdestek@ayajourney.com";
     // formData’dan fullname, email, phone çıkar
     const { firstName, lastName, email, phone, message } = newReservation.formData;
     const fullName = `${firstName} ${lastName}`;
@@ -60,26 +72,35 @@ export async function POST(request) {
     // --------------------------------------------
     // 1) ADMIN'E GİDEN MAİL
     // --------------------------------------------
-    const adminMail = {
-      from: `Aya Journey <${process.env.GOOGLE_MAIL_ADDRESS}>`,
-      to: "teknikdestek@ayajourney.com",
-      subject: `Yeni Randevu - ${fullName}`,
-      html: `
-        <h2>Yeni Randevu Oluşturuldu</h2>
-        <p><strong>Danışman:</strong> ${newReservation.personName}</p>
-        <p><strong>Tarih:</strong> ${newReservation.selectedDay}</p>
-        <p><strong>Saat:</strong> ${newReservation.selectedTime}</p>
+const adminMail = {
+  from: `Aya Journey <${process.env.GOOGLE_MAIL_ADDRESS}>`,
+  to: [
+    consultantMail,
+    "teknikdestek@ayajourney.com",
+  ].filter(Boolean).join(","),
 
-        <h3 style="margin-top:20px;">Müşteri Bilgileri</h3>
-        <p><strong>Ad Soyad:</strong> ${fullName}</p>
-        <p><strong>E-mail:</strong> ${email}</p>
-        <p><strong>Telefon:</strong> ${phone}</p>
-        <p><strong>Mesaj:</strong> ${message}</p>
+  subject: `Yeni Randevu - ${fullName}`,
 
-        <br/>
-        <p>Bu mail Aya Journey randevu sistemi tarafından otomatik gönderildi.</p>
-      `,
-    };
+  html: `
+    <h2>Yeni Randevu Oluşturuldu</h2>
+
+    <p><strong>Danışman:</strong> ${consultantName}</p>
+    <p><strong>Tarih:</strong> ${newReservation.selectedDay}</p>
+    <p><strong>Saat:</strong> ${newReservation.selectedTime}</p>
+
+    <h3 style="margin-top:20px;">Müşteri Bilgileri</h3>
+    <p><strong>Ad Soyad:</strong> ${fullName}</p>
+    <p><strong>E-mail:</strong> ${email}</p>
+    <p><strong>Telefon:</strong> ${phone}</p>
+    <p><strong>Mesaj:</strong> ${message || "-"}</p>
+
+    <br/>
+    <p style="font-size:12px;color:#666;">
+      Bu e-posta Aya Journey randevu sistemi tarafından otomatik gönderilmiştir.
+    </p>
+  `,
+};
+
     await transporter.sendMail(adminMail);
 
     // --------------------------------------------
