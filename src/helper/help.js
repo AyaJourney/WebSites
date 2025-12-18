@@ -723,10 +723,7 @@ export const scenarios = [
     keywords: ["fiyat", "ücret", "ne kadar"],
     reply: "Merhaba! Fiyatlarımız projeye göre değişmektedir. Size nasıl yardımcı olalım?"
   },
-  {
-    keywords: ["ip tv", "iptv", "tv", "yayın"],
-    reply: "IPTV hizmetlerimiz hakkında bilgi almak istiyorsanız paket detaylarını gönderebilirim."
-  },
+
   {
     keywords: ["website", "site", "web", "tasarım"],
     reply: "Web sitesi tasarımında modern, mobil uyumlu çözümler üretiyoruz! Ne tür bir site düşünüyorsunuz?"

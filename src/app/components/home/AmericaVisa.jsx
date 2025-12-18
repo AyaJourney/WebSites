@@ -118,19 +118,17 @@ return (
       <div className="space-y-8 text-center lg:text-left">
        <h1 className="relative z-10 text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
   <span className="bg-gradient-to-r from-red-600 via-red-500 to-blue-600 bg-clip-text text-transparent">
-    Amerika Vizesi
+   Hayalleri Süsleyen  Amerika 
   </span>
-  ,
+  
   <br />
   <span className="text-slate-900">
-    Evraktan Değil Görüşmeden Kazanılır
+    B1/B2 Turist Vizesi ile Seyahat, Eğitim ve Yaşam Fırsatları
   </span>
 </h1>
 
         <p className="text-base sm:text-lg text-slate-700 max-w-xl mx-auto lg:mx-0">
-          ABD vizesi; Schengen, Kanada veya İngiltere vizelerinden farklı olarak
-          evrak incelemesiyle değil, vize memuru ile yapılan birebir görüşmeyle
-          sonuçlanır. Görüşmenin sonucu aynı anda açıklanır.
+         Gezmekten yaşamaya, çalışmaktan eğitim almaya kadar Amerika Birleşik Devletleri, B1/B2 turist vizesi ile milyonlarca kişinin hayalini gerçeğe dönüştürüyoruz.
         </p>
 
         <div className="grid sm:grid-cols-2 gap-4 max-w-xl mx-auto lg:mx-0">
@@ -143,8 +141,8 @@ return (
               key={i}
               className="flex items-center gap-3 bg-white/90 backdrop-blur border border-slate-200 rounded-xl px-4 py-3 shadow"
             >
-              <FaCheckCircle className="text-orange-600 shrink-0" />
-              <span className="text-sm font-medium text-slate-800">
+              <FaCheckCircle className="text-indigo-600 shrink-0" />
+              <span className="text-md font-medium text-slate-800">
                 {text}
               </span>
             </div>
@@ -166,7 +164,7 @@ return (
           ].map((step, i) => (
             <div key={i} className="flex gap-3">
               <FaCheckCircle className="text-green-600 mt-1 shrink-0" />
-              <p className="text-sm text-slate-700 leading-relaxed">
+              <p className="text-md text-slate-700 leading-relaxed">
                 {step}
               </p>
             </div>
@@ -185,7 +183,7 @@ return (
     <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10">
       <Link href="/amerika-vizesi">
         <button className="bg-white text-gray-700 cursor-pointer mt-6 border border-blue-300 px-8 py-2.5 rounded-3xl transition duration-300 hover:text-blue-500 hover:bg-gray-100">
-          İncele
+        Hemen İncele
         </button>
       </Link>
     </div>
