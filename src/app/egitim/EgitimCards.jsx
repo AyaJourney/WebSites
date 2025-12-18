@@ -109,21 +109,42 @@ export default function EducationPage() {
               {current.intro}
             </p>
 
-            <div className="space-y-6">
-              {current.sections.map((sec, i) => (
-                <div
-                  key={i}
-                  className="edu-animate edu-fade-up bg-gray-50 rounded-2xl p-6 border border-gray-200 hakkimizda-hover-fill  hakkimizda-scale-init  relative p-8 rounded-2xl bg-[#f9fafb]  transition-all duration-300 hover:shadow-md"
-                >
-                  <h3 className="font-semibold text-xl mb-2">
-                    {sec.title}
-                  </h3>
-                  <p className="text-gray-700 leading-relaxed text-sm">
-                    {sec.content}
-                  </p>
-                </div>
-              ))}
-            </div>
+          <div className="space-y-6">
+  {current.sections.map((sec, i) => {
+    const isErasmusDocs =
+      sec.title === "Erasmus Vizesi İçin Gerekli Evraklar";
+
+    const items = isErasmusDocs
+      ? sec.content.split(",").map((item) => item.trim())
+      : [];
+
+    return (
+      <div
+        key={i}
+        className="edu-animate edu-fade-up relative rounded-2xl bg-[#f9fafb] p-8 border border-gray-200 transition-all duration-300 hover:shadow-md hakkimizda-hover-fill hakkimizda-scale-init"
+      >
+        <h3 className="font-semibold text-xl mb-4">
+          {sec.title}
+        </h3>
+
+        {isErasmusDocs ? (
+          <ul className="space-y-2 text-sm text-gray-700 list-disc pl-5">
+            {items.map((item, idx) => (
+              <li key={idx} className="leading-relaxed">
+                {item}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-700 leading-relaxed text-sm">
+            {sec.content}
+          </p>
+        )}
+      </div>
+    );
+  })}
+</div>
+
           </div>
 
           {/* IMAGE */}
