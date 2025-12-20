@@ -62,10 +62,11 @@ const Aya2 = () => {
 
   return (
     <section className="w-full bg-white text-black py-6 px-6">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-stretch">
+    <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+
 
         {/* SOL — RESİM */}
-        <div className="flex items-stretch h-full">
+      <div className="flex items-stretch h-full order-1 lg:order-none">
           <div
             ref={imageRef}
             className="relative w-full rounded-2xl overflow-hidden aya2-image-init h-[300px] md:h-auto  md:max-h-[550px]"
@@ -80,8 +81,8 @@ const Aya2 = () => {
         </div>
 
         {/* SAĞ — METİN VE KARTLAR */}
-        <div className="flex flex-col justify-end h-full md:max-h-[550px] ">
-         <h1 className="text-[4rem] md:text-[3rem] font-bold mb-6 leading-snug">
+      <div className="flex flex-col justify-end h-full md:max-h-[550px] order-2 lg:order-none">
+         <h1 className="text-[2rem] md:text-[3rem] font-bold mb-6 leading-snug">
            Diğerlerinden farkımız
           </h1>
 

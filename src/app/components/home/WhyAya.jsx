@@ -119,6 +119,7 @@ function HoverCard({ item, idx, shown, desktopRefs, mobileRefs }) {
           opacity: 0,
           y: 40,
           scale: 0.9,
+
         }}
         animate={
           shown
@@ -137,12 +138,12 @@ function HoverCard({ item, idx, shown, desktopRefs, mobileRefs }) {
         whileHover={{
           width: 260,
           height: 260,
-          borderRadius: "22px",
+          borderRadius: "999px",
           transition: { duration: 0.5 }, // ✔ KART 1 SANİYEDE AÇILIR
         }}
         onHoverStart={() => setIsHovered(true)}
         onHoverEnd={() => setIsHovered(false)}
-        className="hidden md:flex why-circle-card relative cursor-pointer flex-col items-center justify-center hover:justify-start p-8"
+        className="hidden lg:flex why-circle-card relative cursor-pointer flex-col items-center justify-center hover:justify-start p-8"
         style={{
           backdropFilter: isHovered ? "blur(14px)" : "blur(0px)",
           WebkitBackdropFilter: isHovered ? "blur(14px)" : "blur(0px)",
@@ -174,7 +175,7 @@ function HoverCard({ item, idx, shown, desktopRefs, mobileRefs }) {
             ease: "easeOut",
             delay: isHovered ? 0.5 : 0,   // ✔ YAZI 0.7’DE GELİR
           }}
-          className="text-lg font-semibold text-gray-800 text-center absolute bottom-6 w-full px-4"
+          className="text-lg font-semibold text-gray-800 text-center absolute bottom-6 w-full px-4 py-3"
         >
           {item.title}
         </motion.h3>
@@ -183,12 +184,7 @@ function HoverCard({ item, idx, shown, desktopRefs, mobileRefs }) {
       {/* 📱 MOBİL CARD */}
   <div
   ref={(el) => (mobileRefs.current[idx] = el)}
-  className={`
-    md:hidden bg-white border border-gray-200 shadow-md rounded-xl
-    p-6 flex flex-col items-center text-center
-    w-[260px] mx-auto               /* ⭐ Sabit genişlik + ortalama */
-    ${idx % 2 === 0 ? "slide-left-init-why" : "slide-right-init-why"}
-  `}
+  className={`lg:hidden bg-white border border-gray-200 shadow-md rounded-[999px] p-6 flex flex-col items-center text-center w-[260px] h-[260px] mx-auto ${idx % 2 === 0 ? "slide-left-init-why" : "slide-right-init-why"}`}
 >
   <Image
     src={item.icon}

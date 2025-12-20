@@ -10,7 +10,9 @@ import CardEgitim from "./egitim/CardEgitim";
 import Aya from "./components/home/Aya";
 import Aya2 from "./components/home/Aya2";
 import AmericaVisa from "./components/home/AmericaVisa";
-
+import İngiltereVisa from "./components/home/İngiltereVisa";
+import SchengenVisa from "./components/home/SchengenVisa";
+import SideNav from "./components/home/SideNav";
 
 
 export const metadata = {
@@ -25,48 +27,54 @@ export default function Home() {
     <main className="flex flex-col w-full font-sans bg-white">
 
       {/* HERO */}
-          <section className="w-full mb-20">
-        <AmericaVisa />
-      </section>
-      <section className="w-full min-h-[100svh]">
+   <SideNav />
+      <section className="w-full min-h-[100svh] mb-15" id="giris-1" >
         <Giris />
       </section>
 
-
+       <section className="w-full mb-15" id="giris-2">
+        <AmericaVisa />
+      </section>
+           <section className="w-full mb-15" id="giris-3">
+        <İngiltereVisa />
+      </section>
+                 <section className="w-full mb-15" id="giris-4">
+        <SchengenVisa />
+      </section>
       {/* CONTENT SECTIONS */}
-      <section className="w-full py-20">
-        <Aya />
+      <section className="w-full mb-15" id="giris-5">
+        <Aya /> 
       </section>
 
-      <section className="w-full py-20">
+      <section className="w-full mb-15" id="giris-6">
         <CardEgitim />
       </section>
 
-      <section className="w-full py-20">
+      <section className="w-full mb-15" id="giris-7">
         <Portugal />
       </section>
 
-      <section className="w-full py-20">
+      <section className="w-full mb-15" id="giris-8 ">
         <CardHizmet />
       </section>
 
-      <section className="w-full py-20">
+      <section className="w-full mb-15" id="giris-9">
         <CardReferans />
       </section>
 
-      <section className="w-full py-20">
+      <section className="w-full mb-15" id="giris-10">
         <CardBizKimiz />
       </section>
 
-      <section className="w-full py-20">
+      <section className="w-full mb-15" id="giris-11">
         <WhyAya />
       </section>
 
-      <section className="w-full py-20">
+      <section className="w-full mb-15" id="giris-12">
         <Aya2 />
       </section>
 
-      <section className="w-full py-20">
+      <section className="w-full mb-15" id="giris-13">
         <GoogleYorum />
       </section>
 

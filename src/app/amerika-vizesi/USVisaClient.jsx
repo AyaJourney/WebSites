@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -10,7 +10,7 @@ import {
   FaPlaneDeparture,
 } from "react-icons/fa";
 import { GoDotFill } from "react-icons/go";
-
+import AmericaVisaTestModal from "./modal/AmericaVisaTestModal";
 const highlights = [
   {
     label: "Vize süresi",
@@ -98,6 +98,8 @@ const processSteps = [
 ];
 
 export default function USVisaClient() {
+const [open, setOpen] = useState(false);
+
   const refs = useRef([]);
 
   const register = (el) => {
@@ -165,6 +167,12 @@ export default function USVisaClient() {
                   Randevu Al
                 </button>
               </Link>
+              <button
+  onClick={() => setOpen(true)}
+  className="bg-emerald-500 text-white px-6 py-3 rounded-2xl font-semibold hover:bg-emerald-600 transition"
+>
+  Ücretsiz Testi Çöz
+</button>
             </div>
 
             {/* HIGHLIGHTS */}
@@ -345,7 +353,7 @@ export default function USVisaClient() {
       {[
         { t: "Stratejik yaklaşım", d: "Mülakat odaklı plan ve söylem kurgusu." },
         { t: "Şeffaf iletişim", d: "Vize kararı memura aittir; garanti değil, hazırlık." },
-        { t: "Uçtan uca destek", d: "Vize sonrası Amerika’ya gidiş sürecine kadar." },
+        { t: "Uçtan uca destek", d: "Vize sonrası Amerika’ya gidiş sürecine kadar sizinleyiz." },
       ].map((x, i) => (
         <div key={i} className="p-6 rounded-2xl bg-white/85 backdrop-blur border border-slate-200 shadow-sm hover:shadow-md transition">
           <h4 className="font-semibold text-slate-900">{x.t}</h4>
@@ -444,6 +452,8 @@ export default function USVisaClient() {
           }}
         />
       </section>
+  <AmericaVisaTestModal open={open} setOpen={setOpen} />
+
     </main>
   );
 

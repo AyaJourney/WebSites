@@ -98,7 +98,7 @@ export default function EducationPage() {
       {current && (
         <section className="max-w-7xl mx-auto px-6 pb-24 grid md:grid-cols-2 gap-12 items-start ">
           {/* TEXT */}
-          <div className="space-y-8">
+          <div className="space-y-8 text-justify">
             <span
               className={`inline-block px-4 py-1 rounded-full text-sm font-semibold ${current.theme.bg} ${current.theme.text} edu-animate edu-scale-in`}
             >
@@ -128,7 +128,7 @@ export default function EducationPage() {
         </h3>
 
         {isErasmusDocs ? (
-          <ul className="space-y-2 text-sm text-gray-700 list-disc pl-5">
+          <ul className="space-y-2 text-sm text-gray-700 list-disc pl-5 text-justify">
             {items.map((item, idx) => (
               <li key={idx} className="leading-relaxed">
                 {item}

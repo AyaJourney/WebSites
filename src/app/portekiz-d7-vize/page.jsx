@@ -240,15 +240,33 @@ export default function Page() {
     <section
         ref={addRef}
         data-anim="ukvisa-fade-up"
-        className="ukvisa-fade-up-init max-w-6xl mx-auto px-6 pb-20"
+        className="ukvisa-fade-up-init max-w-6xl mx-auto px-6 pb-20 rounded-3xl"
       >
-        <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white/95 backdrop-blur shadow-xl">
+ <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white/95 backdrop-blur shadow-xl">
+ 
+ <div
+  className="absolute inset-0 rounded-3xl"
+  style={{
+    background:
+      "radial-gradient(circle at 18% 30%, rgba(22,163,74,0.22), transparent 45%), radial-gradient(circle at 82% 32%, rgba(220,38,38,0.16), transparent 45%), radial-gradient(circle at 50% 80%, rgba(234,179,8,0.14), transparent 50%), linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,250,252,0.98) 100%)",
+  }}
+/>
+{/* SOFT PORTUGAL STRIPES */}
+<div
+  className="absolute inset-0 opacity-20 rounded-3xl"
+  style={{
+    background:
+      "repeating-linear-gradient(135deg, rgba(22,163,74,0.12) 0 12px, rgba(255,255,255,0) 12px 26px)",
+    mixBlendMode: "multiply",
+  }}
+/>
+
           
           <div className="relative p-6 md:p-8 space-y-6">
             <h2 className="text-2xl md:text-3xl font-bold text-slate-900">Başvuru Süreçleri</h2>
 
             <div className="grid md:grid-cols-3 gap-4">
-              {[ "Başvuru Kanalları", "Belgeler & Randevu", "Aya Journey Desteği" ].map((t, i) => (
+              {[ "Tecrübe", "Profesyonellik", "Aya Journey" ].map((t, i) => (
                 <div key={i} className="p-5 rounded-2xl bg-white/85 border border-slate-200">
                   <h4 className="font-semibold text-slate-900">{t}</h4>
                 </div>
@@ -277,7 +295,10 @@ export default function Page() {
               </div>
             </div>
           </div>
-        </div>
+ 
+ </div>
+
+   
       </section>
 
       {/* FAQ JSON-LD */}

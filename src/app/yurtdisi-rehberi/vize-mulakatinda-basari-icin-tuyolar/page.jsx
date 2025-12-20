@@ -101,29 +101,44 @@ export default function VisaTips() {
       </section>
 
       {/* DETAIL SECTION */}
-      <section
-        ref={register}
-        className="max-w-5xl mx-auto px-6 pb-20 edu-fade-up space-y-6"
-      >
-        <p className="text-slate-700 leading-relaxed">
-          Kariyer geçmişinizde boşluklar bulunmaması büyük önem taşır. SGK
-          dökümleri yalnızca son 3 ayı değil, geçmiş çalışma hayatınızı da
-          yansıtır. Bu nedenle kısa süreli kayıtlarla yapılan başvurular risk
-          oluşturabilir.
-        </p>
+<section
+  ref={register}
+  className="max-w-5xl mx-auto px-6 pb-20 edu-fade-up space-y-6"
+>
+  {[
+    `Vize başvurularında görevliler özellikle mesleki durumunuzu, mali yapınızı ve medeni hâlinizi inceler. Bu noktada vize almak açısından daha avantajlı profiller; uzun süredir düzenli bir işte çalışanlar, evli ve çocuk sahibi olanlar ile istikrarlı geliri ve yeterli birikimi bulunan kişilerdir. Ancak bu kriterler tek başına yeterli değildir; önemli olan bu bilgilerin belgelerle desteklenmesi ve bir bütünlük oluşturmasıdır.`,
 
-        <p className="text-slate-700 leading-relaxed">
-          Sunulan tüm evraklar birbiriyle uyumlu olmalı ve tek bir hikâye
-          anlatmalıdır. Uçuşlar, konaklama, izin yazıları ve tarihler çelişki
-          içermemelidir.
-        </p>
+    `Mali durumunuzu gösteren banka dökümlerinde milyonlarca lira göstermeniz gerekmez. Aksine, düzenli ve kaynağı belli olan gelirler, güvenilir ve istikrarlı bir yaşam sürdüğünüzü gösterir. Başvuruya kısa süre kala hesaba yatırılan yüksek meblağlar yapay bir izlenim yaratabilir ve bu durum ret sebebi olabilir. Günlük yaşamda birikim yaparken parça parça kumbaraya para atar gibi, banka hesabınızda da zamana yayılmış birikimlerin yer alması çok daha sağlıklıdır.`,
 
-        <p className="text-slate-700 leading-relaxed">
-          Niyet mektubu; ülkenize olan bağlarınızı, sorumluluklarınızı ve geri
-          dönüş nedenlerinizi net şekilde ifade etmeniz gereken en önemli
-          belgedir.
-        </p>
-      </section>
+    `Aile bağları da geri dönüş niyetinizi destekleyen önemli unsurlardandır. Ülkenizde ailenizin bulunması, özellikle de küçük yaşta çocuklarınızın olması, başvuru görevlileri için güçlü bir geri dönüş göstergesidir. Kimsenin çocuklarını geride bırakıp kalıcı olarak başka bir ülkeye gitmek istemeyeceği varsayımı, değerlendirmelerde önemli bir etkendir.`,
+
+    `Mesleki durum söz konusu olduğunda ise en kritik nokta kariyer geçmişinizde boşluklar olmamasıdır. Süreklilik, bu alanda anahtar faktördür. Genellikle son 3 aya ait maaş bordrosu istense de SGK dökümleri de sunulur ve geçmişe dönük çalışma hayatınız detaylı şekilde incelenir. Bu nedenle yalnızca 3 aylık bir SGK kaydı ile başvuru yapmak, hanenize eksi olarak yansıyabilir.`,
+
+    `Bununla birlikte, sunduğunuz tüm evrakların birbiriyle uyumlu ve eksiksiz olması gerekir. Uçak ve otel rezervasyonları, izin yazıları ve seyahat tarihleri birbiriyle çelişmemeli; dosyanız tek bir hikâye anlatmalıdır. En küçük tutarsızlık bile başvuru sürecini olumsuz etkileyebilir.`,
+
+    `Niyet mektubu ise kendinizi detaylı şekilde ifade edebileceğiniz en önemli alanlardan biridir. Bu mektupta, başvurulan ülkeye ne kadar hayran olduğunuzu veya saat saat hangi müzeleri gezeceğinizi anlatmanız beklenmez. Asıl amaç, ülkenizdeki yaşamınızı, sorumluluklarınızı ve geri dönme nedenlerinizi açık ve net bir şekilde ortaya koymaktır.`,
+
+    `Bu noktada seyahat süresinin de gerçekçi olması büyük önem taşır. Abartılı planlar her zaman soru işareti oluşturur. Kimse işini, ailesini ve düzenli hayatını bırakıp 20 gün boyunca yabancı bir ülkede kalmanızı olağan karşılamaz. Bu nedenle mantıklı ve tutarlı tarih aralıkları seçmek başvurunuzu güçlendirir.`,
+
+    `Geçmiş seyahatlerinizi mutlaka avantaja çevirin. “Çok eski” diyerek seyahat geçmişinizi es geçmeyin. İlk kez vize başvurusu yapıyor olsanız bile, vizesiz ülkelere yaptığınız seyahatler dosyanızda olumlu bir izlenim yaratacaktır.`,
+
+    `Eğer daha önce vize reddi aldıysanız, bu durumu lehinize çevirebilirsiniz. Ret almak, bir daha başvuru yapamayacağınız anlamına gelmez. Ret gerekçesine göre evraklarınızı güncelleyip, hakkınızda oluşan soru işaretlerini ortadan kaldırarak yeniden başvuru yapabilirsiniz.`,
+
+    `Mülakat gerektiren başvurularda ise en önemli kural tutarlılıktır. Başvuru formunuzda yer alan bilgilerle çelişkiye düşmekten kaçının. Görevlilerin formunuza erişimi olduğunu unutmayın. Formda her detay için alan bulunmayabilir; bu nedenle formda belirtemediğiniz önemli bilgileri, uygun bir bağlam içinde mülakat sırasında aktarmayı ihmal etmeyin.`
+  ].map((text, i) => (
+    <div key={i} className="flex items-start gap-4">
+      {/* madde işareti */}
+      <span className="mt-2 w-2.5 h-2.5 rounded-full bg-blue-500 shrink-0" />
+
+      {/* metin */}
+      <p className="text-slate-700 leading-relaxed">
+        {text}
+      </p>
+    </div>
+  ))}
+</section>
+
+
 
       {/* HIGHLIGHT */}
       <section

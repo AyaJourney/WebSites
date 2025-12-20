@@ -15,7 +15,10 @@ export const metadata = {
     icon: "/images/logo.png",
   },
 };
-
+<link
+  href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600&display=swap"
+  rel="stylesheet"
+/>
 export default function RootLayout({ children }) {
   return (
     <html lang="tr" className="font-arboria bg-white">

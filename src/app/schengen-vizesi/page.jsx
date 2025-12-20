@@ -49,17 +49,17 @@ const genelEvraklar = [
   },
   {
     title: "Otel ve Uçak Rezervasyonları",
-    desc: "Rezervasyonlar seyahat planınızı açıkça göstermeli (biz yardımcı olabiliriz).",
+    desc: "Rezervasyonlar seyahat planınızı açıkça göstermeli.",
     icon: FaRegFileAlt,
   },
   {
     title: "Seyahat Sağlık Sigortası",
-    desc: "Seyahat süresini kapsayan poliçe (ülkeden ülkeye koşullar değişebilir).",
+    desc: "Seyahat süresini kapsayan poliçe (Romanya'da kalış süresi boyunca geçerli olacak şekilde sigorta yapılmalıdır)",
     icon: FaRegFileAlt,
   },
   {
     title: "İngilizce Vize Talep Dilekçesi",
-    desc: "Gidiş amacı ve tarihleri belirten dilekçe (biz hazırlayabiliriz).",
+    desc: "Gidiş amacı ve tarihleri belirten dilekçe.",
     icon: FaRegFileAlt,
   },
   {
@@ -105,7 +105,7 @@ const ekBelgelerByProfile = [
   {
     profile: "Ticari / Aile Ziyareti",
     icon: FaGlobeEurope,
-    items: ["Ülkeden gelen davetiye (varsa)"],
+    items: ["Başvurulan ülkedeki kişi/şirketten gönderilen davetiye"],
   },
   {
     profile: "Sponsor Gerekenler",
@@ -444,13 +444,30 @@ export default function SchengenPage() {
         data-anim="ukvisa-fade-up"
         className="ukvisa-fade-up-init max-w-6xl mx-auto px-6 pb-20"
       >
+        
         <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white/95 backdrop-blur shadow-xl">
-          
+          <div
+  className="absolute inset-0 rounded-3xl"
+  style={{
+    background:
+      "radial-gradient(circle at 20% 25%, rgba(37, 99, 235, 0.18), transparent 45%), radial-gradient(circle at 80% 30%, rgba(234, 179, 8, 0.14), transparent 45%), linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,250,252,0.98) 100%)",
+  }}
+/>
+
+{/* SOFT EURO STARS / STRIPES */}
+<div
+  className="absolute inset-0 opacity-20 rounded-3xl"
+  style={{
+    background:
+      "repeating-linear-gradient(135deg, rgba(234,179,8,0.12) 0 10px, rgba(255,255,255,0) 10px 22px)",
+    mixBlendMode: "multiply",
+  }}
+/>
           <div className="relative p-6 md:p-8 space-y-6">
             <h2 className="text-2xl md:text-3xl font-bold text-slate-900">Başvuru Süreçleri</h2>
 
             <div className="grid md:grid-cols-3 gap-4">
-              {[ "Başvuru Kanalları", "Belgeler & Randevu", "Aya Journey Desteği" ].map((t, i) => (
+              {["Tecrübe", "Profesyonellik", "Aya Journey"  ].map((t, i) => (
                 <div key={i} className="p-5 rounded-2xl bg-white/85 border border-slate-200">
                   <h4 className="font-semibold text-slate-900">{t}</h4>
                 </div>

@@ -169,7 +169,6 @@ return (
               "Belge kontrolü tamamlandı",
                "Danışman atandı",
               "Vize alındı",
-              
               "Hazırlıklar başlasın",
              
              

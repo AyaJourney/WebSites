@@ -34,9 +34,11 @@ export default function Footer() {
     Randevu Al
   </button>
 </Link>
-          <button className="cursor-pointer w-full sm:w-auto px-4 py-2 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 rounded-lg text-white font-medium transition-all shadow-lg">
+  <Link href="/iletisim">  <button className="cursor-pointer w-full sm:w-auto px-4 py-2 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 rounded-lg text-white font-medium transition-all shadow-lg">
             Bize Ulaşın
           </button>
+  </Link>
+        
         </div>
       </div>
 
@@ -170,16 +172,18 @@ export default function Footer() {
       <li><a href="/biz-kimiz" className="hover:opacity-70 transition" aria-label="Biz Kimiz">Biz Kimiz</a></li>
       <li><a href="/referanslarimiz" className="hover:opacity-70 transition" aria-label="Referanslarımız">Referanslarımız</a></li>
       <li><a href="/iletisim" className="hover:opacity-70 transition" aria-label="İletişim">İletişim</a></li>
-      <li><a href="/egitim" className="hover:opacity-70 transition"aria-label="Eğitim">Eğitim</a></li>
+      <li><a href="/egitim" className="hover:opacity-70 transition"aria-label="Eğitim">Yurt Dışı Eğitim & Kariyer Programları</a></li>
       <li><a href="/schengen-vizesi" className="hover:opacity-70 transition">Schengen Vizesi</a></li>
       <li><a href="/ingiltere-vizesi" className="hover:opacity-70 transition">İngiltere Vizesi</a></li>
       <li><a href="/portekiz-d7-vize" className="hover:opacity-70 transition">Portekiz D-7 Vizesi</a></li>
+      <li><a href="/amerika-vizesi" className="hover:opacity-70 transition">Amerika Vizesi</a></li>
+
 
 
 
       {/* <li><a href="/vize" className="hover:opacity-70 transition">Vize</a></li> */}
       <li><a href="/yurtdisi-rehberi" className="hover:opacity-70 transition" aria-label="Yurtdışı Rehberi">Yurtdışı Rehberi</a></li>
-      <li><a href="/sikca-sorulan-sorular" className="hover:opacity-70 transition" aria-label="SSS">SSS</a></li>
+      <li><a href="/sikca-sorulan-sorular" className="hover:opacity-70 transition" aria-label="SSS">Sıkça Sorulan Sorular</a></li>
     </ul>
   </div>
 

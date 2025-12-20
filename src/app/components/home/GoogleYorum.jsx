@@ -83,7 +83,7 @@ const GoogleYorum = () => {
           </span>
         ))}
       </div>
-      <p className="text-gray-600 font-medium mb-6 text-lg">+500 yorum</p>
+      <p className="text-gray-600 font-medium mb-6 text-lg">+600 yorum</p>
 
       <button
         onClick={() =>

@@ -55,7 +55,7 @@ export default function Navbar() {
   return (
     <nav
       className="bg-white shadow-md sticky top-0 z-50"
-      onMouseLeave={() => setOpenMega(null)}
+      // onMouseLeave={() => setOpenMega(null)}
     >
       {/* BAR */}
       <div className="w-full max-w-[1320px] mx-auto px-4 flex justify-between h-24 items-center">
@@ -90,7 +90,7 @@ export default function Navbar() {
             item.submenu ? (
               <div
                 key={item.href}
-                onMouseEnter={() => setOpenMega(item.href)}
+                onClick={() => setOpenMega(openMega === item.href ? null : item.href)}
                 className="relative"
               >
                 <span
@@ -117,7 +117,7 @@ export default function Navbar() {
                       ? "text-blue-600"
                       : "text-gray-700 hover:text-blue-600"
                   }`}
-                onMouseEnter={() => setOpenMega(null)}
+                // onMouseEnter={() => setOpenMega(null)}
               >
                 {item.name}
               </Link>

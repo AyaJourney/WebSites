@@ -52,13 +52,13 @@ const processSteps = [
     step: 4,
     title: "Evrakların Hazırlanması ve Online Yüklenmesi",
     description:
-      "Randevu tarihine kadar gerekli tüm evraklar eksiksiz şekilde hazırlanır ve ilgili online başvuru sistemi üzerinden yüklenir. Evrakların güncel ve talep edilen formatta olması büyük önem taşır.",
+      "Randevu tarihine kadar gerekli tüm evraklar eksiksiz şekilde hazırlanır ve ilgili online başvuru sistemi üzerinden tarafımızca yüklenir. Evrakların güncel ve talep edilen formatta olması büyük önem taşır.",
   },
   {
     step: 5,
     title: "Randevuya Katılım",
     description:
-      "Belirlenen randevu tarihinde başvuru merkezine gidilerek biyometri işlemleri tamamlanır ve evraklar teslim edilir. Randevuya katılım zorunludur.",
+      "Belirlenen randevu tarihinde başvuru merkezine gidilerek biyometri işlemleri tamamlanır. Randevuya katılım zorunludur.",
   },
 ];
 
@@ -78,7 +78,7 @@ const infoCards = [
   {
     icon: <FaFileInvoiceDollar />,
     title: "Ekonomik Gereklilikler",
-    desc: "Gidiş-dönüş uçak bileti, konaklama ve banka dökümü sunulmalıdır."
+    desc: "Gidiş-dönüş uçak bileti, konaklama ve banka dökümü sunumu yapılabilir.(Zorunlu değil)"
   },
 ];
 
@@ -157,7 +157,7 @@ const UKVisaPage = () => {
     { label: "Ortalama randevu bulma süresi", value: "15 iş günü", icon: <FaClock /> },
     { label: "6 aylık harç bedeli", value: "173 $",desc:"İstenen süreye göre harç miktarı değişmektedir", icon: <FaFileInvoiceDollar /> },
     { label: "Başarı ihtimali", value: "Yüksek", icon: <FaCheckCircle /> },
-    { label: "Açıklanma / değerlendirme süresi", value: "12 gün", icon: <FaClock /> },
+    { label: "Açıklanma / değerlendirme süresi", value: "10 iş günü", icon: <FaClock /> },
     { label: "Hizmet bedeli", value: "400 $", icon: <FaFileInvoiceDollar /> },
 
 
@@ -305,15 +305,34 @@ const UKVisaPage = () => {
       <section
         ref={register}
         data-anim="ukvisa-fade-up"
-        className="ukvisa-fade-up-init max-w-6xl mx-auto px-6 pb-20"
+        className="ukvisa-fade-up-init max-w-6xl mx-auto px-6 pb-20 "
       >
-        <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white/95 backdrop-blur shadow-xl">
+
+ <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white/95 backdrop-blur shadow-xl">
+ 
+   <div
+  className="absolute inset-0 rounded-3xl"
+  style={{
+    background:
+      "radial-gradient(circle at 18% 28%, rgba(1,33,105,0.22), transparent 45%), radial-gradient(circle at 82% 32%, rgba(200,16,46,0.16), transparent 45%), linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,250,252,0.98) 100%)",
+  }}
+/>
+
+{/* SOFT UNION JACK STRIPES */}
+<div
+  className="absolute inset-0 opacity-20 rounded-3xl"
+  style={{
+    background:
+      "repeating-linear-gradient(135deg, rgba(200,16,46,0.12) 0 10px, rgba(255,255,255,0) 10px 22px)",
+    mixBlendMode: "multiply",
+  }}
+/>
           
-          <div className="relative p-6 md:p-8 space-y-6">
+          <div className="relative p-6 md:p-8 space-y-6 ">
             <h2 className="text-2xl md:text-3xl font-bold text-slate-900">Sizinleyiz</h2>
 
             <div className="grid md:grid-cols-3 gap-4">
-              {[ "Başvuru Kanalları", "Belgeler & Randevu", "Aya Journey Desteği" ].map((t, i) => (
+              {[ "Tecrübe", "Profesyonellik", "Aya Journey" ].map((t, i) => (
                 <div key={i} className="p-5 rounded-2xl bg-white/85 border border-slate-200">
                   <h4 className="font-semibold text-slate-900">{t}</h4>
                 </div>
@@ -349,7 +368,11 @@ const UKVisaPage = () => {
 
             </div>
           </div>
-        </div>
+ </div>
+
+
+     
+    
       </section>
    
 <script

@@ -52,7 +52,7 @@ const Card = () => {
                     ))
                 ) : (
                     // Eğer descriptions yoksa (eski description yapısı kaldıysa diye önlem)
-                    <li className="leading-tight text-justify">{item.description}</li>
+                  <div></div>
                 )}
               </ul>
               
