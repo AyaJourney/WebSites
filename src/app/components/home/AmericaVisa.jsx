@@ -89,7 +89,7 @@ return (
       </h4>
 
       <p className="text-sm text-emerald-800 leading-relaxed">
-        Yapay zeka destekli analiz ile <strong>ABD vizesi hazırlık skorunuzu</strong>
+        Yapay zeka destekli analiz ile <strong  className="mr-2">ABD vizesi hazırlık skorunuzu </strong>
         2 dakikada öğrenin. Sonuçlar anında gösterilir.
       </p>
 
@@ -180,7 +180,7 @@ return (
       </h4>
 
       <p className="text-sm text-emerald-800 leading-relaxed">
-        Yapay zeka destekli analiz ile <strong>ABD vizesi hazırlık skorunuzu</strong>
+        Yapay zeka destekli analiz ile <strong  className="mr-2">ABD vizesi hazırlık skorunuzu</strong>
         2 dakikada öğrenin. Sonuçlar anında gösterilir.
       </p>
 
