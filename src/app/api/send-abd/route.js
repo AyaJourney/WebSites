@@ -318,7 +318,7 @@ if (showOldMarriages && Array.isArray(s(1).marriages)) {
   drawSection("GEÇMİŞ EVLİLİKLER");
 
   s(1).marriages.forEach((m, index) => {
-    drawSubTitle(`Evlilik ${index + 1}`);
+    // drawSubTitle(`Evlilik ${index + 1}`);
 
     h1 = drawField("Eski Eş Adı Soyadı", m.spouseFullName, false, 0);
     h2 = drawField("Eski Eş Doğum Tarihi", toTRDate(m.spouseBirthDate), false, CONTENT_WIDTH / 2);

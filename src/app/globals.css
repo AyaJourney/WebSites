@@ -12,12 +12,12 @@
   font-display: swap;
 }
 
-@theme inline {
+/* @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
    --font-sans: var(--font-arboria);
   
-}
+} */
 
 /* @media (prefers-color-scheme: dark) {
   :root {

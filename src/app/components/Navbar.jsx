@@ -49,6 +49,7 @@ export default function Navbar() {
     },
     { name: "Yurt Dışı Rehberi", href: "/yurtdisi-rehberi" },
     { name: "Sıkça Sorulan Sorular", href: "/sikca-sorulan-sorular" },
+    // { name: "Blog Yazıları", href: "/blog" },
     { name: "Hadi Başlayalım !", href: "/randevu" },
   ];
 
@@ -58,7 +59,7 @@ export default function Navbar() {
       // onMouseLeave={() => setOpenMega(null)}
     >
       {/* BAR */}
-      <div className="w-full max-w-[1320px] mx-auto px-4 flex justify-between h-24 items-center">
+      <div className="w-full max-w-[1420px] mx-auto px-4 flex justify-between h-24 items-center">
         {/* Logo */}
         <Link href="/">
           <img

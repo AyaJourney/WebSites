@@ -14,9 +14,9 @@ import AmericaVisaTestModal from "./modal/AmericaVisaTestModal";
 const highlights = [
   {
     label: "Vize süresi",
-    value: "Genellikle 10 yıl",
+    value: "10 yıl",
     icon: <FaPassport />,
-    desc: "İstisnai durumlar haricinde turist vizeleri çoğunlukla 10 yıllık verilir.",
+    desc: "İstisnai durumlar haricinde turist vizeleri 10 yıllık verilir.",
   },
   {
     label: "Kalış hakkı",
@@ -51,8 +51,8 @@ const infoCards = [
   },
   {
     icon: <FaCheckCircle />,
-    title: "Şeffaflık: Vize garantisi yok",
-    desc: "AYA Journey vize garantisi sunmaz. Vize kararı tamamen konsolosluk memuruna aittir. Garanti vaat eden kişi/kurumlardan uzak durmanızı öneririz.",
+    title: "Şeffaflık",
+    desc: "Başvuru formunuza ne yazıldığını bilirsiniz, önceden görürsünüz ve sizin onayınızdan geçmeden hiçbir şey yapılmaz.",
   },
 ];
 
