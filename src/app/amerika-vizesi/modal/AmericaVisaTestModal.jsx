@@ -29,7 +29,7 @@ const emailRegex =
 ========================= */
 const steps = {
   1: {
-    title: "1. Yaş Grubunuz?",
+    title: "Yaş Grubunuz?",
     // description:
     //   "Yaş grubu, vize değerlendirmelerinde temel kriterlerden biridir.",
     options: [
@@ -102,7 +102,7 @@ const steps = {
   },
 
   2: {
-    title: "2. Cinsiyetiniz?",
+    title: "Cinsiyetiniz?",
     options: [
       ["Kadın", 5, 3],
       ["Erkek", 0, 3],
@@ -110,7 +110,7 @@ const steps = {
   },
 
 3: {
-  title: "3. Medeni Haliniz?",
+  title: "Medeni Haliniz?",
   options: [
     ["Evli", 5, "child_status"],
     ["Bekar", 0, "travel_type_single"],
@@ -119,7 +119,7 @@ const steps = {
 
   /* ===== ÇOCUK DURUMU ===== */
 child_status: {
-  title: "4. Çocuk Sayısı",
+  title: "Çocuk Sayısı",
   options: [
     ["Çocuğum yok", -5, "travel_type_married_no_child"],
     ["1 çocuk", 0, "child_travel"],
@@ -130,7 +130,7 @@ child_status: {
 child_travel: {
   title: "Çocuklarla mı seyahat edeceksiniz?",
   options: [
-    ["Evet", 4, "travel_type_married_with_child"],
+    ["Evet", 4, 6],
     ["Hayır", 0, "travel_type_married_no_child"],
   ],
 },
@@ -138,14 +138,14 @@ child_travel: {
   /* ===== SEYAHAT ŞEKLİ ===== */
 
  travel_type_single: {
-  title: "5. Seyahat Şekli",
+  title: "Seyahat Şekli",
   options: [
-    ["Bekar ve tek gidecekse", -10, 6],
-    ["Bekar ve arkadaşıyla gidecekse", 3, 6],
+    ["Bekar ve tek gidecek", -10, 6],
+    ["Bekar ve arkadaşıyla gidecek", 3, 6],
   ],
 },
 travel_type_married_no_child: {
-  title: "5. Seyahat Şekli",
+  title: "Seyahat Şekli",
   options: [
     ["Evli ve tek gidecekse", -5, 6],
     ["Evli ve arkadaşlarıyla gidecekse", 10, 6],
@@ -164,7 +164,7 @@ travel_type_married_no_child: {
 // },
 
   6: {
-    title: "6. Son 5 Yıldaki Batı Vizeleri",
+    title: "Son 5 Yıldaki Batı Vizeleri",
     description:"Son 5 yılda, Amerika (Work and Travel hariç), İngiltere, Kanada, Avustralya ve Yeni Zelanda’dan vize aldınız mı?",
     options: [
       ["Birden fazla", 20, 7],
@@ -174,7 +174,7 @@ travel_type_married_no_child: {
   },
 
   7: {
-    title: "7. Kanada Vize Reddi",
+    title: "Kanada Vize Reddi",
     description:"Son 3 yıl içinde, Kanada’ya başvurup ret aldınız mı?",
     options: [
       ["Evet", -10, 8],
@@ -183,7 +183,7 @@ travel_type_married_no_child: {
   },
 
   8: {
-    title: "8. Pasaporttaki Vize Etiketi Sayısı",
+    title: "Pasaporttaki Vize Etiketi Sayısı",
     description:"Pasaportunuzda basılı vize etiketi sayısı (Schengen, İngiltere vb ülkeler. Yunanistan adaları kapıda vize dahil)",
     options: [
       ["Hiç yok", -10, 9],
@@ -194,7 +194,7 @@ travel_type_married_no_child: {
   },
 
   9: {
-    title: "9. Diğer Ülke Seyahatleri",
+    title: "Diğer Ülke Seyahatleri",
     description:"Singapur, Japonya, Güney Kore, Dubai, Tayland, Güney Afrika, Vietnam ülkelerinden birine son 5 yılda gittiniz mi?",
     options: [
       ["Birden fazla", 10, 10],
@@ -204,7 +204,7 @@ travel_type_married_no_child: {
   },
 
   10: {
-    title: "10. İngilizce Mülakat",
+    title: "İngilizce Mülakat",
     description:"İngilizce mülakat yapabilir misiniz? (B2 ve üstü ingilizce seviyesi)",
     options: [
       ["Evet", 15, 11],
@@ -213,7 +213,7 @@ travel_type_married_no_child: {
   },
 
   11: {
-    title: "11. Uluslararası Ödül",
+    title: "Uluslararası Ödül",
     description:"Uluslararası alanda sahip olduğunuz bir ödül (örneğin turnuvada derece, yarışmada mansiyon ödülü vb) var mı?",
     options: [
       ["Evet", 20, 12],
@@ -222,7 +222,7 @@ travel_type_married_no_child: {
   },
 
  12: {
-  title: "12. Ne iş yapıyorsunuz?",
+  title: "Ne iş yapıyorsunuz?",
   options: [
     ["Kamuda üst düzey memur (10 yıl üstü kariyer uzmanı ve yeşil pasaportlu)", 20, 13],
     ["Kamuda kariyer memuru (10 yıl altı kariyer uzmanı)", 8, 13],
@@ -245,7 +245,7 @@ travel_type_married_no_child: {
 
 
 13: {
-  title: "13. ABD Vize Reddi",
+  title: "ABD Vize Reddi",
   description: "Daha önce Amerika vizesine başvurup ret aldınız mı?",
   options: [
     ["Evet", 0, "last_reject"],
@@ -264,7 +264,7 @@ last_reject: {
   ],
 },
  14: {
-  title: "14. Amerika'da Akraba",
+  title: "Amerika'da Akraba",
   description:
     "Amerika’da yaşayan birinci ve ikinci derecede akrabanız var mı (baba, anne, kardeş, amca, dayı, teyze, hala, kuzen vb)",
   options: [

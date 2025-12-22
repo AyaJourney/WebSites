@@ -5,9 +5,9 @@ import Link from "next/link";
 import { FaCheckCircle } from "react-icons/fa";
 
 const bullets = [
-  "Kişiye özel strateji ve belge hazırlığı",
+  // "Kişiye özel strateji ve belge hazırlığı",
   // "Randevu, formlar ve takvim tek ekranda",
-  "24 saat içinde ön geri dönüş garantisi",
+  // "24 saat içinde ön geri dönüş garantisi",
 ];
 
 const stats = [
@@ -110,7 +110,7 @@ return (
         </div>
 
         {/* MADDELER */}
-        <div className="space-y-3">
+        {/* <div className="space-y-3">
           {bullets.map((item, i) => (
             <div
               key={i}
@@ -122,7 +122,7 @@ return (
               <span className="text-gray-800">{item}</span>
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
 
       {/* SAĞ KART */}

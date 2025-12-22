@@ -352,7 +352,7 @@ Bavulları Toplasam mı Testi
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {[
         { t: "Stratejik yaklaşım", d: "Mülakat odaklı plan ve söylem kurgusu." },
-        { t: "Şeffaf iletişim", d: "Vize kararı memura aittir; garanti değil, hazırlık." },
+        // { t: "Şeffaf iletişim", d: "Vize kararı memura aittir; garanti değil, hazırlık." },
         { t: "Uçtan uca destek", d: "Vize sonrası Amerika’ya gidiş sürecine kadar sizinleyiz." },
       ].map((x, i) => (
         <div key={i} className="p-6 rounded-2xl bg-white/85 backdrop-blur border border-slate-200 shadow-sm hover:shadow-md transition">
