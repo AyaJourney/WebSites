@@ -150,7 +150,7 @@ return (
 </h1>
 
         <p className="text-base sm:text-lg text-slate-700 max-w-xl mx-auto lg:mx-0">
-         Gezmekten yaşamaya, çalışmaktan eğitim almaya kadar Amerika Birleşik Devletleri, turist vizesi (B1/B2) ile hayallerinizi gerçeğe dönüştürüyoruz.
+         Gezmekten yaşamaya, çalışmaktan eğitim almaya kadar Amerika Birleşik Devletleri turist vizesi (B1/B2) ile hayallerinizi gerçeğe dönüştürüyoruz.
         </p>
 
         <div className="grid sm:grid-cols-2 gap-4 max-w-xl mx-auto lg:mx-0">

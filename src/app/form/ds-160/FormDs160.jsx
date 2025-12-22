@@ -61,7 +61,15 @@ const defaultForm = {
       whoPays: "",
       relationDegree: "",
       payerAddress: "",
-      payerPhone: ""
+      payerPhone: "",
+      motherFullName: "",
+      fatherFullName: "",
+      motherBirthDate: "",
+      fatherBirthDate: "",
+      usContactInfo: "",
+      usRelativeInfo: "",
+
+
     },
     4: {
       travelAlone: "",
@@ -883,7 +891,7 @@ onChange={(e) => {
             <label className="text-sm font-medium">Evlilik Tarihi</label>
             <input
               type="date"
-              min={new Date().toISOString().split("T")[0]}
+              max={new Date().toISOString().split("T")[0]}
               className="w-full mt-1 p-3 border rounded-xl"
               value={form.steps[1].marriageDate}
               onChange={(e) => updateField(1, "marriageDate", e.target.value)}
@@ -1591,7 +1599,131 @@ onChange={(e) => {
           </div>
         </>
       )}
+
+
+<div>
+  <label className="text-sm font-medium">Anne Adı Soyadı</label>
+  <input
+    className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+    value={form.steps[3].motherFullName || ""}
+    onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "motherFullName", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "motherFullName", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(3, "motherFullName", normalizedValue);
+                }
+            }}
+    placeholder="Anne Adı Soyadı"
+  />
+</div>
+
+<div>
+  <label className="text-sm font-medium">Anne Doğum Tarihi</label>
+  <input
+    type="date"
+    className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+    value={form.steps[3].motherBirthDate || ""}
+    onChange={(e) =>
+      updateField(3, "motherBirthDate", e.target.value)
+    }
+  />
+</div>
+<div>
+  <label className="text-sm font-medium">Baba Adı Soyadı</label>
+  <input
+    className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+    value={form.steps[3].fatherFullName || ""}
+    onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "fatherFullName", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "fatherFullName", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(3, "fatherFullName", normalizedValue);
+                }
+            }}
+    placeholder="Baba Adı Soyadı"
+  />
+</div>
+
+<div>
+  <label className="text-sm font-medium">Baba Doğum Tarihi</label>
+  <input
+    type="date"
+    className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+    value={form.steps[3].fatherBirthDate || ""}
+    onChange={(e) =>
+      updateField(3, "fatherBirthDate", e.target.value)
+    }
+  />
+</div>
+<div className="md:col-span-2 mt-6">
+  <h4 className="font-semibold text-base text-slate-800">
+    Amerika’da İrtibatınız Olan Kişi / Kurum
+  </h4>
+</div>
+
+<div className="md:col-span-2">
+  <label className="text-sm font-medium">
+    Ad Soyad / Kurum Adı, Ünvan, Açık Adres ve Telefon
+  </label>
+  <textarea
+    rows={3}
+    className="w-full resize-none mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+    value={form.steps[3].usContactInfo || ""}
+    onChange={(e) =>
+      updateField(3, "usContactInfo", normalizeAddressInput(e.target.value))
+    }
+    placeholder="Örn: John Smith – ABC Company / Address / Phone"
+  />
+</div>
+
+{/* ===================== */}
+{/* ABD'DE YAKIN AKRABA */}
+{/* ===================== */}
+<div className="md:col-span-2 mt-6">
+  <h4 className="font-semibold text-base text-slate-800">
+    ABD’de Eş / Çocuk / Nişanlı / Kardeş
+  </h4>
+</div>
+
+<div className="md:col-span-2">
+  <label className="text-sm font-medium">
+    Ad Soyad ve Oradaki Statüsü
+  </label>
+  <textarea
+    rows={3}
+    className="w-full resize-none mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+    value={form.steps[3].usRelativeInfo || ""}
+    onChange={(e) =>
+      updateField(3, "usRelativeInfo", normalizeInput(e.target.value))
+    }
+    placeholder="Örn: Ayşe Yılmaz – ABD Vatandaşı / Green Card / Öğrenci"
+  />
+</div>
     </div>
+
+
+
+
   </section>
 )}
 

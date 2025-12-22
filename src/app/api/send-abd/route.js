@@ -412,6 +412,21 @@ currentY -= Math.max(h1, h2) + 10;
     currentY -= h1+10;
     h1 =s(3).whoPays === "DIGER" && drawField("Telefonu", s(3).payerPhone,true,0);
     currentY -= h1+10;
+
+     h1 = drawField("Anne Adı Soyadı", s(3).motherFullName,true,0);
+    h2 = drawField("Anne Doğum Tarihi", toTRDate(s(3).motherBirthDate),true,CONTENT_WIDTH/2);
+
+    currentY -= h1+10;
+ h1 = drawField("Baba Adı Soyadı", s(3).fatherFullName,true,0);
+    h2 = drawField("Baba Doğum Tarihi", toTRDate(s(3).fatherBirthDate),true,CONTENT_WIDTH/2);
+
+    currentY -= h1+10;
+ h1 = drawField("Amerika’da İrtibatınız Olan Kişi / Kurum", s(3).usContactInfo,true,0);
+    h2 = drawField(" ABD’de Eş / Çocuk / Nişanlı / Kardeş", toTRDate(s(3).usRelativeInfo),true,CONTENT_WIDTH/2);
+
+    currentY -= h1+10;
+
+
     drawFooter(currentPage,pageCount); // 1. sayfa sonu
 
     // --- BÖLÜM 4: İş ve Maddi Durum ---
@@ -811,6 +826,12 @@ Masrafları Kim Karşılıyor: ${s(3).whoPays || "-"}
 İlişki Derecesi: ${s(3).relationDegree || "-"}
 Masraf Sahibinin Adresi: ${s(3).payerAddress || "-"}
 Masraf Sahibinin Telefonu: ${s(3).payerPhone || "-"}
+Anne Adı Soyadı: ${s(3).motherFullName || "-"}
+Anne Doğum Tarihi: ${toTRDate(s(3).motherBirthDate) || "-"}
+Baba Adı Soyadı: ${s(3).fatherFullName || "-"}
+Baba Doğum Tarihi: ${toTRDate(s(3).fatherBirthDate) || "-"}
+ABD’de İrtibat Kişi/Kurum: ${s(3).usContactInfo || "-"}
+ABD’de Aile Üyesi: ${s(3).usRelativeInfo || "-"}
 
 -- Seyahat Geçmişi --
 Yalnız Seyahat: ${s(4).travelAlone || "-"}
@@ -1003,6 +1024,12 @@ const htmlBody = `
     <tr><th style="background-color:#e0e0e0;">İlişki Derecesi</th><td>${s(3).relationDegree || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Masraf Sahibinin Adresi</th><td>${s(3).payerAddress || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Masraf Sahibinin Telefonu</th><td>${s(3).payerPhone || "-"}</td></tr>
+    <tr><th style="background-color:#e0e0e0;">Anne Adı Soyadı</th><td>${s(3).motherFullName || "-"}</td></tr>
+    <tr><th style="background-color:#e0e0e0;">Anne Doğum Tarihi</th><td>${toTRDate(s(3).motherBirthDate) || "-"}</td></tr>
+    <tr><th style="background-color:#e0e0e0;">Baba Adı Soyadı</th><td>${s(3).fatherFullName || "-"}</td></tr>
+    <tr><th style="background-color:#e0e0e0;">Baba Doğum Tarihi</th><td>${toTRDate(s(3).fatherBirthDate) || "-"}</td></tr>
+    <tr><th style="background-color:#e0e0e0;">ABD’de İrtibat Kişi/Kurum</th><td>${s(3).usContactInfo || "-"}</td></tr>
+    <tr><th style="background-color:#e0e0e0;">ABD’de Aile Üyesi</th><td>${s(3).usRelativeInfo || "-"}</td></tr>
   </tbody>
 </table>
 

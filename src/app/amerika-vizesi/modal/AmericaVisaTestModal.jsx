@@ -30,8 +30,8 @@ const emailRegex =
 const steps = {
   1: {
     title: "1. Yaş Grubunuz?",
-    description:
-      "Yaş grubu, göçmenlik risk analizinde en temel kriterlerden biridir.",
+    // description:
+    //   "Yaş grubu, vize değerlendirmelerinde temel kriterlerden biridir.",
     options: [
       ["0–14 Yaş", 0, "age_0_14"],
       ["14–18 Yaş", 0, "age_14_18"],
@@ -43,9 +43,7 @@ const steps = {
   },
 
   age_0_14: {
-    title: "Anne & Baba Vize Durumu",
-    description:
-      "Reşit olmayan başvurularda ebeveynlerin seyahat geçmişi çok önemlidir.",
+    title: "Anne ve Baba Vize Durumu",
     options: [
       ["İkisinin de vizesi var", 10, 2],
       ["Sadece birinin vizesi var", 5, 2],
@@ -54,9 +52,7 @@ const steps = {
   },
 
   age_14_18: {
-    title: "Anne & Baba Vize Durumu",
-    description:
-      "Aile bağları ve geri dönüş ihtimali bu yaş grubunda yakından incelenir.",
+    title: "Anne ve Baba Vize Durumu",
     options: [
       ["İkisinin de vizesi var", 7, 2],
       ["Sadece birinin vizesi var", 3, 2],
@@ -65,19 +61,15 @@ const steps = {
   },
 
   age_18_30: {
-    title: "Ailenizin Vize Durumu",
-    description:
-      "Genç yetişkinlerde aileyle bağ ve seyahat geçmişi dengeleyici faktördür.",
+    title: "Cinsiyetiniz?",
     options: [
-      ["Kadınım, anne & baba vizesi var", 3, 2],
-      ["Diğer durumlar", 0, 2],
+      ["Kadın", 10, 3],
+      ["Erkek", 5, 3],
     ],
   },
 
   age_30_45: {
     title: "Cinsiyetiniz?",
-    description:
-      "Bu yaş grubunda sosyo-ekonomik bağlam puanlamaya etki eder.",
     options: [
       ["Kadın", 10, 3],
       ["Erkek", 5, 3],
@@ -86,8 +78,6 @@ const steps = {
 
   age_45_60: {
     title: "Cinsiyetiniz?",
-    description:
-      "Yerleşik hayat ve geri dönüş ihtimali değerlendirilir.",
     options: [
       ["Kadın", 20, 3],
       ["Erkek", 10, 3],
@@ -96,8 +86,6 @@ const steps = {
 
   age_61: {
     title: "Amerika'da Akrabanız Var mı?",
-    description:
-      "Yakın akraba varlığı göçmenlik riskini artırabilir.",
     options: [
       ["Hayır", 20, 2],
       ["Evet", 0, "relative_status"],
@@ -106,8 +94,6 @@ const steps = {
 
   relative_status: {
     title: "Yakınınızın Statüsü",
-    description:
-      "Akrabanın yasal durumu değerlendirmede belirleyicidir.",
     options: [
       ["ABD Vatandaşı", 10, 2],
       ["Green Card Sahibi", 5, 2],
@@ -117,66 +103,79 @@ const steps = {
 
   2: {
     title: "2. Cinsiyetiniz?",
-    description:
-      "İstatistiksel değerlendirme amacıyla sorulmaktadır.",
     options: [
       ["Kadın", 5, 3],
       ["Erkek", 0, 3],
     ],
   },
 
-  3: {
-    title: "3. Medeni Haliniz?",
-    description:
-      "Aile bağları, geri dönüş niyeti açısından önemlidir.",
-    options: [
-      ["Evli", 5, 4],
-      ["Bekar", 0, 4],
-    ],
-  },
+3: {
+  title: "3. Medeni Haliniz?",
+  options: [
+    ["Evli", 5, "child_status"],
+    ["Bekar", 0, "travel_type_single"],
+  ],
+},
 
-  4: {
-    title: "4. Çocuk Sayısı",
-    description:
-      "Çocuklar, ülkeye geri dönüş bağlarını güçlendirir.",
-    options: [
-      ["Çocuğum yok", -5, 5],
-      ["1 çocuk (çocuksuz seyahat)", 3, 5],
-      ["2+ çocuk (çocuksuz)", 15, 5],
-      ["1 çocuk (çocukla)", 2, 5],
-      ["2+ çocuk (çocuklarla)", 0, 5],
-    ],
-  },
+  /* ===== ÇOCUK DURUMU ===== */
+child_status: {
+  title: "4. Çocuk Sayısı",
+  options: [
+    ["Çocuğum yok", -5, "travel_type_married_no_child"],
+    ["1 çocuk", 0, "child_travel"],
+    ["2 veya daha fazla çocuk", 0, "child_travel"],
+  ],
+},
 
-  5: {
-    title: "5. Seyahat Şekli",
-    description:
-      "Seyahat şekli, göçmenlik niyetinin analizinde kullanılır.",
-    options: [
-      ["Bekar & yalnız", -10, 6],
-      ["Evli & yalnız", -5, 6],
-      ["Bekar & arkadaşla", 3, 6],
-      ["Evli & arkadaşlarla", 10, 6],
-      ["Eşimle", 15, 6],
-      ["Ailece", 4, 6],
+child_travel: {
+  title: "Çocuklarla mı seyahat edeceksiniz?",
+  options: [
+    ["Evet", 4, "travel_type_married_with_child"],
+    ["Hayır", 0, "travel_type_married_no_child"],
+  ],
+},
+
+  /* ===== SEYAHAT ŞEKLİ ===== */
+
+ travel_type_single: {
+  title: "5. Seyahat Şekli",
+  options: [
+    ["Bekar ve tek gidecekse", -10, 6],
+    ["Bekar ve arkadaşıyla gidecekse", 3, 6],
+  ],
+},
+travel_type_married_no_child: {
+  title: "5. Seyahat Şekli",
+  options: [
+    ["Evli ve tek gidecekse", -5, 6],
+    ["Evli ve arkadaşlarıyla gidecekse", 10, 6],
+    [
+      "Evli ve karısıyla/kocasıyla gidecekse",
+      15,
+      6,
     ],
-  },
+  ],
+},
+// travel_type_married_with_child: {
+//   title: "5. Seyahat Şekli",
+//   options: [
+//     ["Çocukları da beraber götürüyoruz", 4, 6],
+//   ],
+// },
 
   6: {
     title: "6. Son 5 Yıldaki Batı Vizeleri",
-    description:
-      "ABD, İngiltere, Kanada, Avustralya veya NZ vizeleri.",
+    description:"Son 5 yılda, Amerika (Work and Travel hariç), İngiltere, Kanada, Avustralya ve Yeni Zelanda’dan vize aldınız mı?",
     options: [
       ["Birden fazla", 20, 7],
-      ["1 kez", 10, 7],
+      ["1 tane", 10, 7],
       ["Hiç yok", 0, 7],
     ],
   },
 
   7: {
     title: "7. Kanada Vize Reddi",
-    description:
-      "Son 3 yıl içindeki retler risk puanını etkiler.",
+    description:"Son 3 yıl içinde, Kanada’ya başvurup ret aldınız mı?",
     options: [
       ["Evet", -10, 8],
       ["Hayır", 0, 8],
@@ -184,21 +183,19 @@ const steps = {
   },
 
   8: {
-    title: "8. Pasaporttaki Vize Sayısı",
-    description:
-      "Toplam basılı vize etiketi sayısı.",
+    title: "8. Pasaporttaki Vize Etiketi Sayısı",
+    description:"Pasaportunuzda basılı vize etiketi sayısı (Schengen, İngiltere vb ülkeler. Yunanistan adaları kapıda vize dahil)",
     options: [
       ["Hiç yok", -10, 9],
       ["1 tane", 5, 9],
       ["2 tane", 20, 9],
-      ["3 veya daha fazla", 40, 9],
+      ["3 tane veya daha fazla", 40, 9],
     ],
   },
 
   9: {
     title: "9. Diğer Ülke Seyahatleri",
-    description:
-      "Asya, Orta Doğu veya Afrika seyahatleri.",
+    description:"Singapur, Japonya, Güney Kore, Dubai, Tayland, Güney Afrika, Vietnam ülkelerinden birine son 5 yılda gittiniz mi?",
     options: [
       ["Birden fazla", 10, 10],
       ["Bir tane", 3, 10],
@@ -208,8 +205,7 @@ const steps = {
 
   10: {
     title: "10. İngilizce Mülakat",
-    description:
-      "Konsolosluk görüşmesini İngilizce yapabilir misiniz?",
+    description:"İngilizce mülakat yapabilir misiniz? (B2 ve üstü ingilizce seviyesi)",
     options: [
       ["Evet", 15, 11],
       ["Hayır", 0, 11],
@@ -218,52 +214,120 @@ const steps = {
 
   11: {
     title: "11. Uluslararası Ödül",
-    description:
-      "Spor, sanat veya bilim alanında derece.",
+    description:"Uluslararası alanda sahip olduğunuz bir ödül (örneğin turnuvada derece, yarışmada mansiyon ödülü vb) var mı?",
     options: [
       ["Evet", 20, 12],
       ["Hayır", 0, 12],
     ],
   },
 
-  12: {
-    title: "12. Meslek",
-    description:
-      "Mesleki ve ekonomik istikrar değerlendirilir.",
-    options: [
-      ["Kamu üst düzey / Yeşil Pasaport", 20, 13],
-      ["Kamu kariyer memuru", 8, 13],
-      ["Kamu işçi", 3, 13],
-      ["Şirket sahibi (10+)", 20, 13],
-      ["Şirket sahibi (<10)", 10, 13],
-      ["Üst düzey yönetici", 20, 13],
-      ["Doktor / Avukat", 10, 13],
-      ["Beyaz yaka", 5, 13],
-    ],
-  },
+ 12: {
+  title: "12. Ne iş yapıyorsunuz?",
+  options: [
+    ["Kamuda üst düzey memur (10 yıl üstü kariyer uzmanı ve yeşil pasaportlu)", 20, 13],
+    ["Kamuda kariyer memuru (10 yıl altı kariyer uzmanı)", 8, 13],
+    ["Kamuda işçi/danışman/sözleşmeli kategorisinde", 3, 13],
+    ["Özel sektör – 10 personelden fazla çalışanı olan şirket sahibi", 20, 13],
+    ["Özel sektör – 10 personelden az çalışanı olan şirket sahibi", 10, 13],
+    ["Özel sektör – üst düzey yönetici", 20, 13],
+    ["Özel sektör - uzman/mühendis/mimar/İK görevlisi/öğretmen/hemşire", 5, 13],
+    ["Özel sektör – Doktor/avukat", 10, 13],
+    ["Mavi yaka (işçi, sanayi çalışanı, kurye, şoför vb)", 0, 13],
+    ["Emekli (kamu)", 5, 13],
+    ["Emekli (özel sektör)", 0, 13],
+    ["Emekli (eşinin/babasının aylığını alıyor)", -10, 13],
+    ["Öğrenci (lise)", 2, 13],
+    ["Öğrenci (lisans)", -10, 13],
+    ["Öğrenci (yüksek lisans)", -3, 13],
+    ["Ev hanımı", -5, 13],
+  ],
+},
 
-  13: {
-    title: "13. ABD Vize Reddi",
-    description:
-      "Daha önce ABD vizesinden ret aldınız mı?",
-    options: [
-      ["Evet", 0, "last_reject"],
-      ["Hayır", 0, "result"],
-    ],
-  },
 
-  last_reject: {
-    title: "Son Reddiniz Ne Zamandı?",
-    description:
-      "Ret tarihi, risk skorunu doğrudan etkiler.",
-    options: [
-      ["Son 6 ay", -15, "result"],
-      ["Son 18 ay", -10, "result"],
-      ["2 yıldan fazla", 0, "result"],
-      ["Birden fazla", -20, "result"],
+13: {
+  title: "13. ABD Vize Reddi",
+  description: "Daha önce Amerika vizesine başvurup ret aldınız mı?",
+  options: [
+    ["Evet", 0, "last_reject"],
+    ["Hayır", 0, 14],
+  ],
+},
+
+
+last_reject: {
+  title: "Son Reddiniz Ne Zamandı?",
+  options: [
+    ["Son 6 ay içinde", -15, 14],
+    ["Son 18 ay içinde", -10, 14],
+    ["2 yıldan fazla zaman önce", 0, 14],
+    ["Birden fazla ret varsa", -20, 14],
+  ],
+},
+ 14: {
+  title: "14. Amerika'da Akraba",
+  description:
+    "Amerika’da yaşayan birinci ve ikinci derecede akrabanız var mı (baba, anne, kardeş, amca, dayı, teyze, hala, kuzen vb)",
+  options: [
+    ["Evet", 0, "relative_status_14"],
+    ["Hayır", 0, "result"],
+  ],
+},
+
+relative_status_14: {
+  title: "Hangi statü ile Amerika’da bulunuyorlar?",
+  options: [
+    ["ABD vatandaşı", 10, "relative_job_14"],
+    ["Green Card sahibi", 5, "relative_job_14"],
+    ["Göçmen olmayan vize ile bulunuyor", -10, "relative_job_14"],
+  ],
+},
+
+relative_job_14: {
+  title: "Bu kişi ne iş yapıyor?",
+  options: [
+    [
+      "En az 100 kişinin çalıştığı bir şirkette üst düzey yönetici / şirket sahibi",
+      10,
+      "relative_visit_14",
     ],
-  },
+    [
+      "Beyaz yaka (uzman personel, banka şube müdürü, iç mimar vb)",
+      5,
+      "relative_visit_14",
+    ],
+    [
+      "Günlük işler yapıyor (örneğin uber, doordash, inşaat-tadilat, barmenlik vb)",
+      -20,
+      "relative_visit_14",
+    ],
+  ],
+},
+
+relative_visit_14: {
+  title: "Yakınınız en son ne zaman Türkiye’ye geldi?",
+  options: [
+    [
+      "Son 1 yıl içinde en az 1 defa Türkiye’ye geldi",
+      10,
+      "result",
+    ],
+    [
+      "Seyahat engeli yok ama son 1-2 yıldır gelmedi",
+      -10,
+      "result",
+    ],
+    [
+      "Statü değiştirdiği için gelemiyor",
+      -30,
+      "result",
+    ],
+  ],
+},
+
+
 };
+
+
 
 /* =========================
    COMPONENT
@@ -433,14 +497,14 @@ const goBack = () => {
     </h3>
 
     {/* 📄 AÇIKLAMA */}
-    {steps[step].description && (
+    {steps[step]?.description && (
       <p className="text-slate-600 text-sm">
         {steps[step].description}
       </p>
     )}
 
     {/* ✅ ŞIKLAR */}
-    {steps[step].options.map(([label, pts, nextStep], i) => (
+    {steps[step].options?.map(([label, pts, nextStep], i) => (
       <button
         key={i}
         onClick={() =>
