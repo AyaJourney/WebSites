@@ -24,7 +24,7 @@ export default function TopContactBar() {
             href="mailto:vizedektek@ayajourney.com"
             className="hover:text-emerald-400 transition"
           >
-            ✉️ vizedektek@ayajourney.com
+            ✉️ vizedestek@ayajourney.com
           </a>
 
           <a

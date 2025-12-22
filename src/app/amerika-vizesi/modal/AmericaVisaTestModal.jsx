@@ -467,8 +467,7 @@ const goBack = () => {
               <ScoreGauge score={score} />
 
               <p className="text-slate-600 max-w-md mx-auto mt-50">
-                Bu skor, Amerika vizesi açısından genel
-                hazırlık ve risk seviyenizi göstermektedir.
+              Verilen puanlarin herhangi bir bağlayıcılığı bulunmamakta olup, kullanıcıya fikir vermesi ve eğlendirmesi amaçlanmaktadır.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-2 w-full justify-center">

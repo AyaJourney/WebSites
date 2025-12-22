@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
 </div>
 
 {/* NAVBAR */}
-<div className="fixed top-0 md:top-[40px] left-0 w-full z-40">
+<div className="fixed top-0 md:top-[35px] left-0 w-full z-40">
   <Navbar />
 </div>
      <main className="flex-1 mt-24 bg-white ">
