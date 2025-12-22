@@ -58,11 +58,12 @@ const infoCards = [
 
 const documents = [
   { icon: <GoDotFill />, title: "Geçerli pasaport" },
-  { icon: <GoDotFill />, title: "DS-160 başvuru formu" },
-  { icon: <GoDotFill />, title: "Banka hesap dökümleri ve finansal kanıtlar" },
-  { icon: <GoDotFill />, title: "Çalışma / gelir belgeleri (iş/okul durumu)" },
-  { icon: <GoDotFill />, title: "Varsa eski vizeler ve seyahat geçmişi" },
+  { icon: <GoDotFill />, title: "DS-160  onay (confirmation) sayfasının çıktısı" },
+  { icon: <GoDotFill />, title: "Son altı ay içinde beyaz fon ile çekilmiş, 5×5 cm boyutunda bir adet renkli biometrik fotoğraf" },
+  { icon: <GoDotFill />, title: "Eski pasaportlar veya önceki seyahatleri kanıtlayan belgeler (varsa)" },
+  { icon: <GoDotFill />, title: "Başvuruyu destekleyebilecek ek belgeler (davetiye, uçak bileti vb.)" },
 ];
+
 
 const processSteps = [
   {

@@ -30,8 +30,7 @@ const emailRegex =
 const steps = {
   1: {
     title: "Yaş Grubunuz?",
-    // description:
-    //   "Yaş grubu, vize değerlendirmelerinde temel kriterlerden biridir.",
+  
     options: [
       ["0–14 Yaş", 0, "age_0_14"],
       ["14–18 Yaş", 0, "age_14_18"],
@@ -117,7 +116,6 @@ const steps = {
   ],
 },
 
-  /* ===== ÇOCUK DURUMU ===== */
 child_status: {
   title: "Çocuk Sayısı",
   options: [
@@ -135,7 +133,7 @@ child_travel: {
   ],
 },
 
-  /* ===== SEYAHAT ŞEKLİ ===== */
+
 
  travel_type_single: {
   title: "Seyahat Şekli",
@@ -156,12 +154,6 @@ travel_type_married_no_child: {
     ],
   ],
 },
-// travel_type_married_with_child: {
-//   title: "5. Seyahat Şekli",
-//   options: [
-//     ["Çocukları da beraber götürüyoruz", 4, 6],
-//   ],
-// },
 
   6: {
     title: "Son 5 Yıldaki Batı Vizeleri",
