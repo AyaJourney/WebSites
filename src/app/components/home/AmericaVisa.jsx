@@ -79,6 +79,28 @@ return (
               </div>
             ))}
           </div>
+                  <div className="mt-6 w-full max-w-xl mx-auto lg:mx-0 rounded-2xl border border-emerald-200 bg-emerald-50 px-6 py-5 text-left shadow-sm">
+  <div className="flex items-start gap-4">
+    <div className="text-2xl">🎯</div>
+
+    <div className="space-y-2">
+      <h4 className="text-base font-extrabold text-emerald-900">
+        Amerika Vize Şansınızı Öğrenin
+      </h4>
+
+      <p className="text-sm text-emerald-800 leading-relaxed">
+        Yapay zeka destekli analiz ile <strong>ABD vizesi hazırlık skorunuzu</strong>
+        2 dakikada öğrenin. Sonuçlar anında gösterilir.
+      </p>
+
+      <Link href="/amerika-vizesi?test=1">
+        <button className="mt-2 cursor-pointer inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-emerald-700 transition">
+          Ücretsiz Analizi Başlat →
+        </button>
+      </Link>
+    </div>
+  </div>
+</div>
         </div>
       </div>
 
@@ -148,6 +170,29 @@ return (
             </div>
           ))}
         </div>
+        <div className="mt-6 w-full max-w-xl mx-auto lg:mx-0 rounded-2xl border border-emerald-200 bg-emerald-50 px-6 py-5 text-left shadow-sm">
+  <div className="flex items-start gap-4">
+    <div className="text-2xl">🎯</div>
+
+    <div className="space-y-2">
+      <h4 className="text-base font-extrabold text-emerald-900">
+        Amerika Vize Şansınızı Öğrenin
+      </h4>
+
+      <p className="text-sm text-emerald-800 leading-relaxed">
+        Yapay zeka destekli analiz ile <strong>ABD vizesi hazırlık skorunuzu</strong>
+        2 dakikada öğrenin. Sonuçlar anında gösterilir.
+      </p>
+
+      <Link href="/amerika-vizesi?test=1">
+        <button className="mt-2 cursor-pointer inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-emerald-700 transition">
+          Ücretsiz Analizi Başlat →
+        </button>
+      </Link>
+    </div>
+  </div>
+</div>
+
       </div>
 
       {/* RIGHT */}

@@ -25,9 +25,7 @@ const HomeSideNav = () => {
       {/* OK */}
       <button
         onClick={() => setOpen(!open)}
-        className="h-28 w-10 flex items-center justify-center
-        bg-white/30 backdrop-blur border border-white/40
-        rounded-l-2xl shadow-md hover:bg-white/50 transition cursor-pointer"
+        className="h-28 w-10 flex items-center justify-center bg-white/30 backdrop-blur border border-white/40 rounded-l-2xl shadow-md hover:bg-white/50 transition cursor-pointer"
       >
         {open ? (
           <FaChevronRight className="text-slate-700" />
@@ -42,9 +40,7 @@ const HomeSideNav = () => {
         ${open ? "w-64 opacity-100" : "w-0 opacity-0"}`}
       >
         <nav
-          className="bg-white/30 backdrop-blur-md
-          border border-white/40 rounded-l-2xl
-          px-4 py-5 shadow-lg"
+          className="bg-white/30 backdrop-blur-md border border-white/40 rounded-l-2xl px-4 py-5 shadow-lg"
         >
           <ul className="flex flex-col gap-2">
             {items.map((item, i) => (
@@ -52,16 +48,7 @@ const HomeSideNav = () => {
                 <Link
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className="
-                    block px-3 py-2
-                    text-sm font-medium text-slate-800
-                    cursor-pointer
-                    rounded-md
-                    transition
-                    hover:bg-white/40
-                    hover:border hover:border-blue-400/60
-                    hover:text-blue-600
-                  "
+                  className="block px-3 py-2 text-sm font-medium text-slate-800 cursor-pointer rounded-md transition hover:bg-white/40 hover:border hover:border-blue-400/60 hover:text-blue-600"
                 >
                   {item.label}
                 </Link>

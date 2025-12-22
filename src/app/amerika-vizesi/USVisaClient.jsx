@@ -171,7 +171,7 @@ const [open, setOpen] = useState(false);
   onClick={() => setOpen(true)}
   className="bg-emerald-500 text-white px-6 py-3 rounded-2xl font-semibold hover:bg-emerald-600 transition"
 >
-  Ücretsiz Testi Çöz
+Bavulları Toplasam mı Testi
 </button>
             </div>
 

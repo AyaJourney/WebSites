@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { FaTimes,FaArrowLeft  } from "react-icons/fa";
 import ScoreGauge from "./ScoreGauge";
 import Image from "next/image";
+import { useSearchParams,useRouter } from "next/navigation";
+// import { useRouter } from "next/router";
  function BackButton({ onClick }) {
   return (
     <button
@@ -267,11 +269,19 @@ const steps = {
    COMPONENT
 ========================= */
 export default function AmericaVisaTestModal({ open, setOpen }) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const [step, setStep] = useState(0);
   const [score, setScore] = useState(0);
   const [user, setUser] = useState({ name: "", email: "" });
   const [errors, setErrors] = useState({});
 const [history, setHistory] = useState([]);
+ useEffect(() => {
+    if (searchParams.get("test") === "1") {
+      setOpen(true);
+      router.replace("/amerika-vizesi", { scroll: false });
+    }
+  }, [searchParams]);
   useEffect(() => {
     if (!open) {
       setStep(0);
@@ -301,7 +311,7 @@ const next = (pts, nextStep) => {
   setStep(nextStep);
 };
 
-const finish = (pts) => {
+const finish = async(pts) => {
   setHistory((h) => [...h, { step, pts }]);
 
   const raw = score + pts + 40;
@@ -309,6 +319,20 @@ const finish = (pts) => {
 
   setScore(final);
   setStep("result");
+   router.replace("/amerika-vizesi", { scroll: false });
+     try {
+    await fetch("/api/send-test", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: user.name,
+        email: user.email,
+        score: final,
+      }),
+    });
+  } catch (err) {
+    console.error("Mail gönderilemedi");
+  }
 };
 
 const goBack = () => {
