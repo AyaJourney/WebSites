@@ -396,8 +396,8 @@ const goNext = () => {
       return { ...prev, currentStep: prevStep };
     });
   };
-const jumpTo = (step) => {
-     console.log(errors)
+  const jumpTo = (step) => {
+    
      if (Object.keys(errors).length === 0) {
     setForm((prev) => ({ ...prev, currentStep: step }));
 }

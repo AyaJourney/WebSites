@@ -94,7 +94,7 @@ export default function Navbar() {
                 onClick={() => setOpenMega(openMega === item.href ? null : item.href)}
                 className="relative"
               >
-                <span
+                <span 
                   className={`text-[17px] flex items-center gap-1 cursor-pointer transition
                     ${
                       pathname.startsWith(item.href) || openMega === item.href
@@ -110,6 +110,7 @@ export default function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
+                // onClick={()=>{setMenuOpen}}
                 className={`text-[17px] px-3 py-2 rounded transition
                   ${
                     item.name === "Hadi Başlayalım !"
@@ -146,6 +147,7 @@ export default function Navbar() {
                     key={sub.href}
                     href={sub.href}
                     className="text-gray-700 hover:text-blue-600 font-medium underline underline-offset-4"
+                  
                   >
                     {sub.name}
                   </Link>
