@@ -1,101 +1,82 @@
 "use client";
-import React from "react";
-import { FaPhoneAlt, FaEnvelope } from "react-icons/fa";
-
-export default function NavbarİletisimCard({
-  phone = "+903128701584",
-  email = "vizedestek@ayajourney.com",
-}) {
-  const telHref = `tel:${phone.replace(/\s+/g, "")}`;
-  const mailHref = `mailto:${email}`;
-
+import {
+  FaInstagram,
+  FaLinkedinIn,
+  FaYoutube,
+  FaWhatsapp,
+} from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+export default function TopContactBar() {
   return (
-    <div className="w-full max-w-xl mx-auto mt-4">
-      <div
-        className="
-        backdrop-blur-md 
-        bg-white/70 
-       
-        rounded-2xl 
-       
-        px-6 py-6
-        flex flex-col 
-        items-center
-      "
-      >
-        <div className="mb-4 w-full flex items-start justify-start">
-            
-        <h3 className="text-lg font-semibold text-gray-900 ">
-          Bize Ulaşın
-        </h3>
-        </div>
-       
+    <div className="w-full bg-slate-900 text-slate-100 text-sm">
+      <div className="max-w-[1320px] mx-auto px-4 py-2 flex flex-col sm:flex-row justify-between items-center gap-3">
 
-        {/* Telefon + Mail Satırı */}
-        <div
-          className="
-          w-full 
-          flex items-center justify-between 
-          gap-6
-        "
-        >
-          {/* Telefon */}
+        {/* SOL – İLETİŞİM */}
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 items-center">
           <a
-            href={telHref}
-            className="flex items-center gap-3 group cursor-pointer"
-            aria-label="Telefon aç"
+            href="tel:+903128701584"
+            className="hover:text-emerald-400 transition"
           >
-            <div
-              className="
-              p-3 rounded-full 
-              bg-white 
-              shadow-sm 
-              border border-gray-100 
-              group-hover:scale-110 transition
-            "
-            >
-              <FaPhoneAlt className="text-blue-600 w-[18px] h-[18px]" />
-            </div>
-
-            <span
-              className="
-              text-sm font-medium 
-              text-gray-800 
-              group-hover:text-blue-600 
-              transition
-            "
-            >
-              {phone}
-            </span>
+            📞 +90 312 870 15 84
           </a>
 
-          {/* Mail */}
           <a
-            href={mailHref}
-            className="flex items-center gap-3 group cursor-pointer"
-            aria-label="Mail aç"
+            href="mailto:vizedektek@ayajourney.com"
+            className="hover:text-emerald-400 transition"
           >
-            <div
-              className="
-              p-3 rounded-full 
-              bg-white 
-              shadow-sm 
-              border border-gray-100
-              group-hover:scale-110 transition
-            "
-            >
-              <FaEnvelope className="text-blue-600 w-[18px] h-[18px]" />
-            </div>
+            ✉️ vizedektek@ayajourney.com
+          </a>
 
-            <span
-              className="
-              text-sm font-medium 
-              text-gray-800
-              group-hover:text-blue-600 transition
-            "
-            >
-              {email}
-            </span>
+          <a
+            href="https://wa.me/905302199056"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:text-emerald-400 transition flex items-center gap-1"
+          >
+            <FaWhatsapp /> WhatsApp
+          </a>
+        </div>
+
+        {/* SAĞ – SOSYAL */}
+        <div className="flex gap-4 items-center">
+          <a
+            href="https://www.instagram.com/ayajourneyvize/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            className="hover:text-pink-500 transition"
+          >
+            <FaInstagram />
+          </a>
+
+          <a
+            href="https://www.linkedin.com/company/ayajourney/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            className="hover:text-blue-500 transition"
+          >
+            <FaLinkedinIn />
+          </a>
+
+          <a
+            href="https://x.com/ayajourneyvize"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="X"
+            className="hover:text-gray-300 transition"
+          >
+            <FaXTwitter />
+          </a>
+
+          <a
+            href="https://www.youtube.com/@aya.journey"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="YouTube"
+            className="hover:text-red-500 transition"
+          >
+            <FaYoutube />
           </a>
         </div>
       </div>

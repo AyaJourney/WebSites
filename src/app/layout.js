@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
+import NavbarIletisimCard from "./components/NavbarİletisimCard";
 import Footer from "./components/Footer";
 import Cookies from "./components/Cookies";
 import WhatsappButton from "./components/WhatsappButton";
@@ -29,9 +30,14 @@ export default function RootLayout({ children }) {
   name="viewport"
   content="width=device-width, initial-scale=1, maximum-scale=1"
 />
-       <nav className="fixed top-0 left-0 w-full h-20 md:h-24 z-50 bg-white shadow-md">
-    <Navbar />
-</nav>
+<div className="hidden md:block fixed top-0 left-0 w-full z-50">
+  <NavbarIletisimCard />
+</div>
+
+{/* NAVBAR */}
+<div className="fixed top-0 md:top-[40px] left-0 w-full z-40">
+  <Navbar />
+</div>
      <main className="flex-1 mt-24 bg-white ">
       {children}
       <Cookies/>

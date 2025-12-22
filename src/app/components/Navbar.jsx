@@ -134,7 +134,7 @@ export default function Navbar() {
               <p className="mb-4">
                 {menuItems.find((m) => m.href === openMega)?.description}
               </p>
-              <NavbarİletisimCard />
+              {/* <NavbarİletisimCard /> */}
             </div>
 
             <div className="w-1/2 flex flex-col gap-2">
@@ -157,6 +157,8 @@ export default function Navbar() {
       {/* MOBILE / TABLET MENU */}
       {menuOpen && (
         <div className="xl:hidden px-4 pt-2 pb-4 bg-white border-t space-y-2">
+    <NavbarİletisimCard />
+
           {menuItems.map((item) =>
             item.submenu ? (
               <div key={item.href}>
@@ -205,6 +207,8 @@ export default function Navbar() {
           )}
         </div>
       )}
+      {/* MOBILE MENU */}
+
     </nav>
   );
 }
