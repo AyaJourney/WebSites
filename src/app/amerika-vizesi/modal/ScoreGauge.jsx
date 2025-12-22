@@ -5,74 +5,125 @@ export default function ScoreGauge({ score }) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    let start = 0;
+    let current = 0;
     const interval = setInterval(() => {
-      start += 1;
-      if (start >= score) {
+      current += 1;
+      if (current >= score) {
+        current = score;
         clearInterval(interval);
-        setProgress(score);
-      } else {
-        setProgress(start);
       }
-    }, 15);
+      setProgress(current);
+    }, 18);
 
     return () => clearInterval(interval);
   }, [score]);
 
+  // açı (-90 → +90)
   const angle = (progress / 100) * 180 - 90;
 
   const color =
     progress < 50
-      ? "#ef4444" // kırmızı
+      ? "#ef4444"
       : progress < 75
-      ? "#eab308" // sarı
-      : "#22c55e"; // yeşil
+      ? "#eab308"
+      : "#22c55e";
+
+  const label =
+    progress < 50
+      ? "Yüksek Risk"
+      : progress < 75
+      ? "Orta Seviye"
+      : "Güçlü Profil";
+
+  const description =
+    progress < 50
+      ? "Profiliniz vize açısından riskli görünüyor."
+      : progress < 75
+      ? "Doğru strateji ile şansınız artırılabilir."
+      : "Profiliniz Amerika vizesi için oldukça güçlü.";
 
   return (
-    <div className="relative w-[260px] h-[140px] mx-auto flex flex-col items-center justify-center">
-      {/* ARKA KADRAN */}
-     
-      {/* İBRE */}
-      <div> <svg viewBox="0 0 200 100" className="w-full h-full">
-        <path
-          d="M10 100 A90 90 0 0 1 190 100"
-          fill="none"
-          stroke="#e5e7eb"
-          strokeWidth="12"
-        />
-        <path
-          d="M10 100 A90 90 0 0 1 190 100"
-          fill="none"
-          stroke={color}
-          strokeWidth="12"
-          strokeDasharray={`${(progress / 100) * 283} 283`}
-          strokeLinecap="round"
-        />
-      </svg>
-
-         <div
-        className="absolute left-1/2 bottom-0 w-[3px] h-[80px] origin-bottom transition-transform duration-700"
-        style={{
-          background: color,
-          transform: `rotate(${angle}deg) translateX(-50%)`,
-        }}
-      />
-
-      {/* MERKEZ NOKTA */}
-      <div className="absolute left-1/2 bottom-0 w-4 h-4 bg-slate-800 rounded-full -translate-x-1/2 translate-y-1/2" />
-      </div>
-     
-
-      {/* SKOR */}
-      <div className="absolute inset-0 top-60 flex flex-col items-center justify-end pb-2 gap-4">
-        <div className="text-4xl font-extrabold text-slate-900">
-          {progress}
-        </div>
-        <div className="text-xs text-slate-500 tracking-wide mt-2">
-          Vize Hazırlık Skoru
-        </div>
-      </div>
+    <div className="relative w-full h-[220px] mx-auto flex flex-col items-center justify-start">
       
+      {/* GAUGE */}
+      <div className="relative w-full h-[140px]">
+        <svg viewBox="0 0 200 110" className="w-full h-full">
+          {/* Arka zemin */}
+          <path
+            d="M10 100 A90 90 0 0 1 190 100"
+            fill="none"
+            stroke="#e5e7eb"
+            strokeWidth="14"
+          />
+
+          {/* Gradient tanımı */}
+          <defs>
+            <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#ef4444" />
+              <stop offset="50%" stopColor="#eab308" />
+              <stop offset="100%" stopColor="#22c55e" />
+            </linearGradient>
+          </defs>
+
+          {/* Doluluk */}
+          <path
+            d="M10 100 A90 90 0 0 1 190 100"
+            fill="none"
+            stroke="url(#scoreGradient)"
+            strokeWidth="14"
+            strokeDasharray={`${(progress / 100) * 283} 283`}
+            strokeLinecap="round"
+          />
+        </svg>
+
+        {/* İBRE */}
+        <div
+          className="absolute left-1/2 bottom-[12px] w-[4px] h-[95px] rounded-full transition-transform duration-700 ease-out"
+          style={{
+            background: color,
+            transform: `translateX(-50%) rotate(${angle}deg)`,
+            transformOrigin: "bottom center",
+            boxShadow: `0 0 12px ${color}`,
+          }}
+        />
+
+        {/* Merkez Nokta */}
+        <div className="absolute left-1/2 bottom-[6px] w-5 h-5 bg-slate-900 rounded-full -translate-x-1/2 shadow-lg border-2 border-white" />
+      </div>
+
+      {/* SKOR KARTI */}
+<div className="mt-4 w-full text-center px-4">
+  <div
+    className="text-5xl font-extrabold"
+    style={{ color }}
+  >
+    {progress}
+  </div>
+
+  <div className="mt-1 text-sm font-bold tracking-wide uppercase">
+    {label}
+  </div>
+
+  {progress < 90 && (
+    <div className="w-full mt-4 rounded-2xl border border-blue-200 bg-blue-50 px-6 py-5 text-left">
+      <p className="text-sm leading-relaxed text-blue-900">
+        🚀 <strong>Biliyor muydunuz?</strong>
+        <br />
+        AYA Journey ile çalıştığınızda buradaki puanınızı{" "}
+        <span className="inline-block rounded bg-yellow-300 px-1.5 font-bold text-black">
+          90 ve üstüne
+        </span>{" "}
+        çıkarabilirsiniz.
+      </p>
+    </div>
+  )}
+
+  <p className="mt-2 text-md text-slate-500 leading-snug">
+    {description}
+  </p>
+</div>
+
+
     </div>
   );
 }
