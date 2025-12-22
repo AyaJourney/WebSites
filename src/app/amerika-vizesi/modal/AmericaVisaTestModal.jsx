@@ -375,7 +375,7 @@ const finish = async(pts) => {
 
   setScore(final);
   setStep("result");
-   router.replace("/amerika-vizesi", { scroll: false });
+
      try {
     await fetch("/api/send-test", {
       method: "POST",
@@ -419,7 +419,7 @@ const goBack = () => {
               onClick={() => setOpen(false)}
               className="cursor-pointer text-slate-400 hover:text-black transition"
             />
-            <span className="absolute right-0 top-6 opacity-0 group-hover:opacity-100 text-xs bg-black text-white px-2 py-1 rounded">
+            <span  className="absolute right-0 top-6 opacity-0 group-hover:opacity-100 text-xs bg-black text-white px-2 py-1 rounded">
               Kapat
             </span>
           </div>
