@@ -27,296 +27,497 @@ const emailRegex =
 /* =========================
    QUESTIONS
 ========================= */
+// const steps = {
+//   1: {
+//     title: "Yaş Grubunuz?",
+  
+//     options: [
+//       ["0–13 Yaş", 0, "age_0_14"],
+//       ["14–18 Yaş", 0, "age_14_18"],
+//       ["18–30 Yaş", 0, "age_18_30"],
+//       ["30–45 Yaş", 0, "age_30_45"],
+//       ["45–60 Yaş", 0, "age_45_60"],
+//       ["61 Yaş ve Üstü", 0, "age_61"],
+//     ],
+//   },
+
+//   age_0_14: {
+//     title: "Anne ve Baba Vize Durumu",
+//     options: [
+//       ["İkisinin de vizesi var", 10, 2],
+//       ["Sadece birinin vizesi var", 5, 2],
+//       ["Vizeleri yok", 0, 2],
+//     ],
+//   },
+
+//   age_14_18: {
+//     title: "Anne ve Baba Vize Durumu",
+//     options: [
+//       ["İkisinin de vizesi var", 7, 2],
+//       ["Sadece birinin vizesi var", 3, 2],
+//       ["Vizeleri yok", 0, 2],
+//     ],
+//   },
+
+//   age_18_30: {
+//     title: "Cinsiyetiniz?",
+//     options: [
+//       ["Kadın", 10, 3],
+//       ["Erkek", 5, 3],
+//     ],
+//   },
+
+//   age_30_45: {
+//     title: "Cinsiyetiniz?",
+//     options: [
+//       ["Kadın", 10, 3],
+//       ["Erkek", 5, 3],
+//     ],
+//   },
+
+//   age_45_60: {
+//     title: "Cinsiyetiniz?",
+//     options: [
+//       ["Kadın", 20, 3],
+//       ["Erkek", 10, 3],
+//     ],
+//   },
+
+//   age_61: {
+//     title: "Amerika'da Akrabanız Var mı?",
+//     options: [
+//       ["Hayır", 20, 2],
+//       ["Evet", 0, "relative_status"],
+//     ],
+//   },
+
+//   relative_status: {
+//     title: "Yakınınızın Statüsü",
+//     options: [
+//       ["ABD Vatandaşı", 10, 2],
+//       ["Green Card Sahibi", 5, 2],
+//       ["Geçici vizeyle", -10, 2],
+//     ],
+//   },
+
+//   2: {
+//     title: "Cinsiyetiniz?",
+//     options: [
+//       ["Kadın", 5, 3],
+//       ["Erkek", 0, 3],
+//     ],
+//   },
+
+// 3: {
+//   title: "Medeni Haliniz?",
+//   options: [
+//     ["Evli", 5, "child_status"],
+//     ["Bekar", 0, "travel_type_single"],
+//   ],
+// },
+
+// child_status: {
+//   title: "Çocuk Sayısı",
+//   options: [
+//     ["Çocuğum yok", -5, "travel_type_married_no_child"],
+//     ["1 çocuk", 0, "child_travel"],
+//     ["2 veya daha fazla çocuk", 0, "child_travel"],
+//   ],
+// },
+
+// child_travel: {
+//   title: "Çocuklarla mı seyahat edeceksiniz?",
+//   options: [
+//     ["Evet", 4, 6],
+//     ["Hayır", 0, "travel_type_married_no_child"],
+//   ],
+// },
+
+
+
+//  travel_type_single: {
+//   title: "Seyahat Şekli",
+//   options: [
+//     ["Bekar ve tek gidecek", -10, 6],
+//     ["Bekar ve arkadaşıyla gidecek", 3, 6],
+//   ],
+// },
+// travel_type_married_no_child: {
+//   title: "Seyahat Şekli",
+//   options: [
+//     ["Evli ve tek gidecekse", -5, 6],
+//     ["Evli ve arkadaşlarıyla gidecekse", 10, 6],
+//     [
+//       "Evli ve karısıyla/kocasıyla gidecekse",
+//       15,
+//       6,
+//     ],
+//   ],
+// },
+
+//   6: {
+//     title: "Son 5 Yıldaki Batı Vizeleri",
+//     description:"Son 5 yılda, Amerika (Work and Travel hariç), İngiltere, Kanada, Avustralya ve Yeni Zelanda’dan vize aldınız mı?",
+//     options: [
+//       ["Birden fazla", 20, 7],
+//       ["1 tane", 10, 7],
+//       ["Hiç yok", 0, 7],
+//     ],
+//   },
+
+//   7: {
+//     title: "Kanada Vize Reddi",
+//     description:"Son 3 yıl içinde, Kanada’ya başvurup ret aldınız mı?",
+//     options: [
+//       ["Evet", -10, 8],
+//       ["Hayır", 0, 8],
+//     ],
+//   },
+
+//   8: {
+//     title: "Pasaporttaki Vize Etiketi Sayısı",
+//     description:"Pasaportunuzda basılı vize etiketi sayısı (Schengen, İngiltere vb ülkeler. Yunanistan adaları kapıda vize dahil)",
+//     options: [
+//       ["Hiç yok", -10, 9],
+//       ["1 tane", 5, 9],
+//       ["2 tane", 20, 9],
+//       ["3 tane veya daha fazla", 40, 9],
+//     ],
+//   },
+
+//   9: {
+//     title: "Diğer Ülke Seyahatleri",
+//     description:"Singapur, Japonya, Güney Kore, Dubai, Tayland, Güney Afrika, Vietnam ülkelerinden birine son 5 yılda gittiniz mi?",
+//     options: [
+//       ["Birden fazla", 10, 10],
+//       ["Bir tane", 3, 10],
+//       ["Hayır", 0, 10],
+//     ],
+//   },
+
+//   10: {
+//     title: "İngilizce Mülakat",
+//     description:"İngilizce mülakat yapabilir misiniz? (B2 ve üstü ingilizce seviyesi)",
+//     options: [
+//       ["Evet", 15, 11],
+//       ["Hayır", 0, 11],
+//     ],
+//   },
+
+//   11: {
+//     title: "Uluslararası Ödül",
+//     description:"Uluslararası alanda sahip olduğunuz bir ödül (örneğin turnuvada derece, yarışmada mansiyon ödülü vb) var mı?",
+//     options: [
+//       ["Evet", 20, 12],
+//       ["Hayır", 0, 12],
+//     ],
+//   },
+
+//  12: {
+//   title: "Ne iş yapıyorsunuz?",
+//   options: [
+//     ["Kamuda üst düzey memur (10 yıl üstü kariyer uzmanı ve yeşil pasaportlu)", 20, 13],
+//     ["Kamuda kariyer memuru (10 yıl altı kariyer uzmanı)", 8, 13],
+//     ["Kamuda işçi/danışman/sözleşmeli kategorisinde", 3, 13],
+//     ["Özel sektör – 10 personelden fazla çalışanı olan şirket sahibi", 20, 13],
+//     ["Özel sektör – 10 personelden az çalışanı olan şirket sahibi", 10, 13],
+//     ["Özel sektör – üst düzey yönetici", 20, 13],
+//     ["Özel sektör - uzman/mühendis/mimar/İK görevlisi/öğretmen/hemşire", 5, 13],
+//     ["Özel sektör – Doktor/avukat", 10, 13],
+//     ["Mavi yaka (işçi, sanayi çalışanı, kurye, şoför vb)", 0, 13],
+//     ["Emekli (kamu)", 5, 13],
+//     ["Emekli (özel sektör)", 0, 13],
+//     ["Emekli (eşinin/babasının aylığını alıyor)", -10, 13],
+//     ["Öğrenci (lise)", 2, 13],
+//     ["Öğrenci (lisans)", -10, 13],
+//     ["Öğrenci (yüksek lisans)", -3, 13],
+//     ["Ev hanımı", -5, 13],
+//   ],
+// },
+
+
+// 13: {
+//   title: "ABD Vize Reddi",
+//   description: "Daha önce Amerika vizesine başvurup ret aldınız mı?",
+//   options: [
+//     ["Evet", 0, "last_reject"],
+//     ["Hayır", 0, 14],
+//   ],
+// },
+
+
+// last_reject: {
+//   title: "Son Reddiniz Ne Zamandı?",
+//   options: [
+//     ["Son 6 ay içinde", -15, 14],
+//     ["Son 18 ay içinde", -10, 14],
+//     ["2 yıldan fazla zaman önce", 0, 14],
+//     ["Birden fazla ret varsa", -20, 14],
+//   ],
+// },
+//  14: {
+//   title: "Amerika'da Akraba",
+//   description:
+//     "Amerika’da yaşayan birinci ve ikinci derecede akrabanız var mı (baba, anne, kardeş, amca, dayı, teyze, hala, kuzen vb)",
+//   options: [
+//     ["Evet", 0, "relative_status_14"],
+//     ["Hayır", 0, "result"],
+//   ],
+// },
+
+// relative_status_14: {
+//   title: "Hangi statü ile Amerika’da bulunuyorlar?",
+//   options: [
+//     ["ABD vatandaşı", 10, "relative_job_14"],
+//     ["Green Card sahibi", 5, "relative_job_14"],
+//     ["Göçmen olmayan vize ile bulunuyor", -10, "relative_job_14"],
+//   ],
+// },
+
+// relative_job_14: {
+//   title: "Bu kişi ne iş yapıyor?",
+//   options: [
+//     [
+//       "En az 100 kişinin çalıştığı bir şirkette üst düzey yönetici / şirket sahibi",
+//       10,
+//       "relative_visit_14",
+//     ],
+//     [
+//       "Beyaz yaka (uzman personel, banka şube müdürü, iç mimar vb)",
+//       5,
+//       "relative_visit_14",
+//     ],
+//     [
+//       "Günlük işler yapıyor (örneğin uber, doordash, inşaat-tadilat, barmenlik vb)",
+//       -20,
+//       "relative_visit_14",
+//     ],
+//   ],
+// },
+
+// relative_visit_14: {
+//   title: "Yakınınız en son ne zaman Türkiye’ye geldi?",
+//   options: [
+//     [
+//       "Son 1 yıl içinde en az 1 defa Türkiye’ye geldi",
+//       10,
+//       "result",
+//     ],
+//     [
+//       "Seyahat engeli yok ama son 1-2 yıldır gelmedi",
+//       -10,
+//       "result",
+//     ],
+//     [
+//       "Statü değiştirdiği için gelemiyor",
+//       -30,
+//       "result",
+//     ],
+//   ],
+// },
+
+
+// };
+
 const steps = {
   1: {
-    title: "Yaş Grubunuz?",
-  
-    options: [
-      ["0–14 Yaş", 0, "age_0_14"],
-      ["14–18 Yaş", 0, "age_14_18"],
-      ["18–30 Yaş", 0, "age_18_30"],
-      ["30–45 Yaş", 0, "age_30_45"],
-      ["45–60 Yaş", 0, "age_45_60"],
-      ["61 Yaş ve Üstü", 0, "age_61"],
-    ],
-  },
-
-  age_0_14: {
-    title: "Anne ve Baba Vize Durumu",
-    options: [
-      ["İkisinin de vizesi var", 10, 2],
-      ["Sadece birinin vizesi var", 5, 2],
-      ["Vizeleri yok", 0, 2],
-    ],
-  },
-
-  age_14_18: {
-    title: "Anne ve Baba Vize Durumu",
-    options: [
-      ["İkisinin de vizesi var", 7, 2],
-      ["Sadece birinin vizesi var", 3, 2],
-      ["Vizeleri yok", 0, 2],
-    ],
-  },
-
-  age_18_30: {
-    title: "Cinsiyetiniz?",
-    options: [
-      ["Kadın", 10, 3],
-      ["Erkek", 5, 3],
-    ],
-  },
-
-  age_30_45: {
-    title: "Cinsiyetiniz?",
-    options: [
-      ["Kadın", 10, 3],
-      ["Erkek", 5, 3],
-    ],
-  },
-
-  age_45_60: {
-    title: "Cinsiyetiniz?",
-    options: [
-      ["Kadın", 20, 3],
-      ["Erkek", 10, 3],
-    ],
-  },
-
-  age_61: {
-    title: "Amerika'da Akrabanız Var mı?",
-    options: [
-      ["Hayır", 20, 2],
-      ["Evet", 0, "relative_status"],
-    ],
-  },
-
-  relative_status: {
-    title: "Yakınınızın Statüsü",
-    options: [
-      ["ABD Vatandaşı", 10, 2],
-      ["Green Card Sahibi", 5, 2],
-      ["Geçici vizeyle", -10, 2],
-    ],
-  },
-
-  2: {
-    title: "Cinsiyetiniz?",
-    options: [
-      ["Kadın", 5, 3],
-      ["Erkek", 0, 3],
-    ],
-  },
-
-3: {
-  title: "Medeni Haliniz?",
+  title: "Yaş Grubu",
+  description: "Lütfen yaş aralığınızı seçiniz.",
   options: [
-    ["Evli", 5, "child_status"],
-    ["Bekar", 0, "travel_type_single"],
+    ["0 - 13 yaşındayım.", 0, "parents_visa", { isMinor: true, ageGroup: "0-13" }],
+    ["14 - 17 yaşındayım.", 0, "parents_visa", { isMinor: true, ageGroup: "14-17" }],
+    ["18 - 28 yaş arasındayım.", -10, "gender_check", { isMinor: false, ageGroup: "18-28" }],
+    ["29 - 45 yaş arasındayım.", 5, "marital_status", { isMinor: false, ageGroup: "29-45" }],
+    ["46 - 60 yaş arasındayım.", 10, "marital_status", { isMinor: false, ageGroup: "46-60" }],
+    ["60 yaşından büyüğüm.", 15, "marital_status", { isMinor: false, ageGroup: "60+" }],
   ],
 },
 
-child_status: {
-  title: "Çocuk Sayısı",
-  options: [
-    ["Çocuğum yok", -5, "travel_type_married_no_child"],
-    ["1 çocuk", 0, "child_travel"],
-    ["2 veya daha fazla çocuk", 0, "child_travel"],
-  ],
-},
-
-child_travel: {
-  title: "Çocuklarla mı seyahat edeceksiniz?",
-  options: [
-    ["Evet", 4, 6],
-    ["Hayır", 0, "travel_type_married_no_child"],
-  ],
-},
-
-
-
- travel_type_single: {
-  title: "Seyahat Şekli",
-  options: [
-    ["Bekar ve tek gidecek", -10, 6],
-    ["Bekar ve arkadaşıyla gidecek", 3, 6],
-  ],
-},
-travel_type_married_no_child: {
-  title: "Seyahat Şekli",
-  options: [
-    ["Evli ve tek gidecekse", -5, 6],
-    ["Evli ve arkadaşlarıyla gidecekse", 10, 6],
-    [
-      "Evli ve karısıyla/kocasıyla gidecekse",
-      15,
-      6,
+  gender_check: {
+    title: "Cinsiyet",
+    description: "Cinsiyetinizi belirtiniz.",
+    options: [
+      ["Kadın", 5, "parents_visa"],
+      ["Erkek", -5, "parents_visa"],
     ],
-  ],
-},
+  },
 
-  6: {
+  parents_visa: {
+    title: "Ebeveyn Vize Durumu",
+    description:
+      "Anne veya babanızın (veya her ikisinin) geçerli bir ABD vizesi bulunuyor mu?",
+    options: [
+      ["Evet, hem annemin hem de babamın geçerli vizesi var.", 10, "travel_with_parents"],
+      ["Evet, sadece bir ebeveynimin (anne veya baba) vizesi var.", 5, "travel_with_parents"],
+      ["Hayır, ebeveynlerimin vizesi yok.", -5, "travel_companion_check"],
+    ],
+  },
+
+  travel_with_parents: {
+    title: "Seyahat Şekli",
+    description:
+      "Amerika seyahatinizi, vizesi olan ebeveynlerinizle birlikte mi gerçekleştireceksiniz?",
+    options: [
+      ["Evet, onlarla birlikte seyahat edeceğim.", 0, "flow_router"], // specialLogic vardı
+      ["Hayır, onlardan bağımsız seyahat edeceğim.", 0, "travel_companion_check"],
+    ],
+  },
+
+  travel_companion_check: {
+    title: "Seyahat Eşlikçisi",
+    description:
+      "Peki, Amerika seyahatinizi kiminle gerçekleştirmeyi planlıyorsunuz?",
+    options: [
+      ["Yalnız başıma seyahat edeceğim.", -2, "flow_router"],
+      ["Bir arkadaşımla veya arkadaş grubumla.", 0, "flow_router"],
+      ["Okul veya iş sebebiyle bir ekip/heyet ile birlikte.", 5, "flow_router"],
+      ["Eşimle veya sevgilimle.", 3, "flow_router"],
+    ],
+  },
+
+  marital_status: {
+    title: "Medeni Durum",
+    description: "Medeni durumunuz nedir?",
+    options: [
+      ["Bekarım / Dul / Boşanmış", 0, "job_status"],
+      ["Evliyim", 5, "job_status"],
+    ],
+  },
+
+  job_status: {
+    title: "Meslek Durumu",
+    description:
+      "Mevcut çalışma durumunuzu en iyi ifade eden seçenek hangisidir?",
+    options: [
+      ["Kamu çalışanıyım (Memur, Akademisyen vb.)", 10, "children_count"],
+      ["Özel sektörde çalışanım (SGK'lı).", 5, "children_count"],
+      ["İşverenim / Şirket Sahibiyim.", 10, "children_count"],
+      ["Öğrenciyim.", 2, "children_count"],
+      ["Emekliyim.", 8, "children_count"],
+      ["Çalışmıyorum / Ev hanımıyım.", -5, "children_count"],
+    ],
+  },
+
+  children_count: {
+    title: "Çocuk Sayısı",
+    description: "Sahip olduğunuz çocuk sayısını belirtiniz.",
+    options: [
+      ["Çocuğum yok.", 0, "us_contact"],
+      ["1 çocuk sahibiyim.", 5, "us_contact"],
+      ["2 veya daha fazla çocuğum var.", 10, "us_contact"],
+    ],
+  },
+
+  us_contact: {
+    title: "Amerika'daki Tanıdıklar",
+    description:
+      "Amerika Birleşik Devletleri'nde yaşayan birinci derece akrabanız veya yakın tanıdığınız var mı?",
+    options: [
+      ["Evet, birinci derece akrabam var.", -10, "us_contact_status"],
+      ["Evet, uzak akrabam veya arkadaşlarım var.", -5, "us_contact_status"],
+      ["Hayır, Amerika'da kimsem yok.", 0, "travel_western_visas"],
+    ],
+  },
+
+  us_contact_status: {
+    title: "Tanıdığınızın Statüsü",
+    description:
+      "Amerika'daki tanıdığınızın oradaki yasal statüsü nedir?",
+    options: [
+      ["ABD Vatandaşı.", 5, "us_contact_visit"],
+      ["Green Card (Yeşil Kart) Sahibi.", 2, "us_contact_visit"],
+      ["Öğrenci veya Geçici Çalışma Vizesi ile orada.", -10, "us_contact_visit"],
+    ],
+  },
+
+  us_contact_visit: {
+    title: "Türkiye Ziyareti",
+    description:
+      "Bu kişi en son ne zaman Türkiye'ye ziyarete geldi?",
+    options: [
+      ["Son 1 yıl içerisinde geldi.", 5, "travel_western_visas"],
+      ["1 - 3 yıl arasında geldi.", -5, "travel_western_visas"],
+      ["3 yıldan daha uzun süredir gelmedi veya hiç gelmedi.", -15, "travel_western_visas"],
+    ],
+  },
+
+  travel_western_visas: {
     title: "Son 5 Yıldaki Batı Vizeleri",
-    description:"Son 5 yılda, Amerika (Work and Travel hariç), İngiltere, Kanada, Avustralya ve Yeni Zelanda’dan vize aldınız mı?",
+    description:
+      "Son 5 yılda, Amerika (Work and Travel hariç), İngiltere, Kanada, Avustralya ve Yeni Zelanda’dan vize aldınız mı?",
     options: [
-      ["Birden fazla", 20, 7],
-      ["1 tane", 10, 7],
-      ["Hiç yok", 0, 7],
+      ["Birden fazla", 20, "travel_visa_labels"],
+      ["1 tane", 8, "travel_visa_labels"],
+      ["Hiç yok", 0, "travel_visa_labels"],
     ],
   },
 
-  7: {
-    title: "Kanada Vize Reddi",
-    description:"Son 3 yıl içinde, Kanada’ya başvurup ret aldınız mı?",
-    options: [
-      ["Evet", -10, 8],
-      ["Hayır", 0, 8],
-    ],
-  },
-
-  8: {
+  travel_visa_labels: {
     title: "Pasaporttaki Vize Etiketi Sayısı",
-    description:"Pasaportunuzda basılı vize etiketi sayısı (Schengen, İngiltere vb ülkeler. Yunanistan adaları kapıda vize dahil)",
+    description:
+      "Pasaportunuzda basılı vize etiketi sayısı.",
     options: [
-      ["Hiç yok", -10, 9],
-      ["1 tane", 5, 9],
-      ["2 tane", 20, 9],
-      ["3 tane veya daha fazla", 40, 9],
+      ["Hiç yok", -10, "travel_other_countries"],
+      ["1 tane", 3, "travel_other_countries"],
+      ["2 tane", 8, "travel_other_countries"],
+      ["3 tane veya daha fazla", 15, "travel_other_countries"],
     ],
   },
 
-  9: {
+  travel_other_countries: {
     title: "Diğer Ülke Seyahatleri",
-    description:"Singapur, Japonya, Güney Kore, Dubai, Tayland, Güney Afrika, Vietnam ülkelerinden birine son 5 yılda gittiniz mi?",
+    description:
+      "Belirtilen ülkelere son 5 yılda seyahat ettiniz mi?",
     options: [
-      ["Birden fazla", 10, 10],
-      ["Bir tane", 3, 10],
-      ["Hayır", 0, 10],
+      ["Birden fazla", 8, "us_refusal"],
+      ["Bir tane", 2, "us_refusal"],
+      ["Hayır", 0, "us_refusal"],
     ],
   },
 
-  10: {
-    title: "İngilizce Mülakat",
-    description:"İngilizce mülakat yapabilir misiniz? (B2 ve üstü ingilizce seviyesi)",
+  us_refusal: {
+    title: "ABD Vize Geçmişi",
+    description:
+      "Daha önce Amerika vizesi başvurunuzdan ret aldınız mı?",
     options: [
-      ["Evet", 15, 11],
-      ["Hayır", 0, 11],
+      ["Hayır, almadım.", 0, "canada_refusal"],
+      ["Evet, aldım.", -10, "us_refusal_time"],
     ],
   },
 
-  11: {
-    title: "Uluslararası Ödül",
-    description:"Uluslararası alanda sahip olduğunuz bir ödül (örneğin turnuvada derece, yarışmada mansiyon ödülü vb) var mı?",
+  us_refusal_time: {
+    title: "ABD Ret Zamanı",
+    description: "En son ret cevabını ne zaman aldınız?",
     options: [
-      ["Evet", 20, 12],
-      ["Hayır", 0, 12],
+      ["6 aydan daha yakın bir sürede.", -10, "us_refusal_count"],
+      ["6 ay - 1 yıl arasında.", -5, "us_refusal_count"],
+      ["1 - 2 yıl arasında.", -2, "us_refusal_count"],
+      ["2 yıldan daha uzun süre önce.", 0, "us_refusal_count"],
     ],
   },
 
- 12: {
-  title: "Ne iş yapıyorsunuz?",
-  options: [
-    ["Kamuda üst düzey memur (10 yıl üstü kariyer uzmanı ve yeşil pasaportlu)", 20, 13],
-    ["Kamuda kariyer memuru (10 yıl altı kariyer uzmanı)", 8, 13],
-    ["Kamuda işçi/danışman/sözleşmeli kategorisinde", 3, 13],
-    ["Özel sektör – 10 personelden fazla çalışanı olan şirket sahibi", 20, 13],
-    ["Özel sektör – 10 personelden az çalışanı olan şirket sahibi", 10, 13],
-    ["Özel sektör – üst düzey yönetici", 20, 13],
-    ["Özel sektör - uzman/mühendis/mimar/İK görevlisi/öğretmen/hemşire", 5, 13],
-    ["Özel sektör – Doktor/avukat", 10, 13],
-    ["Mavi yaka (işçi, sanayi çalışanı, kurye, şoför vb)", 0, 13],
-    ["Emekli (kamu)", 5, 13],
-    ["Emekli (özel sektör)", 0, 13],
-    ["Emekli (eşinin/babasının aylığını alıyor)", -10, 13],
-    ["Öğrenci (lise)", 2, 13],
-    ["Öğrenci (lisans)", -10, 13],
-    ["Öğrenci (yüksek lisans)", -3, 13],
-    ["Ev hanımı", -5, 13],
-  ],
-},
-
-
-13: {
-  title: "ABD Vize Reddi",
-  description: "Daha önce Amerika vizesine başvurup ret aldınız mı?",
-  options: [
-    ["Evet", 0, "last_reject"],
-    ["Hayır", 0, 14],
-  ],
-},
-
-
-last_reject: {
-  title: "Son Reddiniz Ne Zamandı?",
-  options: [
-    ["Son 6 ay içinde", -15, 14],
-    ["Son 18 ay içinde", -10, 14],
-    ["2 yıldan fazla zaman önce", 0, 14],
-    ["Birden fazla ret varsa", -20, 14],
-  ],
-},
- 14: {
-  title: "Amerika'da Akraba",
-  description:
-    "Amerika’da yaşayan birinci ve ikinci derecede akrabanız var mı (baba, anne, kardeş, amca, dayı, teyze, hala, kuzen vb)",
-  options: [
-    ["Evet", 0, "relative_status_14"],
-    ["Hayır", 0, "result"],
-  ],
-},
-
-relative_status_14: {
-  title: "Hangi statü ile Amerika’da bulunuyorlar?",
-  options: [
-    ["ABD vatandaşı", 10, "relative_job_14"],
-    ["Green Card sahibi", 5, "relative_job_14"],
-    ["Göçmen olmayan vize ile bulunuyor", -10, "relative_job_14"],
-  ],
-},
-
-relative_job_14: {
-  title: "Bu kişi ne iş yapıyor?",
-  options: [
-    [
-      "En az 100 kişinin çalıştığı bir şirkette üst düzey yönetici / şirket sahibi",
-      10,
-      "relative_visit_14",
+  us_refusal_count: {
+    title: "ABD Ret Sayısı",
+    description: "Toplamda kaç kez ret aldınız?",
+    options: [
+      ["Sadece 1 kez.", 0, "canada_refusal"],
+      ["2 kez.", -2, "canada_refusal"],
+      ["3 veya daha fazla kez.", -5, "canada_refusal"],
     ],
-    [
-      "Beyaz yaka (uzman personel, banka şube müdürü, iç mimar vb)",
-      5,
-      "relative_visit_14",
+  },
+
+  canada_refusal: {
+    title: "Kanada Vize Geçmişi",
+    description:
+      "Son üç yılda Kanada'dan vize reddi aldınız mı?",
+    options: [
+      ["Evet, Kanada'dan ret aldım.", -15, "calculate_final"],
+      ["Hayır, Kanada'dan hiç ret almadım.", 0, "calculate_final"],
     ],
-    [
-      "Günlük işler yapıyor (örneğin uber, doordash, inşaat-tadilat, barmenlik vb)",
-      -20,
-      "relative_visit_14",
-    ],
-  ],
+  },
+  flow_router: {
+  hidden: true
 },
-
-relative_visit_14: {
-  title: "Yakınınız en son ne zaman Türkiye’ye geldi?",
-  options: [
-    [
-      "Son 1 yıl içinde en az 1 defa Türkiye’ye geldi",
-      10,
-      "result",
-    ],
-    [
-      "Seyahat engeli yok ama son 1-2 yıldır gelmedi",
-      -10,
-      "result",
-    ],
-    [
-      "Statü değiştirdiği için gelemiyor",
-      -30,
-      "result",
-    ],
-  ],
-},
-
-
 };
 
 
@@ -332,6 +533,13 @@ export default function AmericaVisaTestModal({ open, setOpen }) {
   const [user, setUser] = useState({ name: "", email: "" });
   const [errors, setErrors] = useState({});
 const [history, setHistory] = useState([]);
+const [userState, setUserState] = useState({
+  // score: 50,
+  ageGroup: "",
+  gender: "",
+  maritalStatus: "",
+  isMinor: false,
+});
  useEffect(() => {
     if (searchParams.get("test") === "1") {
       setOpen(true);
@@ -361,9 +569,27 @@ const [history, setHistory] = useState([]);
     return Object.keys(e).length === 0;
   };
 
-const next = (pts, nextStep) => {
+const next = (pts, nextStep,payload = null) => {
   setHistory((h) => [...h, { step, pts }]);
   setScore((s) => s + pts);
+ const nextUserState = payload
+    ? { ...userState, ...payload }
+    : userState;
+
+  setUserState(nextUserState);
+
+  // 🔀 FLOW ROUTER
+  if (nextStep === "flow_router") {
+    setStep(nextUserState.isMinor ? "us_refusal" : "marital_status");
+    return;
+  }
+
+  // 🧮 FINAL
+  if (nextStep === "calculate_final") {
+    finish(0);
+    return;
+  }
+
   setStep(nextStep);
 };
 
@@ -496,13 +722,13 @@ const goBack = () => {
     )}
 
     {/* ✅ ŞIKLAR */}
-    {steps[step].options?.map(([label, pts, nextStep], i) => (
+    {steps[step].options?.map(([label, pts, nextStep,payload], i) => (
       <button
         key={i}
         onClick={() =>
           nextStep === "result"
             ? finish(pts)
-            : next(pts, nextStep)
+            : next(pts, nextStep,payload)
         }
         className="w-full text-left p-4 border rounded-xl hover:border-emerald-500 hover:bg-emerald-50 transition font-semibold"
       >
