@@ -61,7 +61,7 @@ const documents = [
   { icon: <GoDotFill />, title: "DS-160  onay (confirmation) sayfasının çıktısı" },
   { icon: <GoDotFill />, title: "Son altı ay içinde beyaz fon ile çekilmiş, 5×5 cm boyutunda bir adet renkli biometrik fotoğraf" },
   { icon: <GoDotFill />, title: "Eski pasaportlar veya önceki seyahatleri kanıtlayan belgeler (varsa)" },
-  { icon: <GoDotFill />, title: "Başvuruyu destekleyebilecek ek belgeler (davetiye, uçak bileti vb.)" },
+  { icon: <GoDotFill />, title: "Başvuruyu destekleyebilecek ek belgeler (davetiye vb.)" },
 ];
 
 

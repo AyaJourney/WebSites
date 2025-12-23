@@ -337,8 +337,8 @@ const steps = {
     title: "Cinsiyet",
     description: "Cinsiyetinizi belirtiniz.",
     options: [
-      ["Kadın", 5, "parents_visa"],
-      ["Erkek", -5, "parents_visa"],
+      ["Kadın", 5, "parents_visa",{gender:"female"}],
+      ["Erkek", -5, "parents_visa",{gender:"male"}],
     ],
   },
 
@@ -374,15 +374,24 @@ const steps = {
       ["Eşimle veya sevgilimle.", 3, "flow_router"],
     ],
   },
-
-  marital_status: {
-    title: "Medeni Durum",
-    description: "Medeni durumunuz nedir?",
-    options: [
-      ["Bekarım / Dul / Boşanmış", 0, "job_status"],
-      ["Evliyim", 5, "job_status"],
+marital_status: {
+  title: "Medeni Durum",
+  description: "Medeni durumunuz nedir?",
+  options: [
+    [
+      "Bekar / Dul / Boşanmış",
+      0,
+      "job_status",
+      { maritalStatus: "single" }
     ],
-  },
+    [
+      "Evli",
+      5,
+      "job_status",
+      { maritalStatus: "married" }
+    ],
+  ],
+},
 
   job_status: {
     title: "Meslek Durumu",
@@ -467,7 +476,7 @@ const steps = {
   travel_other_countries: {
     title: "Diğer Ülke Seyahatleri",
     description:
-      "Belirtilen ülkelere son 5 yılda seyahat ettiniz mi?",
+      "Japonya,Güney Kore,Singapur,Tayland,Birleşik Arap Emirlikleri,Güney Afrika bu ülkelere son 5 yılda seyahat ettiniz mi?",
     options: [
       ["Birden fazla", 8, "us_refusal"],
       ["Bir tane", 2, "us_refusal"],
@@ -592,30 +601,46 @@ const next = (pts, nextStep,payload = null) => {
 
   setStep(nextStep);
 };
-
-const finish = async(pts) => {
+// console.log("userState:", userState);
+const finish = async (pts) => {
   setHistory((h) => [...h, { step, pts }]);
 
-  const raw = score + pts + 40;
-  const final = Math.min(Math.max(raw, 15), 99);
+  // 🔢 Base hesap
+  let finalScore = score + pts + 40;
 
-  setScore(final);
+  // 🔻 Genç Yaş (18–28) Kesintisi
+  if (userState.ageGroup === "18-28" && finalScore >= 90) {
+    if (userState.maritalStatus === "single") finalScore -= 20;
+    else if (userState.maritalStatus === "married") finalScore -= 15;
+  }
+
+  // 🔻 Orta Yaş (29–45) Kesintisi
+  if (userState.ageGroup === "29-45" && finalScore >= 90) {
+    if (userState.maritalStatus === "single") finalScore -= 12;
+    else if (userState.maritalStatus === "married") finalScore -= 5;
+  }
+
+  // 🔒 Alt / Üst sınır
+  finalScore = Math.min(Math.max(finalScore, 15), 93);
+
+  setScore(finalScore);
   setStep("result");
 
-     try {
+  try {
     await fetch("/api/send-test", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         name: user.name,
         email: user.email,
-        score: final,
+        score: finalScore,
       }),
     });
   } catch (err) {
     console.error("Mail gönderilemedi");
   }
 };
+
 
 const goBack = () => {
   if (history.length === 0) return;
@@ -632,13 +657,16 @@ const goBack = () => {
 
         {/* HEADER */}
         <div className="flex items-center justify-between px-4 py-4 border-b">
-          <Image
+          <div className="flex items-center justify-center w-full">
+<Image
           src="/images/aya_logo_svg.svg"
           alt="Logo"
           width={150}
           height={150}
           />
          
+          </div>
+          
 
           <div className="group relative">
             <FaTimes
@@ -656,7 +684,7 @@ const goBack = () => {
 
           {/* STEP 0 */}
           {step === 0 && (
-            <div className="space-y-4 text-center">
+            <div className="space-y-10 text-center">
               <h2 className="text-3xl font-extrabold">
            Ücretsiz Amerika Vize Analizi
               </h2>
