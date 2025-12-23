@@ -96,7 +96,7 @@ fs.writeFileSync(
   "utf-8"
 );
 
-    if (!name || !email || !phoneNumber || typeof score !== "number") {
+    if (!name || !email || typeof score !== "number") {
       return new Response(
         JSON.stringify({ error: "Eksik veya hatalı veri" }),
         { status: 400 }
