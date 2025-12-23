@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
    SCORE CONFIG
 ========================= */
 function getScoreMeta(score) {
-  if (score >= 85) {
+  if (score >= 80) {
     return {
       label: "Çok Güçlü Profil",
       bg: "#dcfce7",
@@ -23,7 +23,7 @@ function getScoreMeta(score) {
     };
   }
 
-  if (score >= 65) {
+  if (score >= 50) {
     return {
       label: "Orta – Güçlü Profil",
       bg: "#fef9c3",
@@ -53,6 +53,92 @@ export async function POST(req) {
     }
 
     const meta = getScoreMeta(score);
+const riskText = `
+  <p>
+    <strong>AYA Journey vize ihtimal robotunu kullandığınız için teşekkür ederiz.</strong>
+    Söz konusu uygulama bağlayıcı olmayıp, size fikir vermeyi amaçlamaktadır.
+  </p>
+
+  <p>
+    Test sonucunuza göre <strong>yüksek riskli kategoride</strong> yer aldığınızı değerlendiriyoruz.
+  </p>
+
+    <p>
+    AYA Journey veya başka bir danışmanlık firması ile mutlaka görüşmenizi öneririz.
+   
+  </p>
+  <p>
+   
+    Profesyonel bir yönlendirme ve doğru strateji ile ilerlemek başvuru süreciniz açısından
+    büyük önem taşımaktadır.
+  </p>
+
+  <p>
+    Aşağıdaki bağlantıları kullanarak bizimle iletişime geçebilir veya
+    <strong>+90 312 870 15 84</strong> numaralı telefondan veya vizedestek@ayajourney.com mail adresinden bize ulaşabilirsiniz.
+  </p>
+
+  <p>
+    <strong>En iyi dileklerimizle,</strong><br/>
+    AYA Journey
+  </p>
+`;
+const mediumRiskText = `
+  <p>
+    <strong>AYA Journey vize ihtimal robotunu kullandığınız için teşekkür ederiz.</strong>
+    Söz konusu uygulama bağlayıcı olmayıp, size fikir vermeyi amaçlamaktadır.
+  </p>
+
+  <p>
+    Test sonucunuza göre <strong>orta riskli kategoride</strong> yer aldığınızı değerlendiriyoruz.
+    Bu noktada başvuru formunuz (DS-160) ve mülakat stratejiniz büyük önem taşımaktadır.
+  </p>
+
+  <p>
+    AYA Journey ile temasa geçerek vize alma şansınızı yükseltebilirsiniz.
+    Ekibimizde, her biri ABD’yi bizzat görmüş ve vize süreçlerine son derece hâkim
+    uzmanlar yer almaktadır. Hatta bunlardan bazıları <strong>eski konsolos ve avukatlardır.</strong>
+  </p>
+
+  <p>
+    Aşağıdaki bağlantıları kullanarak bizimle iletişime geçebilir veya
+    <strong>+90 312 870 15 84</strong> numaralı telefondan veya vizedestek@ayajourney.com mail adresinden bize ulaşabilirsiniz.
+  </p>
+  <p>
+    <strong>En iyi dileklerimizle,</strong><br/>
+    AYA Journey
+  </p>
+`;
+const highScoreText = `
+  <p>
+    <strong>AYA Journey vize ihtimal robotunu kullandığınız için teşekkür ederiz.</strong>
+    Söz konusu uygulama bağlayıcı olmayıp, size fikir vermeyi amaçlamaktadır.
+  </p>
+
+  <p>
+    Test sonucunuza göre, Amerika vizesi almak için
+    <strong>profilinizin oldukça güçlü</strong> olduğunu görüyoruz.
+    Herhangi bir yerden danışmanlık almasanız dahi vize onayı alma ihtimaliniz
+    oldukça yüksektir.
+  </p>
+
+  <p>
+    Buna rağmen, “Olası dalgınlıklar veya hatalar ret sebebi olmasın,
+    süreci risksiz ve eksiksiz şekilde ilerleteyim” derseniz,
+    AYA Journey uzmanları size <strong>sorunsuz ve profesyonel bir başvuru süreci</strong>
+    sunmak için hazırdır.
+  </p>
+
+  <p>
+    Aşağıdaki bağlantıları kullanarak bizimle iletişime geçebilir ya da
+    <strong>+90 312 870 15 84</strong> numaralı telefondan veya vizedestek@ayajourney.com mail adresinden bize ulaşabilirsiniz.
+  </p>
+
+  <p>
+    <strong>En iyi dileklerimizle,</strong><br/>
+    AYA Journey
+  </p>
+`;
 
     /* =========================
        MAIL HTML
@@ -61,10 +147,30 @@ export async function POST(req) {
       <div style="font-family:Arial,sans-serif;background:#f8fafc;padding:30px;">
         <div style="max-width:600px;margin:auto;background:#ffffff;border-radius:16px;overflow:hidden;border:1px solid #e5e7eb">
 
-          <div style="padding:24px;text-align:center;">
-            <h2 style="margin:0 0 8px 0;">Amerika Vize Analiz Sonucunuz</h2>
-            <p style="color:#64748b;margin:0;">AYA Journey</p>
-          </div>
+         <div style="padding:24px;text-align:center;">
+
+  <img
+    src="https://ayajourney.com/images/ayalogoxl.png"
+    alt="AYA Journey"
+    style="
+      display:block;
+      margin:0 auto 16px auto;
+      max-width:160px;
+      width:100%;
+      height:auto;
+    "
+  />
+
+  <h2 style="margin:0 0 8px 0;">
+    Amerika Vize Analiz Sonucunuz
+  </h2>
+
+  <p style="color:#64748b;margin:0;">
+    AYA Journey
+  </p>
+
+</div>
+
 
           <div style="padding:24px;background:${meta.bg};text-align:center;">
             <div style="font-size:48px;font-weight:800;color:${meta.color}">
@@ -75,25 +181,17 @@ export async function POST(req) {
             </div>
           </div>
 
-          <div style="padding:24px;color:#334155;line-height:1.6;">
-            <p>Sayın <strong>${name}</strong>,</p>
+         <div style="padding:24px;color:#334155;line-height:1.6;">
+  <p>Sayın <strong>${name}</strong>,</p>
 
-            <p>
-              Amerika turist vizesi (B1/B2) için oluşturduğumuz
-              <strong>yapay zeka destekli analiz</strong> sonucunda
-              hazırlık skorunuz yukarıdaki gibidir.
-            </p>
+ ${score < 50
+  ? riskText
+  : score < 80
+  ? mediumRiskText
+  : highScoreText
+}
+</div>
 
-            <p>
-              Bu skor, profilinizin <strong>göçmenlik riski, seyahat geçmişi
-              ve tutarlılık</strong> açısından genel durumunu gösterir.
-            </p>
-
-            <p>
-              Skorunuzu yükseltmek ve başvurunuzu profesyonel şekilde
-              hazırlamak için uzmanlarımızla görüşebilirsiniz.
-            </p>
-          </div>
 
         <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:16px;">
   <tr>

@@ -172,7 +172,7 @@ const [open, setOpen] = useState(false);
   onClick={() => setOpen(true)}
   className="bg-emerald-500 text-white px-6 py-3 rounded-2xl font-semibold hover:bg-emerald-600 transition"
 >
-Bavulları Toplasam mı Testi
+Vize alma ihtimalinizi ölçün!
 </button>
             </div>
 
@@ -266,9 +266,7 @@ Bavulları Toplasam mı Testi
           data-anim="ukvisa-fade-up"
           className="ukvisa-fade-up-init mt-10 rounded-2xl border border-amber-200 bg-amber-50/70 p-5 text-sm text-slate-800"
         >
-          <strong>Önemli Not:</strong> AYA Journey, vize alma garantisi sunmaz. Vize verme yetkisi tamamen
-          konsolosluk mülakatını yapan memura aittir. Vize garantisi vaat eden kişi veya kurumlardan
-          uzak durmanızı önemle tavsiye ederiz.
+          <strong>Önemli Not:</strong>Vize verme yetkisi yalnızca konsoloslukta mülakatı yapan memura aittir. AYA Journey, vize alma garantisi sunmaz, bu tür sözler veren kişi veya kurumlardan uzak durmanızı önemle tavsiye eder.
         </div>
       </section>
 

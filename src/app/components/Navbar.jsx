@@ -110,7 +110,7 @@ export default function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                // onClick={()=>{setMenuOpen}}
+                onClick={()=>{setMenuOpen(false)}}
                 className={`text-[17px] px-3 py-2 rounded transition
                   ${
                     item.name === "Hadi Başlayalım !"
@@ -147,7 +147,10 @@ export default function Navbar() {
                     key={sub.href}
                     href={sub.href}
                     className="text-gray-700 hover:text-blue-600 font-medium underline underline-offset-4"
-                  
+                  onClick={() => {
+    setMenuOpen(false);
+    setOpenMega(null);
+  }}
                   >
                     {sub.name}
                   </Link>

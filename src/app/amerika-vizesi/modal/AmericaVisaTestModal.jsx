@@ -27,297 +27,7 @@ const emailRegex =
 /* =========================
    QUESTIONS
 ========================= */
-// const steps = {
-//   1: {
-//     title: "Yaş Grubunuz?",
-  
-//     options: [
-//       ["0–13 Yaş", 0, "age_0_14"],
-//       ["14–18 Yaş", 0, "age_14_18"],
-//       ["18–30 Yaş", 0, "age_18_30"],
-//       ["30–45 Yaş", 0, "age_30_45"],
-//       ["45–60 Yaş", 0, "age_45_60"],
-//       ["61 Yaş ve Üstü", 0, "age_61"],
-//     ],
-//   },
 
-//   age_0_14: {
-//     title: "Anne ve Baba Vize Durumu",
-//     options: [
-//       ["İkisinin de vizesi var", 10, 2],
-//       ["Sadece birinin vizesi var", 5, 2],
-//       ["Vizeleri yok", 0, 2],
-//     ],
-//   },
-
-//   age_14_18: {
-//     title: "Anne ve Baba Vize Durumu",
-//     options: [
-//       ["İkisinin de vizesi var", 7, 2],
-//       ["Sadece birinin vizesi var", 3, 2],
-//       ["Vizeleri yok", 0, 2],
-//     ],
-//   },
-
-//   age_18_30: {
-//     title: "Cinsiyetiniz?",
-//     options: [
-//       ["Kadın", 10, 3],
-//       ["Erkek", 5, 3],
-//     ],
-//   },
-
-//   age_30_45: {
-//     title: "Cinsiyetiniz?",
-//     options: [
-//       ["Kadın", 10, 3],
-//       ["Erkek", 5, 3],
-//     ],
-//   },
-
-//   age_45_60: {
-//     title: "Cinsiyetiniz?",
-//     options: [
-//       ["Kadın", 20, 3],
-//       ["Erkek", 10, 3],
-//     ],
-//   },
-
-//   age_61: {
-//     title: "Amerika'da Akrabanız Var mı?",
-//     options: [
-//       ["Hayır", 20, 2],
-//       ["Evet", 0, "relative_status"],
-//     ],
-//   },
-
-//   relative_status: {
-//     title: "Yakınınızın Statüsü",
-//     options: [
-//       ["ABD Vatandaşı", 10, 2],
-//       ["Green Card Sahibi", 5, 2],
-//       ["Geçici vizeyle", -10, 2],
-//     ],
-//   },
-
-//   2: {
-//     title: "Cinsiyetiniz?",
-//     options: [
-//       ["Kadın", 5, 3],
-//       ["Erkek", 0, 3],
-//     ],
-//   },
-
-// 3: {
-//   title: "Medeni Haliniz?",
-//   options: [
-//     ["Evli", 5, "child_status"],
-//     ["Bekar", 0, "travel_type_single"],
-//   ],
-// },
-
-// child_status: {
-//   title: "Çocuk Sayısı",
-//   options: [
-//     ["Çocuğum yok", -5, "travel_type_married_no_child"],
-//     ["1 çocuk", 0, "child_travel"],
-//     ["2 veya daha fazla çocuk", 0, "child_travel"],
-//   ],
-// },
-
-// child_travel: {
-//   title: "Çocuklarla mı seyahat edeceksiniz?",
-//   options: [
-//     ["Evet", 4, 6],
-//     ["Hayır", 0, "travel_type_married_no_child"],
-//   ],
-// },
-
-
-
-//  travel_type_single: {
-//   title: "Seyahat Şekli",
-//   options: [
-//     ["Bekar ve tek gidecek", -10, 6],
-//     ["Bekar ve arkadaşıyla gidecek", 3, 6],
-//   ],
-// },
-// travel_type_married_no_child: {
-//   title: "Seyahat Şekli",
-//   options: [
-//     ["Evli ve tek gidecekse", -5, 6],
-//     ["Evli ve arkadaşlarıyla gidecekse", 10, 6],
-//     [
-//       "Evli ve karısıyla/kocasıyla gidecekse",
-//       15,
-//       6,
-//     ],
-//   ],
-// },
-
-//   6: {
-//     title: "Son 5 Yıldaki Batı Vizeleri",
-//     description:"Son 5 yılda, Amerika (Work and Travel hariç), İngiltere, Kanada, Avustralya ve Yeni Zelanda’dan vize aldınız mı?",
-//     options: [
-//       ["Birden fazla", 20, 7],
-//       ["1 tane", 10, 7],
-//       ["Hiç yok", 0, 7],
-//     ],
-//   },
-
-//   7: {
-//     title: "Kanada Vize Reddi",
-//     description:"Son 3 yıl içinde, Kanada’ya başvurup ret aldınız mı?",
-//     options: [
-//       ["Evet", -10, 8],
-//       ["Hayır", 0, 8],
-//     ],
-//   },
-
-//   8: {
-//     title: "Pasaporttaki Vize Etiketi Sayısı",
-//     description:"Pasaportunuzda basılı vize etiketi sayısı (Schengen, İngiltere vb ülkeler. Yunanistan adaları kapıda vize dahil)",
-//     options: [
-//       ["Hiç yok", -10, 9],
-//       ["1 tane", 5, 9],
-//       ["2 tane", 20, 9],
-//       ["3 tane veya daha fazla", 40, 9],
-//     ],
-//   },
-
-//   9: {
-//     title: "Diğer Ülke Seyahatleri",
-//     description:"Singapur, Japonya, Güney Kore, Dubai, Tayland, Güney Afrika, Vietnam ülkelerinden birine son 5 yılda gittiniz mi?",
-//     options: [
-//       ["Birden fazla", 10, 10],
-//       ["Bir tane", 3, 10],
-//       ["Hayır", 0, 10],
-//     ],
-//   },
-
-//   10: {
-//     title: "İngilizce Mülakat",
-//     description:"İngilizce mülakat yapabilir misiniz? (B2 ve üstü ingilizce seviyesi)",
-//     options: [
-//       ["Evet", 15, 11],
-//       ["Hayır", 0, 11],
-//     ],
-//   },
-
-//   11: {
-//     title: "Uluslararası Ödül",
-//     description:"Uluslararası alanda sahip olduğunuz bir ödül (örneğin turnuvada derece, yarışmada mansiyon ödülü vb) var mı?",
-//     options: [
-//       ["Evet", 20, 12],
-//       ["Hayır", 0, 12],
-//     ],
-//   },
-
-//  12: {
-//   title: "Ne iş yapıyorsunuz?",
-//   options: [
-//     ["Kamuda üst düzey memur (10 yıl üstü kariyer uzmanı ve yeşil pasaportlu)", 20, 13],
-//     ["Kamuda kariyer memuru (10 yıl altı kariyer uzmanı)", 8, 13],
-//     ["Kamuda işçi/danışman/sözleşmeli kategorisinde", 3, 13],
-//     ["Özel sektör – 10 personelden fazla çalışanı olan şirket sahibi", 20, 13],
-//     ["Özel sektör – 10 personelden az çalışanı olan şirket sahibi", 10, 13],
-//     ["Özel sektör – üst düzey yönetici", 20, 13],
-//     ["Özel sektör - uzman/mühendis/mimar/İK görevlisi/öğretmen/hemşire", 5, 13],
-//     ["Özel sektör – Doktor/avukat", 10, 13],
-//     ["Mavi yaka (işçi, sanayi çalışanı, kurye, şoför vb)", 0, 13],
-//     ["Emekli (kamu)", 5, 13],
-//     ["Emekli (özel sektör)", 0, 13],
-//     ["Emekli (eşinin/babasının aylığını alıyor)", -10, 13],
-//     ["Öğrenci (lise)", 2, 13],
-//     ["Öğrenci (lisans)", -10, 13],
-//     ["Öğrenci (yüksek lisans)", -3, 13],
-//     ["Ev hanımı", -5, 13],
-//   ],
-// },
-
-
-// 13: {
-//   title: "ABD Vize Reddi",
-//   description: "Daha önce Amerika vizesine başvurup ret aldınız mı?",
-//   options: [
-//     ["Evet", 0, "last_reject"],
-//     ["Hayır", 0, 14],
-//   ],
-// },
-
-
-// last_reject: {
-//   title: "Son Reddiniz Ne Zamandı?",
-//   options: [
-//     ["Son 6 ay içinde", -15, 14],
-//     ["Son 18 ay içinde", -10, 14],
-//     ["2 yıldan fazla zaman önce", 0, 14],
-//     ["Birden fazla ret varsa", -20, 14],
-//   ],
-// },
-//  14: {
-//   title: "Amerika'da Akraba",
-//   description:
-//     "Amerika’da yaşayan birinci ve ikinci derecede akrabanız var mı (baba, anne, kardeş, amca, dayı, teyze, hala, kuzen vb)",
-//   options: [
-//     ["Evet", 0, "relative_status_14"],
-//     ["Hayır", 0, "result"],
-//   ],
-// },
-
-// relative_status_14: {
-//   title: "Hangi statü ile Amerika’da bulunuyorlar?",
-//   options: [
-//     ["ABD vatandaşı", 10, "relative_job_14"],
-//     ["Green Card sahibi", 5, "relative_job_14"],
-//     ["Göçmen olmayan vize ile bulunuyor", -10, "relative_job_14"],
-//   ],
-// },
-
-// relative_job_14: {
-//   title: "Bu kişi ne iş yapıyor?",
-//   options: [
-//     [
-//       "En az 100 kişinin çalıştığı bir şirkette üst düzey yönetici / şirket sahibi",
-//       10,
-//       "relative_visit_14",
-//     ],
-//     [
-//       "Beyaz yaka (uzman personel, banka şube müdürü, iç mimar vb)",
-//       5,
-//       "relative_visit_14",
-//     ],
-//     [
-//       "Günlük işler yapıyor (örneğin uber, doordash, inşaat-tadilat, barmenlik vb)",
-//       -20,
-//       "relative_visit_14",
-//     ],
-//   ],
-// },
-
-// relative_visit_14: {
-//   title: "Yakınınız en son ne zaman Türkiye’ye geldi?",
-//   options: [
-//     [
-//       "Son 1 yıl içinde en az 1 defa Türkiye’ye geldi",
-//       10,
-//       "result",
-//     ],
-//     [
-//       "Seyahat engeli yok ama son 1-2 yıldır gelmedi",
-//       -10,
-//       "result",
-//     ],
-//     [
-//       "Statü değiştirdiği için gelemiyor",
-//       -30,
-//       "result",
-//     ],
-//   ],
-// },
-
-
-// };
 
 const steps = {
   1: {
@@ -332,7 +42,26 @@ const steps = {
     ["60 yaşından büyüğüm.", 15, "marital_status", { isMinor: false, ageGroup: "60+" }],
   ],
 },
+// education_check:{
+//  title: "Eğitim Durumu",
+//     description: "Eğitim hayatınıza devam ediyor musunuz?",
+//     options: [
+//       ["Evet", 0, "school_check"],
+//       ["Hayır", 0, "parents_visa"],
+     
 
+//     ], 
+// },
+school_check:{
+ title: "Öğrencilik Durumu",
+    description: "Öğrencilik durumunuzu belirtiniz.",
+    options: [
+      // ["Lise", 5, "parents_visa",{gender:"female"}],
+      ["Ön Lisans/Lisans", -10, "children_count"],
+      ["Yüksek Lisans", -3, "children_count"],
+
+    ], 
+},
   gender_check: {
     title: "Cinsiyet",
     description: "Cinsiyetinizi belirtiniz.",
@@ -401,9 +130,10 @@ marital_status: {
       ["Kamu çalışanıyım (Memur, Akademisyen vb.)", 10, "children_count"],
       ["Özel sektörde çalışanım (SGK'lı).", 5, "children_count"],
       ["İşverenim / Şirket Sahibiyim.", 10, "children_count"],
-      ["Öğrenciyim.", 2, "children_count"],
+      ["Öğrenciyim.", 2, "school_check"],
       ["Emekliyim.", 8, "children_count"],
       ["Çalışmıyorum / Ev hanımıyım.", -5, "children_count"],
+      ["Freelance(Yazılımcı, Tasarımcı,İç Mimar vb.)", -10, "children_count"]
     ],
   },
 
@@ -436,6 +166,8 @@ marital_status: {
       ["ABD Vatandaşı.", 5, "us_contact_visit"],
       ["Green Card (Yeşil Kart) Sahibi.", 2, "us_contact_visit"],
       ["Öğrenci veya Geçici Çalışma Vizesi ile orada.", -10, "us_contact_visit"],
+      ["İltica/Yasa dışı yollardan geçmiş", -30, "us_contact_visit"],
+
     ],
   },
 
@@ -661,8 +393,8 @@ const goBack = () => {
 <Image
           src="/images/aya_logo_svg.svg"
           alt="Logo"
-          width={150}
-          height={150}
+          width={250}
+          height={250}
           />
          
           </div>
@@ -686,7 +418,7 @@ const goBack = () => {
           {step === 0 && (
             <div className="space-y-10 text-center">
               <h2 className="text-3xl font-extrabold">
-           Ücretsiz Amerika Vize Analizi
+            Amerika Vize Analizi
               </h2>
               <p className="text-slate-600">
                 2 dakikada Amerika vize hazırlık skorunuzu öğrenin.
@@ -809,7 +541,14 @@ const goBack = () => {
       >
         WhatsApp’tan Yaz
       </a>
-
+     <a
+        href="/iletisim"
+        className="w-full sm:w-auto"
+      >
+        <button className=" cursor-pointer w-full sm:w-auto bg-white text-blue-600 px-6 py-3 rounded-xl font-semibold shadow-lg hover:-translate-y-0.5 transition">
+         Size Ulaşalım
+                 </button>
+      </a>
     </div>
 
               <button
