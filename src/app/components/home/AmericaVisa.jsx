@@ -51,7 +51,7 @@ return (
   
   <br />
    <span className="text-slate-900">
-     Turist Vizesi (B1/B2), Ögrenci Vizesi (F1),  külturel değişim programları vizesi (J1) ve daha fazlasında uzmanlığa güvenin
+     Turist Vizesi (B1/B2), Ögrenci Vizesi (F1),  kültürel değişim programları vizesi (J1) ve daha fazlasında uzmanlığa güvenin
   </span>
 </h1>
 
@@ -138,15 +138,15 @@ return (
       
       {/* LEFT */}
       <div className="space-y-8 text-center lg:text-justify">
-       <h1 className="relative z-10 text-3xl sm:text-4xl md:text-5xl font-bold leading-tight ">
-  <span className="bg-gradient-to-r from-red-600 via-red-500 to-blue-600 bg-clip-text text-transparent ">
-   Hayalleri Süsleyen  Amerika 
+<h1 className="relative z-10 text-3xl sm:text-4xl md:text-6xl font-bold leading-tight text-center">
+  <span className="bg-gradient-to-r from-red-600 via-red-500 to-blue-600 bg-clip-text text-transparent">
+    Hayalleri Süsleyen Amerika
   </span>
-  
-  <br />
-  <span className="text-slate-900 md:text-4xl text-justify">
-   Turist Vizesi (B1/B2), Ögrenci Vizesi (F1),  külturel değişim programları vizesi (J1) ve daha fazlasında uzmanlığa güvenin
-  </span>
+
+  <div className="mt-4 text-slate-900 md:text-3xl text-justify max-w-4xl mx-auto font-normal">
+    Turist Vizesi (B1/B2), Öğrenci Vizesi (F1), kültürel değişim programları
+    vizesi (J1) ve daha fazlasında uzmanlığa güvenin
+  </div>
 </h1>
 
         <p className="text-base sm:text-lg text-slate-700 max-w-xl mx-auto lg:mx-0">

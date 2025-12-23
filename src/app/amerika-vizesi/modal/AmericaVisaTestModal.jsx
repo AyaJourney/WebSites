@@ -537,7 +537,7 @@ const goBack = () => {
 
               <ScoreGauge score={score} />
 
-              <p className="text-slate-600 max-w-md mx-auto mt-50">
+              <p className="text-slate-600 max-w-md mx-auto mt-50 text-[8px]">
               Verilen puanlarin herhangi bir bağlayıcılığı bulunmamakta olup, kullanıcıya fikir vermesi ve eğlendirmesi amaçlanmaktadır.
               </p>
 

@@ -39,7 +39,7 @@ export default function ScoreGauge({ score }) {
     progress < 50
       ? "Profiliniz vize açısından riskli görünüyor."
       : progress < 75
-      ? "Doğru strateji ile şansınız artırılabilir."
+      ? "Doğru strateji ile şansınız arttırılabilir."
       : "Profiliniz Amerika vizesi için oldukça güçlü. Yine de risklerden korunmak için AYA Journey ile temasa geçmenizi öneririz.";
 
   return (
