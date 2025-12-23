@@ -111,11 +111,9 @@ export default function ScoreGauge({ score }) {
       <p className="text-sm leading-relaxed text-blue-900">
         🚀 <strong>Biliyor muydunuz?</strong>
         <br />
-        AYA Journey ile çalıştığınızda buradaki puanınızı{" "}
-        <span className="inline-block rounded bg-yellow-300 px-1.5 font-bold text-black">
-          90 ve üstüne
-        </span>{" "}
-        çıkarabilirsiniz.
+        AYA Journey ile çalıştığınızda çok daha iyi sonuç alabilirsiniz.
+       
+    
       </p>
     </div>
   )}
