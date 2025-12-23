@@ -218,6 +218,9 @@ return (
           if (hour < now.getHours() || (hour === now.getHours() && minute <= now.getMinutes())) {
             disableTime = true;
           }
+          if(person.id === 1){
+             disableTime = true;
+          }
         }
 
         return (
