@@ -37,11 +37,39 @@ const steps = {
     ["0 - 13 yaşındayım.", 0, "parents_visa", { isMinor: true, ageGroup: "0-13" }],
     ["14 - 17 yaşındayım.", 0, "parents_visa", { isMinor: true, ageGroup: "14-17" }],
     ["18 - 28 yaş arasındayım.", -10, "gender_check", { isMinor: false, ageGroup: "18-28" }],
-    ["29 - 45 yaş arasındayım.", 5, "marital_status", { isMinor: false, ageGroup: "29-45" }],
-    ["46 - 60 yaş arasındayım.", 10, "marital_status", { isMinor: false, ageGroup: "46-60" }],
-    ["60 yaşından büyüğüm.", 15, "marital_status", { isMinor: false, ageGroup: "60+" }],
+    ["29 - 45 yaş arasındayım.", 5, "marital_status_mat", { isMinor: false, ageGroup: "29-45" }],
+    ["46 - 60 yaş arasındayım.", 10, "marital_status_mat", { isMinor: false, ageGroup: "46-60" }],
+    ["60 yaşından büyüğüm.", 15, "marital_status_mat", { isMinor: false, ageGroup: "60+" }],
   ],
 },
+
+// school_check_0_13:{
+//  title: "Okul Durumu",
+//     description: "Okul durumunuzu belirtiniz.",
+//     options: [
+//       ["Okul Öncesi", 5, "parents_visa"],
+//       ["İlk Okul", 5, "parents_visa"],
+//       ["Orta Okul", 5, "parents_visa"],
+//     ], 
+// },
+
+// family_visa_check_0_13:{
+//  title: "Anne ve Baba Vize Durumu",
+//     description: "Anne ve Baba Vize Durumu",
+//     options: [
+//       ["İkisinin de var", 5, "parents_visa"],
+//       ["İlk Okul", 5, "parents_visa"],
+//       ["Orta Okul", 5, "parents_visa"],
+//     ], 
+// },
+
+
+
+
+
+
+
+
 // education_check:{
 //  title: "Eğitim Durumu",
 //     description: "Eğitim hayatınıza devam ediyor musunuz?",
@@ -103,6 +131,18 @@ school_check:{
       ["Eşimle veya sevgilimle.", 3, "flow_router"],
     ],
   },
+  
+  travel_companion_check_mat: {
+    title: "Seyahat Eşlikçisi",
+    description:
+      "Peki, Amerika seyahatinizi kiminle gerçekleştirmeyi planlıyorsunuz?",
+    options: [
+      ["Yalnız başıma seyahat edeceğim.", -2, "job_status"],
+      ["Bir arkadaşımla veya arkadaş grubumla.", 0, "job_status"],
+      ["Okul veya iş sebebiyle bir ekip/heyet ile birlikte.", 5, "job_status"],
+      ["Eşimle veya sevgilimle.", 3, "job_status"],
+    ],
+  },
 marital_status: {
   title: "Medeni Durum",
   description: "Medeni durumunuz nedir?",
@@ -121,7 +161,24 @@ marital_status: {
     ],
   ],
 },
-
+marital_status_mat: {
+  title: "Medeni Durum",
+  description: "Medeni durumunuz nedir?",
+  options: [
+    [
+      "Bekar / Dul / Boşanmış",
+      0,
+      "travel_companion_check_mat",
+      { maritalStatus: "single" }
+    ],
+    [
+      "Evli",
+      5,
+      "travel_companion_check_mat",
+      { maritalStatus: "married" }
+    ],
+  ],
+},
   job_status: {
     title: "Meslek Durumu",
     description:
@@ -194,14 +251,15 @@ marital_status: {
   },
 
   travel_visa_labels: {
-    title: "Pasaporttaki Vize Etiketi Sayısı",
+    title: "Pasaporttaki Schengen Vize Etiketi Sayısı",
     description:
-      "Pasaportunuzda basılı vize etiketi sayısı.",
+      "Pasaportunuzda basılı Schengen vize etiketi sayısı.(Yunanistan kapıda vize dahil.)",
     options: [
       ["Hiç yok", -10, "travel_other_countries"],
       ["1 tane", 3, "travel_other_countries"],
       ["2 tane", 8, "travel_other_countries"],
       ["3 tane veya daha fazla", 15, "travel_other_countries"],
+      
     ],
   },
 
