@@ -99,9 +99,10 @@ const EnglandVisaHero = () => {
 
             {/* Bilgi bandı */}
             <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-700">
-              İngiltere vizeleri başvuru türüne göre
-              <strong> 6 ay, 2 yıl, 5 yıl veya 10 yıl</strong>
-              olarak verilebilir.
+            İngiltere vizeleri başvuru türüne göre
+<span className="mr-1"/>
+<strong>6 ay, 2 yıl, 5 yıl veya 10 yıl</strong><span className="mr-1"/>
+olarak verilebilir.
             </div>
           </div>
         </div>
