@@ -95,7 +95,7 @@ return (
 
       <Link href="/amerika-vizesi?test=1">
         <button className="mt-2 cursor-pointer inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-emerald-700 transition">
-          Ücretsiz Analizi Başlat →
+          Analizi Başlat →
         </button>
       </Link>
     </div>
@@ -186,7 +186,7 @@ return (
 
       <Link href="/amerika-vizesi?test=1">
         <button className="mt-2 cursor-pointer inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-emerald-700 transition">
-          Ücretsiz Analizi Başlat →
+           Analizi Başlat →
         </button>
       </Link>
     </div>

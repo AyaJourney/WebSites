@@ -1,15 +1,15 @@
 export const titleCase = [
-  { 
-    "id": 1,
-    "name": "Ahmet Yavuz AYBAŞ",
-    "title": "Ankara",
-    // "descriptions": [
-    //   "Kurumsal iş ortaklıklarını ve yurt dışı yatırımcı görüşmelerini yönetir.",
-    //   "Şirketlerin iş geliştirme stratejilerine liderlik eder.",
-    //   "Üst düzey vize süreçlerinin koordinasyonunu ve takibini sağlar."
-    // ],
-    "photo": "/images/defaultuserimage.svg"
-  },
+  // { 
+  //   "id": 1,
+  //   "name": "Ahmet Yavuz AYBAŞ",
+  //   "title": "Ankara",
+  //   // "descriptions": [
+  //   //   "Kurumsal iş ortaklıklarını ve yurt dışı yatırımcı görüşmelerini yönetir.",
+  //   //   "Şirketlerin iş geliştirme stratejilerine liderlik eder.",
+  //   //   "Üst düzey vize süreçlerinin koordinasyonunu ve takibini sağlar."
+  //   // ],
+  //   "photo": "/images/defaultuserimage.svg"
+  // },
   {
     "id": 2,
     "name": "Ahmet Gani KÜÇÜK",

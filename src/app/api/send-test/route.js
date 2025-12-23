@@ -1,3 +1,5 @@
+import fs from "fs";
+import path from "path";
 import nodemailer from "nodemailer";
 
 /* =========================
@@ -14,6 +16,18 @@ const transporter = nodemailer.createTransport({
 /* =========================
    SCORE CONFIG
 ========================= */
+function slugify(str) {
+  return str
+    .toLowerCase()
+    .replace(/ğ/g, "g")
+    .replace(/ü/g, "u")
+    .replace(/ş/g, "s")
+    .replace(/ı/g, "i")
+    .replace(/ö/g, "o")
+    .replace(/ç/g, "c")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
 function getScoreMeta(score) {
   if (score >= 80) {
     return {
@@ -37,15 +51,52 @@ function getScoreMeta(score) {
     color: "#991b1b",
     };
 }
+const now = new Date();
 
+const dateStr = now
+  .toISOString()
+  .replace(/[:.]/g, "-");
 /* =========================
    POST
 ========================= */
 export async function POST(req) {
   try {
-    const { name, email, score } = await req.json();
+const { name, email, phoneNumber, score,answers } = await req.json();
 
-    if (!name || !email || typeof score !== "number") {
+const dirPath = path.join(
+  process.cwd(),
+  
+  "data",
+  "test-verileri"
+);
+
+if (!fs.existsSync(dirPath)) {
+  fs.mkdirSync(dirPath, { recursive: true });
+}
+
+const filePath = path.join(
+  dirPath,
+  `${slugify(name)}-${dateStr}.json`
+);
+
+fs.writeFileSync(
+  filePath,
+  JSON.stringify(
+    {
+      name,
+      email,
+      phoneNumber,
+      score,
+      createdAt: new Date().toISOString(),
+      answers
+    },
+    null,
+    2
+  ),
+  "utf-8"
+);
+
+    if (!name || !email || !phoneNumber || typeof score !== "number") {
       return new Response(
         JSON.stringify({ error: "Eksik veya hatalı veri" }),
         { status: 400 }

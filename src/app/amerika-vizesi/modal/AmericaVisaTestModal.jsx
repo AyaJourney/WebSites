@@ -271,9 +271,10 @@ export default function AmericaVisaTestModal({ open, setOpen }) {
   const router = useRouter();
   const [step, setStep] = useState(0);
   const [score, setScore] = useState(0);
-  const [user, setUser] = useState({ name: "", email: "" });
+  const [user, setUser] = useState({ name: "", email: "",phoneNumber:"" });
   const [errors, setErrors] = useState({});
 const [history, setHistory] = useState([]);
+const [answers, setAnswers] = useState([]);
 const [userState, setUserState] = useState({
   // score: 50,
   ageGroup: "",
@@ -291,7 +292,7 @@ const [userState, setUserState] = useState({
     if (!open) {
       setStep(0);
       setScore(0);
-      setUser({ name: "", email: "" });
+      setUser({ name: "", email: "",phoneNumber:"" });
       setErrors({});
     }
   }, [open]);
@@ -310,7 +311,18 @@ const [userState, setUserState] = useState({
     return Object.keys(e).length === 0;
   };
 
-const next = (pts, nextStep,payload = null) => {
+const next = (pts, nextStep,payload = null,answerLabel = "",questionTitle = "") => {
+   if (questionTitle && answerLabel) {
+    setAnswers((prev) => [
+      ...prev,
+      {
+        step,
+        question: questionTitle,
+        answer: answerLabel,
+        points: pts,
+      },
+    ]);
+  }
   setHistory((h) => [...h, { step, pts }]);
   setScore((s) => s + pts);
  const nextUserState = payload
@@ -333,7 +345,7 @@ const next = (pts, nextStep,payload = null) => {
 
   setStep(nextStep);
 };
-// console.log("userState:", userState);
+// console.log("userState:",answers );
 const finish = async (pts) => {
   setHistory((h) => [...h, { step, pts }]);
 
@@ -365,7 +377,9 @@ const finish = async (pts) => {
       body: JSON.stringify({
         name: user.name,
         email: user.email,
+        phoneNumber:user.phoneNumber,
         score: finalScore,
+        answers:answers,
       }),
     });
   } catch (err) {
@@ -380,6 +394,7 @@ const goBack = () => {
   const last = history[history.length - 1];
 
   setHistory((h) => h.slice(0, -1));
+  setAnswers((a) => a.slice(0, -1));
   setScore((s) => s - last.pts);
   setStep(last.step);
 };
@@ -451,6 +466,14 @@ const goBack = () => {
                 </p>
               )}
 
+              <input
+                placeholder="Telefon Numarası"
+  className="w-full p-4 border rounded-xl"
+  value={user.phoneNumber}
+  onChange={(e) => setUser({ ...user, phoneNumber: e.target.value })}
+
+              />
+              
               <button
                 onClick={() => validateStart() && setStep(1)}
                 className="w-full bg-black text-white py-4 rounded-xl font-bold"
@@ -488,7 +511,13 @@ const goBack = () => {
         onClick={() =>
           nextStep === "result"
             ? finish(pts)
-            : next(pts, nextStep,payload)
+            : next(
+    pts,
+    nextStep,
+    payload,
+    label,
+    steps[step].title
+  )
         }
         className="w-full text-left p-4 border rounded-xl hover:border-emerald-500 hover:bg-emerald-50 transition font-semibold"
       >

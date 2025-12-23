@@ -91,17 +91,14 @@ export default function Page() {
             <div className="rounded-2xl bg-slate-50 border border-slate-200 p-4">
               <p className="font-semibold">Birleşik Krallık</p>
               <p className="text-slate-700 mt-1">
-                Genellikle detaylı ve sohbet tarzında yazılmış bir ret mektubu
-                sunarak hangi hususların eksik veya yetersiz olduğunu açıkça
-                belirtir.
+               Eposta ile, detaylı ve hangi hususlar dolayısıyla uygun bulunmadığınızı izah eden bir ret mektubu gönderilir.
               </p>
             </div>
 
             <div className="rounded-2xl bg-slate-50 border border-slate-200 p-4">
               <p className="font-semibold">Amerika Birleşik Devletleri</p>
               <p className="text-slate-700 mt-1">
-                Çoğu zaman yalnızca 214(b) maddesi kapsamında reddedildiğinizi
-                belirten kısa bir belge verir.
+              Neredeyse hiçbir zaman ret sebebini söylemez. Amerika Göçmenlik ve Vatandaşlık Kanunu'nun 214(b) maddesi kapsamında vize başvurunuza ret verildiğine dair, ret alan herkese verilen belgeden size de verir.
               </p>
             </div>
 
