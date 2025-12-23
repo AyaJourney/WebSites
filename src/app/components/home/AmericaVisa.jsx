@@ -43,7 +43,7 @@ return (
       
       {/* SLIDE 1 – LEFT (AYNI İÇERİK) */}
       <div className="snap-center shrink-0 w-full px-6 py-24">
-        <div className="space-y-8 text-center">
+        <div className="space-y-8 text-justify">
 <h1 className="relative z-10 text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
   <span className="bg-gradient-to-r from-red-600 via-red-500 to-blue-600 bg-clip-text text-transparent">
    Hayalleri Süsleyen  Amerika 
@@ -51,7 +51,7 @@ return (
   
   <br />
    <span className="text-slate-900">
-    Turist Vizesi (B1/B2) ile Seyahat, Eğitim, Yatırım ve Yaşam Fırsatları
+     Turist Vizesi (B1/B2), Ögrenci Vizesi (F1),  külturel değişim programları vizesi (J1) ve daha fazlasında uzmanlığa güvenin
   </span>
 </h1>
 
@@ -137,20 +137,20 @@ return (
     <div className="relative hidden md:grid max-w-7xl mx-auto px-6 grid-cols-1 lg:grid-cols-2 gap-16 min-h-[100svh] items-center">
       
       {/* LEFT */}
-      <div className="space-y-8 text-center lg:text-left">
-       <h1 className="relative z-10 text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
-  <span className="bg-gradient-to-r from-red-600 via-red-500 to-blue-600 bg-clip-text text-transparent">
+      <div className="space-y-8 text-center lg:text-justify">
+       <h1 className="relative z-10 text-3xl sm:text-4xl md:text-5xl font-bold leading-tight ">
+  <span className="bg-gradient-to-r from-red-600 via-red-500 to-blue-600 bg-clip-text text-transparent ">
    Hayalleri Süsleyen  Amerika 
   </span>
   
   <br />
-  <span className="text-slate-900">
-    Turist Vizesi (B1/B2) ile Seyahat, Eğitim, Yatırım ve Yaşam Fırsatları
+  <span className="text-slate-900 md:text-4xl text-justify">
+   Turist Vizesi (B1/B2), Ögrenci Vizesi (F1),  külturel değişim programları vizesi (J1) ve daha fazlasında uzmanlığa güvenin
   </span>
 </h1>
 
         <p className="text-base sm:text-lg text-slate-700 max-w-xl mx-auto lg:mx-0">
-         Gezmekten yaşamaya, çalışmaktan eğitim almaya kadar Amerika Birleşik Devletleri turist vizesi (B1/B2) ile hayallerinizi gerçeğe dönüştürüyoruz.
+         Gezmekten yaşamaya, çalışmaktan eğitim almaya kadar Amerika Birleşik Devletleri hayallerinizi gerçeğe dönüştürüyoruz.
         </p>
 
         <div className="grid sm:grid-cols-2 gap-4 max-w-xl mx-auto lg:mx-0">
