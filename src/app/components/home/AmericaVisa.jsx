@@ -170,7 +170,7 @@ return (
             </div>
           ))}
         </div>
-        <div className="mt-6 w-full max-w-xl mx-auto lg:mx-0 rounded-2xl border border-emerald-200 bg-emerald-50 px-6 py-5 text-left shadow-sm">
+        <div className="mt-6 mb-20 w-full max-w-xl mx-auto lg:mx-0 rounded-2xl border border-emerald-200 bg-emerald-50 px-6 py-5 text-left shadow-sm">
   <div className="flex items-start gap-4">
     <div className="text-2xl">🎯</div>
 
