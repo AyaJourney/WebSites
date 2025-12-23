@@ -253,7 +253,7 @@ marital_status_mat: {
   travel_visa_labels: {
     title: "Pasaporttaki Schengen Vize Etiketi Sayısı",
     description:
-      "Pasaportunuzda basılı Schengen vize etiketi sayısı.(Yunanistan kapıda vize dahil.)",
+      "Yunanistan kapıda vize dahil.",
     options: [
       ["Hiç yok", -10, "travel_other_countries"],
       ["1 tane", 3, "travel_other_countries"],
