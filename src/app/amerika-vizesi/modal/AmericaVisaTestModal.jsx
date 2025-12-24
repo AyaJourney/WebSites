@@ -391,7 +391,7 @@ english_interwiew_14_17:{
     options: [
       ["Evet, hem annemin hem de babamın geçerli vizesi var.", 10, "travel_with_parents_18_28"],
       ["Evet, sadece bir ebeveynimin (anne veya baba) vizesi var.", 5, "travel_with_parents_18_28"],
-      ["Hayır, ebeveynlerimin vizesi yok.", -5, "travel_companion_check_18_28"],
+      ["Hayır, ebeveynlerimin vizesi yok.", 0, "travel_companion_check_18_28"],
     ],
   },
 
@@ -401,23 +401,9 @@ english_interwiew_14_17:{
       "Amerika seyahatinizi, vizesi olan ebeveynlerinizle birlikte mi gerçekleştireceksiniz?",
     options: [
       ["Evet, onlarla birlikte seyahat edeceğim.", 0, "marital_status_18_28"], // specialLogic vardı
-      ["Hayır, onlardan bağımsız seyahat edeceğim.", 0, "travel_companion_check_18_28"],
+      ["Hayır, onlardan bağımsız seyahat edeceğim.", 0, "marital_status_18_28"],
     ],
   },
-
-  travel_companion_check_18_28: {
-    title: "Seyahat Eşlikçisi",
-    description:
-      "Peki, Amerika seyahatinizi kiminle gerçekleştirmeyi planlıyorsunuz?",
-    options: [
-      ["Yalnız başıma seyahat edeceğim.", -2, "marital_status_18_28"],
-      ["Bir arkadaşımla veya arkadaş grubumla.", 0, "marital_status_18_28"],
-      ["Okul veya iş sebebiyle bir ekip/heyet ile birlikte.", 5, "marital_status_18_28"],
-      ["Eşimle veya sevgilimle.", 3, "marital_status_18_28"],
-    ],
-  },
-  
-
 marital_status_18_28: {
   title: "Medeni Durum",
   description: "Medeni durumunuz nedir?",
@@ -440,9 +426,50 @@ marital_status_18_28: {
     title: "Çocuk Sayısı",
     description: "Sahip olduğunuz çocuk sayısını belirtiniz.",
     options: [
-      ["Çocuğum yok.", 0, "job_status_18_28"],
-      ["1 çocuk sahibiyim.", 5, "job_status_18_28"],
-      ["2 veya daha fazla çocuğum var.", 10, "job_status_18_28"],
+      ["Çocuğum yok.", 0, "travel_companion_check_18_28"],
+      ["1 çocuk sahibiyim.", 5, "travel_companion_check_18_28"],
+      ["2 veya daha fazla çocuğum var.", 10, "travel_companion_check_18_28"],
+    ],
+  },
+  travel_companion_check_18_28: {
+    title: "Seyahat Eşlikçisi",
+    description:
+      "Peki, Amerika seyahatinizi kiminle gerçekleştirmeyi planlıyorsunuz?",
+    options: [
+      ["Yalnız başıma seyahat edeceğim.", -4, "travel_friend_visa_18_28"],
+      ["Bir arkadaşımla veya arkadaş grubumla.", 5, "travel_friend_visa_18_28"],
+      ["Okul veya iş sebebiyle bir ekip/heyet ile birlikte.", 5, "travel_school_visa_18_28"],
+      ["Eşimle veya sevgilimle.", 3, "travel_friend_visa_18_28"],
+      ["Ailecek çocuklar dahil.", 3, "travel_family_visa_18_28"],
+    ],
+  },
+
+travel_school_visa_18_28: {
+    title: "Seyahat Eşlikçisi Vize Durumu",
+    description:
+      "Seyahat edeceğiniz grubun ABD vizesi var mı?",
+    options: [
+      ["Hepsinin var.", 2, "job_status_18_28"],
+      ["Bazılarının var.", 0, "job_status_18_28"],
+      ["Hiçbirinin yok.", -3, "job_status_18_28"],
+    ],
+  },
+travel_friend_visa_18_28: {
+    title: "Seyahat Eşlikçisi Vize Durumu",
+    description:
+      "Seyahat arkadaşınızın ABD vizesi var mı?",
+    options: [
+      ["Evet, vizesi var.", 0, "job_status_18_28"],
+      ["Hayır, vizesi yok.", -3, "job_status_18_28"],
+    ],
+  },
+travel_family_visa_18_28: {
+    title: "Seyahat Eşlikçisi Vize Durumu",
+    description:
+      "Seyahat edeceğiniz aile bireylerinizin ABD vizesi var mı?",
+    options: [
+      ["Evet, vizesi var.", 2, "job_status_18_28"],
+      ["Hayır, vizesi yok.", -3, "job_status_18_28"],
     ],
   },
   job_status_18_28: {
@@ -487,8 +514,8 @@ marital_status_18_28: {
    
     options: [
       ["0-50000TL", -5, "us_contact_18_28"],
- ["500001-100000TL", 0, "us_contact_18_28"],
- ["100001-150000TL", 3, "us_contact_18_28"],
+ ["500001-100000TL", 3, "us_contact_18_28"],
+ ["100001-150000TL", 4, "us_contact_18_28"],
   ["150001TL ve üzeri", 5, "us_contact_18_28"],
     ]  
 },
@@ -638,34 +665,31 @@ schengen_russia_china_visit_18_28: {
     description:
       "Son üç yılda Kanada'dan vize reddi aldınız mı?",
     options: [
-      ["Evet, Kanada'dan ret aldım.", -15, "calculate_final"],
-      ["Hayır, Kanada'dan hiç ret almadım.", 0, "calculate_final"],
+      ["Hayır, almadım.", 0, "english_interwiew_18_28"],
+      ["Evet, aldım.", -15, "english_interwiew_18_28"],
+      
     ],
   },
+  english_interwiew_18_28:{
+ title: "İngilizce mülakat yapabilir misiniz?",
+  
+    options: [
+      ["Evet", 15, "calculate_final"],
+      ["Hayır", 0, "calculate_final"],
+ 
+
+    
+    ], },
 // 29-45 YAŞ İÇİN
   gender_check_29_45: {
     title: "Cinsiyet",
     description: "Cinsiyetinizi belirtiniz.",
     options: [
-      ["Kadın", 5, "travel_companion_check_29_45",{gender:"female"}],
-      ["Erkek", -5, "travel_companion_check_29_45",{gender:"male"}],
+      ["Kadın", 5, "marital_status_29_45",{gender:"female"}],
+      ["Erkek", -5, "marital_status_29_45",{gender:"male"}],
     ],
   },
-
-
-  travel_companion_check_29_45: {
-    title: "Seyahat Eşlikçisi",
-    description:
-      "Peki, Amerika seyahatinizi kiminle gerçekleştirmeyi planlıyorsunuz?",
-    options: [
-      ["Yalnız başıma seyahat edeceğim.", -2, "marital_status_29_45"],
-      ["Bir arkadaşımla veya arkadaş grubumla.", 0, "marital_status_29_45"],
-      ["Okul veya iş sebebiyle bir ekip/heyet ile birlikte.", 5, "marital_status_29_45"],
-      ["Eşimle veya sevgilimle.", 3, "marital_status_29_45"],
-    ],
-  },
-  
-marital_status_29_45: {
+  marital_status_29_45: {
   title: "Medeni Durum",
   description: "Medeni durumunuz nedir?",
   options: [
@@ -688,11 +712,56 @@ marital_status_29_45: {
     title: "Çocuk Sayısı",
     description: "Sahip olduğunuz çocuk sayısını belirtiniz.",
     options: [
-      ["Çocuğum yok.", 0, "job_status_29_45"],
-      ["1 çocuk sahibiyim.", 5, "job_status_29_45"],
-      ["2 veya daha fazla çocuğum var.", 10, "job_status_29_45"],
+      ["Çocuğum yok.", 0, "travel_companion_check_18_28"],
+      ["1 çocuk sahibiyim.", 5, "travel_companion_check_18_28"],
+      ["2 veya daha fazla çocuğum var.", 10, "travel_companion_check_18_28"],
     ],
   },
+travel_companion_check_29_45: {
+    title: "Seyahat Eşlikçisi",
+    description:
+      "Peki, Amerika seyahatinizi kiminle gerçekleştirmeyi planlıyorsunuz?",
+    options: [
+      ["Yalnız başıma seyahat edeceğim.", -4, "travel_friend_visa_29_45"],
+      ["Bir arkadaşımla veya arkadaş grubumla.", 5, "travel_friend_visa_29_45"],
+      ["Okul veya iş sebebiyle bir ekip/heyet ile birlikte.", 5, "travel_school_visa_29_45"],
+      ["Eşimle veya sevgilimle.", 3, "travel_friend_visa_29_45"],
+      ["Ailecek çocuklar dahil.", 3, "travel_family_visa_29_45"],
+    ],
+  },
+
+travel_school_visa_29_45: {
+    title: "Seyahat Eşlikçisi Vize Durumu",
+    description:
+      "Seyahat edeceğiniz grubun ABD vizesi var mı?",
+    options: [
+      ["Hepsinin var.", 2, "job_status_29_45"],
+      ["Bazılarının var.", 0, "job_status_29_45"],
+      ["Hiçbirinin yok.", -3, "job_status_29_45"],
+    ],
+  },
+travel_friend_visa_29_45: {
+    title: "Seyahat Eşlikçisi Vize Durumu",
+    description:
+      "Seyahat arkadaşınızın ABD vizesi var mı?",
+    options: [
+      ["Evet, vizesi var.", 0, "job_status_29_45"],
+      ["Hayır, vizesi yok.", -3, "job_status_29_45"],
+    ],
+  },
+travel_family_visa_29_45: {
+    title: "Seyahat Eşlikçisi Vize Durumu",
+    description:
+      "Seyahat edeceğiniz aile bireylerinizin ABD vizesi var mı?",
+    options: [
+      ["Evet, vizesi var.", 2, "job_status_29_45"],
+      ["Hayır, vizesi yok.", -3, "job_status_29_45"],
+    ],
+  },
+
+
+  
+
   job_status_29_45: {
     title: "Meslek Durumu",
     description:
@@ -735,8 +804,8 @@ marital_status_29_45: {
    
     options: [
       ["0-50000TL", -5, "us_contact_29_45"],
- ["500001-100000TL", 0, "us_contact_29_45"],
- ["100001-150000TL", 3, "us_contact_29_45"],
+ ["500001-100000TL", 3, "us_contact_29_45"],
+ ["100001-150000TL", 4, "us_contact_29_45"],
 
   ["150001TL ve üzeri", 5, "us_contact_29_45"],
     ]  
@@ -887,10 +956,20 @@ schengen_russia_china_visit_29_45: {
     description:
       "Son üç yılda Kanada'dan vize reddi aldınız mı?",
     options: [
-      ["Evet, Kanada'dan ret aldım.", -15, "calculate_final"],
-      ["Hayır, Kanada'dan hiç ret almadım.", 0, "calculate_final"],
+      ["Evet, aldım.", -15, "english_interwiew_29_45"],
+      ["Hayır, almadım.", 0, "english_interwiew_29_45"],
     ],
   },
+    english_interwiew_29_45:{
+ title: "İngilizce mülakat yapabilir misiniz?",
+  
+    options: [
+      ["Evet", 10, "calculate_final"],
+      ["Hayır", 0, "calculate_final"],
+ 
+
+    
+    ], },
 // 46-60 YAŞ İÇİN
   gender_check_46_60: {
     title: "Cinsiyet",
@@ -902,20 +981,7 @@ schengen_russia_china_visit_29_45: {
   },
 
  
-
-  travel_companion_check_46_60: {
-    title: "Seyahat Eşlikçisi",
-    description:
-      "Peki, Amerika seyahatinizi kiminle gerçekleştirmeyi planlıyorsunuz?",
-    options: [
-      ["Yalnız başıma seyahat edeceğim.", -2, "marital_status_46_60"],
-      ["Bir arkadaşımla veya arkadaş grubumla.", 0, "marital_status_46_60"],
-      ["Okul veya iş sebebiyle bir ekip/heyet ile birlikte.", 5, "marital_status_46_60"],
-      ["Eşimle veya sevgilimle.", 3, "marital_status_46_60"],
-    ],
-  },
-  
-marital_status_46_60: {
+  marital_status_46_60: {
   title: "Medeni Durum",
   description: "Medeni durumunuz nedir?",
   options: [
@@ -938,9 +1004,50 @@ marital_status_46_60: {
     title: "Çocuk Sayısı",
     description: "Sahip olduğunuz çocuk sayısını belirtiniz.",
     options: [
-      ["Çocuğum yok.", 0, "job_status_46_60"],
-      ["1 çocuk sahibiyim.", 5, "job_status_46_60"],
-      ["2 veya daha fazla çocuğum var.", 10, "job_status_46_60"],
+      ["Çocuğum yok.", 0, "travel_companion_check_18_28"],
+      ["1 çocuk sahibiyim.", 5, "travel_companion_check_18_28"],
+      ["2 veya daha fazla çocuğum var.", 10, "travel_companion_check_18_28"],
+    ],
+  },
+travel_companion_check_46_60: {
+    title: "Seyahat Eşlikçisi",
+    description:
+      "Peki, Amerika seyahatinizi kiminle gerçekleştirmeyi planlıyorsunuz?",
+    options: [
+      ["Yalnız başıma seyahat edeceğim.", -4, "travel_friend_visa_46_60"],
+      ["Bir arkadaşımla veya arkadaş grubumla.", 5, "travel_friend_visa_46_60"],
+      ["Okul veya iş sebebiyle bir ekip/heyet ile birlikte.", 5, "travel_school_visa_46_60"],
+      ["Eşimle veya sevgilimle.", 3, "travel_friend_visa_46_60"],
+      ["Ailecek çocuklar dahil.", 3, "travel_family_visa_46_60"],
+    ],
+  },
+
+travel_school_visa_46_60: {
+    title: "Seyahat Eşlikçisi Vize Durumu",
+    description:
+      "Seyahat edeceğiniz grubun ABD vizesi var mı?",
+    options: [
+      ["Hepsinin var.", 2, "job_status_46_60"],
+      ["Bazılarının var.", 0, "job_status_46_60"],
+      ["Hiçbirinin yok.", -3, "job_status_46_60"],
+    ],
+  },
+travel_friend_visa_46_60: {
+    title: "Seyahat Eşlikçisi Vize Durumu",
+    description:
+      "Seyahat arkadaşınızın ABD vizesi var mı?",
+    options: [
+      ["Evet, vizesi var.", 0, "job_status_46_60"],
+      ["Hayır, vizesi yok.", -3, "job_status_46_60"],
+    ],
+  },
+travel_family_visa_46_60: {
+    title: "Seyahat Eşlikçisi Vize Durumu",
+    description:
+      "Seyahat edeceğiniz aile bireylerinizin ABD vizesi var mı?",
+    options: [
+      ["Evet, vizesi var.", 2, "job_status_46_60"],
+      ["Hayır, vizesi yok.", -3, "job_status_46_60"],
     ],
   },
   job_status_46_60: {
@@ -985,8 +1092,8 @@ marital_status_46_60: {
    
     options: [
       ["0-50000TL", -5, "us_contact_46_60"],
- ["500001-100000TL", 0, "us_contact_46_60"],
- ["100001-150000TL", 3, "us_contact_46_60"],
+ ["500001-100000TL", 3, "us_contact_46_60"],
+ ["100001-150000TL", 4, "us_contact_46_60"],
 
   ["150001TL ve üzeri", 5, "us_contact_46_60"],
     ]  
@@ -1137,10 +1244,21 @@ schengen_russia_china_visit_46_60: {
     description:
       "Son üç yılda Kanada'dan vize reddi aldınız mı?",
     options: [
-      ["Evet, Kanada'dan ret aldım.", -15, "calculate_final"],
-      ["Hayır, Kanada'dan hiç ret almadım.", 0, "calculate_final"],
+         ["Hayır, almadım.", 0, "english_interwiew_46_60"],
+      ["Evet, aldım.", -15, "english_interwiew_46_60"],
+   
     ],
   },
+   english_interwiew_46_60:{
+ title: "İngilizce mülakat yapabilir misiniz?",
+  
+    options: [
+      ["Evet", 10, "calculate_final"],
+      ["Hayır", 0, "calculate_final"],
+ 
+
+    
+    ], },
 // +60 YAŞ İÇİN
   gender_check_61_plus: {
     title: "Cinsiyet",
@@ -1152,20 +1270,8 @@ schengen_russia_china_visit_46_60: {
   },
 
  
-
-  travel_companion_check_61_plus: {
-    title: "Seyahat Eşlikçisi",
-    description:
-      "Peki, Amerika seyahatinizi kiminle gerçekleştirmeyi planlıyorsunuz?",
-    options: [
-      ["Yalnız başıma seyahat edeceğim.", -2, "marital_status_61_plus"],
-      ["Bir arkadaşımla veya arkadaş grubumla.", 0, "marital_status_61_plus"],
-      ["Okul veya iş sebebiyle bir ekip/heyet ile birlikte.", 5, "marital_status_61_plus"],
-      ["Eşimle veya sevgilimle.", 3, "marital_status_61_plus"],
-    ],
-  },
-  
-marital_status_61_plus: {
+ 
+  marital_status_61_plus: {
   title: "Medeni Durum",
   description: "Medeni durumunuz nedir?",
   options: [
@@ -1188,9 +1294,50 @@ marital_status_61_plus: {
     title: "Çocuk Sayısı",
     description: "Sahip olduğunuz çocuk sayısını belirtiniz.",
     options: [
-      ["Çocuğum yok.", 0, "job_status_61_plus"],
-      ["1 çocuk sahibiyim.", 5, "job_status_61_plus"],
-      ["2 veya daha fazla çocuğum var.", 10, "job_status_61_plus"],
+      ["Çocuğum yok.", 0, "travel_companion_check_18_28"],
+      ["1 çocuk sahibiyim.", 5, "travel_companion_check_18_28"],
+      ["2 veya daha fazla çocuğum var.", 10, "travel_companion_check_18_28"],
+    ],
+  },
+travel_companion_check_61_plus: {
+    title: "Seyahat Eşlikçisi",
+    description:
+      "Peki, Amerika seyahatinizi kiminle gerçekleştirmeyi planlıyorsunuz?",
+    options: [
+      ["Yalnız başıma seyahat edeceğim.", -4, "travel_friend_visa_61_plus"],
+      ["Bir arkadaşımla veya arkadaş grubumla.", 5, "travel_friend_visa_61_plus"],
+      ["Okul veya iş sebebiyle bir ekip/heyet ile birlikte.", 5, "travel_school_visa_61_plus"],
+      ["Eşimle veya sevgilimle.", 3, "travel_friend_visa_61_plus"],
+      ["Ailecek çocuklar dahil.", 3, "travel_family_visa_61_plus"],
+    ],
+  },
+
+travel_school_visa_61_plus: {
+    title: "Seyahat Eşlikçisi Vize Durumu",
+    description:
+      "Seyahat edeceğiniz grubun ABD vizesi var mı?",
+    options: [
+      ["Hepsinin var.", 2, "job_status_61_plus"],
+      ["Bazılarının var.", 0, "job_status_61_plus"],
+      ["Hiçbirinin yok.", -3, "job_status_61_plus"],
+    ],
+  },
+travel_friend_visa_61_plus: {
+    title: "Seyahat Eşlikçisi Vize Durumu",
+    description:
+      "Seyahat arkadaşınızın ABD vizesi var mı?",
+    options: [
+      ["Evet, vizesi var.", 0, "job_status_61_plus"],
+      ["Hayır, vizesi yok.", -3, "job_status_61_plus"],
+    ],
+  },
+travel_family_visa_61_plus: {
+    title: "Seyahat Eşlikçisi Vize Durumu",
+    description:
+      "Seyahat edeceğiniz aile bireylerinizin ABD vizesi var mı?",
+    options: [
+      ["Evet, vizesi var.", 2, "job_status_61_plus"],
+      ["Hayır, vizesi yok.", -3, "job_status_61_plus"],
     ],
   },
   job_status_61_plus: {
@@ -1235,8 +1382,8 @@ marital_status_61_plus: {
    
     options: [
       ["0-50000TL", -5, "us_contact_61_plus"],
- ["500001-100000TL", 0, "us_contact_61_plus"],
- ["100001-150000TL", 3, "us_contact_61_plus"],
+ ["500001-100000TL", 3, "us_contact_61_plus"],
+ ["100001-150000TL", 4, "us_contact_61_plus"],
 
   ["150001TL ve üzeri", 5, "us_contact_61_plus"],
     ]  
@@ -1356,8 +1503,8 @@ schengen_russia_china_visit_61_plus: {
     description:
       "Daha önce Amerika vizesi başvurunuzdan ret aldınız mı?",
     options: [
-      ["Hayır, almadım.", 0, "canada_refusal_61_plus"],
       ["Evet, aldım.", -10, "us_refusal_time_61_plus"],
+      ["Hayır, almadım.", 0, "canada_refusal_61_plus"],
     ],
   },
 
@@ -1387,10 +1534,20 @@ schengen_russia_china_visit_61_plus: {
     description:
       "Son üç yılda Kanada'dan vize reddi aldınız mı?",
     options: [
-      ["Evet, Kanada'dan ret aldım.", -15, "calculate_final"],
-      ["Hayır, Kanada'dan hiç ret almadım.", 0, "calculate_final"],
+      ["Evet, aldım.", -15, "english_interwiew_61_plus"],
+      ["Hayır, almadım.", 0, "english_interwiew_61_plus"],
     ],
   },
+   english_interwiew_61_plus:{
+ title: "İngilizce mülakat yapabilir misiniz?",
+  
+    options: [
+      ["Evet", 5, "calculate_final"],
+      ["Hayır", 0, "calculate_final"],
+ 
+
+    
+    ], },
 // education_check:{
 //  title: "Eğitim Durumu",
 //     description: "Eğitim hayatınıza devam ediyor musunuz?",
@@ -1427,7 +1584,7 @@ school_check:{
     options: [
       ["Evet, hem annemin hem de babamın geçerli vizesi var.", 10, "travel_with_parents"],
       ["Evet, sadece bir ebeveynimin (anne veya baba) vizesi var.", 5, "travel_with_parents"],
-      ["Hayır, ebeveynlerimin vizesi yok.", -5, "travel_companion_check"],
+      ["Hayır, ebeveynlerimin vizesi yok.", 0, "travel_companion_check"],
     ],
   },
 
@@ -1600,8 +1757,8 @@ marital_status_mat: {
     description:
       "Daha önce Amerika vizesi başvurunuzdan ret aldınız mı?",
     options: [
-      ["Hayır, almadım.", 0, "canada_refusal"],
       ["Evet, aldım.", -10, "us_refusal_time"],
+      ["Hayır, almadım.", 0, "canada_refusal"],
     ],
   },
 
@@ -1631,8 +1788,8 @@ marital_status_mat: {
     description:
       "Son üç yılda Kanada'dan vize reddi aldınız mı?",
     options: [
-      ["Evet, Kanada'dan ret aldım.", -15, "calculate_final"],
-      ["Hayır, Kanada'dan hiç ret almadım.", 0, "calculate_final"],
+      ["Evet, aldım.", -15, "calculate_final"],
+      ["Hayır, almadım.", 0, "calculate_final"],
     ],
   },
   flow_router: {
@@ -1661,6 +1818,11 @@ const [userState, setUserState] = useState({
   maritalStatus: "",
   isMinor: false,
 });
+useEffect(() => {
+  if (step === "calculate_final") {
+    finish(0);
+  }
+}, [step]);
  useEffect(() => {
     if (searchParams.get("test") === "1") {
       setOpen(true);
@@ -1675,6 +1837,7 @@ const [userState, setUserState] = useState({
       setErrors({});
     }
   }, [open]);
+
 
   if (!open) return null;
 
@@ -1693,8 +1856,14 @@ const [userState, setUserState] = useState({
     return Object.keys(e).length === 0;
   };
 
-const next = (pts, nextStep,payload = null,answerLabel = "",questionTitle = "") => {
-   if (questionTitle && answerLabel) {
+const next = (
+  pts,
+  nextStep,
+  payload = null,
+  answerLabel = "",
+  questionTitle = ""
+) => {
+  if (questionTitle && answerLabel) {
     setAnswers((prev) => [
       ...prev,
       {
@@ -1705,9 +1874,11 @@ const next = (pts, nextStep,payload = null,answerLabel = "",questionTitle = "") 
       },
     ]);
   }
+
   setHistory((h) => [...h, { step, pts }]);
   setScore((s) => s + pts);
- const nextUserState = payload
+
+  const nextUserState = payload
     ? { ...userState, ...payload }
     : userState;
 
@@ -1719,14 +1890,17 @@ const next = (pts, nextStep,payload = null,answerLabel = "",questionTitle = "") 
     return;
   }
 
-  // 🧮 FINAL
+  // 🧮 FINAL — ❗ return ETME
   if (nextStep === "calculate_final") {
-    finish(0);
+    // step'i değiştir, finish'i effect yakalasın
+    setStep("calculate_final");
     return;
   }
 
   setStep(nextStep);
 };
+
+
 // console.log("userState:",answers );
 const finish = async (pts) => {
   setHistory((h) => [...h, { step, pts }]);
