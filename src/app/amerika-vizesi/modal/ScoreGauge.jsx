@@ -43,10 +43,10 @@ export default function ScoreGauge({ score }) {
       : "Profiliniz Amerika vizesi için oldukça güçlü. Yine de risklerden korunmak için AYA Journey ile temasa geçmenizi öneririz.";
 
   return (
-    <div className="relative w-full h-[220px] mx-auto flex flex-col items-center justify-start">
+  <div className="relative w-full mx-auto h-[200px] sm:h-[220px] md:h-[260px] lg:h-[300px] flex flex-col items-center justify-start">
       
       {/* GAUGE */}
-      <div className="relative w-full h-[140px]">
+     <div className="relative w-full h-[120px] sm:h-[140px] md:h-[170px] lg:h-[200px]">
         <svg viewBox="0 0 200 110" className="w-full h-full">
           {/* Arka zemin */}
           <path
@@ -80,7 +80,7 @@ export default function ScoreGauge({ score }) {
 
         {/* İBRE */}
         <div
-          className="absolute left-1/2 bottom-[12px] w-[4px] h-[95px] rounded-full transition-transform duration-700 ease-out"
+         className="absolute left-1/2 bottom-[10px] sm:bottom-[12px] md:bottom-[14px] w-[3px] sm:w-[4px] h-[70px] sm:h-[95px] md:h-[120px] lg:h-[140px] rounded-full transition-transform duration-700 ease-out"
           style={{
             background: color,
             transform: `translateX(-50%) rotate(${angle}deg)`,
@@ -90,13 +90,14 @@ export default function ScoreGauge({ score }) {
         />
 
         {/* Merkez Nokta */}
-        <div className="absolute left-1/2 bottom-[6px] w-5 h-5 bg-slate-900 rounded-full -translate-x-1/2 shadow-lg border-2 border-white" />
+<div className="absolute left-1/2 bottom-[4px] sm:bottom-[6px] w-4 h-4 sm:w-5 sm:h-5
+  bg-slate-900 rounded-full -translate-x-1/2 shadow-lg border-2 border-white" />
       </div>
 
       {/* SKOR KARTI */}
 <div className="mt-4 w-full text-center px-4">
   <div
-    className="text-5xl font-extrabold"
+    className="font-extrabold text-4xl sm:text-5xl md:text-6xl"
     style={{ color }}
   >
     {progress}
@@ -107,7 +108,7 @@ export default function ScoreGauge({ score }) {
   </div>
 
   {progress < 90 && (
-    <div className="w-full mt-4 rounded-2xl border border-blue-200 bg-blue-50 px-6 py-5 text-left">
+ <div className="w-full mt-4 rounded-2xl border border-blue-200 bg-blue-50 px-4 sm:px-6 py-4 sm:py-5 text-left">
       <p className="text-sm leading-relaxed text-blue-900">
         🚀 <strong>Biliyor muydunuz?</strong>
         <br />
@@ -118,7 +119,7 @@ export default function ScoreGauge({ score }) {
     </div>
   )}
 
-  <p className="mt-2 text-md text-slate-500 leading-snug">
+<p className="mt-2 text-sm sm:text-md text-slate-500 leading-snug sm:leading-relaxed">
     {description}
   </p>
 </div>

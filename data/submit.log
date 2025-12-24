@@ -455,3 +455,30 @@
 2025-12-22T16:50:37.945Z - [ds-160] attempt 1 - sending payload: {"currentStep":8,"steps":{"1":{"fullName":"IPEK PARLAK","gender":"ERKEK","maritalStatus":"BEKAR","maidenName":"PARLAK","birthDate":"2025-12-22","birthPlace":"ANKARA","marriageDate":"","spouseFullName":"","spouseBirthDate":"","spouseBirthPlace":"","spouseAddress":"","spouseOccupation":"","otherMarriages":"","marriages":[{"spouseFullName":"","spouseBirthDate":"","marriageStartDate":"","marriageEndDate":""}]},"2":{"nationality":"TURKIYE","otherNationalityExist":"HAYIR","otherNationality":"","otherS...
 2025-12-22T16:52:06.614Z - [ds-160] attempt=1 status=200 response={"success":true}
 2025-12-22T16:52:06.620Z - [ds-160] success attempt=1
+2025-12-24T08:40:27.388Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1766565627375.json
+2025-12-24T08:40:27.391Z - [ds-160] START apiUrl=http://localhost:3000/api/send-abd
+2025-12-24T08:40:27.391Z - [ds-160] attempt 1 - sending payload: {"currentStep":8,"steps":{"1":{"fullName":"SEVKET PARLAK","gender":"ERKEK","maritalStatus":"EVLI","maidenName":"PARLAK","birthDate":"2025-12-09","birthPlace":"ANKARA","marriageDate":"2025-12-04","spouseFullName":"ASDASD","spouseBirthDate":"2025-12-03","spouseBirthPlace":"ASDASD","spouseAddress":"ASDASD","spouseOccupation":"ASDASD","otherMarriages":"EVET","marriages":[{"spouseFullName":"ASDASD","spouseBirthDate":"2025-12-17","marriageStartDate":"2025-12-02","marriageEndDate":"2025-12-03"}],"home_...
+2025-12-24T08:40:48.625Z - [ds-160] attempt=1 status=500 response={"success":false,"error":"drawSubSection is not defined"}
+2025-12-24T08:40:48.626Z - [ds-160] attempt 2 - sending payload: {"currentStep":8,"steps":{"1":{"fullName":"SEVKET PARLAK","gender":"ERKEK","maritalStatus":"EVLI","maidenName":"PARLAK","birthDate":"2025-12-09","birthPlace":"ANKARA","marriageDate":"2025-12-04","spouseFullName":"ASDASD","spouseBirthDate":"2025-12-03","spouseBirthPlace":"ASDASD","spouseAddress":"ASDASD","spouseOccupation":"ASDASD","otherMarriages":"EVET","marriages":[{"spouseFullName":"ASDASD","spouseBirthDate":"2025-12-17","marriageStartDate":"2025-12-02","marriageEndDate":"2025-12-03"}],"home_...
+2025-12-24T08:41:04.584Z - [ds-160] attempt=2 status=500 response={"success":false,"error":"drawSubSection is not defined"}
+2025-12-24T08:41:04.585Z - [ds-160] MOVED TO FAILED: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\failed\form_1766565627375.json
+2025-12-24T08:42:37.655Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1766565757649.json
+2025-12-24T08:42:37.657Z - [ds-160] START apiUrl=http://localhost:3000/api/send-abd
+2025-12-24T08:42:37.658Z - [ds-160] attempt 1 - sending payload: {"currentStep":9,"steps":{"1":{"fullName":"SEVKET PARLAK","gender":"ERKEK","maritalStatus":"EVLI","maidenName":"PARLAK","birthDate":"2025-12-09","birthPlace":"ANKARA","marriageDate":"2025-12-04","spouseFullName":"ASDASD","spouseBirthDate":"2025-12-03","spouseBirthPlace":"ASDASD","spouseAddress":"ASDASD","spouseOccupation":"ASDASD","otherMarriages":"EVET","marriages":[{"spouseFullName":"ASDASD","spouseBirthDate":"2025-12-17","marriageStartDate":"2025-12-02","marriageEndDate":"2025-12-03"}],"home_...
+2025-12-24T08:45:04.112Z - [ds-160] attempt=1 status=200 response={"success":true}
+2025-12-24T08:45:04.115Z - [ds-160] success attempt=1
+2025-12-24T08:48:21.430Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1766566101424.json
+2025-12-24T08:48:21.432Z - [ds-160] START apiUrl=http://localhost:3000/api/send-abd
+2025-12-24T08:48:21.432Z - [ds-160] attempt 1 - sending payload: {"currentStep":10,"steps":{"1":{"fullName":"SEVKET PARLAK","gender":"ERKEK","maritalStatus":"EVLI","maidenName":"PARLAK","birthDate":"2025-12-09","birthPlace":"ANKARA","marriageDate":"2025-12-04","spouseFullName":"ASDASD","spouseBirthDate":"2025-12-03","spouseBirthPlace":"ASDASD","spouseAddress":"ASDASD","spouseOccupation":"ASDASD","otherMarriages":"EVET","marriages":[{"spouseFullName":"ASDASD","spouseBirthDate":"2025-12-17","marriageStartDate":"2025-12-02","marriageEndDate":"2025-12-03"}],"home...
+2025-12-24T08:50:39.465Z - [ds-160] attempt=1 status=200 response={"success":true}
+2025-12-24T08:50:39.468Z - [ds-160] success attempt=1
+2025-12-24T08:56:54.096Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1766566614090.json
+2025-12-24T08:56:54.098Z - [ds-160] START apiUrl=http://localhost:3000/api/send-abd
+2025-12-24T08:56:54.098Z - [ds-160] attempt 1 - sending payload: {"currentStep":11,"steps":{"1":{"fullName":"SEVKET PARLAK","gender":"ERKEK","maritalStatus":"EVLI","maidenName":"PARLAK","birthDate":"2025-12-09","birthPlace":"ANKARA","marriageDate":"2025-12-04","spouseFullName":"ASDASD","spouseBirthDate":"2025-12-03","spouseBirthPlace":"ASDASD","spouseAddress":"ASDASD","spouseOccupation":"ASDASD","otherMarriages":"EVET","marriages":[{"spouseFullName":"ASDASD","spouseBirthDate":"2025-12-17","marriageStartDate":"2025-12-02","marriageEndDate":"2025-12-03"}],"home...
+2025-12-24T08:59:06.571Z - [ds-160] attempt=1 status=200 response={"success":true}
+2025-12-24T08:59:06.574Z - [ds-160] success attempt=1
+2025-12-24T09:01:04.073Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1766566864067.json
+2025-12-24T09:01:04.075Z - [ds-160] START apiUrl=http://localhost:3000/api/send-abd
+2025-12-24T09:01:04.076Z - [ds-160] attempt 1 - sending payload: {"currentStep":12,"steps":{"1":{"fullName":"SEVKET PARLAK","gender":"ERKEK","maritalStatus":"EVLI","maidenName":"PARLAK","birthDate":"2025-12-09","birthPlace":"ANKARA","marriageDate":"2025-12-04","spouseFullName":"ASDASD","spouseBirthDate":"2025-12-03","spouseBirthPlace":"ASDASD","spouseAddress":"ASDASD","spouseOccupation":"ASDASD","otherMarriages":"EVET","marriages":[{"spouseFullName":"ASDASD","spouseBirthDate":"2025-12-17","marriageStartDate":"2025-12-02","marriageEndDate":"2025-12-03"}],"home...
+2025-12-24T09:03:35.062Z - [ds-160] attempt=1 status=200 response={"success":true}
+2025-12-24T09:03:35.069Z - [ds-160] success attempt=1

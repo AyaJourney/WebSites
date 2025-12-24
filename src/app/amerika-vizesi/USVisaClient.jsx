@@ -159,7 +159,7 @@ const [open, setOpen] = useState(false);
             <div className="flex flex-col sm:flex-row gap-3">
               <Link href="/iletisim">
                 <button className="bg-blue-600 text-white px-5 py-3 rounded-xl font-semibold shadow-md hover:bg-blue-500">
-                  Ücretsiz Ön Görüşme
+                 Hadi Başlayalım!
                 </button>
               </Link>
 
@@ -170,7 +170,7 @@ const [open, setOpen] = useState(false);
               </Link>
               <button
   onClick={() => setOpen(true)}
-  className="bg-emerald-500 text-white px-6 py-3 rounded-2xl font-semibold hover:bg-emerald-600 transition"
+  className="bg-emerald-500 text-white px-6 py-3 rounded-2xl font-semibold hover:bg-emerald-600 transition flex-none"
 >
 Vize alma ihtimalinizi ölçün!
 </button>

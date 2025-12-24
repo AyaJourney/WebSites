@@ -50,7 +50,7 @@ export default function Navbar() {
     { name: "Yurt Dışı Rehberi", href: "/yurtdisi-rehberi" },
     { name: "Sıkça Sorulan Sorular", href: "/sikca-sorulan-sorular" },
     // { name: "Blog Yazıları", href: "/blog" },
-    { name: "Hadi Başlayalım !", href: "/randevu" },
+    { name: "Vize alma ihtimalinizi ölçün!", href: "/amerika-vizesi?test=1" },
   ];
 
   return (
@@ -59,7 +59,7 @@ export default function Navbar() {
       // onMouseLeave={() => setOpenMega(null)}
     >
       {/* BAR */}
-      <div className="w-full max-w-[1420px] mx-auto px-4 flex justify-between h-24 items-center">
+      <div className="w-full max-w-[1520px] mx-auto px-4 flex justify-between h-24 items-center">
         {/* Logo */}
         <Link href="/">
           <img
@@ -113,8 +113,8 @@ export default function Navbar() {
                 onClick={()=>{setMenuOpen(false)}}
                 className={`text-[17px] px-3 py-2 rounded transition
                   ${
-                    item.name === "Hadi Başlayalım !"
-                      ? "bg-red-600 text-white hover:bg-red-700"
+                    item.name === "Vize alma ihtimalinizi ölçün!"
+                      ? "bg-emerald-500 text-white hover:bg-emerald-700"
                       : pathname === item.href
                       ? "text-blue-600"
                       : "text-gray-700 hover:text-blue-600"

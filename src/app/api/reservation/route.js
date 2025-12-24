@@ -1,7 +1,17 @@
 import fs from "fs";
 import path from "path";
 import nodemailer from "nodemailer";
+function toTRDate(dateStr) {
+  if (!dateStr) return "";
+  const d = new Date(dateStr);
+  if (isNaN(d)) return dateStr;
 
+  return d.toLocaleDateString("tr-TR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric"
+  });
+}
 const DATA_DIR = path.join(process.cwd(), "src", "reservation");
 const FILE_PATH = path.join(DATA_DIR, "reservation.json");
 
@@ -77,6 +87,8 @@ const adminMail = {
   to: [
     consultantMail,
     "teknikdestek@ayajourney.com",
+    "vizedestek@ayajourney.com",
+
   ].filter(Boolean).join(","),
 
   subject: `Yeni Randevu - ${fullName}`,
@@ -85,7 +97,7 @@ const adminMail = {
     <h2>Yeni Randevu Oluşturuldu</h2>
 
     <p><strong>Danışman:</strong> ${consultantName}</p>
-    <p><strong>Tarih:</strong> ${newReservation.selectedDay}</p>
+    <p><strong>Tarih:</strong> ${toTRDate(newReservation.selectedDay)}</p>
     <p><strong>Saat:</strong> ${newReservation.selectedTime}</p>
 
     <h3 style="margin-top:20px;">Müşteri Bilgileri</h3>
@@ -117,7 +129,7 @@ const adminMail = {
         <p>Aşağıdaki bilgiler ile randevunuz başarıyla oluşturuldu:</p>
 
         <p><strong>Danışman:</strong> ${newReservation.personName}</p>
-        <p><strong>Tarih:</strong> ${newReservation.selectedDay}</p>
+        <p><strong>Tarih:</strong> ${toTRDate(newReservation.selectedDay)}</p>
         <p><strong>Saat:</strong> ${newReservation.selectedTime}</p>
 
         <br/>
