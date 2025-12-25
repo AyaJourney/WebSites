@@ -17,19 +17,41 @@ const defaultForm = {
     1: {
       tcId:"",      
       fullName: "",
+      natinolity:"",
+      other_nationality:"",
+      other_nationality_country:"",
+      other_nationality_start_date:"",
+      other_nationality_end_date:"",
       gender: "",
       maritalStatus: "",
       partner_full_name: "",
+      partner_birth_date: "",
+      partner_nationality:"",
+      partner_travel_with_you:"",
+      partner_passport_number:"",
+      partner_lives_with_you:"",
       birthDate: "",
       birthPlace: "",
       phone_number:"",
+      phone_number2:"",
       email:"",
+      email2:"",
       home_address:"",
       post_code:"",
       home_owner:"",
       residence_duration:"",
       maidenName:"",
       past_addresses:"",
+    bool_last_fullname:"",
+      last_fullname:"",
+       home_city: "",
+    home_district: "",
+    home_neighborhood: "",
+    home_street: "",
+    home_avenue: "",
+    home_building_no: "",
+    home_apartment_no: "",
+    home_owner_info:"",
       
     },
        2: {
@@ -40,11 +62,13 @@ const defaultForm = {
   mother_full_name: "",
   mother_birth_date: "",
   mother_travel_with_you: "",
+  mother_nationality:"",
 
   // Baba
   father_full_name: "",
   father_birth_date: "",
   father_travel_with_you: "",
+  father_nationality:"",
 
   // Çocuklar
   child_names: [],              
@@ -138,9 +162,19 @@ uk_family_visa_explanation: "",
 
   visa_refused_or_banned: "",
   visa_refused_details: "",
+  boolean_travel_group: "",
+  travel_group: "",
 
 
-
+other_visited_countries:"",
+ lastTravels: [
+    {
+      country: "",
+      purpose: "",
+      monthYear: "",
+      durationDays: ""
+    }
+  ],
 
     },
     
@@ -198,6 +232,11 @@ useEffect(() => {
             setIsMobile(isMobileOrAndroid());
         }
     }, []);
+    const getTravelCardCount = (value) => {
+  if (value === "BIR KEZ") return 1;
+  if (value === "2-5 KEZ" || value === "6 VE UZERI") return 2;
+  return 0;
+};
 function base64ToBlob(base64, mimeType = "image/jpeg") {
   const byteString = atob(base64.split(",")[1] || base64);
   const ab = new ArrayBuffer(byteString.length);
@@ -396,13 +435,55 @@ const jumpTo = (step) => {
 
 
 const updateField = (step, field, value) => {
-  setForm(prev => ({
-    ...prev,
-    steps: {
+  setForm((prev) => {
+    const updatedSteps = {
       ...prev.steps,
-      [step]: { ...(prev.steps[step] || {}), [field]: value },
-    },
-  }));
+      [step]: {
+        ...prev.steps[step],
+        [field]: value,
+      },
+    };
+
+
+if (step === 1) {
+  const s = updatedSteps[1];
+
+  const mahalle = normalizeWithSuffix(s.home_neighborhood, "MAHALLESİ");
+  const cadde = normalizeWithSuffix(s.home_street, "CADDE");
+  const sokak = normalizeWithSuffix(s.home_avenue, "SOKAK");
+
+  const binaNo = s.home_building_no
+    ? `APT NO: ${normalizeAddressPart(s.home_building_no)}`
+    : "";
+
+  const daireNo = s.home_apartment_no
+    ? `DAİRE NO: ${normalizeAddressPart(s.home_apartment_no)}`
+    : "";
+
+  const ilce = s.home_district
+    ? normalizeAddressPart(s.home_district)
+    : "";
+
+  const il = s.home_city
+    ? normalizeAddressPart(s.home_city)
+    : "";
+
+  const addressParts = [
+    mahalle,
+    cadde,
+    sokak,
+    binaNo,
+    daireNo,
+    ilce,
+    il,
+  ].filter(Boolean);
+
+  updatedSteps[1].home_address = addressParts.join(" ");
+}
+
+
+    return { ...prev, steps: updatedSteps };
+  });
 };
 const updateFileField = async (step, key, file) => {
   if (!file) {
@@ -519,6 +600,14 @@ const updateChildName = (index, value) => {
     updateField(2, "child_names", names);
 };
 
+const updateChildPassportNumber = (index, value) => {
+
+ const passportNumbers = form.steps[2].child_passport_numbers ? [...form.steps[2].child_passport_numbers] : [];
+    passportNumbers[index] = value;
+    
+    // updateField'ı kullanarak state'i güncelle:
+    updateField(2, "child_passport_numbers", passportNumbers);
+};
 
 // 2. onChange İşleyicisi
 const handleChildNameChange = (e, i) => {
@@ -543,6 +632,31 @@ const handleChildNameBlur = (e, i) => {
     }
     // Desktop için onBlur'a gerek yok, zaten onChange'de halledildi.
 };
+
+const handleChildPassportNumberChange = (e, i) => {
+    const value = e.target.value;
+    
+    if (isMobile) {
+        // MOBILE: Normalizasyon yapma, değeri olduğu gibi sakla
+        updateChildPassportNumber(i, value);
+    } else {
+        // DESKTOP: Hemen normalize et
+        updateChildPassportNumber(i, normalizeInput(value));
+    }
+};
+
+// 3. onBlur İşleyicisi
+const handleChildPassportNumberBlur = (e, i) => {
+    const value = e.target.value;
+    
+    if (isMobile) {
+        // MOBILE: onBlur tetiklendiğinde normalizasyonu yap
+        updateChildPassportNumber(i, normalizeInput(value));
+    }
+    // Desktop için onBlur'a gerek yok, zaten onChange'de halledildi.
+};
+
+
 
 const updateCountryName = (index, value) => {
     const newArray = [...(form.steps[5].abroad_country || [])];
@@ -630,7 +744,46 @@ function normalizeDurationInput(value) {
 }
 
 
+const normalizeAddressPart = (value) => {
+  if (!value) return "";
 
+  let v = value.trim().toUpperCase();
+
+  // Türkçe karakter düzeltme
+  const map = { "Ç":"C","Ö":"O","Ş":"S","İ":"I","I":"I","Ğ":"G","Ü":"U" };
+  v = v.replace(/[ÇÖŞİIĞÜ]/g, (m) => map[m]);
+
+  // Fazla boşlukları temizle
+  v = v.replace(/\s+/g, " ");
+
+  return v;
+};
+
+// Mahalle - Cadde - Sokak için suffix üretici
+const normalizeWithSuffix = (value, suffix) => {
+  if (!value) return "";
+
+  value = normalizeAddressPart(value);
+
+  // --- Mahalle için temizleme ---
+  if (suffix === "MAHALLESİ") {
+    value = value.replace(/\b(MAH|MAH\.|MH|MH\.|MAHALE|MAHALLE|MAHALLESI)\b/gi, "");
+  }
+
+  // --- Cadde için temizleme ---
+  if (suffix === "CADDE") {
+    value = value.replace(/\b(CD|CAD|CAD\.|CADDE|CADDES|CADDESII|CADDESI)\b/gi, "");
+  }
+
+  // --- Sokak için temizleme ---
+  if (suffix === "SOKAK") {
+    value = value.replace(/\b(SK|SOK|SOK\.|SOKA|SOKAK|SOKAGI)\b/gi, "");
+  }
+
+  value = value.trim();
+
+  return `${value} ${suffix}`.trim();
+};
 
 
 
@@ -797,7 +950,7 @@ function extractMonthsFromDuration(value) {
           maxLength={11}
           className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
           ${errors.tcId ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
-          value={form.steps[1].tcId}
+          value={form.steps[1].tcId ||""}
           onChange={(e) => updateField(1, "tcId", e.target.value)}
           placeholder="Örn: 12345678901"
         />
@@ -811,7 +964,7 @@ function extractMonthsFromDuration(value) {
           name="fullName"
           className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
           ${errors.fullName ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
-          value={form.steps[1].fullName}
+          value={form.steps[1].fullName ||""}
      onChange={(e) => {
                 if (isMobile) {
                     // Mobile: Normalizasyon YOK, sadece değeri sakla
@@ -835,7 +988,152 @@ function extractMonthsFromDuration(value) {
           <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>
         )}
       </div>
+  <div>
+        <label className="text-sm font-medium">Hangi Ülke Vatandaşısınız (Pasaportta yazan)</label>
+        <input
+          name="natinolity"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+          ${errors.natinolity ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+          value={form.steps[1].natinolity ||""}
+     onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(1, "natinolity", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(1, "natinolity", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(1, "natinolity", normalizedValue);
+                }
+            }}
+          placeholder="Örn: IPEK PARLAK"
+        />
+        {errors.natinolity && (
+          <p className="text-red-500 text-xs mt-1">{errors.natinolity}</p>
+        )}
+      </div>
 
+ <div>
+        <label className="text-sm font-medium">Başka Ülke Vatandaşlığınız Oldu mu??</label>
+        <select
+          name="other_nationality"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+          ${errors.other_nationality ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+          value={form.steps[1].other_nationality || ""}
+          onChange={(e) => updateField(1, "other_nationality", e.target.value)}
+        >
+          <option value="">Seçiniz</option>
+          <option value="EVET">EVET</option>
+          <option value="HAYIR">HAYIR</option>
+        </select>
+        {errors.other_nationality && <p className="text-red-500 text-xs mt-1">{errors.other_nationality}</p>}
+      </div>
+ {form.steps[1].other_nationality === "EVET" && (
+  <>
+   <div>
+          <label className="text-sm font-medium">Vatandaşlık Alınan Ülke</label>
+          <input
+            name="other_nationality_country"
+            className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+            ${errors.other_nationality_country ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+            value={form.steps[1].other_nationality_country || ""}
+        onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(1, "other_nationality_country", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(1, "other_nationality_country", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(1, "other_nationality_country", normalizedValue);
+                }
+            }}
+            // placeholder="Örn: AHMET PARLAK"
+          />
+          {errors.other_nationality_country && (
+            <p className="text-red-500 text-xs mt-1">{errors.other_nationality_country}</p>
+          )}
+        </div>
+         <div>
+          <label className="text-sm font-medium">Vatandaşlık Başlama Tarihi</label>
+          <input
+            name="other_nationality_start_date"
+            type="date"
+             max={new Date().toISOString().split("T")[0]}  
+            className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+            ${errors.other_nationality_start_date ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+            value={form.steps[1].other_nationality_start_date || ""}
+        onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(1, "other_nationality_start_date", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(1, "other_nationality_start_date", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(1, "other_nationality_start_date", normalizedValue);
+                }
+            }}
+            placeholder="Örn: AHMET PARLAK"
+          />
+          {errors.other_nationality_start_date && (
+            <p className="text-red-500 text-xs mt-1">{errors.other_nationality_start_date}</p>
+          )}
+        </div>
+           <div>
+          <label className="text-sm font-medium">Vatandaşlık Bitiş Tarihi</label>
+          <input
+            name="other_nationality_end_date"
+            type="date"
+              
+            className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+            ${errors.other_nationality_end_date ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+            value={form.steps[1].other_nationality_end_date || ""}
+        onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(1, "other_nationality_end_date", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(1, "other_nationality_end_date", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(1, "other_nationality_end_date", normalizedValue);
+                }
+            }}
+            placeholder="Örn: AHMET PARLAK"
+          />
+          {errors.other_nationality_end_date && (
+            <p className="text-red-500 text-xs mt-1">{errors.other_nationality_end_date}</p>
+          )}
+        </div>
+
+  </>
+       
+      )}
       {/* CİNSİYET */}
       <div>
         <label className="text-sm font-medium">Cinsiyet</label>
@@ -868,11 +1166,14 @@ function extractMonthsFromDuration(value) {
           <option value="EVLI">EVLİ</option>
           <option value="DUL">DUL</option>
           <option value="BOSANMIS">BOŞANMIŞ</option>
+          <option value="KAYIT DIŞI BİRLİKTELİK">KAYIT DIŞI BİRLİKTELİK</option>
+
         </select>
         {errors.maritalStatus && (
           <p className="text-red-500 text-xs mt-1">{errors.maritalStatus}</p>
         )}
       </div>
+
       {form.steps[1].gender === "KADIN" &&
         form.steps[1].maritalStatus === "EVLI" && (
           <div className="transition-all duration-300">
@@ -908,7 +1209,8 @@ function extractMonthsFromDuration(value) {
         )}
       {/* EŞ / ESKİ EŞ */}
       {form.steps[1].maritalStatus === "EVLI" && (
-        <div>
+        <>
+          <div>
           <label className="text-sm font-medium">Eşinin Adı Soyadı</label>
           <input
             name="partner_full_name"
@@ -938,6 +1240,139 @@ function extractMonthsFromDuration(value) {
             <p className="text-red-500 text-xs mt-1">{errors.partner_full_name}</p>
           )}
         </div>
+            <div>
+          <label className="text-sm font-medium">Eşinin Doğum Tarihi</label>
+          <input
+          type="date"
+          max={new Date().toISOString().split("T")[0]}
+            name="partner_birth_date"
+            className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+            ${errors.partner_birth_date ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+            value={form.steps[1].partner_birth_date || ""}
+        onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(1, "partner_birth_date", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(1, "partner_birth_date", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(1, "partner_birth_date", normalizedValue);
+                }
+            }}
+            // placeholder="Örn: AHMET PARLAK"
+          />
+          {errors.partner_birth_date && (
+            <p className="text-red-500 text-xs mt-1">{errors.partner_birth_date}</p>
+          )}
+        </div>
+         <div>
+          <label className="text-sm font-medium">Eşinin Uyruğu</label>
+          <input
+            name="partner_nationality"
+            className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+            ${errors.partner_nationality ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+            value={form.steps[1].partner_nationality || ""}
+        onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(1, "partner_nationality", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(1, "partner_nationality", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(1, "partner_nationality", normalizedValue);
+                }
+            }}
+            // placeholder="Örn: AHMET PARLAK"
+          />
+          {errors.partner_nationality && (
+            <p className="text-red-500 text-xs mt-1">{errors.partner_nationality}</p>
+          )}
+        </div>
+
+   <div>
+        <label className="text-sm font-medium">Eşinizle Birlikte mi Yaşıyorsunuz?</label>
+        <select
+          name="partner_lives_with_you"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+          ${errors.partner_lives_with_you ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+          value={form.steps[1].partner_lives_with_you || ""}
+          onChange={(e) => updateField(1, "partner_lives_with_you", e.target.value)}
+        >
+          <option value="">Seçiniz</option>
+          <option value="EVET">EVET</option>
+          <option value="HAYIR">HAYIR</option>
+         
+
+        </select>
+        {errors.partner_lives_with_you && (
+          <p className="text-red-500 text-xs mt-1">{errors.partner_lives_with_you}</p>
+        )}
+      </div>
+   <div>
+        <label className="text-sm font-medium">İngiltere'ye Eşinizle mi Seyahat Edeceksiniz?</label>
+        <select
+          name="partner_travel_with_you"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+          ${errors.partner_travel_with_you ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+          value={form.steps[1].partner_travel_with_you || ""}
+          onChange={(e) => updateField(1, "partner_travel_with_you", e.target.value)}
+        >
+          <option value="">Seçiniz</option>
+          <option value="EVET">EVET</option>
+          <option value="HAYIR">HAYIR</option>
+         
+
+        </select>
+        {errors.partner_travel_with_you && (
+          <p className="text-red-500 text-xs mt-1">{errors.partner_travel_with_you}</p>
+        )}
+      </div>
+           <div>
+          <label className="text-sm font-medium">Eşinin Pasaport Numarası</label>
+          <input
+            name="partner_passport_number"
+            className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+            ${errors.partner_passport_number ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+            value={form.steps[1].partner_passport_number || ""}
+        onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(1, "partner_passport_number", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(1, "partner_passport_number", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(1, "partner_passport_number", normalizedValue);
+                }
+            }}
+
+          />
+          {errors.partner_passport_number && (
+            <p className="text-red-500 text-xs mt-1">{errors.partner_passport_number}</p>
+          )}
+        </div>
+        </>
+      
       )}
 
       {["DUL", "BOSANMIS"].includes(form.steps[1].maritalStatus) && (
@@ -974,6 +1409,57 @@ function extractMonthsFromDuration(value) {
       )}
 
       {/* DOĞUM TARİHİ */}
+            <div>
+        <label className="text-sm font-medium">Daha Önce Başka Ad veya Soyad Kullandınız mı?</label>
+        <select
+          name="bool_last_fullname"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+          ${errors.bool_last_fullname ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+          value={form.steps[1].bool_last_fullname || ""}
+          onChange={(e) => updateField(1, "bool_last_fullname", e.target.value)}
+        >
+          <option value="">Seçiniz</option>
+          <option value="EVET">EVET</option>
+          <option value="HAYIR">HAYIR</option>
+         
+
+        </select>
+        {errors.bool_last_fullname && (
+          <p className="text-red-500 text-xs mt-1">{errors.bool_last_fullname}</p>
+        )}
+      </div>
+            {form.steps[1].bool_last_fullname === "EVET" && (
+        <div>
+          <label className="text-sm font-medium">Önceden Kullandığınız Ad veya Soyad</label>
+          <input
+            name="last_fullname"
+            className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+            ${errors.last_fullname ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+            value={form.steps[1].last_fullname || ""}
+        onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(1, "last_fullname", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(1, "last_fullname", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(1, "last_fullname", normalizedValue);
+                }
+            }}
+            // placeholder="Örn: AHMET PARLAK"
+          />
+          {errors.last_fullname && (
+            <p className="text-red-500 text-xs mt-1">{errors.last_fullname}</p>
+          )}
+        </div>
+      )}
 <div>
   <label className="text-sm font-medium">Doğum Tarihi</label>
 <input
@@ -1059,7 +1545,7 @@ function extractMonthsFromDuration(value) {
           name="phone_number"
           className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
           ${errors.phone_number ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
-          value={form.steps[1].phone_number}
+          value={form.steps[1].phone_number ||""}
           onChange={(e) => updateField(1, "phone_number", e.target.value)}
           placeholder="+90 5XX XXX XX XX"
         />
@@ -1067,7 +1553,20 @@ function extractMonthsFromDuration(value) {
           <p className="text-red-500 text-xs mt-1">{errors.phone_number}</p>
         )}
       </div>
-
+      <div>
+        <label className="text-sm font-medium">İkinci Telefon Numarası(varsa)</label>
+        <input
+          name="phone_number2"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+          ${errors.phone_number2 ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+          value={form.steps[1].phone_number2 || ""}
+          onChange={(e) => updateField(1, "phone_number2", e.target.value)}
+          placeholder="+90 5XX XXX XX XX"
+        />
+        {errors.phone_number2 && (
+          <p className="text-red-500 text-xs mt-1">{errors.phone_number2}</p>
+        )}
+      </div>
       {/* E-MAIL */}
       <div>
         <label className="text-sm font-medium">E-posta Adresi</label>
@@ -1076,7 +1575,7 @@ function extractMonthsFromDuration(value) {
           type="email"
           className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
           ${errors.email ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
-          value={form.steps[1].email}
+          value={form.steps[1].email ||""}
           onChange={(e) => updateField(1, "email", e.target.value)}
           placeholder="ornek@mail.com"
         />
@@ -1084,9 +1583,23 @@ function extractMonthsFromDuration(value) {
           <p className="text-red-500 text-xs mt-1">{errors.email}</p>
         )}
       </div>
-
+   <div>
+        <label className="text-sm font-medium">İkinci E-posta Adresi(varsa)</label>
+        <input
+          name="email2"
+          type="email"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+          ${errors.email2 ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+          value={form.steps[1].email2 || ""}
+          onChange={(e) => updateField(1, "email2", e.target.value)}
+          placeholder="ornek@mail.com"
+        />
+        {errors.email2 && (
+          <p className="text-red-500 text-xs mt-1">{errors.email2}</p>
+        )}
+      </div>
       {/* POSTA KODU */}
-      <div>
+      {/* <div>
         <label className="text-sm font-medium">Posta Kodu</label>
         <input
           name="post_code"
@@ -1099,24 +1612,27 @@ function extractMonthsFromDuration(value) {
         {errors.post_code && (
           <p className="text-red-500 text-xs mt-1">{errors.post_code}</p>
         )}
-      </div>
+      </div> */}
 
       {/* EV ADRESİ */}
-      <div className="md:col-span-2">
-        <label className="text-sm font-medium">Ev Adresi</label>
-        <textarea
-          name="home_address"
-          rows={3}
-          className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
-          ${errors.home_address ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
-          value={form.steps[1].home_address}
-         onChange={(e) => {
+           <div className="col-span-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+  {/* İl */}
+  <div>
+    <label className="text-sm font-medium">İl *</label>
+    <input
+      name="home_city"
+      className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition 
+        ${errors.home_city ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+     
+      value={form.steps[1].home_city || ""}
+                      onChange={(e) => {
                 if (isMobile) {
                     // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(1, "home_address", e.target.value);
+                    updateField(1, "home_city", e.target.value);
                 } else {
                     // Desktop/Diğer: Normalizasyon YAP
-                    updateField(1, "home_address", normalizeAddressInput(e.target.value));
+                    updateField(1, "home_city", normalizeAddressInput(e.target.value));
                 }
             }}
             
@@ -1124,15 +1640,238 @@ function extractMonthsFromDuration(value) {
             onBlur={(e) => {
                 if (isMobile) {
                     const normalizedValue = normalizeAddressInput(e.target.value);
-                    updateField(1, "home_address", normalizedValue);
+                    updateField(1, "home_city", normalizedValue);
                 }
             }}
-          placeholder="Mahalle, Cadde, Sokak, No, İlçe, İl"
-        ></textarea>
-        {errors.home_address && (
-          <p className="text-red-500 text-xs mt-1">{errors.home_address}</p>
+      placeholder="Örn: İstanbul"
+    />
+    {errors.home_city && (
+      <p className="text-red-500 text-xs mt-1">{errors.home_city}</p>
+    )}
+  </div>
+
+  {/* İlçe */}
+  <div>
+    <label className="text-sm font-medium">İlçe *</label>
+    <input
+      name="home_district"
+      className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition 
+        ${errors.home_district ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+      value={form.steps[1].home_district || ""}
+                         onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(1, "home_district", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(1, "home_district", normalizeAddressInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeAddressInput(e.target.value);
+                    updateField(1, "home_district", normalizedValue);
+                }
+            }}
+      placeholder="Örn: Kadıköy"
+    />
+    {errors.home_district && (
+      <p className="text-red-500 text-xs mt-1">{errors.home_district}</p>
+    )}
+  </div>
+
+  {/* Mahalle */}
+  <div>
+    <label className="text-sm font-medium">Mahalle *</label>
+    <input
+      name="home_neighborhood"
+      className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition 
+        ${errors.home_neighborhood ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+      value={form.steps[1].home_neighborhood || ""}
+                         onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(1, "home_neighborhood", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(1, "home_neighborhood", normalizeAddressInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeAddressInput(e.target.value);
+                    updateField(1, "home_neighborhood", normalizedValue);
+                }
+            }}
+      placeholder="Örn: Kanuni Mah."
+    />
+    {errors.home_neighborhood && (
+      <p className="text-red-500 text-xs mt-1">{errors.home_neighborhood}</p>
+    )}
+  </div>
+
+  {/* Cadde */}
+  <div>
+    <label className="text-sm font-medium">Cadde *</label>
+    <input
+      name="home_street"
+      className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition 
+        ${errors.home_street ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+      value={form.steps[1].home_street || ""}
+                         onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(1, "home_street", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(1, "home_street", normalizeAddressInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeAddressInput(e.target.value);
+                    updateField(1, "home_street", normalizedValue);
+                }
+            }}
+      placeholder="Örn: Örnek Cd"
+    />
+    {errors.home_street && (
+      <p className="text-red-500 text-xs mt-1">{errors.home_street}</p>
+    )}
+  </div>
+
+  {/* Sokak */}
+  <div>
+    <label className="text-sm font-medium">Sokak *</label>
+    <input
+      name="home_avenue"
+      className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition 
+        ${errors.home_avenue ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+      value={form.steps[1].home_avenue || ""}
+                         onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(1, "home_avenue", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(1, "home_avenue", normalizeAddressInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeAddressInput(e.target.value);
+                    updateField(1, "home_avenue", normalizedValue);
+                }
+            }}
+      placeholder="Örn: Gülistan Sk"
+    />
+    {errors.home_avenue && (
+      <p className="text-red-500 text-xs mt-1">{errors.home_avenue}</p>
+    )}
+  </div>
+
+  {/* Bina No */}
+  <div>
+    <label className="text-sm font-medium">Bina No *</label>
+    <input
+      name="home_building_no"
+      className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition 
+        ${errors.home_building_no ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+      value={form.steps[1].home_building_no || ""}
+                      onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(1, "home_building_no", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(1, "home_building_no", normalizeAddressInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeAddressInput(e.target.value);
+                    updateField(1, "home_building_no", normalizedValue);
+                }
+            }}
+      placeholder="Örn: 12"
+    />
+    {errors.home_building_no && (
+      <p className="text-red-500 text-xs mt-1">{errors.home_building_no}</p>
+    )}
+  </div>
+
+  {/* Daire No */}
+  <div>
+    <label className="text-sm font-medium">Daire No *</label>
+    <input
+      name="home_apartment_no"
+      className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition 
+        ${errors.home_apartment_no ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+      value={form.steps[1].home_apartment_no || ""}
+                       onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(1, "home_apartment_no", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(1, "home_apartment_no", normalizeAddressInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeAddressInput(e.target.value);
+                    updateField(1, "home_apartment_no", normalizedValue);
+                }
+            }}
+      placeholder="Örn: 4"
+    />
+    {errors.home_apartment_no && (
+      <p className="text-red-500 text-xs mt-1">{errors.home_apartment_no}</p>
+    )}
+  </div>
+<div>
+        <label className="text-sm font-medium">Posta Kodu</label>
+        <input
+          name="post_code"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+          ${errors.post_code ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
+          value={form.steps[1].post_code}
+                           onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(1, "post_code", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(1, "post_code", normalizeAddressInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeAddressInput(e.target.value);
+                    updateField(1, "post_code", normalizedValue);
+                }
+            }}
+          placeholder="Örn: 06510"
+        />
+        {errors.post_code && (
+          <p className="text-red-500 text-xs mt-1">{errors.post_code}</p>
         )}
       </div>
+</div>
 
       {/* EV SAHİBİ */}
 <div>
@@ -1147,16 +1886,48 @@ function extractMonthsFromDuration(value) {
     <option value="">Seçiniz</option>
     <option value="KENDİSİ">KENDİSİ</option>
     <option value="KİRA">KİRA</option>
-    <option value="ANNE">ANNE</option>
-    <option value="BABA">BABA</option>
-    <option value="EŞ">EŞ</option>
+    <option value="DIGER">DİĞER</option>
+ 
   </select>
 
   {errors.home_owner && (
     <p className="text-red-500 text-xs mt-1">{errors.home_owner}</p>
   )}
 </div>
+{form.steps[1].home_owner == "DIGER" &&
+ (
+  <div className="col-span-full mt-4">
+    <label className="text-sm font-medium">Açıklayınız</label>
 
+    <textarea
+      name="home_owner_info"
+      className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300 focus:ring-2 focus:ring-blue-500 resize-none"
+      placeholder="ÖRN: Ev sahibi babam ama kira vermiyorum"
+      rows={4}
+      
+      value={form.steps[1].home_owner_info || ""}
+      onChange={(e) => {
+        const raw = e.target.value;
+
+        if (isMobile) {
+          updateField(1, "home_owner_info", raw);
+        } else {
+          updateField(1, "home_owner_info", normalizeAddressInput(raw));
+        }
+      }}
+      onBlur={(e) => {
+        if (isMobile) {
+          const normalized = normalizeAddressInput(e.target.value);
+          updateField(1, "home_owner_info", normalized);
+        }
+      }}
+    />
+
+    {errors.home_owner_info && (
+      <p className="text-red-500 text-xs mt-1">{errors.home_owner_info}</p>
+    )}
+  </div>
+)}
 <div>
   <label className="text-sm font-medium">Bu evde ne kadar süredir yaşıyorsunuz?</label>
 
@@ -1210,7 +1981,7 @@ onBlur={(e) => {
 </div>
 {form.steps[1].residence_months_total !== null &&
  form.steps[1].residence_months_total < 12 && (
-  <div className="mt-4">
+  <div className="col-span-full mt-4">
     <label className="text-sm font-medium">Geçmiş 2 yıldaki adreslerinizi yazınız</label>
 
     <textarea
@@ -1341,7 +2112,33 @@ onBlur={(e) => {
     <p className="text-red-500 text-xs mt-1">{errors.mother_birth_date}</p>
   )}
 </div>
-
+ <div>
+        <label className="text-sm font-medium">Anne Uyruğu</label>
+        <input
+          name="mother_nationality"
+          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          value={form.steps[2].mother_nationality || ""}
+          onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(2, "mother_nationality", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(2, "mother_nationality", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(2, "mother_nationality", normalizedValue);
+                }
+            }}
+          placeholder="Örn: TÜRKİYE"
+        />
+      </div>
+               
 <div>
   <label className="text-sm font-medium">Anne sizinle seyahat edecek mi?</label>
   <select
@@ -1437,6 +2234,32 @@ onBlur={(e) => {
     <p className="text-red-500 text-xs mt-1">{errors.father_birth_date}</p>
   )}
 </div>
+ <div>
+        <label className="text-sm font-medium">Baba Uyruğu</label>
+        <input
+          name="father_nationality"
+          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          value={form.steps[2].father_nationality || ""}
+          onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(2, "father_nationality", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(2, "father_nationality", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(2, "father_nationality", normalizedValue);
+                }
+            }}
+          placeholder="Örn: TÜRKİYE"
+        />
+      </div>
 <div>
   <label className="text-sm font-medium">Baba sizinle seyahat edecek mi?</label>
   <select
@@ -1484,7 +2307,7 @@ onBlur={(e) => {
       {/* Çocuk isimleri */}
       {form.steps[2].boolean_child === "EVET" &&
         Array.from({ length: Number(form.steps[2].child_count || 0) }).map((_, i) => (
-          <div key={i} >
+          <div key={i} className="col-span-full grid grid-cols-1 md:grid-cols-2  gap-6" >
             <div>
         <label className="text-sm font-medium">{i + 1}. Çocuk Adı</label>
         <input
@@ -1496,7 +2319,42 @@ onBlur={(e) => {
           placeholder="Örn: ALİ PARLAK"
         />
       </div>
+   <div>
+  <label className="text-sm font-medium">{i + 1}. Doğum Tarihi</label>
+  <input
+    type="date"
+   name={`child_birth_date_${i}`}
+    max={new Date().toISOString().split("T")[0]}   // bugünden sonrası kapalı
+    min="1900-01-01"                                // saçma eski tarihler kapalı
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+    `}
+    value={form.steps[2].child_birth_date?.[i] || ""}
+    onChange={(e) => {
+      // ❗ Sadece değeri sakla — validation burada çalışmayacak
+      updateField(2, "child_birth_date", {
+        ...(form.steps[2].child_birth_date || {}),
+        [i]: e.target.value
+      });
+    }}
+    onBlur={(e) => {
+      const selected = e.target.value;
 
+      // ❗ Eğer tarih TAM değilse validation yapma
+      if (selected.length < 10) return;
+
+      const today = new Date().toISOString().split("T")[0];
+
+      // 🔴 Gelecek tarih kontrolü
+
+
+      // 🔴 Çok eski tarih kontrolü
+
+
+    
+    }}
+  />
+
+</div>
       {/* 🔥 Çocuk Sizinle Seyahat Edecek mi? */}
       <div>
         <label className="text-sm font-medium">{i + 1}. Çocuk sizinle seyahat edecek mi?</label>
@@ -1514,7 +2372,53 @@ onBlur={(e) => {
           <option value="HAYIR">Hayır</option>
         </select>
       </div>
-          </div>
+      <div>
+        <label className="text-sm font-medium">{i + 1}. Çocuk sizinle beraber mi yaşıyor?</label>
+        <select
+          name={`child_live_${i}`}
+         className="w-full mt-1 p-3.5 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          value={form.steps[2].child_live?.[i] || ""}
+          onChange={(e) => updateField(2, "child_live", {
+            ...(form.steps[2].child_live || {}),
+            [i]: e.target.value
+          })}
+        >
+          <option value="">Seçiniz</option>
+          <option value="EVET">Evet</option>
+          <option value="HAYIR">Hayır</option>
+        </select>
+      </div>
+          <div>
+        <label className="text-sm font-medium">{i + 1}. Çocuk İngiltere vizesi var mı?</label>
+        <select
+          name={`child_visa_${i}`}
+         className="w-full mt-1 p-3.5 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          value={form.steps[2].child_visa?.[i] || ""}
+          onChange={(e) => updateField(2, "child_visa", {
+            ...(form.steps[2].child_visa || {}),
+            [i]: e.target.value
+          })}
+        >
+          <option value="">Seçiniz</option>
+          <option value="EVET">Evet</option>
+          <option value="HAYIR">Hayır</option>
+        </select>
+      </div>
+              <div>
+        <label className="text-sm font-medium">{i + 1}. Çocuk Pasaport No (varsa)</label>
+        <input
+          name={`child_passport_number_${i}`}
+         className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          value={form.steps[2].child_passport_numbers?.[i] || ""}
+          onChange={(e) => handleChildPassportNumberChange(e, i)}
+          onBlur={(e) => handleChildPassportNumberBlur(e, i)}
+          placeholder="Örn: C12345678"
+        />
+      </div>
+        
+      </div>
+       
+          
         ))}
     </div>
   </section>
@@ -2291,143 +3195,7 @@ onBlur={(e) => {
 
 
       {/* Daha önce yurtdışına çıktı mı */}
-      <div className="md:col-span-2">
-        <label className="text-sm font-medium">
-          Daha önce yurtdışına çıktıysanız, ülkeler ve ay/yıl olarak gidiş tarihleri ve orada kalış süreleri
-        </label>
-        <select
-          name="boolean_traveled_adroad"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
-          value={form.steps[5].boolean_traveled_adroad || ""}
-          onChange={(e) => updateField(5, "boolean_traveled_adroad", e.target.value)}
-        >
-          <option value="">Seçiniz</option>
-          <option value="EVET">Evet</option>
-          <option value="HAYIR">Hayır</option>
-        </select>
-      </div>
 
-      {/* Yurtdışına çıktıysa detaylar */}
-{form.steps[5].boolean_traveled_adroad === "EVET" && (
-  <div className="md:col-span-2 space-y-3">
-    {(form.steps[5].abroad_country || []).map((item, index) => (
-      <div key={index} className="flex flex-col md:flex-row gap-3 items-center">
-        <input
-          name={`abroad_country_name_${index}`}
-          placeholder="Ülke"
-          className="flex-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
-          value={item.country || ""}
-        onChange={(e) => handleCountryChange(e, index)}
-    onBlur={(e) => handleCountryBlur(e, index)}
-        />
-  <input
-  type="date"
-  name={`abroad_country_start_${index}`}
-  placeholder="Gidiş Tarihi (Gün/Ay/Yıl)"
-  className="w-40 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
-  value={item.start || ""}
-  onChange={(e) => {
-    const newArray = [...form.steps[5].abroad_country];
-    newArray[index].start = e.target.value;
-    updateField(5, "abroad_country", newArray);
-  }}
-  onBlur={(e) => {
-    const value = e.target.value;
-
-    // Eğer format tam değilse (örn: 2025-0, 2025-, 2025 vs.) → Hiçbir şey yapma
-    if (!value || value.length < 10) return;
-
-    const today = new Date().toISOString().split("T")[0];
-
-    // ❌ Gelecek tarih olamaz
-    if (value > today) {
-      const arr = [...form.steps[5].abroad_country];
-      arr[index].start = ""; // alanı temizle
-      updateField(5, "abroad_country", arr);
-      return;
-    }
-
-    // ❌ 1900 öncesi olamaz
-    if (value < "1900-01-01") {
-      const arr = [...form.steps[5].abroad_country];
-      arr[index].start = "";
-      updateField(5, "abroad_country", arr);
-      return;
-    }
-  }}
-/>
-<input
-  type="date"
-  name={`abroad_country_end_${index}`}
-  placeholder="Dönüş Tarihi (Gün/Ay/Yıl)"
-  className="w-40 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
-  value={item.end || ""}
-  onChange={(e) => {
-    const newArray = [...form.steps[5].abroad_country];
-    newArray[index].end = e.target.value;
-    updateField(5, "abroad_country", newArray);
-  }}
-  onBlur={(e) => {
-    const value = e.target.value;
-
-    // Eğer format tam değilse → hiçbir şey yapma
-    if (!value || value.length < 10) return;
-
-    const today = new Date().toISOString().split("T")[0];
-    const startDate = form.steps[5].abroad_country[index]?.start || "";
-
-    // ❌ Bugünden ileri tarih olamaz
-    if (value > today) {
-      const arr = [...form.steps[5].abroad_country];
-      arr[index].end = "";
-      updateField(5, "abroad_country", arr);
-      return;
-    }
-
-    // ❌ 1900 öncesi olamaz
-    if (value < "1900-01-01") {
-      const arr = [...form.steps[5].abroad_country];
-      arr[index].end = "";
-      updateField(5, "abroad_country", arr);
-      return;
-    }
-
-    // ❌ Başlangıç tarihinden önce olamaz
-    if (startDate && value < startDate) {
-      const arr = [...form.steps[5].abroad_country];
-      arr[index].end = "";
-      updateField(5, "abroad_country", arr);
-      return;
-    }
-  }}
-/>
-
-        <button
-          type="button"
-          onClick={() => {
-            const newArray = [...form.steps[5].abroad_country];
-            newArray.splice(index, 1);
-            updateField(5, "abroad_country", newArray);
-          }}
-          className="px-2 py-1 bg-red-500 text-white rounded"
-        >
-          Sil
-        </button>
-      </div>
-    ))}
-
-    <button
-      type="button"
-      onClick={() => {
-        const newArray = [...(form.steps[5].abroad_country || []), { country: "", start: "", end: "" }];
-        updateField(5, "abroad_country", newArray);
-      }}
-      className="px-4 py-2 bg-blue-600 text-white rounded"
-    >
-      Yeni Ülke Ekle
-    </button>
-  </div>
-)}
 
 
 
@@ -2653,8 +3421,51 @@ onBlur={(e) => {
         </>
       )}
     </div>
+{/* GRUP SEYAHAT */}
+    <div>
+        <label className="text-sm font-medium">Grup İle mi Seyahat Edeceksiniz?</label>
+        <select
+          name="boolean_travel_group"
+          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+          value={form.steps[5].boolean_travel_group || ""}
+          onChange={(e) => updateField(5, "boolean_travel_group", e.target.value)}
+        >
+          <option value="">Seçiniz</option>
+          <option value="EVET">Evet</option>
+          <option value="HAYIR">Hayır</option>
+        </select>
+      </div>
+      
+        {form.steps[5].boolean_travel_group === "EVET" && (
+       
+          <div>
+            <label className="text-sm font-medium">Grup Adı Nedir?</label>
+            <input
+              type="text"
+              name="travel_group"
+              className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+              value={form.steps[5].travel_group || ""}
+                     onChange={(e) => {
+          if (isMobile) {
+            updateField(5, "travel_group", e.target.value);
+          } else {
+            updateField(5, "travel_group", normalizeInput(e.target.value));
+          }
+        }}
+        onBlur={(e) => {
+          if (isMobile) {
+            const normalizedValue = normalizeInput(e.target.value);
+            updateField(5, "travel_group", normalizedValue);
+          }
+        }}
+            />
+          </div>
 
-{/* SEYAHAT SEBEBİ */}
+      
+     
+      )}
+      
+      {/* SEYAHAT SEBEBİ */}
 <div>
   <label className="text-sm font-medium">Seyahat Sebebi</label>
 
@@ -3267,7 +4078,23 @@ onBlur={(e) => {
       placeholder="Ziyaret Amacı"
       className="p-3 border rounded-xl"
       value={form.steps[5].uk_visit_purpose || ""}
-      onChange={(e) => updateField(5, "uk_visit_purpose", normalizeInput(e.target.value))}
+      onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(5, "uk_visit_purpose", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(5, "uk_visit_purpose", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(5, "uk_visit_purpose", normalizedValue);
+                }
+            }}
     />
 </div>
 <div>
@@ -3276,13 +4103,189 @@ onBlur={(e) => {
       placeholder=" (örn: 2019 Mart)"
       className="p-3 border rounded-xl col-span-1 md:col-span-2"
       value={form.steps[5].uk_visit_dates || ""}
-      onChange={(e) => updateField(5, "uk_visit_dates", e.target.value)}
+      onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(5, "uk_visit_dates", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(5, "uk_visit_dates", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(5, "uk_visit_dates", normalizedValue);
+                }
+            }}
     />
 </div>
 
 
   </div>
 )}
+
+
+<label className="text-sm font-medium mt-6 block">
+Avustralya, Kanada, Yeni Zelanda, Amerika, İsviçre, Schengen Ülkelerini Son 10 Yıl İçinde Seyahat Ettiniz mi?
+  </label>
+<select
+  value={form.steps[5].other_visited_countries || ""}
+  onChange={(e) => updateField(5, "other_visited_countries", e.target.value)}
+  className="w-full mt-1 p-3 border rounded-xl"
+>
+  <option value="">Seçiniz</option>
+  <option value="HIC">HİÇ</option>
+  <option value="BIR KEZ">BİR KEZ</option>
+  <option value="2-5 KEZ">2-5 KEZ</option>
+  <option value="6 VE UZERI">6 VE ÜZERİ</option>
+
+</select>
+
+{getTravelCardCount(form.steps[5].other_visited_countries) > 0 && (
+  <div className="mt-6 space-y-6">
+    {Array.from({ length: getTravelCardCount(form.steps[5].other_visited_countries) }).map((_, index) => (
+      <div key={index} className="relative p-4 border rounded-2xl bg-gray-50 shadow-sm">
+        <h4 className="absolute -top-3 left-4 bg-gray-50 px-2 text-sm font-medium">Son {index + 1}. Seyahat</h4>
+
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+
+          <div>
+            <label className="text-sm font-medium block">Ülke</label>
+            <input className="w-full mt-1 p-3 border rounded-xl" value={form.steps[5][`lastTravel${index + 1}_country`] || ""} onChange={(e) => updateField(5, `lastTravel${index + 1}_country`, normalizeInput(e.target.value))} />
+          </div>
+
+          <div>
+            <label className="text-sm font-medium block">Seyahat Amacı</label>
+            <input className="w-full mt-1 p-3 border rounded-xl" value={form.steps[5][`lastTravel${index + 1}_purpose`] || ""} onChange={(e) => updateField(5, `lastTravel${index + 1}_purpose`, normalizeInput(e.target.value))} />
+          </div>
+
+          <div>
+            <label className="text-sm font-medium block">Tarih (Ay / Yıl)</label>
+            <input type="month" className="w-full mt-1 p-3 border rounded-xl" value={form.steps[5][`lastTravel${index + 1}_monthYear`] || ""} onChange={(e) => updateField(5, `lastTravel${index + 1}_monthYear`, e.target.value)} />
+          </div>
+
+          <div>
+            <label className="text-sm font-medium block">Süre (Kaç Gün)</label>
+            <input type="number" className="w-full mt-1 p-3 border rounded-xl" value={form.steps[5][`lastTravel${index + 1}_duration`] || ""} onChange={(e) => updateField(5, `lastTravel${index + 1}_duration`, e.target.value)} />
+          </div>
+
+        </div>
+      </div>
+    ))}
+  </div>
+)}
+<div className="md:col-span-2">
+  <label className="text-sm font-medium block">
+    Son 10 yılda İngiltere, ABD, Kanada, Avustralya, Yeni Zelanda, İsviçre veya Schengen ülkeleri dışında başka ülkelere gittiniz mi? (Hepsini belirtiniz.)
+  </label>
+  <select className="w-full mt-1 p-3 border rounded-xl" value={form.steps[5].boolean_traveled_adroad || ""} onChange={(e) => {
+    updateField(5, "boolean_traveled_adroad", e.target.value);
+    if (e.target.value === "HAYIR") updateField(5, "abroad_country", []);
+  }}>
+    <option value="">Seçiniz</option>
+    <option value="EVET">Evet</option>
+    <option value="HAYIR">Hayır</option>
+  </select>
+</div>
+
+{form.steps[5].boolean_traveled_adroad === "EVET" && (
+  <div className="md:col-span-2 space-y-4">
+
+    {(form.steps[5].abroad_country || []).map((item, index) => (
+      <div key={index} className="relative p-4 border rounded-2xl bg-gray-50 shadow-sm">
+
+        <h4 className="absolute -top-3 left-4 bg-gray-50 px-2 text-sm font-medium">
+          {index + 1}. Ülke
+        </h4>
+
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+
+          {/* Ülke */}
+          <div>
+            <label className="text-sm font-medium block">Gidilen Ülke</label>
+            <input name={`abroad_country[${index}].country`} className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300" value={item.country || ""} onChange={(e) => handleCountryChange(e, index)} onBlur={(e) => handleCountryBlur(e, index)} />
+          </div>
+
+          {/* Amaç */}
+          <div>
+            <label className="text-sm font-medium block">Seyahat Amacı</label>
+            <input name={`abroad_country[${index}].purpose`} placeholder="Turizm, iş, eğitim, aile ziyareti vb." className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300" value={item.purpose || ""} onChange={(e) => {
+              const arr = [...form.steps[5].abroad_country];
+              arr[index].purpose = normalizeInput(e.target.value);
+              updateField(5, "abroad_country", arr);
+            }} />
+          </div>
+
+          {/* Giriş Tarihi */}
+          <div>
+            <label className="text-sm font-medium block">Giriş Tarihi</label>
+            <input type="date" name={`abroad_country[${index}].start`} className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300" value={item.start || ""} onChange={(e) => {
+              const arr = [...form.steps[5].abroad_country];
+              arr[index].start = e.target.value;
+              updateField(5, "abroad_country", arr);
+            }} onBlur={(e) => {
+              const value = e.target.value;
+              if (!value || value.length < 10) return;
+              const today = new Date().toISOString().split("T")[0];
+              if (value > today || value < "1900-01-01") {
+                const arr = [...form.steps[5].abroad_country];
+                arr[index].start = "";
+                updateField(5, "abroad_country", arr);
+              }
+            }} />
+          </div>
+
+          {/* Çıkış Tarihi */}
+          <div>
+            <label className="text-sm font-medium block">Çıkış Tarihi</label>
+            <input type="date" name={`abroad_country[${index}].end`} className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300" value={item.end || ""} onChange={(e) => {
+              const arr = [...form.steps[5].abroad_country];
+              arr[index].end = e.target.value;
+              updateField(5, "abroad_country", arr);
+            }} onBlur={(e) => {
+              const value = e.target.value;
+              const startDate = form.steps[5].abroad_country[index]?.start || "";
+              if (!value || value.length < 10) return;
+              const today = new Date().toISOString().split("T")[0];
+              if (value > today || value < "1900-01-01" || (startDate && value < startDate)) {
+                const arr = [...form.steps[5].abroad_country];
+                arr[index].end = "";
+                updateField(5, "abroad_country", arr);
+              }
+            }} />
+          </div>
+
+        </div>
+
+        <button type="button" onClick={() => {
+          const arr = [...form.steps[5].abroad_country];
+          arr.splice(index, 1);
+          updateField(5, "abroad_country", arr);
+        }} className="absolute top-3 right-3 px-3 py-1 text-xs bg-red-500 text-white rounded-lg">
+          Sil
+        </button>
+
+      </div>
+    ))}
+
+    <button type="button" onClick={() => {
+      const newArray = [...(form.steps[5].abroad_country || []), { country: "", purpose: "", start: "", end: "" }];
+      updateField(5, "abroad_country", newArray);
+    }} className="px-4 py-2 bg-blue-600 text-white rounded-xl">
+      Yeni Ülke Ekle
+    </button>
+
+  </div>
+)}
+
+
+
+
+
+
 
 {/* --------------------------------------------------- */}
 {/* 3) İngiltere’de tıbbi tedavi gördünüz mü? */}

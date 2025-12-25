@@ -32,7 +32,12 @@ const typeStyles = {
     passive: "bg-sky-100 text-sky-700 hover:bg-sky-200",
   },
 };
-
+const visa101=" Avcı toplayıcılıktan yurtdışı seyahate..."
+const schengen=" Avrupa.. Avrupa.."
+const america=" Suyun öte tarafına dair akla takılanlar"
+const canada="Kanada vizeleri hakkında sıkça sorulan sorular"
+const uk="Kırmızı telefon kulübesi, çift katlı otobüs ve olmayan yemek kültürü."
+const russia="Putin, Votka ve Matruşka ya da eğlence, tarih ve sınırsız iş potansiyeli: seçim sizin"
   const toggleOpen = (id) => {
     setOpenId(openId === id ? null : id);
   };
@@ -89,7 +94,12 @@ const typeStyles = {
       {/* FAQ LİSTESİ */}
       <div className="max-w-4xl mx-auto space-y-4">
         <h2 className="text-3xl font-bold text-gray-800 mb-3">
-          Avcı toplayıcılıktan yurtdışı seyahate...
+          {selectedType === "Vize 101" && visa101}
+          {selectedType === "Schengen" && schengen}
+          {selectedType === "Amerika" && america}
+          {selectedType === "Kanada" && canada}
+          {selectedType === "İngiltere" && uk}
+          {selectedType === "Rusya" && russia}
         </h2>
 
         {filteredQuestions.map((item) => (
