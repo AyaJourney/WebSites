@@ -43,7 +43,7 @@ next-env.d.ts
 /data
 
 
-/src/app/blog/
+/src/app/blogs/
 /src/app/api/admin/
 /src/app/api/auth/
 /src/app/api/posts/
