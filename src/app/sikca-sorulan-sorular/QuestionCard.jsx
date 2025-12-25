@@ -34,9 +34,9 @@ const typeStyles = {
 };
 const visa101=" Avcı toplayıcılıktan yurtdışı seyahate..."
 const schengen=" Avrupa.. Avrupa.."
-const america=" Suyun öte tarafına dair akla takılanlar"
+const america="Suyun öte tarafına dair akla takılanlar"
 const canada="Kanada vizeleri hakkında sıkça sorulan sorular"
-const uk="Kırmızı telefon kulübesi, çift katlı otobüs ve olmayan yemek kültürü."
+const uk="Kırmızı telefon kulübesi, çift katlı otobüs ve olmayan yemek kültürü"
 const russia="Putin, Votka ve Matruşka ya da eğlence, tarih ve sınırsız iş potansiyeli: seçim sizin"
   const toggleOpen = (id) => {
     setOpenId(openId === id ? null : id);
