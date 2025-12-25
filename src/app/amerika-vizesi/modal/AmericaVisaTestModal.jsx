@@ -18,6 +18,45 @@ import { abroad } from "@/helper/help";
     </button>
   );
 }
+function FinishScreen({ onFinish }) {
+  return (
+    <div className="flex items-center justify-center min-h-[70vh] px-4 ">
+      <div className="relative w-full max-w-lg bg-white rounded-[28px]  p-10 text-center space-y-7">
+
+        <div className="absolute -top-8 left-1/2 -translate-x-1/2">
+          <div className="w-16 h-16 rounded-full flex items-center justify-center shadow-lg bg-indigo-50">
+            <span className="text-blue text-2xl font-bold">✓</span>
+          </div>
+        </div>
+
+        <div className="pt-6">
+          <h2 className="text-3xl font-semibold text-gray-800 tracking-tight">
+            Test Bitti
+          </h2>
+        </div>
+
+        <p className="text-gray-600 leading-relaxed text-base">
+          Cevaplarınızı kaydettik. Testi bitirmek için aşağıdaki
+          butona basabilirsiniz.
+        </p>
+
+        <p className="text-gray-500 italic text-sm">
+          Bakalım kaderiniz nasıl yazılmış?
+        </p>
+
+        <button onClick={onFinish} className="w-full mt-4 px-6 py-4 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white text-lg font-medium cursor-pointer transition-all duration-300 shadow-lg hover:shadow-xl hover:brightness-110 active:scale-[0.97]">
+          Bitir
+        </button>
+
+        <div className="pt-2 text-xs text-gray-400">
+          Sonuçlarınız bir sonraki adımda hazırlanacaktır
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
 /* =========================
    VALIDATION REGEX
 ========================= */
@@ -173,7 +212,7 @@ passport_type_0_13:{
  title: "Pasaport türünüz nedir?",
    
     options: [
-      ["Yeşil Pasaport", 20, "calculate_final"],
+      ["Yeşil Pasaport", 20, "finish_screen"],
       ["Bordo Pasaport ", 0, "abroad_stay_0_13"],
     
     ], 
@@ -184,7 +223,7 @@ abroad_stay_0_13:{
    
     options: [
       ["Evet", 5, "abroad_travel_country_0_13"],
-      ["Hayır ", 0, "calculate_final"],
+      ["Hayır ", 0, "finish_screen"],
     
     ], 
 },
@@ -193,8 +232,8 @@ abroad_travel_country_0_13:{
  title: "Hangi ülkeye seyahat ettiniz?",
    
     options: [
-      ["Schengen Bölgeleri ve/veya İngiltere", 15, "calculate_final"],
-      ["Diğer ülkeler(Balkanlar,Gürcistan,Dubai vs.) ", 5, "calculate_final"],
+      ["Schengen Bölgeleri ve/veya İngiltere", 15, "finish_screen"],
+      ["Diğer ülkeler(Balkanlar,Gürcistan,Dubai vs.) ", 5, "finish_screen"],
      
 
     
@@ -360,8 +399,8 @@ english_interwiew_14_17:{
  title: "İngilizce mülakat yapabilir misiniz?",
   
     options: [
-      ["Evet", 20, "calculate_final"],
-      ["Hayır", -5, "calculate_final"],
+      ["Evet", 20, "finish_screen"],
+      ["Hayır", -5, "finish_screen"],
  
 
     
@@ -674,8 +713,8 @@ schengen_russia_china_visit_18_28: {
  title: "İngilizce mülakat yapabilir misiniz?",
   
     options: [
-      ["Evet", 15, "calculate_final"],
-      ["Hayır", 0, "calculate_final"],
+      ["Evet", 15, "finish_screen"],
+      ["Hayır", 0, "finish_screen"],
  
 
     
@@ -964,8 +1003,8 @@ schengen_russia_china_visit_29_45: {
  title: "İngilizce mülakat yapabilir misiniz?",
   
     options: [
-      ["Evet", 10, "calculate_final"],
-      ["Hayır", 0, "calculate_final"],
+      ["Evet", 10, "finish_screen"],
+      ["Hayır", 0, "finish_screen"],
  
 
     
@@ -1253,8 +1292,8 @@ schengen_russia_china_visit_46_60: {
  title: "İngilizce mülakat yapabilir misiniz?",
   
     options: [
-      ["Evet", 10, "calculate_final"],
-      ["Hayır", 0, "calculate_final"],
+      ["Evet", 10, "finish_screen"],
+      ["Hayır", 0, "finish_screen"],
  
 
     
@@ -1542,256 +1581,14 @@ schengen_russia_china_visit_61_plus: {
  title: "İngilizce mülakat yapabilir misiniz?",
   
     options: [
-      ["Evet", 5, "calculate_final"],
-      ["Hayır", 0, "calculate_final"],
+      ["Evet", 5, "finish_screen"],
+      ["Hayır", 0, "finish_screen"],
  
 
     
     ], },
-// education_check:{
-//  title: "Eğitim Durumu",
-//     description: "Eğitim hayatınıza devam ediyor musunuz?",
-//     options: [
-//       ["Evet", 0, "school_check"],
-//       ["Hayır", 0, "parents_visa"],
-     
-
-//     ], 
-// },
-school_check:{
- title: "Öğrencilik Durumu",
-    description: "Öğrencilik durumunuzu belirtiniz.",
-    options: [
-      // ["Lise", 5, "parents_visa",{gender:"female"}],
-      ["Ön Lisans/Lisans", -10, "children_count"],
-      ["Yüksek Lisans", -3, "children_count"],
-
-    ], 
-},
-  gender_check: {
-    title: "Cinsiyet",
-    description: "Cinsiyetinizi belirtiniz.",
-    options: [
-      ["Kadın", 5, "parents_visa",{gender:"female"}],
-      ["Erkek", -5, "parents_visa",{gender:"male"}],
-    ],
-  },
-
-  parents_visa: {
-    title: "Ebeveyn Vize Durumu",
-    description:
-      "Anne veya babanızın (veya her ikisinin) geçerli bir ABD vizesi bulunuyor mu?",
-    options: [
-      ["Evet, hem annemin hem de babamın geçerli vizesi var.", 10, "travel_with_parents"],
-      ["Evet, sadece bir ebeveynimin (anne veya baba) vizesi var.", 5, "travel_with_parents"],
-      ["Hayır, ebeveynlerimin vizesi yok.", 0, "travel_companion_check"],
-    ],
-  },
-
-  travel_with_parents: {
-    title: "Seyahat Şekli",
-    description:
-      "Amerika seyahatinizi, vizesi olan ebeveynlerinizle birlikte mi gerçekleştireceksiniz?",
-    options: [
-      ["Evet, onlarla birlikte seyahat edeceğim.", 0, "flow_router"], // specialLogic vardı
-      ["Hayır, onlardan bağımsız seyahat edeceğim.", 0, "travel_companion_check"],
-    ],
-  },
-
-  travel_companion_check: {
-    title: "Seyahat Eşlikçisi",
-    description:
-      "Peki, Amerika seyahatinizi kiminle gerçekleştirmeyi planlıyorsunuz?",
-    options: [
-      ["Yalnız başıma seyahat edeceğim.", -2, "flow_router"],
-      ["Bir arkadaşımla veya arkadaş grubumla.", 0, "flow_router"],
-      ["Okul veya iş sebebiyle bir ekip/heyet ile birlikte.", 5, "flow_router"],
-      ["Eşimle veya sevgilimle.", 3, "flow_router"],
-    ],
-  },
-  
-  travel_companion_check_mat: {
-    title: "Seyahat Eşlikçisi",
-    description:
-      "Peki, Amerika seyahatinizi kiminle gerçekleştirmeyi planlıyorsunuz?",
-    options: [
-      ["Yalnız başıma seyahat edeceğim.", -2, "job_status"],
-      ["Bir arkadaşımla veya arkadaş grubumla.", 0, "job_status"],
-      ["Okul veya iş sebebiyle bir ekip/heyet ile birlikte.", 5, "job_status"],
-      ["Eşimle veya sevgilimle.", 3, "job_status"],
-    ],
-  },
-marital_status: {
-  title: "Medeni Durum",
-  description: "Medeni durumunuz nedir?",
-  options: [
-    [
-      "Bekar / Dul / Boşanmış",
-      0,
-      "job_status",
-      { maritalStatus: "single" }
-    ],
-    [
-      "Evli",
-      5,
-      "job_status",
-      { maritalStatus: "married" }
-    ],
-  ],
-},
-marital_status_mat: {
-  title: "Medeni Durum",
-  description: "Medeni durumunuz nedir?",
-  options: [
-    [
-      "Bekar / Dul / Boşanmış",
-      0,
-      "travel_companion_check_mat",
-      { maritalStatus: "single" }
-    ],
-    [
-      "Evli",
-      5,
-      "travel_companion_check_mat",
-      { maritalStatus: "married" }
-    ],
-  ],
-},
-  job_status: {
-    title: "Meslek Durumu",
-    description:
-      "Mevcut çalışma durumunuzu en iyi ifade eden seçenek hangisidir?",
-    options: [
-      ["Kamu çalışanıyım (Memur, Akademisyen vb.)", 10, "children_count"],
-      ["Özel sektörde çalışanım (SGK'lı).", 5, "children_count"],
-      ["İşverenim / Şirket Sahibiyim.", 10, "children_count"],
-      ["Öğrenciyim.", 2, "school_check"],
-      ["Emekliyim.", 8, "children_count"],
-      ["Çalışmıyorum / Ev hanımıyım.", -5, "children_count"],
-      ["Freelance(Yazılımcı, Tasarımcı,İç Mimar vb.)", -10, "children_count"]
-    ],
-  },
-
-  children_count: {
-    title: "Çocuk Sayısı",
-    description: "Sahip olduğunuz çocuk sayısını belirtiniz.",
-    options: [
-      ["Çocuğum yok.", 0, "us_contact"],
-      ["1 çocuk sahibiyim.", 5, "us_contact"],
-      ["2 veya daha fazla çocuğum var.", 10, "us_contact"],
-    ],
-  },
-
-  us_contact: {
-    title: "Amerika'daki Tanıdıklar",
-    description:
-      "Amerika Birleşik Devletleri'nde yaşayan birinci derece akrabanız veya yakın tanıdığınız var mı?",
-    options: [
-      ["Evet, birinci derece akrabam var.", -10, "us_contact_status"],
-      ["Evet, uzak akrabam veya arkadaşlarım var.", -5, "us_contact_status"],
-      ["Hayır, Amerika'da kimsem yok.", 0, "travel_western_visas"],
-    ],
-  },
-
-  us_contact_status: {
-    title: "Tanıdığınızın Statüsü",
-    description:
-      "Amerika'daki tanıdığınızın oradaki yasal statüsü nedir?",
-    options: [
-      ["ABD Vatandaşı.", 5, "us_contact_visit"],
-      ["Green Card (Yeşil Kart) Sahibi.", 2, "us_contact_visit"],
-      ["Öğrenci veya Geçici Çalışma Vizesi ile orada.", -10, "us_contact_visit"],
-      ["İltica/Yasa dışı yollardan geçmiş", -30, "us_contact_visit"],
-
-    ],
-  },
-
-  us_contact_visit: {
-    title: "Türkiye Ziyareti",
-    description:
-      "Bu kişi en son ne zaman Türkiye'ye ziyarete geldi?",
-    options: [
-      ["Son 1 yıl içerisinde geldi.", 5, "travel_western_visas"],
-      ["1 - 3 yıl arasında geldi.", -5, "travel_western_visas"],
-      ["3 yıldan daha uzun süredir gelmedi veya hiç gelmedi.", -15, "travel_western_visas"],
-    ],
-  },
-
-  travel_western_visas: {
-    title: "Son 5 Yıldaki Batı Vizeleri",
-    description:
-      "Son 5 yılda, Amerika (Work and Travel hariç), İngiltere, Kanada, Avustralya ve Yeni Zelanda’dan vize aldınız mı?",
-    options: [
-      ["Birden fazla", 20, "travel_visa_labels"],
-      ["1 tane", 8, "travel_visa_labels"],
-      ["Hiç yok", 0, "travel_visa_labels"],
-    ],
-  },
-
-  travel_visa_labels: {
-    title: "Pasaporttaki Schengen Vize Etiketi Sayısı",
-    description:
-      "Yunanistan kapıda vize dahil.",
-    options: [
-      ["Hiç yok", -10, "travel_other_countries"],
-      ["1 tane", 3, "travel_other_countries"],
-      ["2 tane", 8, "travel_other_countries"],
-      ["3 tane veya daha fazla", 15, "travel_other_countries"],
-      
-    ],
-  },
-
-  travel_other_countries: {
-    title: "Diğer Ülke Seyahatleri",
-    description:
-      "Japonya,Güney Kore,Singapur,Tayland,Birleşik Arap Emirlikleri,Güney Afrika bu ülkelere son 5 yılda seyahat ettiniz mi?",
-    options: [
-      ["Birden fazla", 8, "us_refusal"],
-      ["Bir tane", 2, "us_refusal"],
-      ["Hayır", 0, "us_refusal"],
-    ],
-  },
-
-  us_refusal: {
-    title: "ABD Vize Geçmişi",
-    description:
-      "Daha önce Amerika vizesi başvurunuzdan ret aldınız mı?",
-    options: [
-      ["Evet, aldım.", -10, "us_refusal_time"],
-      ["Hayır, almadım.", 0, "canada_refusal"],
-    ],
-  },
-
-  us_refusal_time: {
-    title: "ABD Ret Zamanı",
-    description: "En son ret cevabını ne zaman aldınız?",
-    options: [
-      ["6 aydan daha yakın bir sürede.", -10, "us_refusal_count"],
-      ["6 ay - 1 yıl arasında.", -5, "us_refusal_count"],
-      ["1 - 2 yıl arasında.", -2, "us_refusal_count"],
-      ["2 yıldan daha uzun süre önce.", 0, "us_refusal_count"],
-    ],
-  },
-
-  us_refusal_count: {
-    title: "ABD Ret Sayısı",
-    description: "Toplamda kaç kez ret aldınız?",
-    options: [
-      ["Sadece 1 kez.", 0, "canada_refusal"],
-      ["2 kez.", -2, "canada_refusal"],
-      ["3 veya daha fazla kez.", -5, "canada_refusal"],
-    ],
-  },
-
-  canada_refusal: {
-    title: "Kanada Vize Geçmişi",
-    description:
-      "Son üç yılda Kanada'dan vize reddi aldınız mı?",
-    options: [
-      ["Evet, aldım.", -15, "calculate_final"],
-      ["Hayır, almadım.", 0, "calculate_final"],
-    ],
-  },
+FINISH_SCREEN: "finish_screen",
+  CALCULATE_FINAL: "calculate_final",
   flow_router: {
   hidden: true
 },
@@ -1896,7 +1693,10 @@ const next = (
     setStep("calculate_final");
     return;
   }
-
+if (nextStep === "finish_screen") {
+  setStep("finish_screen");
+  return;
+}
   setStep(nextStep);
 };
 
@@ -2054,7 +1854,7 @@ const goBack = () => {
   <div className="space-y-5 relative">
     
     {/* 🔙 BACK BUTTON – SORU ALANININ İÇİNDE */}
-   {history.length > 0 && step !== "result" && (
+   {history.length > 0  && (
       <BackButton onClick={goBack} />
     )}
 
@@ -2093,6 +1893,17 @@ const goBack = () => {
   </div>
 )}
 
+{step === "finish_screen" && (
+  <>
+     {history.length > 0  && (
+      <BackButton onClick={goBack} />
+    )}
+      <FinishScreen
+     onFinish={() => setStep("calculate_final")}
+  />
+  </>
+
+)}
 
           {/* RESULT */}
           {step === "result" && (
