@@ -8,13 +8,82 @@ import WhatsappButton from "./components/WhatsappButton";
 export const dynamic = "force-static";
 export const revalidate = 60;
 
-
 export const metadata = {
-  title: "Aya Journey",
-  description: "Visa Education and Business",
-   icons: {
-    icon: "/images/logo.png",
+  metadataBase: new URL("https://ayajourney.com"),
+
+  title: {
+    default: "Aya Journey",
+    template: "%s | Aya Journey",
   },
+
+  description: "Visa Education and Business",
+
+  applicationName: "Aya Journey",
+
+  keywords: [
+    "ABD vizesi",
+    "Kanada vizesi",
+    "İngiltere vizesi",
+    "Schengen vizesi",
+    "vize danışmanlığı",
+    "Aya Journey",
+  ],
+
+  authors: [{ name: "Aya Journey", url: "https://ayajourney.com" }],
+  creator: "Aya Journey",
+  publisher: "Aya Journey",
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+
+  icons: {
+    icon: "/images/logo.png",
+    shortcut: "/images/logo.png",
+    apple: "/images/logo.png",
+  },
+
+  openGraph: {
+    title: "Aya Journey",
+    description: "Visa Education and Business",
+    url: "https://ayajourney.com",
+    siteName: "Aya Journey",
+    locale: "tr_TR",
+    type: "website",
+    images: [
+      {
+        url: "https://ayajourney.com/images/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Aya Journey",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Aya Journey",
+    description: "Visa Education and Business",
+    images: ["https://ayajourney.com/images/og-image.jpg"],
+  },
+
+  verification: {
+    google: "GOOGLE_SEARCH_CONSOLE_CODE",
+  },
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 <link
   href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600&display=swap"
