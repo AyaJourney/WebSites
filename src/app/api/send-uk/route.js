@@ -799,7 +799,7 @@ h1 = drawField(
 currentY -= h1 + 10;
 
 // Diğer seyahat sebebi
-if (s(5).travel_reason === "Diğer") {
+if (s(5).travel_reason === "DIGER") {
   h1 = drawField(
     "Seyahat Sebebi Açıklaması",
     s(5).travel_reason_other || "-",
@@ -1706,7 +1706,7 @@ ${formatDateDMY(f.steps[5].travel_start_date)} / ${formatDateDMY(f.steps[5].trav
 
 Seyahat Sebebi:
 ${
-  f.steps[5].travel_reason === "Diğer"
+  f.steps[5].travel_reason === "DIGER"
     ? `Diğer: ${f.steps[5].travel_reason_other || "-"}`
     : (f.steps[5].travel_reason || "-")
 }
@@ -2248,7 +2248,7 @@ f.steps[4].boolean_work === "OGRENCI"
 <tr>
   <th>Seyahat Sebebi</th>
   <td>${
-    f.steps[5].travel_reason === "Diğer"
+    f.steps[5].travel_reason === "DIGER"
       ? `Diğer: ${f.steps[5].travel_reason_other || "-"}`
       : (f.steps[5].travel_reason || "-")
   }</td>
