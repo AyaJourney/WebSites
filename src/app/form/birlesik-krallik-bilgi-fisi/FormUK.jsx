@@ -3477,15 +3477,16 @@ onBlur={(e) => {
     onChange={(e) => updateField(5, "travel_reason", e.target.value)}
   >
     <option value="">Seçiniz</option>
-    <option value="Aile ziyareti">Aile ziyareti</option>
-    <option value="Arkadaş ziyareti">Arkadaş ziyareti</option>
-    <option value="İş">İş</option>
-    <option value="Transit">Transit</option>
-    <option value="Akademik ziyaret">Akademik ziyaret</option>
-    <option value="Kısa süreli eğitim">Kısa süreli eğitim</option>
-    <option value="Sağlık">Sağlık</option>
-    <option value="Evlilik">Evlilik</option>
-    <option value="Diğer">Diğer (açıklayınız)</option>
+    <option value="AILE ZIYARETI">Aile ziyareti</option>
+    <option value="ARKADAŞ ZIYARETI">Arkadaş ziyareti</option>
+    <option value="IS">İş</option>
+    <option value="TRANSİT">Transit</option>
+    <option value="TURISTIK">Turistik</option>
+    <option value="AKADEMIK ZIYARET">Akademik ziyaret</option>
+    <option value="KISA SURELI EGITIM">Kısa süreli eğitim</option>
+    <option value="SAGLIK">Sağlık</option>
+    <option value="EVLILIK">Evlilik</option>
+    <option value="DIGER">Diğer (açıklayınız)</option>
   </select>
 
   {errors.travel_reason && (
@@ -3494,7 +3495,7 @@ onBlur={(e) => {
 </div>
 
 {/* DİĞER SEBEP AÇIKLAMASI — SADECE "DİĞER" SEÇİLİNCE GÖRÜNÜR */}
-{form.steps[5].travel_reason === "Diğer" && (
+{form.steps[5].travel_reason === "DIGER" && (
   <div className="mt-3">
     <label className="text-sm font-medium">Seyahat Sebebi Açıklaması</label>
     <textarea
