@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import DeleteWarningModal from "./modal/DeleteWarningModal";
+import { FiEdit2, FiTrash2 } from "react-icons/fi";
 export default function AdminBlogsPage() {
     const[open,setOpen]=useState(false);
     const[blogId,setBlogId]=useState("")
@@ -23,7 +24,7 @@ const getBlogText = async ()=>{
         
     }
 }
-console.log(blogs)
+
 
 const deleteBlogText = async (blog)=>{
     setLoading(true)
@@ -114,26 +115,33 @@ getBlogText()
                 <td className="px-4 py-3 text-gray-600">
                   {new Date(blog.created_at).toLocaleDateString()}
                 </td>
+<td className="px-4 py-3 text-right">
+  <div className="inline-flex items-center gap-3">
+    {/* Düzenle */}
+    <a href={`/admin/blogs/${blog.id}`} className="group relative inline-flex items-center justify-center rounded-lg p-2 text-slate-600 hover:bg-slate-100 hover:text-blue-600 transition">
+      <FiEdit2 className="text-lg" />
+      <span className="pointer-events-none absolute -top-9 right-0 whitespace-nowrap rounded-md bg-slate-900 px-2 py-1 text-xs font-medium text-white opacity-0 shadow-sm transition group-hover:opacity-100">
+        Düzenle
+      </span>
+    </a>
 
-                <td className="px-4 py-3 text-right space-x-3">
-                  <a
-                    href={`/admin/blogs/${blog.id}`}
-                    className="text-blue-600 hover:underline font-medium"
-                  >
-                    Düzenle
-                  </a>
+    {/* Sil */}
+    <button
+      type="button"
+      onClick={() => {
+        setOpen(true);
+        setBlogId(blog);
+      }}
+      className="group relative inline-flex items-center justify-center rounded-lg p-2 text-slate-600 hover:bg-slate-100 hover:text-red-600 transition"
+    >
+      <FiTrash2 className="text-lg" />
+      <span className="pointer-events-none absolute -top-9 right-0 whitespace-nowrap rounded-md bg-slate-900 px-2 py-1 text-xs font-medium text-white opacity-0 shadow-sm transition group-hover:opacity-100">
+        Sil
+      </span>
+    </button>
+  </div>
+</td>
 
-                  <button
-                    onClick={()=>{
-                        setOpen(true);
-                        setBlogId(blog)
-                    }}
-                     
-                    className="text-red-600 hover:underline font-medium"
-                  >
-                    Sil
-                  </button>
-                </td>
               </tr>
             ))}
           </tbody>

@@ -7,6 +7,7 @@ import { supabase } from "@/lib/supabase";
 export default function AdminLayout({ children }) {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
+  const [session, setSession] = useState(null);
 
   useEffect(() => {
     let mounted = true;
@@ -18,6 +19,7 @@ export default function AdminLayout({ children }) {
       if (!session) {
         router.push("/admin/login");
       } else {
+        setSession(session);
         setLoading(false);
       }
     });
@@ -29,11 +31,13 @@ export default function AdminLayout({ children }) {
       if (!mounted) return;
 
       if (!session) {
+        setSession(null);
         router.push("/admin/login");
-         setLoading(false);
       } else {
-        setLoading(false);
+        setSession(session);
       }
+
+      setLoading(false);
     });
 
     return () => {
@@ -42,30 +46,35 @@ export default function AdminLayout({ children }) {
     };
   }, [router]);
 
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setSession(null);
+    router.push("/admin/login");
+  };
+
   if (loading) {
     return (
-      <main className="max-w-[1320px] mx-auto px-4 py-10 ">
-         <p className="p-6">Yetki kontrol ediliyor...</p>
+      <main className="max-w-[1320px] mx-auto px-4 py-10">
+        <p className="p-6">Yetki kontrol ediliyor...</p>
       </main>
-   );
+    );
   }
-const handleLogout = async () => {
-  await supabase.auth.signOut();
-  router.push("/admin/login");
-};
-  return (<>
-  
-<header className="fixed top-32 right-0 w-full h-16  flex items-end justify-end px-6 z-50">
-  {/* <span className="font-bold">Admin Panel</span> */}
-   <button
-  onClick={handleLogout}
-  className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700 cursor-pointer"
->
-  Çıkış Yap
-</button>
-</header>
 
-<main className="pt-20">{children}</main>
-  
-  </>);
+  return (
+    <>
+      {/* HEADER SADECE LOGIN OLMUŞSA */}
+      {session && (
+        <header className="fixed top-32 right-0 w-full h-16 flex items-center justify-end px-6 z-50">
+          <button
+            onClick={handleLogout}
+            className="px-4 py-2 rounded-xl bg-red-600 text-white hover:bg-red-700 cursor-pointer text-sm font-semibold"
+          >
+            Çıkış Yap
+          </button>
+        </header>
+      )}
+
+      <main className="pt-20">{children}</main>
+    </>
+  );
 }
