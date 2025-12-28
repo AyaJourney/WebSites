@@ -32,10 +32,22 @@ export default function BlogPage() {
       });
   }, []);
 
-  const categories = useMemo(
-    () => ["Tümü", ...Array.from(new Set(posts.map((p) => p.category)))],
-    [posts]
-  );
+const categories = useMemo(() => {
+  const map = new Map();
+
+  posts.forEach((p) => {
+    if (!p.category) return;
+
+    const normalized = p.category.trim().toLowerCase();
+
+    if (!map.has(normalized)) {
+      map.set(normalized, p.category.trim());
+    }
+  });
+
+  return ["Tümü", ...Array.from(map.values())];
+}, [posts]);
+
 
   const featured = useMemo(() => {
     return posts
