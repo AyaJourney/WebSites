@@ -11,6 +11,9 @@ import {
 } from "react-icons/fa";
 import { GoDotFill } from "react-icons/go";
 import AmericaVisaTestModal from "./modal/AmericaVisaTestModal";
+import TestModal from "../f1/TestModal";
+
+
 const highlights = [
   {
     label: "Vize süresi",
@@ -100,6 +103,8 @@ const processSteps = [
 
 export default function USVisaClient() {
 const [open, setOpen] = useState(false);
+const [openF1, setOpenF1] = useState(false);
+
 
   const refs = useRef([]);
 
@@ -174,6 +179,12 @@ const [open, setOpen] = useState(false);
 >
 Vize alma ihtimalinizi ölçün!
 </button>
+              {/* <button
+  onClick={() => setOpenF1(true)}
+  className="bg-emerald-500 text-white px-6 py-3 rounded-2xl font-semibold hover:bg-emerald-600 transition flex-none"
+>
+F1 Vize alma ihtimalinizi ölçün!
+</button> */}
             </div>
 
             {/* HIGHLIGHTS */}
@@ -452,6 +463,7 @@ Vize alma ihtimalinizi ölçün!
         />
       </section>
   <AmericaVisaTestModal open={open} setOpen={setOpen} />
+  <TestModal openF1={openF1} setOpenF1={setOpenF1}/>
 
     </main>
   );

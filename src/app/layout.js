@@ -5,6 +5,7 @@ import NavbarIletisimCard from "./components/NavbarİletisimCard";
 import Footer from "./components/Footer";
 import Cookies from "./components/Cookies";
 import WhatsappButton from "./components/WhatsappButton";
+import ScrollToTop from "./components/ScrollTop";
 export const dynamic = "force-static";
 export const revalidate = 60;
 
@@ -60,7 +61,7 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "https://ayajourney.com/images/og-image.jpg",
+        url: "https://ayajourney.com/images/og-image.JPG",
         width: 1200,
         height: 630,
         alt: "Aya Journey",
@@ -95,6 +96,7 @@ export default function RootLayout({ children }) {
       <body 
         
       >
+            <ScrollToTop />
         <meta
   name="viewport"
   content="width=device-width, initial-scale=1, maximum-scale=1"
