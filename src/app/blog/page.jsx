@@ -16,9 +16,9 @@ export default function BlogPage() {
 
   useEffect(() => {
     fetch("/api/blogs")
-      .then((res) => res.json())
+      .then((res) => res?.json())
       .then((data) => {
-        const normalized = (data || []).map((b) => ({
+        const normalized = (data || [])?.map((b) => ({
           slug: b.slug,
           title: b.title,
           excerpt: b.summary,
@@ -77,7 +77,8 @@ const categories = useMemo(() => {
   }
 
   return (
-    <main className="max-w-[1320px] mx-auto px-4 py-10 bg-slate-50">
+   <main className="max-w-[1320px] mx-auto px-4 py-10 bg-slate-50 overflow-x-hidden">
+
       {/* HEADER */}
       <header className="mb-10">
         <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900">
@@ -88,11 +89,12 @@ const categories = useMemo(() => {
         </p>
       </header>
 
-      <div className="grid grid-cols-12 gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10">
+
         {/* ================= LEFT SIDEBAR ================= */}
-        <aside className="col-span-12 lg:col-span-3 space-y-6">
-          {/* Categories */}
-       <div className="rounded-3xl border bg-white p-5">
+<aside className="col-span-12 lg:col-span-9 space-y-10">
+  <div className="px-0 sm:px-2 lg:px-0 space-y-6">
+     <div className="rounded-3xl border bg-white p-5">
   <h3 className="text-xs font-bold uppercase text-slate-500 mb-4">
     Kategoriler
   </h3>
@@ -171,6 +173,9 @@ const categories = useMemo(() => {
               </a>
             </div>
           </div>
+  </div>
+          {/* Categories */}
+      
         </aside>
 
         {/* ================= RIGHT CONTENT ================= */}
@@ -182,7 +187,8 @@ const categories = useMemo(() => {
     className="group relative block overflow-hidden rounded-[28px]"
   >
     {/* IMAGE */}
-    <div className="relative h-[420px]">
+  <div className="relative h-[260px] sm:h-[320px] lg:h-[420px]">
+
       <img
         src={featured.image || "/images/icon.png"}
         alt={featured.title}
@@ -196,11 +202,13 @@ const categories = useMemo(() => {
       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/25 to-transparent" />
 
       {/* blur alan */}
-      <div className="relative p-8 backdrop-blur-xs bg-black/10">
-        <div className="flex items-end justify-between gap-6">
+  <div className="relative p-4 sm:p-6 lg:p-8 backdrop-blur-xs bg-black/10">
+
+     <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6">
+
           {/* SOL TARAF */}
           <div className="max-w-3xl">
-            <h2 className="text-2xl md:text-3xl font-extrabold text-white leading-snug">
+            <h2 className="text-xl md:text-3xl font-extrabold text-white leading-snug">
               {featured.title}
             </h2>
 
@@ -237,7 +245,8 @@ const categories = useMemo(() => {
 
 
           {/* GRID */}
-<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-x-8 gap-y-12">
+<div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 sm:gap-8 lg:gap-x-8 lg:gap-y-12">
+
   {filtered.map((p) => (
   <article
   key={p.slug}
@@ -252,7 +261,7 @@ const categories = useMemo(() => {
           src={p.image || "/images/icon.png"}
           alt={p.title}
           onError={(e) => (e.currentTarget.src = "/images/icon.png")}
-          className="h-56 w-full object-contain transition duration-500 group-hover:scale-105"
+          className="h-44 sm:h-48 lg:h-56 w-full object-contain transition duration-500 group-hover:scale-105"
         />
       </Link>
 
