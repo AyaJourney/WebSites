@@ -92,7 +92,7 @@ const categories = useMemo(() => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10">
 
         {/* ================= LEFT SIDEBAR ================= */}
-<aside className="col-span-12 lg:col-span-9 space-y-10">
+<aside className="col-span-12 lg:col-span-3 space-y-6">
   <div className="px-0 sm:px-2 lg:px-0 space-y-6">
      <div className="rounded-3xl border bg-white p-5">
   <h3 className="text-xs font-bold uppercase text-slate-500 mb-4">
@@ -208,7 +208,7 @@ const categories = useMemo(() => {
 
           {/* SOL TARAF */}
           <div className="max-w-3xl">
-            <h2 className="text-xl md:text-3xl font-extrabold text-white leading-snug">
+            <h2 className="text-2xl md:text-3xl font-extrabold text-white leading-snug">
               {featured.title}
             </h2>
 
