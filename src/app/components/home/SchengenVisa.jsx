@@ -41,7 +41,7 @@ const SchengenIntro = () => {
 
 
           <p className="text-lg text-slate-700 max-w-xl mx-auto lg:mx-0">
-            26 ülke, 26 farklı bakış açısı.
+            29 ülke, 29 farklı bakış açısı.
             <br />
             <strong className="text-slate-900">
               Doğru ülke seçimi ve dosya tutarlılığı Schengen vizesinin kaderini belirler.
@@ -104,10 +104,9 @@ const SchengenIntro = () => {
             />
 
             {/* Bilgi bandı */}
-            <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-700">
-              Schengen vizeleri genellikle{" "}
-              <strong>tek girişli, çok girişli</strong> veya{" "}
-              <strong>uzun süreli</strong> olarak değerlendirilir.
+            <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur border border-slate-200 rounded-xl px-4 py-3 text-md text-slate-700">
+              Schengen vizesinin en iyi yanı. <br />
+              <strong className=" ml-5 lg:ml-25">Tek vize ile 29 ülkeyi gezebilme imkanı</strong> 
             </div>
           </div>
         </div>
