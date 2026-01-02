@@ -304,13 +304,9 @@ async function sendForm(payload) {
   });
 if(res.ok){
   setResMessage(true)
+}else {
+ setResMessage(false)
 }
-  if (!res.ok) {
-    // console.error("PDF oluşturulamadı");
-    setResMessage(false)
-    return;
-  }
-
   // const pdfBlob = await res.blob() || "";
   // const url = URL.createObjectURL(pdfBlob);
   // window.open(url, "_blank");

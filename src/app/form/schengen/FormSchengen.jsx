@@ -211,12 +211,9 @@ if(res.ok){
 }));
 
 
+}else {
+ setResMessage(false)
 }
-  if (!res.ok) {
-    // console.error("PDF oluşturulamadı");
-    setResMessage(false)
-    return;
-  }
 
   // const pdfBlob = await res.blob() || "";
   // const url = URL.createObjectURL(pdfBlob);
