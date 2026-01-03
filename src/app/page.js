@@ -28,7 +28,7 @@ export default function Home() {
 
       {/* HERO */}
    <SideNav />
-      <section className="w-full min-h-[100svh] mb-15" id="giris-1" >
+      <section className="w-full min-h-[100svh] mb-15 mt-9" id="giris-1" >
         <Giris />
       </section>
 

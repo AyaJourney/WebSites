@@ -18,53 +18,29 @@ const Giris = () => {
   }, [videoEnded]);
 
   return (
-    <section className="relative w-full overflow-hidden font-sans h-[80svh] md:h-[90svh] lg:h-[85svh]">
-
-      {/* 📱 MOBİL VIDEO */}
+    <section
+      className="relative w-full overflow-hidden font-sans h-[80svh] md:h-[90svh] lg:h-[85svh]"
+    >
+      {/* VIDEO – TÜM EKRANLARDA */}
       <video
-        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 block md:hidden ${
-          videoEnded ? "opacity-0" : "opacity-100"
-        }`}
-        autoPlay
-        muted
-        playsInline
-        preload="auto"
-        onEnded={() => setVideoEnded(true)}
-      >
-        <source src="/images/videopasaport.mp4" type="video/mp4" />
-      </video>
+  autoPlay
+  muted
+  playsInline
+  preload="auto"
+  poster="/images/videosonu.webp"
+  onEnded={() => setVideoEnded(true)}
+  className="absolute inset-0 w-full h-full object-cover"
+>
+  {/* Önce iOS uyumlu */}
+  <source src="/images/videopasaportmp4.mp4" type="video/mp4" />
 
-      {/* 📲 TABLET GÖRSEL */}
-      <div className="absolute inset-0 hidden md:block lg:hidden">
-        <Image
-          src="/images/videosonu.webp"
-          alt="Hadi topla bavulları"
-          fill
-          priority
-          className="object-cover"
-          onLoad={() => setVideoEnded(true)}
-        />
-      </div>
+  {/* Sonra WEBM (Chrome vs) */}
+  <source src="/images/videopasaport.webm" type="video/webm" />
+</video>
 
-      {/* 💻 DESKTOP VIDEO */}
-      <video
-        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 hidden lg:block ${
-          videoEnded ? "opacity-0" : "opacity-100"
-        }`}
-        autoPlay
-        muted
-        playsInline
-        preload="auto"
-        onEnded={() => setVideoEnded(true)}
-      >
-        <source src="/images/videopasaport.mp4" type="video/mp4" />
-      </video>
-
-      {/* VIDEO SONRASI GÖRSEL (DESKTOP + MOBİL) */}
+      {/* FOTOĞRAF – VIDEO BİTİNCE */}
       <div
-        className={`absolute inset-0 transition-opacity duration-500 ${
-          videoEnded ? "opacity-100" : "opacity-0"
-        } ${"block lg:block md:hidden lg:block"}`}
+        className={`absolute inset-0 transition-opacity duration-300 ${videoEnded ? "opacity-100" : "opacity-0"}`}
       >
         <Image
           src="/images/videosonu.webp"
@@ -77,28 +53,38 @@ const Giris = () => {
 
       {/* METİN KATMANI */}
       <div className="absolute inset-0 flex items-center">
-        {showTitle && (
-          <div className="w-full px-6 md:px-12 lg:px-20 text-white bg-gradient-to-l from-black/50 to-transparent">
+       {showTitle && (  <div className="w-full px-6 md:px-12 lg:px-20 text-white bg-gradient-to-l from-black/50 to-transparent">
 
-            <h1 className="font-bold drop-shadow-xl text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
-              Hadi, topla bavulları!
-            </h1>
+          {/* BAŞLIK */}
+          <h1
+            className={`font-bold drop-shadow-xl transition-all duration-700 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl ${showTitle ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10"}`}
+          >
+            Hadi, topla bavulları!
+          </h1>
 
-            <p className="mt-4 max-w-2xl drop-shadow-lg text-sm sm:text-base md:text-lg lg:text-xl">
-              Yurt dışında eğitim, iş ve vize danışmanlık ihtiyaçlarınız için
-              AYA Journey olarak her zaman yanınızdayız.
-            </p>
+          {/* METİN */}
+          <p
+            className={`mt-4 max-w-2xl drop-shadow-lg transition-all duration-700 text-sm sm:text-base md:text-lg lg:text-xl ${showText ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}
+          >
+            Yurt dışında eğitim, iş ve vize danışmanlık ihtiyaçlarınız için
+            AYA Journey olarak her zaman yanınızdayız.
+          </p>
 
-            <div className="mt-6">
-              <Link href="/randevu">
-                <button className="bg-white text-gray-800 border border-blue-300 px-6 py-3 rounded-3xl font-semibold hover:text-blue-600 hover:bg-gray-100 transition">
-                  Randevu Al
-                </button>
-              </Link>
-            </div>
-
+          {/* BUTON */}
+          <div
+            className={`mt-6 transition-all duration-700 ${showButton ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
+          >
+            <Link href="/randevu">
+              <button
+                className=" bg-white text-gray-800 border border-blue-300 px-6 py-3 rounded-3xl font-semibold hover:text-blue-600 hover:bg-gray-100 transition"
+              >
+                Randevu Al
+              </button>
+            </Link>
           </div>
-        )}
+
+        </div>)}
+      
       </div>
     </section>
   );
