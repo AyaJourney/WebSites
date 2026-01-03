@@ -293,6 +293,7 @@ export default function FormKanada() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
+      duplex: "half",
     });
  if(res.ok){
   // clearLocalStorage()

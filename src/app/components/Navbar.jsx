@@ -59,7 +59,7 @@ export default function Navbar() {
       // onMouseLeave={() => setOpenMega(null)}
     >
       {/* BAR */}
-      <div className="w-full max-w-[1520px] mx-auto px-4 flex justify-between h-24 items-center">
+      <div className="w-full max-w-[1520px] mx-auto px-4 flex justify-between h-24 items-center ">
         {/* Logo */}
         <Link href="/">
           <img
@@ -72,7 +72,7 @@ export default function Navbar() {
         </Link>
 
         {/* BURGER – TABLET & MOBİL */}
-        <div className="xl:hidden">
+        <div className="xl:hidden lg:mr-10">
           <button
             onClick={() => {
               setMenuOpen(!menuOpen);
@@ -163,7 +163,9 @@ export default function Navbar() {
       {/* MOBILE / TABLET MENU */}
       {menuOpen && (
         <div className="xl:hidden px-4 pt-2 pb-4 bg-white border-t space-y-2">
-    <NavbarİletisimCard />
+<div className="lg:hidden">
+  <NavbarİletisimCard />
+</div>
 
           {menuItems.map((item) =>
             item.submenu ? (

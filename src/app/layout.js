@@ -101,12 +101,12 @@ export default function RootLayout({ children }) {
   name="viewport"
   content="width=device-width, initial-scale=1, maximum-scale=1"
 />
-<div className="hidden md:block fixed top-0 left-0 w-full z-50">
+<div className="hidden lg:block fixed top-0 left-0 w-full z-50">
   <NavbarIletisimCard />
 </div>
 
 {/* NAVBAR */}
-<div className="fixed top-0 md:top-[35px] left-0 w-full z-40">
+<div className="fixed top-0 lg:top-[35px] left-0 w-full z-40">
   <Navbar />
 </div>
      <main className="flex-1 mt-24 bg-white ">

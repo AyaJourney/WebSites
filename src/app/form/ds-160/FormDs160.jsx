@@ -276,29 +276,26 @@ const handleSubmit = async () => {
   setIsSubmitting(false);
 };
 
+
 async function sendForm(payload) {
-  const res = await fetch(process.env.NEXT_PUBLIC_SUBMIT_URL, {
+  const res = await fetch("/api/submit", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
+    duplex: "half", // ⭐ APPLE FIX (KRİTİK)
   });
-if(res.ok){
-  // clearLocalStorage()
- setResMessage(true)
- setForm(prev => ({
-  ...prev,
-  currentStep: prev.currentStep + 1
-}));
-}else {
- setResMessage(false)
-}
- 
 
-  // const pdfBlob = await res.blob() || "";
-  // const url = URL.createObjectURL(pdfBlob);
-  // window.open(url, "_blank");
-
+  if (res.ok) {
+    setResMessage(true);
+    setForm(prev => ({
+      ...prev,
+      currentStep: prev.currentStep + 1,
+    }));
+  } else {
+    setResMessage(false);
+  }
 }
+
+
   // load storage method preference and form data on mount
   useEffect(() => {
     const storedMethod = (localStorage.getItem(STORAGE_METHOD_KEY) || "local");

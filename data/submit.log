@@ -511,3 +511,18 @@
 2025-12-25T12:47:57.583Z - [uk] attempt 1 - sending payload: {"currentStep":6,"steps":{"1":{"tcId":"25070607546","fullName":"SEVKET PARLAK","natinolity":"TURKIYE","other_nationality":"EVET","other_nationality_country":"TURKIYE","other_nationality_start_date":"2025-12-01","other_nationality_end_date":"2025-12-26","gender":"ERKEK","maritalStatus":"EVLI","partner_full_name":"AYCA PARLAK","partner_birth_date":"2025-12-03","partner_nationality":"TURKIYE","partner_travel_with_you":"EVET","partner_passport_number":"1615616516","partner_lives_with_you":"EVET","bi...
 2025-12-25T12:51:30.913Z - [uk] attempt=1 status=200 response={"success":true}
 2025-12-25T12:51:30.917Z - [uk] success attempt=1
+2026-01-02T22:05:20.505Z - POST error: No number after minus sign in JSON at position 1 (line 1 column 2)
+2026-01-02T22:05:50.662Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1767391550642.json
+2026-01-02T22:05:50.665Z - [ds-160] START apiUrl=http://localhost:3000/api/send-abd
+2026-01-02T22:05:50.666Z - [ds-160] attempt 1 - sending payload: {"currentStep":8,"steps":{"1":{"fullName":"ASD","gender":"ERKEK","maritalStatus":"BEKAR","maidenName":"ASD","birthDate":"2025-12-30","birthPlace":"ASD","marriageDate":"","spouseFullName":"","spouseBirthDate":"","spouseBirthPlace":"","spouseAddress":"","spouseOccupation":"","otherMarriages":"","marriages":[{"spouseFullName":"","spouseBirthDate":"","marriageStartDate":"","marriageEndDate":""}]},"2":{"nationality":"ASD","otherNationalityExist":"HAYIR","otherNationality":"","otherNationalityPassport...
+2026-01-02T22:08:33.409Z - [ds-160] attempt=1 status=200 response={"success":true}
+2026-01-02T22:08:33.412Z - [ds-160] success attempt=1
+2026-01-02T22:22:20.081Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1767392540062.json
+2026-01-02T22:22:20.085Z - [ds-160] START apiUrl=http://localhost:3000/api/send-abd
+2026-01-02T22:22:20.085Z - [ds-160] attempt 1 - sending payload: {"currentStep":9,"steps":{"1":{"fullName":"ASD","gender":"ERKEK","maritalStatus":"BEKAR","maidenName":"ASD","birthDate":"2025-12-30","birthPlace":"ASD","marriageDate":"","spouseFullName":"","spouseBirthDate":"","spouseBirthPlace":"","spouseAddress":"","spouseOccupation":"","otherMarriages":"","marriages":[{"spouseFullName":"","spouseBirthDate":"","marriageStartDate":"","marriageEndDate":""}]},"2":{"nationality":"ASD","otherNationalityExist":"HAYIR","otherNationality":"","otherNationalityPassport...
+2026-01-02T22:24:59.160Z - [ds-160] attempt=1 status=200 response={"success":true}
+2026-01-02T22:24:59.161Z - [ds-160] success attempt=1
+2026-01-03T19:47:52.206Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1767469672201.json
+2026-01-03T19:53:34.644Z - JSON saved: C:\Users\1275\Desktop\AYA-JOURNEY\project\data\form_1767470014642.json
+2026-01-03T19:53:34.647Z - [ds-160] START apiUrl=http://localhost:3000/api/send-abd
+2026-01-03T19:53:34.647Z - [ds-160] attempt 1 - sending payload: {"currentStep":9,"steps":{"1":{"fullName":"","gender":"","maritalStatus":"","maidenName":"","birthDate":"","birthPlace":"","marriageDate":"","spouseFullName":"","spouseBirthDate":"","spouseBirthPlace":"","spouseAddress":"","spouseOccupation":"","otherMarriages":"","marriages":[{"spouseFullName":"","spouseBirthDate":"","marriageStartDate":"","marriageEndDate":""}]},"2":{"nationality":"","otherNationalityExist":"","otherNationality":"","otherNationalityPassportNo":"","otherSessionExist":"","otherS...
