@@ -40,7 +40,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 # IGNORE DATA FOLDER
-/data
+/data/
 
 
 # /src/app/blogs/
