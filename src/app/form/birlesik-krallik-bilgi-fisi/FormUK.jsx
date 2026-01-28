@@ -1,5 +1,6 @@
 "use client";
 import AydinlatmaFormu from "@/app/components/modals/AydinlatmaFormu";
+import { allCountries } from "@/helper/help";
 import Link from "next/link";
 import React, { useEffect, useState,useMemo } from "react";
 
@@ -141,6 +142,13 @@ uk_family_visa_explanation: "",
   travel_non_family_phone: "",
 
   uk_visited_last10: "",
+  uk_visits: [
+  {
+    purpose: "",
+    arrivalDate: "",
+    departureDate: ""
+  }
+],
   uk_visited_count: "",
   uk_visit_purpose: "",
   uk_visit_dates: "",
@@ -985,36 +993,36 @@ function extractMonthsFromDuration(value) {
           <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>
         )}
       </div>
-  <div>
-        <label className="text-sm font-medium">Hangi Ülke Vatandaşısınız (Pasaportta yazan)</label>
-        <input
-          name="natinolity"
-          className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
-          ${errors.natinolity ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
-          value={form.steps[1].natinolity ||""}
-     onChange={(e) => {
-                if (isMobile) {
-                    // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(1, "natinolity", e.target.value);
-                } else {
-                    // Desktop/Diğer: Normalizasyon YAP
-                    updateField(1, "natinolity", normalizeInput(e.target.value));
-                }
-            }}
-            
-            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
-            onBlur={(e) => {
-                if (isMobile) {
-                    const normalizedValue = normalizeInput(e.target.value);
-                    updateField(1, "natinolity", normalizedValue);
-                }
-            }}
-          placeholder="Örn: IPEK PARLAK"
-        />
-        {errors.natinolity && (
-          <p className="text-red-500 text-xs mt-1">{errors.natinolity}</p>
-        )}
-      </div>
+<div>
+  <label className="text-sm font-medium">
+    Hangi Ülke Vatandaşısınız (Pasaportta yazan)
+  </label>
+
+  <select
+    name="natinolity"
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+      ${
+        errors.natinolity
+          ? "border-red-500"
+          : "border-gray-300 focus:ring-2 focus:ring-blue-500"
+      }`}
+    value={form.steps[1].natinolity || ""}
+    onChange={(e) => updateField(1, "natinolity", e.target.value)}
+  >
+    <option value="">Seçiniz</option>
+
+    {allCountries.map((country) => (
+      <option key={country.value} value={country.value}>
+        {country.label}
+      </option>
+    ))}
+  </select>
+
+  {errors.natinolity && (
+    <p className="text-red-500 text-xs mt-1">{errors.natinolity}</p>
+  )}
+</div>
+
 
  <div>
         <label className="text-sm font-medium">Başka Ülke Vatandaşlığınız Oldu mu??</label>
@@ -1033,36 +1041,40 @@ function extractMonthsFromDuration(value) {
       </div>
  {form.steps[1].other_nationality === "EVET" && (
   <>
-   <div>
-          <label className="text-sm font-medium">Vatandaşlık Alınan Ülke</label>
-          <input
-            name="other_nationality_country"
-            className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
-            ${errors.other_nationality_country ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
-            value={form.steps[1].other_nationality_country || ""}
-        onChange={(e) => {
-                if (isMobile) {
-                    // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(1, "other_nationality_country", e.target.value);
-                } else {
-                    // Desktop/Diğer: Normalizasyon YAP
-                    updateField(1, "other_nationality_country", normalizeInput(e.target.value));
-                }
-            }}
-            
-            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
-            onBlur={(e) => {
-                if (isMobile) {
-                    const normalizedValue = normalizeInput(e.target.value);
-                    updateField(1, "other_nationality_country", normalizedValue);
-                }
-            }}
-            // placeholder="Örn: AHMET PARLAK"
-          />
-          {errors.other_nationality_country && (
-            <p className="text-red-500 text-xs mt-1">{errors.other_nationality_country}</p>
-          )}
-        </div>
+<div>
+  <label className="text-sm font-medium">
+    Vatandaşlık Alınan Ülke
+  </label>
+
+  <select
+    name="other_nationality_country"
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+      ${
+        errors.other_nationality_country
+          ? "border-red-500"
+          : "border-gray-300 focus:ring-2 focus:ring-blue-500"
+      }`}
+    value={form.steps[1].other_nationality_country || ""}
+    onChange={(e) =>
+      updateField(1, "other_nationality_country", e.target.value)
+    }
+  >
+    <option value="">Seçiniz</option>
+
+    {allCountries.map((country) => (
+      <option key={country.value} value={country.value}>
+        {country.label}
+      </option>
+    ))}
+  </select>
+
+  {errors.other_nationality_country && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.other_nationality_country}
+    </p>
+  )}
+</div>
+
          <div>
           <label className="text-sm font-medium">Vatandaşlık Başlama Tarihi</label>
           <input
@@ -1269,36 +1281,38 @@ function extractMonthsFromDuration(value) {
             <p className="text-red-500 text-xs mt-1">{errors.partner_birth_date}</p>
           )}
         </div>
-         <div>
-          <label className="text-sm font-medium">Eşinin Uyruğu</label>
-          <input
-            name="partner_nationality"
-            className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
-            ${errors.partner_nationality ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
-            value={form.steps[1].partner_nationality || ""}
-        onChange={(e) => {
-                if (isMobile) {
-                    // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(1, "partner_nationality", e.target.value);
-                } else {
-                    // Desktop/Diğer: Normalizasyon YAP
-                    updateField(1, "partner_nationality", normalizeInput(e.target.value));
-                }
-            }}
-            
-            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
-            onBlur={(e) => {
-                if (isMobile) {
-                    const normalizedValue = normalizeInput(e.target.value);
-                    updateField(1, "partner_nationality", normalizedValue);
-                }
-            }}
-            // placeholder="Örn: AHMET PARLAK"
-          />
-          {errors.partner_nationality && (
-            <p className="text-red-500 text-xs mt-1">{errors.partner_nationality}</p>
-          )}
-        </div>
+    <div>
+  <label className="text-sm font-medium">Eşinin Uyruğu</label>
+
+  <select
+    name="partner_nationality"
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+      ${
+        errors.partner_nationality
+          ? "border-red-500"
+          : "border-gray-300 focus:ring-2 focus:ring-blue-500"
+      }`}
+    value={form.steps[1].partner_nationality || ""}
+    onChange={(e) =>
+      updateField(1, "partner_nationality", e.target.value)
+    }
+  >
+    <option value="">Seçiniz</option>
+
+    {allCountries.map((country) => (
+      <option key={country.value} value={country.value}>
+        {country.label}
+      </option>
+    ))}
+  </select>
+
+  {errors.partner_nationality && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.partner_nationality}
+    </p>
+  )}
+</div>
+
 
    <div>
         <label className="text-sm font-medium">Eşinizle Birlikte mi Yaşıyorsunuz?</label>
@@ -2109,32 +2123,27 @@ onBlur={(e) => {
     <p className="text-red-500 text-xs mt-1">{errors.mother_birth_date}</p>
   )}
 </div>
- <div>
-        <label className="text-sm font-medium">Anne Uyruğu</label>
-        <input
-          name="mother_nationality"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
-          value={form.steps[2].mother_nationality || ""}
-          onChange={(e) => {
-                if (isMobile) {
-                    // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(2, "mother_nationality", e.target.value);
-                } else {
-                    // Desktop/Diğer: Normalizasyon YAP
-                    updateField(2, "mother_nationality", normalizeInput(e.target.value));
-                }
-            }}
-            
-            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
-            onBlur={(e) => {
-                if (isMobile) {
-                    const normalizedValue = normalizeInput(e.target.value);
-                    updateField(2, "mother_nationality", normalizedValue);
-                }
-            }}
-          placeholder="Örn: TÜRKİYE"
-        />
-      </div>
+<div>
+  <label className="text-sm font-medium">Anne Uyruğu</label>
+
+  <select
+    name="mother_nationality"
+    className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+    value={form.steps[2].mother_nationality || ""}
+    onChange={(e) =>
+      updateField(2, "mother_nationality", e.target.value)
+    }
+  >
+    <option value="">Seçiniz</option>
+
+    {allCountries.map((country) => (
+      <option key={country.value} value={country.value}>
+        {country.label}
+      </option>
+    ))}
+  </select>
+</div>
+
                
 <div>
   <label className="text-sm font-medium">Anne sizinle seyahat edecek mi?</label>
@@ -2231,32 +2240,27 @@ onBlur={(e) => {
     <p className="text-red-500 text-xs mt-1">{errors.father_birth_date}</p>
   )}
 </div>
- <div>
-        <label className="text-sm font-medium">Baba Uyruğu</label>
-        <input
-          name="father_nationality"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
-          value={form.steps[2].father_nationality || ""}
-          onChange={(e) => {
-                if (isMobile) {
-                    // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(2, "father_nationality", e.target.value);
-                } else {
-                    // Desktop/Diğer: Normalizasyon YAP
-                    updateField(2, "father_nationality", normalizeInput(e.target.value));
-                }
-            }}
-            
-            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
-            onBlur={(e) => {
-                if (isMobile) {
-                    const normalizedValue = normalizeInput(e.target.value);
-                    updateField(2, "father_nationality", normalizedValue);
-                }
-            }}
-          placeholder="Örn: TÜRKİYE"
-        />
-      </div>
+<div>
+  <label className="text-sm font-medium">Baba Uyruğu</label>
+
+  <select
+    name="father_nationality"
+    className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+    value={form.steps[2].father_nationality || ""}
+    onChange={(e) =>
+      updateField(2, "father_nationality", e.target.value)
+    }
+  >
+    <option value="">Seçiniz</option>
+
+    {allCountries.map((country) => (
+      <option key={country.value} value={country.value}>
+        {country.label}
+      </option>
+    ))}
+  </select>
+</div>
+
 <div>
   <label className="text-sm font-medium">Baba sizinle seyahat edecek mi?</label>
   <select
@@ -2610,7 +2614,7 @@ onBlur={(e) => {
                     updateField(3, "passport_issuing_authority", normalizedValue);
                 }
             }}
-          placeholder="Örn: Nüfus Müdürlüğü"
+          placeholder="Pasaportta yazanı giriniz"
         />
           {errors.passport_issuing_authority && (
     <p className="text-red-500 text-xs mt-1">{errors.passport_issuing_authority}</p>
@@ -4045,85 +4049,132 @@ onBlur={(e) => {
 {/* 2) Son 10 yıl UK'de bulundunuz mu? */}
 {/* --------------------------------------------------- */}
 
-<label className="text-sm font-medium mt-6 block">Son 10 yıl içinde Birleşik Krallık’ta bulundunuz mu?</label>
-<select
-  value={form.steps[5].uk_visited_last10 || ""}
-  onChange={(e) => updateField(5, "uk_visited_last10", e.target.value)}
-  className="w-full mt-1 p-3 border rounded-xl"
->
-  <option value="">Seçiniz</option>
-  <option value="EVET">Evet</option>
-  <option value="HAYIR">Hayır</option>
-</select>
+<label className="text-sm font-medium mt-6 block">
+  Son 10 yıl içinde Birleşik Krallık’ta bulundunuz mu?
+</label>
 
-{form.steps[5].uk_visited_last10 === "EVET" && (
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
-<div>
-<label className="text-sm font-medium mt-6 block">Kaç kere bulundunuz?</label>
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+  {/* EVET / HAYIR */}
+  <select
+    value={form.steps[5].uk_visited_last10 || ""}
+    onChange={(e) => {
+      updateField(5, "uk_visited_last10", e.target.value);
 
-   <input
-      placeholder="Kaç kere bulundunuz?"
-      type="number"
-      className="p-3 border rounded-xl"
-      value={form.steps[5].uk_visited_count || ""}
-      onChange={(e) => updateField(5, "uk_visited_count", e.target.value)}
-    />
-</div>
-   
-<div>
-  <label className="text-sm font-medium mt-6 block">Ziyaret Amacı</label>
+      // HAYIR seçilirse resetle
+      if (e.target.value !== "EVET") {
+        updateField(5, "uk_visited_count", "");
+        updateField(5, "uk_visits", []);
+      }
+    }}
+    className="w-full p-3 border rounded-xl"
+  >
+    <option value="">Seçiniz</option>
+    <option value="EVET">Evet</option>
+    <option value="HAYIR">Hayır</option>
+  </select>
+
+  {/* KAÇ KERE – SADECE EVET İSE */}
+  {form.steps[5].uk_visited_last10 === "EVET" && (
     <input
-      placeholder="Ziyaret Amacı"
-      className="p-3 border rounded-xl"
-      value={form.steps[5].uk_visit_purpose || ""}
+      type="number"
+      min={1}
+      placeholder="Kaç kere gittiniz?"
+      className="w-full p-3 border rounded-xl"
+      value={form.steps[5].uk_visited_count || ""}
       onChange={(e) => {
-                if (isMobile) {
-                    // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(5, "uk_visit_purpose", e.target.value);
-                } else {
-                    // Desktop/Diğer: Normalizasyon YAP
-                    updateField(5, "uk_visit_purpose", normalizeInput(e.target.value));
-                }
-            }}
-            
-            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
-            onBlur={(e) => {
-                if (isMobile) {
-                    const normalizedValue = normalizeInput(e.target.value);
-                    updateField(5, "uk_visit_purpose", normalizedValue);
-                }
-            }}
+        const count = Number(e.target.value);
+
+        updateField(5, "uk_visited_count", count);
+
+        const visits = Array.from({ length: count }, (_, i) => ({
+          purpose: form.steps[5].uk_visits?.[i]?.purpose || "",
+          arrivalDate: form.steps[5].uk_visits?.[i]?.arrivalDate || "",
+          departureDate: form.steps[5].uk_visits?.[i]?.departureDate || "",
+        }));
+
+        updateField(5, "uk_visits", visits);
+      }}
     />
-</div>
-<div>
-    <label className="text-sm font-medium mt-6 block">Ziyaret Tarihleri</label>
-        <input
-      placeholder=" (örn: 2019 Mart)"
-      className="p-3 border rounded-xl col-span-1 md:col-span-2"
-      value={form.steps[5].uk_visit_dates || ""}
-      onChange={(e) => {
-                if (isMobile) {
-                    // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(5, "uk_visit_dates", e.target.value);
-                } else {
-                    // Desktop/Diğer: Normalizasyon YAP
-                    updateField(5, "uk_visit_dates", normalizeInput(e.target.value));
-                }
-            }}
-            
-            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
-            onBlur={(e) => {
-                if (isMobile) {
-                    const normalizedValue = normalizeInput(e.target.value);
-                    updateField(5, "uk_visit_dates", normalizedValue);
-                }
-            }}
-    />
+  )}
 </div>
 
 
+{/* ZİYARET KARTLARI */}
+{form.steps[5].uk_visited_last10 === "EVET" &&
+  Array.isArray(form.steps[5].uk_visits) &&
+  form.steps[5].uk_visits.map((visit, index) => (
+    <div
+      key={index}
+      className="mt-4 p-4 border rounded-2xl bg-gray-50"
+    >
+      <h4 className="font-semibold mb-3">
+        {index + 1}. Gidiş
+      </h4>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Ziyaret Amacı */}
+      <div>
+  <label className="text-sm font-medium">Ziyaret Amacı</label>
+
+  <select
+    className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition border-gray-300 focus:ring-2 focus:ring-blue-500"
+    value={visit.purpose || ""}
+    onChange={(e) => {
+      const updated = [...form.steps[5].uk_visits];
+      updated[index].purpose = e.target.value;
+      updateField(5, "uk_visits", updated);
+    }}
+  >
+    <option value="">Seçiniz</option>
+    <option value="AILE ZIYARETI">Aile ziyareti</option>
+    <option value="ARKADAS ZIYARETI">Arkadaş ziyareti</option>
+    <option value="IS">İş</option>
+    <option value="TRANSIT">Transit</option>
+    <option value="TURISTIK">Turistik</option>
+    <option value="AKADEMIK ZIYARET">Akademik ziyaret</option>
+    <option value="KISA SURELI EGITIM">Kısa süreli eğitim</option>
+    <option value="SAGLIK">Sağlık</option>
+    <option value="EVLILIK">Evlilik</option>
+    {/* <option value="DIGER">Diğer (açıklayınız)</option> */}
+  </select>
+</div>
+
+        {/* Gidiş Tarihi */}
+        <div>
+  <label className="text-sm font-medium">Gidiş Tarihi</label>
+      <input
+          placeholder="Gidiş Tarihi"
+           type="date"
+          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition border-gray-300 focus:ring-2 focus:ring-blue-500"
+          value={visit.arrivalDate || ""}
+          onChange={(e) => {
+            const updated = [...form.steps[5].uk_visits];
+            updated[index].arrivalDate = e.target.value;
+            updateField(5, "uk_visits", updated);
+          }}
+        />
   </div>
-)}
+  
+        <div>
+  <label className="text-sm font-medium">Dönüş Tarihi</label>
+ <input
+          placeholder="Dönüş Tarihi"
+          type="date"
+          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition border-gray-300 focus:ring-2 focus:ring-blue-500"
+          value={visit.departureDate || ""}
+          onChange={(e) => {
+            const updated = [...form.steps[5].uk_visits];
+            updated[index].departureDate = e.target.value;
+            updateField(5, "uk_visits", updated);
+          }}
+        />
+  </div>
+        {/* Dönüş Tarihi */}
+       
+      </div>
+    </div>
+  ))}
+
 
 
 <label className="text-sm font-medium mt-6 block">
@@ -4150,10 +4201,29 @@ Avustralya, Kanada, Yeni Zelanda, Amerika, İsviçre, Schengen Ülkelerini Son 1
 
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
 
-          <div>
-            <label className="text-sm font-medium block">Ülke</label>
-            <input className="w-full mt-1 p-3 border rounded-xl" value={form.steps[5][`lastTravel${index + 1}_country`] || ""} onChange={(e) => updateField(5, `lastTravel${index + 1}_country`, normalizeInput(e.target.value))} />
-          </div>
+      <div>
+  <label className="text-sm font-medium block">Ülke</label>
+
+  <select
+    className="w-full mt-1 p-3 border rounded-xl"
+    value={form.steps[5][`lastTravel${index + 1}_country`] || ""}
+    onChange={(e) =>
+      updateField(
+        5,
+        `lastTravel${index + 1}_country`,
+        e.target.value
+      )
+    }
+  >
+    <option value="">Seçiniz</option>
+
+    {allCountries.map((country) => (
+      <option key={country.value} value={country.value}>
+        {country.label}
+      </option>
+    ))}
+  </select>
+</div>
 
           <div>
             <label className="text-sm font-medium block">Seyahat Amacı</label>
@@ -4161,13 +4231,13 @@ Avustralya, Kanada, Yeni Zelanda, Amerika, İsviçre, Schengen Ülkelerini Son 1
           </div>
 
           <div>
-            <label className="text-sm font-medium block">Tarih (Ay / Yıl)</label>
-            <input type="month" className="w-full mt-1 p-3 border rounded-xl" value={form.steps[5][`lastTravel${index + 1}_monthYear`] || ""} onChange={(e) => updateField(5, `lastTravel${index + 1}_monthYear`, e.target.value)} />
+            <label className="text-sm font-medium block">Gidiş Tarihi</label>
+            <input type="date" className="w-full mt-1 p-3 border rounded-xl" value={form.steps[5][`lastTravel${index + 1}_monthYear`] || ""} onChange={(e) => updateField(5, `lastTravel${index + 1}_monthYear`, e.target.value)} />
           </div>
 
           <div>
-            <label className="text-sm font-medium block">Süre (Kaç Gün)</label>
-            <input type="number" className="w-full mt-1 p-3 border rounded-xl" value={form.steps[5][`lastTravel${index + 1}_duration`] || ""} onChange={(e) => updateField(5, `lastTravel${index + 1}_duration`, e.target.value)} />
+            <label className="text-sm font-medium block">Dönüş Tarihi</label>
+            <input type="date" className="w-full mt-1 p-3 border rounded-xl" value={form.steps[5][`lastTravel${index + 1}_duration`] || ""} onChange={(e) => updateField(5, `lastTravel${index + 1}_duration`, e.target.value)} />
           </div>
 
         </div>
@@ -4203,9 +4273,24 @@ Avustralya, Kanada, Yeni Zelanda, Amerika, İsviçre, Schengen Ülkelerini Son 1
 
           {/* Ülke */}
           <div>
-            <label className="text-sm font-medium block">Gidilen Ülke</label>
-            <input name={`abroad_country[${index}].country`} className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300" value={item.country || ""} onChange={(e) => handleCountryChange(e, index)} onBlur={(e) => handleCountryBlur(e, index)} />
-          </div>
+  <label className="text-sm font-medium block">Gidilen Ülke</label>
+
+  <select
+    name={`abroad_country[${index}].country`}
+    className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+    value={item.country || ""}
+    onChange={(e) => handleCountryChange(e, index)}
+    onBlur={(e) => handleCountryBlur(e, index)}
+  >
+    <option value="">Seçiniz</option>
+
+    {allCountries.map((country) => (
+      <option key={country.value} value={country.value}>
+        {country.label}
+      </option>
+    ))}
+  </select>
+</div>
 
           {/* Amaç */}
           <div>

@@ -47,7 +47,7 @@ function formatDateDMY(dateString) {
 export async function POST(req) {
   try {
     const formData = await req.json();
-
+    console.log("PDF İŞLEMİ BAŞLATILDI")
     // --- PDF Dokümanı Oluştur ---
     const pdfDoc = await PDFDocument.create();
     
@@ -96,7 +96,19 @@ export async function POST(req) {
     const PAGE_HEIGHT = 842;
     const MARGIN = 40;
     const CONTENT_WIDTH = PAGE_WIDTH - (MARGIN * 2);
+    const PAGE_BOTTOM_MARGIN = 80;
 
+function ensureSpace(requiredHeight = 60) {
+  if (currentY - requiredHeight < PAGE_BOTTOM_MARGIN) {
+    drawFooter(currentPage, pageCount);
+
+    currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+    pageCount++;
+    currentY = PAGE_HEIGHT - MARGIN;
+
+    drawHeader(currentPage);
+  }
+}
     // --- Yardımcı Fonksiyonlar ---
 // const logoPath = path.join(process.cwd(), "public", "images", "aya_logo_100x70.png");
 // const logoBytes = fs.readFileSync(logoPath);
@@ -194,75 +206,91 @@ const drawHeader = async (page) => {
     };
 
     // 5. Bölüm Başlığı (Section)
-    const drawSection = (title) => {
-      checkSpace(50);
-      currentY -= 15; // Biraz boşluk
-      
-      // Arkaplan kutusu
-      currentPage.drawRectangle({
-        x: MARGIN,
-        y: currentY - 25,
-        width: CONTENT_WIDTH,
-        height: 25,
-        color: COLORS.primary,
-      });
+const drawSection = (title) => {
+  const sectionHeight = 28;
+  const sectionSpacing = 18; // section altı boşluk
 
-      // Başlık metni
-      currentPage.drawText(title.toUpperCase(), {
-        x: MARGIN + 10,
-        y: currentY - 19,
-        size: 11,
-        font: boldFont, // Senin fontun
-        color: COLORS.white
-      });
+  // 🔥 Section için GERÇEK alan kontrolü
+  checkSpace(sectionHeight + sectionSpacing);
 
-      currentY -= 40; // Aşağı in
-    };
+  // Arkaplan kutusu
+  currentPage.drawRectangle({
+    x: MARGIN,
+    y: currentY - sectionHeight,
+    width: CONTENT_WIDTH,
+    height: sectionHeight,
+    color: COLORS.primary,
+  });
+
+  // Başlık metni
+  currentPage.drawText(title.toUpperCase(), {
+    x: MARGIN + 12,
+    y: currentY - sectionHeight + 9,
+    size: 11,
+    font: boldFont,
+    color: COLORS.white,
+  });
+
+  // 🔥 currentY TEK VE NET düşürülüyor
+  currentY -= sectionHeight + sectionSpacing;
+};
+
 
     // 6. Alan Çizimi (Grid Yapısı - Label/Value)
-    const drawField = (label, value, isFullWidth = false, xOffset = 0) => {
-      const colWidth = isFullWidth ? CONTENT_WIDTH : (CONTENT_WIDTH / 2) - 10;
-      const valStr = value ? String(value) : "-";
-      const labelSize = 8;
-      const valueSize = 10;
-      
-      // Value kaç satır tutuyor?
-      const valueLines = wrapText(valStr, colWidth, regularFont, valueSize);
-      const heightNeeded = (valueLines.length * (valueSize + 4)) + 15; 
+ const drawField = (label, value, isFullWidth = false, xOffset = 0) => {
+  const colWidth = isFullWidth
+    ? CONTENT_WIDTH
+    : (CONTENT_WIDTH / 2) - 12;
 
-      // Sayfa sonu kontrolü
-      if (xOffset === 0) {
-         if (checkSpace(heightNeeded)) {
-             // Sayfa değiştiyse Y sıfırlandı
-         }
-      }
+  const valStr = value ? String(value) : "-";
+  const labelSize = 8;
+  const valueSize = 10;
 
-      const drawX = MARGIN + xOffset;
-      
-      // Label
-      currentPage.drawText(label, {
-        x: drawX,
-        y: currentY,
-        size: labelSize,
-        font: boldFont, // Senin fontun (Bold olmadığı için regular görünecek ama stilimiz aynı kalacak)
-        color: COLORS.textLabel
-      });
+  // Metin satırları
+  const valueLines = wrapText(
+    valStr,
+    colWidth,
+    regularFont,
+    valueSize
+  );
 
-      // Value (Wrapped)
-      let textY = currentY - 12;
-      valueLines.forEach(line => {
-        currentPage.drawText(line, {
-            x: drawX,
-            y: textY,
-            size: valueSize,
-            font: regularFont,
-            color: COLORS.textMain
-        });
-        textY -= (valueSize + 4);
-      });
-      
-      return heightNeeded; 
-    };
+  // 🔥 GERÇEK yükseklik hesabı
+  const labelHeight = labelSize + 4;
+  const valueHeight = valueLines.length * (valueSize + 4);
+  const fieldHeight = labelHeight + valueHeight + 10;
+
+  // 🔥 Sayfa kontrolü (SADECE sol kolon için)
+  if (xOffset === 0) {
+    checkSpace(fieldHeight + 10);
+  }
+
+  const drawX = MARGIN + xOffset;
+
+  // Label
+  currentPage.drawText(label, {
+    x: drawX,
+    y: currentY,
+    size: labelSize,
+    font: boldFont,
+    color: COLORS.textLabel,
+  });
+
+  // Value
+  let textY = currentY - labelHeight;
+  valueLines.forEach((line) => {
+    currentPage.drawText(line, {
+      x: drawX,
+      y: textY,
+      size: valueSize,
+      font: regularFont,
+      color: COLORS.textMain,
+    });
+    textY -= valueSize + 4;
+  });
+
+  return fieldHeight;
+};
+
 
     // --- Veri İşleme ve Çizim Başlangıcı ---
     
@@ -375,8 +403,6 @@ if (s(1).residence_months_total !== null && s(1).residence_months_total < 12) {
 
 drawFooter(currentPage, pageCount);
 
-
-  // --- BÖLÜM 4: Davet Bilgileri ---
 currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
 pageCount++;
 currentY = PAGE_HEIGHT - MARGIN;
@@ -499,7 +525,8 @@ if (String(s(2).boolean_child).toUpperCase() === "EVET") {
   });
 }
 
-/* ================= FOOTER & PAGE ================= */
+drawFooter(currentPage, pageCount);
+
 currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
 pageCount++;
 currentY = PAGE_HEIGHT - MARGIN;
@@ -554,6 +581,11 @@ currentY -= h1 + 10;
 
 // Footer
 drawFooter(currentPage, pageCount);
+
+currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+pageCount++;
+currentY = PAGE_HEIGHT - MARGIN;
+await drawHeader(currentPage);
 
 
 // --- BÖLÜM 4 ---
@@ -615,7 +647,6 @@ if (s(4).boolean_work === "OGRENCI") {
 }
 
 drawFooter(currentPage, pageCount);
-
 
 currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
 pageCount++;
@@ -755,7 +786,7 @@ if (s(5).boolean_refused_visa === "EVET") {
 
   h1 = drawField(
     "Vize Reddi Tarihi",
-    s(5).when_refused || "-",
+   formatDateDMY(s(5).when_refused)  || "-",
     false,
     0
   );
@@ -1012,48 +1043,50 @@ if (s(5).has_family_in_uk === "EVET") {
 
 drawFooter(currentPage, pageCount);
 
+currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+pageCount++;
+currentY = PAGE_HEIGHT - MARGIN;
 await drawHeader(currentPage);
 drawSection("AİLE DIŞI BİRİYLE SEYAHAT");
 
-// Aile dışı biriyle seyahat?
+ensureSpace(100);
 h1 = drawField(
   "Aile bireyleri dışında biriyle seyahat edecek misiniz?",
   s(5).travel_with_non_family || "-",
-  false,
+  true,   // ✅ TAM SATIR
   0
 );
-currentY -= h1 + 10;
+currentY -= h1 + 50;
 
 if (s(5).travel_with_non_family === "EVET") {
 
-  // Ad Soyad
+  ensureSpace(100);
   h1 = drawField(
     "Seyahat Edeceğiniz Kişinin Adı Soyadı",
     s(5).travel_non_family_fullname || "-",
-    false,
+    true,   // ✅ TAM SATIR
     0
   );
-  currentY -= h1 + 10;
+  currentY -= h1 + 50;
 
-  // Yakınlık Derecesi
+  ensureSpace(100);
   h1 = drawField(
     "Yakınlık Derecesi",
     s(5).travel_non_family_relation || "-",
-    false,
+    true,   // ✅ TAM SATIR
     0
   );
-  currentY -= h1 + 10;
+  currentY -= h1 + 50;
 
-  // Telefon
+  ensureSpace(100);
   h1 = drawField(
     "Telefon",
     s(5).travel_non_family_phone || "-",
-    false,
+    true,   // ✅ TAM SATIR
     0
   );
-  currentY -= h1 + 10;
+  currentY -= h1 + 50;
 }
-
 
 // ===============================
 // SON 10 YILDA UK ZİYARETİ
@@ -1061,49 +1094,77 @@ if (s(5).travel_with_non_family === "EVET") {
 
 drawSection("SON 10 YILDA BİRLEŞİK KRALLIK ZİYARETİ");
 
-// Ana soru
+ensureSpace(200);
 h1 = drawField(
   "Son 10 yıl içinde Birleşik Krallık’ta bulundunuz mu?",
   s(5).uk_visited_last10 || "-",
-  false,
+  true,
   0
 );
-currentY -= h1 + 10;
+currentY -= h1 + 50;
 
 if (s(5).uk_visited_last10 === "EVET") {
 
-  // Kaç kere
+  ensureSpace(100);
   h1 = drawField(
     "Kaç Kere Bulundunuz?",
-    s(5).uk_visited_count || "-",
-    false,
+    s(5).uk_visited_count ? String(s(5).uk_visited_count) : "-",
+    true,
     0
   );
-  currentY -= h1 + 10;
+  currentY -= h1 + 50;
 
-  // Ziyaret amacı
-  h1 = drawField(
-    "Ziyaret Amacı",
-    s(5).uk_visit_purpose || "-",
-    false,
-    0
-  );
-  currentY -= h1 + 10;
+  if (Array.isArray(s(5).uk_visits) && s(5).uk_visits.length > 0) {
+    s(5).uk_visits.forEach((visit, index) => {
 
-  // Ziyaret tarihleri
-  h1 = drawField(
-    "Ziyaret Tarihleri",
-    s(5).uk_visit_dates || "-",
-    false,
-    0
-  );
-  currentY -= h1 + 10;
+      ensureSpace(120);
+      h1 = drawField(`Ziyaret ${index + 1}`, "", false, 0);
+      currentY -= h1 + 20;
+
+      ensureSpace(100);
+      let v1 = drawField(
+        "Ziyaret Amacı",
+        visit.purpose || "-",
+        true,
+        0
+      );
+
+      let v2 = drawField(
+        "Gidiş Tarihi",
+        visit.arrivalDate
+          ? formatDateDMY(visit.arrivalDate)
+          : "-",
+        true,
+        CONTENT_WIDTH / 2
+      );
+
+      currentY -= Math.max(v1, v2) + 20;
+
+      ensureSpace(100);
+      let v3 = drawField(
+        "Dönüş Tarihi",
+        visit.departureDate
+          ? formatDateDMY(visit.departureDate)
+          : "-",
+        true,
+        0
+      );
+
+      currentY -= v3 + 50;
+    });
+  }
 }
+
 
 // =============================================
 // SON 10 YILDA SCHENGEN / ABD / KANADA vb.
 // =============================================
 drawFooter(currentPage, pageCount);
+
+currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+pageCount++;
+currentY = PAGE_HEIGHT - MARGIN;
+await drawHeader(currentPage);
 
 drawSection("SON 10 YILDA DİĞER ÜLKE SEYAHATLERİ");
 
@@ -1159,8 +1220,8 @@ if (travelCount > 0) {
 
     // Ay / Yıl
     h1 = drawField(
-      "Tarih (Ay / Yıl)",
-      s(5)[`lastTravel${i}_monthYear`] || "-",
+      "Gidiş Tarihi",
+    formatDateDMY( s(5)[`lastTravel${i}_monthYear`])  || "-",
       false,
       0
     );
@@ -1168,8 +1229,8 @@ if (travelCount > 0) {
 
     // Süre
     h1 = drawField(
-      "Süre (Gün)",
-      s(5)[`lastTravel${i}_duration`] || "-",
+      "Dönüş Tarihi",
+    formatDateDMY(s(5)[`lastTravel${i}_duration`])   || "-",
       false,
       0
     );
@@ -1348,6 +1409,11 @@ if (s(5).uk_stay_application_last10 === "EVET") {
 // ==================================================
 drawFooter(currentPage, pageCount);
 
+currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+pageCount++;
+currentY = PAGE_HEIGHT - MARGIN;
+await drawHeader(currentPage);
+
 drawSection("KAMU FONU BİLGİSİ");
 
 h1 = drawField(
@@ -1519,7 +1585,7 @@ let pdfBuffer = null;
       ? pdfBytes
       : Buffer.from(pdfBytes, "base64");
   }
-
+console.log("PDF GEÇİLDİ ")
     // --- Text & HTML Body ---
 // formData: gönderilen form verisi
 const f = formData; // veya defaultForm yerine bu kullanılacak
@@ -1538,7 +1604,7 @@ Başka Ülke Vatandaşlığı: ${f.steps[1].other_nationality || "-"}
 ${
   f.steps[1].other_nationality === "EVET"
     ? `Vatandaşlık Alınan Ülke: ${f.steps[1].other_nationality_country || "-"}
-Vatandaşlık Tarihleri: ${f.steps[1].other_nationality_start_date || "-"} / ${f.steps[1].other_nationality_end_date || "-"}`
+Vatandaşlık Tarihleri: ${formatDateDMY(f.steps[1].other_nationality_start_date) || "-"} / ${f.steps[1].other_nationality_end_date || "-"}`
     : ""
 }
 
@@ -1559,7 +1625,7 @@ ${
 
 ${
   f.steps[1].maritalStatus === "EVLI"
-    ? `Eşinin Doğum Tarihi: ${f.steps[1].partner_birth_date || "-"}
+    ? `Eşinin Doğum Tarihi: ${formatDateDMY(f.steps[1].partner_birth_date) || "-"}
 Eşinin Uyruğu: ${f.steps[1].partner_nationality || "-"}
 Eşiyle Birlikte Yaşıyor mu: ${f.steps[1].partner_lives_with_you || "-"}
 Eşiyle Seyahat Edecek mi: ${f.steps[1].partner_travel_with_you || "-"}
@@ -1567,7 +1633,7 @@ Eşinin Pasaport No: ${f.steps[1].partner_passport_number || "-"}`
     : ""
 }
 
-Doğum Tarihi: ${f.steps[1].birthDate || "-"}
+Doğum Tarihi: ${formatDateDMY(f.steps[1].birthDate )|| "-"}
 Doğum Yeri: ${f.steps[1].birthPlace || "-"}
 
 Telefon: ${f.steps[1].phone_number || "-"}
@@ -1600,12 +1666,12 @@ ${f.steps[1].past_addresses || "-"}`
 -- Aile Bilgileri --
 
 Anne Adı Soyadı: ${f.steps[2].mother_full_name || "-"}
-Anne Doğum Tarihi: ${f.steps[2].mother_birth_date || "-"}
+Anne Doğum Tarihi: ${formatDateDMY(f.steps[2].mother_birth_date) || "-"}
 Anne Uyruğu: ${f.steps[2].mother_nationality || "-"}
 Anne Sizinle Seyahat Edecek mi?: ${f.steps[2].mother_travel_with_you || "-"}
 
 Baba Adı Soyadı: ${f.steps[2].father_full_name || "-"}
-Baba Doğum Tarihi: ${f.steps[2].father_birth_date || "-"}
+Baba Doğum Tarihi: ${formatDateDMY(f.steps[2].father_birth_date) || "-"}
 Baba Uyruğu: ${f.steps[2].father_nationality || "-"}
 Baba Sizinle Seyahat Edecek mi?: ${f.steps[2].father_travel_with_you || "-"}
 
@@ -1626,7 +1692,7 @@ ${
           (name, idx) => `
 ${idx + 1}. Çocuk
 Ad Soyad: ${name || "-"}
-Doğum Tarihi: ${f.steps[2].child_birth_date?.[idx] || "-"}
+Doğum Tarihi: ${formatDateDMY(f.steps[2].child_birth_date?.[idx]) || "-"}
 Sizinle Seyahat Edecek mi?: ${f.steps[2].child_travel_with_you?.[idx] || "-"}
 Sizinle Birlikte Yaşıyor mu?: ${f.steps[2].child_live?.[idx] || "-"}
 İngiltere Vizesi Var mı?: ${f.steps[2].child_visa?.[idx] || "-"}
@@ -1764,9 +1830,27 @@ ${
   f.steps[5].uk_visited_last10 === "EVET"
     ? `
 UK Ziyaret Bilgileri:
-  - Kaç kere: ${f.steps[5].uk_visited_count || "-"}
-  - Ziyaret Amacı: ${f.steps[5].uk_visit_purpose || "-"}
-  - Ziyaret Tarihleri: ${f.steps[5].uk_visit_dates || "-"}
+- Kaç kere: ${f.steps[5].uk_visited_count || "-"}
+
+${
+  Array.isArray(f.steps[5].uk_visits) &&
+  f.steps[5].uk_visits.length > 0
+    ? f.steps[5].uk_visits
+        .map(
+          (visit, index) => `
+Ziyaret ${index + 1}:
+  - Ziyaret Amacı: ${visit.purpose || "-"}
+  - Gidiş Tarihi: ${
+    visit.arrivalDate ? formatDateDMY(visit.arrivalDate) : "-"
+  }
+  - Dönüş Tarihi: ${
+    visit.departureDate ? formatDateDMY(visit.departureDate) : "-"
+  }
+`
+        )
+        .join("")
+    : "- Ziyaret detayı girilmemiş"
+}
 `
     : ""
 }
@@ -1790,8 +1874,8 @@ ${Array.from({
   ${index + 1}. Seyahat
      - Ülke: ${f.steps[5][`lastTravel${index + 1}_country`] || "-"}
      - Seyahat Amacı: ${f.steps[5][`lastTravel${index + 1}_purpose`] || "-"}
-     - Tarih (Ay/Yıl): ${f.steps[5][`lastTravel${index + 1}_monthYear`] || "-"}
-     - Süre (Gün): ${f.steps[5][`lastTravel${index + 1}_duration`] || "-"}`;
+     - Gidiş Tarihi: ${formatDateDMY(f.steps[5][`lastTravel${index + 1}_monthYear`]) || "-"}
+     - Dönüş Tarihi: ${formatDateDMY(f.steps[5][`lastTravel${index + 1}_duration`]) || "-"}`;
   })
   .join("\n")}
 `
@@ -1990,7 +2074,7 @@ const htmlBody = `
       s1.other_nationality === "EVET"
         ? `
         <tr><th style="background-color:#e0e0e0;">Vatandaşlık Alınan Ülke</th><td>${s1.other_nationality_country || "-"}</td></tr>
-        <tr><th style="background-color:#e0e0e0;">Vatandaşlık Tarihleri</th><td>${s1.other_nationality_start_date || "-"} / ${s1.other_nationality_end_date || "-"}</td></tr>
+        <tr><th style="background-color:#e0e0e0;">Vatandaşlık Tarihleri</th><td>${formatDateDMY(s1.other_nationality_start_date) || "-"} / ${s1.other_nationality_end_date || "-"}</td></tr>
         `
         : ""
     }
@@ -2013,7 +2097,7 @@ const htmlBody = `
     ${
       s1.maritalStatus === "EVLI"
         ? `
-        <tr><th style="background-color:#e0e0e0;">Eşinin Doğum Tarihi</th><td>${s1.partner_birth_date || "-"}</td></tr>
+        <tr><th style="background-color:#e0e0e0;">Eşinin Doğum Tarihi</th><td>${formatDateDMY(s1.partner_birth_date) || "-"}</td></tr>
         <tr><th style="background-color:#e0e0e0;">Eşinin Uyruğu</th><td>${s1.partner_nationality || "-"}</td></tr>
         <tr><th style="background-color:#e0e0e0;">Eşiyle Birlikte Yaşıyor mu</th><td>${s1.partner_lives_with_you || "-"}</td></tr>
         <tr><th style="background-color:#e0e0e0;">Eşiyle Seyahat Edecek mi</th><td>${s1.partner_travel_with_you || "-"}</td></tr>
@@ -2022,7 +2106,7 @@ const htmlBody = `
         : ""
     }
 
-    <tr><th style="background-color:#e0e0e0;">Doğum Tarihi</th><td>${s1.birthDate || "-"}</td></tr>
+    <tr><th style="background-color:#e0e0e0;">Doğum Tarihi</th><td>${formatDateDMY(s1.birthDate) || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Doğum Yeri</th><td>${s1.birthPlace || "-"}</td></tr>
 
     <tr><th style="background-color:#e0e0e0;">Telefon</th><td>${s1.phone_number || "-"}</td></tr>
@@ -2064,7 +2148,7 @@ const htmlBody = `
     </tr>
     <tr>
       <th style="background-color:#e0e0e0;">Anne Doğum Tarihi</th>
-      <td>${f.steps[2].mother_birth_date || "-"}</td>
+      <td>${formatDateDMY(f.steps[2].mother_birth_date )|| "-"}</td>
     </tr>
     <tr>
       <th style="background-color:#e0e0e0;">Anne Uyruğu</th>
@@ -2082,7 +2166,7 @@ const htmlBody = `
     </tr>
     <tr>
       <th style="background-color:#e0e0e0;">Baba Doğum Tarihi</th>
-      <td>${f.steps[2].father_birth_date || "-"}</td>
+      <td>${formatDateDMY(f.steps[2].father_birth_date) || "-"}</td>
     </tr>
     <tr>
       <th style="background-color:#e0e0e0;">Baba Uyruğu</th>
@@ -2123,7 +2207,7 @@ const htmlBody = `
                   <div style="margin-bottom:8px;">
                     <strong>${idx + 1}. Çocuk</strong><br/>
                     Ad Soyad: ${name || "-"}<br/>
-                    Doğum Tarihi: ${f.steps[2].child_birth_date?.[idx] || "-"}<br/>
+                    Doğum Tarihi: ${formatDateDMY(f.steps[2].child_birth_date?.[idx]) || "-"}<br/>
                     Sizinle Seyahat: ${f.steps[2].child_travel_with_you?.[idx] || "-"}<br/>
                     Birlikte Yaşıyor: ${f.steps[2].child_live?.[idx] || "-"}<br/>
                     İngiltere Vizesi: ${f.steps[2].child_visa?.[idx] || "-"}<br/>
@@ -2297,15 +2381,42 @@ ${
   f.steps[5].uk_visited_last10 === "EVET"
     ? `
 <tr>
-  <th>UK Ziyaret Detayı</th>
+  <th>UK Ziyaret Detayları</th>
   <td>
-    Kaç Kez: ${f.steps[5].uk_visited_count || "-"}<br/>
-    Amaç: ${f.steps[5].uk_visit_purpose || "-"}<br/>
-    Tarihler: ${f.steps[5].uk_visit_dates || "-"}
+    <strong>Kaç Kez:</strong> ${f.steps[5].uk_visited_count || "-"}
+    <br/><br/>
+
+    ${
+      Array.isArray(f.steps[5].uk_visits) &&
+      f.steps[5].uk_visits.length > 0
+        ? f.steps[5].uk_visits
+            .map(
+              (visit, index) => `
+              <div style="margin-bottom:10px;">
+                <strong>Ziyaret ${index + 1}</strong><br/>
+                Amaç: ${visit.purpose || "-"}<br/>
+                Gidiş Tarihi: ${
+                  visit.arrivalDate
+                    ? formatDateDMY(visit.arrivalDate)
+                    : "-"
+                }<br/>
+                Dönüş Tarihi: ${
+                  visit.departureDate
+                    ? formatDateDMY(visit.departureDate)
+                    : "-"
+                }
+              </div>
+            `
+            )
+            .join("")
+        : "-"
+    }
   </td>
-</tr>`
+</tr>
+`
     : ""
 }
+
 
 <tr>
   <th>Son 10 Yılda Diğer Ülkeler (Schengen vb.)</th>
@@ -2321,8 +2432,8 @@ ${
   <td>
     Ülke: ${f.steps[5][`lastTravel${i + 1}_country`] || "-"}<br/>
     Amaç: ${f.steps[5][`lastTravel${i + 1}_purpose`] || "-"}<br/>
-    Tarih (Ay/Yıl): ${f.steps[5][`lastTravel${i + 1}_monthYear`] || "-"}<br/>
-    Süre (Gün): ${f.steps[5][`lastTravel${i + 1}_duration`] || "-"}
+    Gidiş Tarihi: ${formatDateDMY(f.steps[5][`lastTravel${i + 1}_monthYear`]) || "-"}<br/>
+    Dönüş Tarihi: ${formatDateDMY(f.steps[5][`lastTravel${i + 1}_duration`]) || "-"}
   </td>
 </tr>`).join("")
     : ""

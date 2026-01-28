@@ -2,7 +2,8 @@
 import AydinlatmaFormu from "@/app/components/modals/AydinlatmaFormu";
 import Link from "next/link";
 import React, { useEffect, useState,useMemo } from "react";
-import { countryName, payerRelationships, state } from "@/helper/help";
+import { countryName, languages_option, occupations, payerRelationships, state } from "@/helper/help";
+import { VisitedCountriesSelect } from "./VisitedCountriesSelect";
 
 const isMobileOrAndroid = () => {
     // ... UA kontrol kodunuz
@@ -12,6 +13,15 @@ const isMobileOrAndroid = () => {
 
 const STORAGE_KEY = "ds160_form_data_v1";
 const STORAGE_METHOD_KEY = "ds160_storage_method_v1"; // "local" or "cookie"
+const RELATIONSHIP_MAP = {
+  PARENT: "P",
+  SPOUSE: "S",
+  CHILD: "C",
+  RELATIVE: "R",
+  FRIEND: "F",
+  BUSINESS: "B",
+  OTHER: "O",
+};
 const defaultForm = {
   currentStep: 1,
  steps: {
@@ -23,25 +33,6 @@ const defaultForm = {
       birthDate: "",
       birthPlace: "",
       birthCountry:"",
- marriageDate: "",
-  spouseFullName: "",
-  spouseBirthDate: "",
-  spouseBirthPlace: "",
-  spouseAddress: "",
-  spouseOccupation: "",
-
-  // ✅ Geçmiş evlilik kontrolü (EVLI ise sorulur)
-  otherMarriages: "",       // EVET | HAYIR
-
-  // ✅ TÜM ESKİ EVLİLİKLER (DUL / BOSANMIS / EVET)
-  marriages: [
-    {
-      spouseFullName: "",
-      spouseBirthDate: "",
-      marriageStartDate: "",
-      marriageEndDate: ""
-    }
-  ],
     },
     2: {
       nationality: "",
@@ -54,15 +45,37 @@ const defaultForm = {
       tcId: "",
       ssn: "",
       vkn: "",
-      tcEndDate:"",
-       motherFullName: "",
-      fatherFullName: "",
-      motherBirthDate: "",
-      fatherBirthDate: "",
+     
+      
     },
     3: {
       visaType: "",
       visaTypeDesc:"",
+      visaEduFullName1:"",
+      visaEduAddress1:"",
+      visaEduCity1:"",
+      visaEduState1:"",
+      visaEduPostCode1:"",
+      visaEduCountry1:"",
+      visaEduPhone1:"",
+      visaEduMail1:"",
+      visaEduFullName2:"",
+      visaEduAddress2:"",
+      visaEduCity2:"",
+      visaEduState2:"",
+      visaEduPostCode2:"",
+      visaEduCountry2:"",
+      visaEduPhone2:"",
+      visaEduMail2:"",
+      study_in_us:"",
+      sevis_id:"",
+      program_number:"",
+      school_name:"",
+      course_of_study:"",
+      school_address1:"",
+      school_city:"",
+      school_state:"",
+      school_post_code:"",
       stayDurationUnit:"",
       usaArrivalCity:"",
       usaAddress:"",
@@ -100,6 +113,14 @@ const defaultForm = {
     },
     4: {
       travelAlone: "",
+       companionCount: 0,        // number
+    companions: [
+    {
+      fullName: "",
+      relationship: "",
+      hasVisa: "",
+    }
+  ],
       otherTraveler: "",
       otherTravelerConnection: "",
       otherTravelerConnectionVisa:"",
@@ -115,8 +136,7 @@ const defaultForm = {
       visaRefused: "",
       immigrationDetail: "",
       visaDateLastRefused:"",
-      organizationBoolean:"",
-      organizationInfo:"",
+     
       organizationTravel:"",
       organizationTravelName:"",
       hadUSDriverLicense:"",
@@ -152,37 +172,120 @@ immigration:"",
       passportAuthority: "",
       passportStart: "",
       passportEnd: "",
-      lostPassportNumber: ""
+      lostPassportNumber: "",
+      passportAuthorityCountry:"",
+      lostPassportBoolean:"",
+      lostPassportNumber:"",
+      lostPassportAuthorityCountry:"",
+      lostPassportInfo:"",
+
+
     },
-    6: {
+
+    6:{
+      organizationBoolean:"",
+      organizationInfo:"",
+      usaRelativeFullName:"",
+      usaRelative:"",
+      usaRelativeInfo:"",
+      usaRelativeAddress:"",
+      usaRelativeAddressCity:"",
+      usaRelativeAddressState:"",
+      usaRelativePhone:"",
+      usaRelativeEmail:"",
+      usaRelativePostCode:"",
+      organizationAddress:"",
+      organizationAddressCity:"",
+      organizationAddressState:"",
+      organizationPhone:"",
+      organizationEmail:"",
+      organizationPostCode:"",
+
+
+    },
+
+7:{
+motherFullName:"",
+  fatherFullName:"",
+  motherBirthDate:"",
+  fatherBirthDate:"",
+  isMotherInUSA:"",
+  isFatherInUSA:"",
+  isMotherUSAStatus:"",
+  isFatherUSAStatus:"",
+hasRelativeInUSA: "", // YES | NO
+  relativeCount: 0,
+  relatives: [
+    {
+      fullName: "",
+      level: "",
+      status: ""
+    }
+  ],
+  otherRelativeInUSA:"",
+
+},
+
+8:{
+  spouseFullName:"",
+wifeMaidenName:"",
+spouseNationality:"",
+spouseBirthPlace:"",
+spouseBirthPlaceCountry:"",
+spouseBirthDate:"",
+spouseAddress:"",
+otherSpouseAddress:"",
+otherSpouseAddressCity:"",
+otherSpouseAddressCountry:"",
+otherSpouseAddressPostCode:"",
+oldSpouseFullName:"",
+marriageDate:"",
+oldMarriageDate:"",
+oldMarriageEndDate:"",
+oldSpouseBirthDate:"",
+oldSpouseNationality:"",
+oldSpouseBirthPlace:"",
+oldSpouseEndCountry:"",
+oldSpouseInfo:"",
+
+},
+   9: {
       occupation: "",
       workOrSchoolName: "",
       workOrSchoolAddress: "",
+      workOrSchoolCity: "",
+      workOrSchoolCountry:"",
+      workOrSchoolPhone:"",
+      workOrSchoolPostCode:"",
+      otherJobDescription:"",
       workPhone: "",
       workStartDate: "",
       monthlyIncome: "",
       jobDescription: "",
       previousJobs: "",
-      highSchoolName: "",
-highSchoolStartDate: "",
-highSchoolEndDate: "",
-highSchoolAddress: "",
-universityName: "",
-universityStartDate: "",
-universityEndDate: "",
-universityAddress: "",
+      educationBoolean:"",
+       previousEducations: [
+        
+       ] ,
+     
+previousJobBoolean:"",
 universitySection:"",
       previousJobs: [
   {
     companyName: "",
-    companyAddress: "",
+    previusWorkAddress: "",
+    previusWorkCity:"",
+    previusWorkPostCode:"",
+    previusWorkCountry: "",
+    previusWorkPhone: "",
+    previusSupervisorFullname:"",
     position: "",
     startDate: "",
     endDate: ""
   }
 ]
     },
-    7: {
+    10: {
       languages: "",
       visitedCountries: "",
       militaryStatus: "",
@@ -194,7 +297,7 @@ universitySection:"",
 
    
     },
-    8: {
+    11: {
       
       passportFile: null,
       photoFile: null
@@ -292,41 +395,47 @@ const getMaritalStatus = (defaultForm) => {
   return inferMaritalStatus(defaultForm);
 };
 
-function getSurname(fullName = "") {
- if (!fullName) return "";
+function getSurname(fullName) {
+  // ❗ String değilse direkt boş dön
+  if (typeof fullName !== "string") return "";
 
-  const parts = fullName.trim().split(/\s+/);
-  const surname = parts.at(-1);
+  const cleaned = fullName.trim();
+  if (!cleaned) return "";
+
+  const parts = cleaned.split(/\s+/);
+  const surname = parts.at(-1) || "";
 
   return turkishToEnglish(surname).toUpperCase();
-
 }
 const splitFullName = (fullName = "") => {
   if (!fullName) {
     return { givenName: "", surname: "" };
   }
 
-  const parts = fullName.trim().split(/\s+/);
+  const parts = fullName?.trim()?.split(/\s+/);
 
   if (parts.length === 1) {
     return { givenName: "", surname: parts[0] };
   }
 
   return {
-    givenName: parts.slice(0, -1).join(" "),
-    surname: parts.at(-1),
+    givenName: parts?.slice(0, -1)?.join(" "),
+    surname: parts?.at(-1),
   };
 };
 
-function getGivenName(fullName = "") {
- if (!fullName) return "";
+function getGivenName(fullName) {
+  if (typeof fullName !== "string") return "";
 
-  const parts = fullName.trim().split(/\s+/);
-  parts.pop(); // soyadı çıkar
+  const cleaned = fullName.trim();
+  if (!cleaned) return "";
 
-  const givenName = parts.join(" ");
+  const parts = cleaned.split(/\s+/);
+  const given = parts.length > 1
+    ? parts.slice(0, -1).join(" ")
+    : "";
 
-  return turkishToEnglish(givenName).toUpperCase();
+  return turkishToEnglish(given).toUpperCase();
 }
 const getOtherNameParts = (defaultForm) => {
   const step1 = defaultForm?.steps?.[1];
@@ -420,28 +529,7 @@ const buildVisitFields = (defaultForm) => {
 
   return result;
 };
-const buildCrmForm = (defaultForm, crmMap) => {
-  const result = {};
 
-  // 1️⃣ Statik alanlar (crmMap)
-  for (const crmKey in crmMap) {
-    const path = crmMap[crmKey];
-    const rawValue = getValueByPath(defaultForm, path);
-
-    const transform = transformByCrmKey[crmKey];
-
-    let value = transform
-      ? transform(rawValue, defaultForm)
-      : rawValue ?? "";
-
-    result[crmKey] = String(value);
-  }
-
-  // 2️⃣ Dinamik VISIT alanları
-  Object.assign(result, buildVisitFields(defaultForm));
-
-  return result;
-};
 const isPrevVisaSameType = (defaultForm) => {
   const currentVisa = normalizeVisaType(
     defaultForm?.steps?.[3]?.visaTypeDesc
@@ -494,6 +582,206 @@ const buildHomeAddress = (defaultForm) => {
 
   return parts.join(" ");
 };
+const parseSocialMedia = (accounts) => {
+  if (!Array.isArray(accounts) || accounts.length === 0) {
+    return {
+      platforms: "",
+      usernames: "",
+    };
+  }
+
+  const platforms = [];
+  const usernames = [];
+
+  accounts.forEach((acc) => {
+    if (acc?.platform) {
+      platforms.push(
+        String(acc.platform).trim().toUpperCase()
+      );
+    }
+
+    if (acc?.username) {
+      usernames.push(
+        String(acc.username).trim()
+      );
+    }
+  });
+
+  return {
+    platforms: platforms.join(","),
+    usernames: usernames.join(","),
+  };
+};
+const isNo = (v) => String(v).toUpperCase() === "NO";
+
+const getUsPocSource = (defaultForm) => {
+  const step4 = defaultForm?.steps?.[4];
+  const step3 = defaultForm?.steps?.[3];
+  const step6 = defaultForm?.steps?.[6];
+
+  const useRelative = step4?.useRelative;
+  const organization = step4?.organizationBoolean;
+
+  const bothNo =
+    String(useRelative).toUpperCase() === "NO" &&
+    String(organization).toUpperCase() === "NO";
+
+  if (bothNo) {
+    return {
+      address: step3?.usaAddress || "",
+      city: step3?.usaAddressCity || "",
+      state: step3?.usaAddressState || "",
+      zip: step3?.usaAddressZip || "",
+      phone: "05555555555" || "",
+      email: "xx@mail.com" || "",
+      orgName: "XXX HOTEL",
+    };
+  }
+
+  return {
+    address: step6?.usaRelativeAddress || "",
+    city: step6?.usaRelativeAddressCity || "",
+    state: step6?.usaRelativeAddressState || "",
+    zip: step6?.usaRelativePostCode || "",
+    phone: step6?.usaRelativePhone || "",
+    email: step6?.usaRelativeEmail || "",
+    orgName: step6?.organizationInfo || "",
+  };
+};
+
+const buildUsImmediateRelatives = (defaultForm) => {
+  const result = {};
+
+  const hasRel = defaultForm?.steps?.[7]?.hasRelativeInUSA;
+  if (hasRel !== "YES") return result;
+
+  const relatives = defaultForm?.steps?.[7]?.relatives || [];
+
+  relatives.forEach((rel, index) => {
+    const i = index + 1;
+
+    const parts = String(rel.fullName || "").trim().split(/\s+/);
+
+    result[`US_REL${i}_SURNAME`] =
+      parts.length > 1 ? parts.at(-1).toUpperCase() : parts[0]?.toUpperCase() || "";
+
+    result[`US_REL${i}_GIVEN`] =
+      parts.length > 1
+        ? parts.slice(0, -1).join(" ").toUpperCase()
+        : "";
+
+    result[`US_REL${i}_TYPE`] = rel.level || "";
+    result[`US_REL${i}_STATUS`] = rel.status || "";
+  });
+
+  return result;
+};
+function splitFullNameSafe(fullName) {
+  if (typeof fullName !== "string") {
+    return { surname: "", given: "" };
+  }
+
+  const parts = fullName.trim().split(/\s+/);
+  return {
+    surname: turkishToEnglish(parts.at(-1)).toUpperCase(),
+    given: turkishToEnglish(parts.slice(0, -1).join(" ")).toUpperCase(),
+  };
+}
+function splitDateSafe(dateStr) {
+  if (!dateStr) return { day: "", month: "", year: "" };
+
+  const d = new Date(dateStr);
+  if (isNaN(d)) return { day: "", month: "", year: "" };
+
+  return {
+    day: String(d.getDate()).padStart(2, "0"),
+    month: d.toLocaleString("en-US", { month: "short" }).toUpperCase(),
+    year: String(d.getFullYear()),
+  };
+}
+function getSpouseSurname(form) {
+  const applicantGender = form?.steps?.[1]?.gender;
+  const spouseFullName = form?.steps?.[8]?.spouseFullName;
+  const maidenName = form?.steps?.[8]?.wifeMaidenName;
+
+  if (typeof spouseFullName !== "string") return "";
+
+  // mevcut soyadı (son kelime)
+  const parts = spouseFullName.trim().split(/\s+/);
+  const currentSurname = parts.at(-1);
+
+  // Eğer eş KADINSA (başvuran erkek)
+  if (
+    applicantGender === "M" &&
+    typeof maidenName === "string" &&
+    maidenName.trim() !== ""
+  ) {
+    return turkishToEnglish(
+      `${maidenName.trim()} ${currentSurname}`
+    ).toUpperCase();
+  }
+
+  // Diğer tüm durumlar
+  return turkishToEnglish(currentSurname).toUpperCase();
+}
+function getSpouseGivenNames(form) {
+  const spouseFullName = form?.steps?.[8]?.spouseFullName;
+  if (typeof spouseFullName !== "string") return "";
+
+  const parts = spouseFullName.trim().split(/\s+/);
+  parts.pop(); // soyadı çıkar
+
+  return turkishToEnglish(parts.join(" ")).toUpperCase();
+}
+function normalizeUpper(val = "") {
+  if (typeof val !== "string") return "";
+  return turkishToEnglish(val).toUpperCase();
+}
+const formatDateToDs160 = (date) => {
+  if (!date) return "";
+  const d = new Date(date);
+  const day = String(d.getDate()).padStart(2, "0");
+  const year = d.getFullYear();
+  const month = d.toLocaleString("en-US", { month: "short" }).toUpperCase();
+  return `${day}-${month}-${year}`;
+};
+const joinArray = (arr, fn) =>
+  arr.map(fn).join(",");
+
+
+const buildCrmForm = (defaultForm, crmMap) => {
+  const result = {};
+
+  for (const crmKey in crmMap) {
+    const path = crmMap[crmKey];
+    const rawValue = path ? getValueByPath(defaultForm, path) : undefined;
+    const transform = transformByCrmKey[crmKey];
+
+    let value;
+
+    if (transform) {
+      value = transform(rawValue, defaultForm);
+    } else {
+      // 🔥 transform yoksa path’ten geleni al
+      value = rawValue;
+    }
+
+    // 🔥 EDU_00_*, EDU_01_* gibi çoklu alanlar
+    if (
+      value &&
+      typeof value === "object" &&
+      !Array.isArray(value) &&
+      !(value instanceof Date)
+    ) {
+      Object.assign(result, value);
+    } else {
+      result[crmKey] =
+        value === undefined || value === null ? "" : String(value);
+    }
+  }
+
+  return result;
+};
 
 const crmMap = {
   // ===== PERSONAL =====
@@ -505,7 +793,6 @@ const crmMap = {
   OTHER_GIVEN_NAME_1: "steps.1.marriages",
   GENDER: "steps.1.gender",
   MARITAL_STATUS: "steps.1.maritalStatus",
-
   // ===== BIRTH =====
   BIRTH_DAY: "steps.1.birthDate",
   BIRTH_MONTH: "steps.1.birthDate",
@@ -513,75 +800,89 @@ const crmMap = {
   BIRTH_CITY: "steps.1.birthPlace",
   BIRTH_STATE: "N/A",
   BIRTH_COUNTRY: "steps.1.birthCountry",
-
   // ===== NATIONALITY / ID =====
   NATIONALITY: "steps.2.nationality",
   OTHER_NATIONALITY: "steps.2.otherNationalityExist",
   OTHER_NATIONALITY_1_COUNTRY: "steps.2.otherNationality",
   OTHER_NATIONALITY_1_HAS_PASSPORT: "steps.2.otherNationalityExist",
   OTHER_NATIONALITY_1_PASSPORT_NUMBER: "steps.2.otherNationalityPassportNo",
-
   PERMANENT_RESIDENT_OTHER_COUNTRY: "steps.2.otherSessionExist",
   PERMANENT_RESIDENT_1_COUNTRY: "steps.2.otherSessionExistCountry",
   PERMANENT_RESIDENT_2_COUNTRY: "steps.2.otherSessionExistCountry",
-
   NATIONAL_ID: "steps.2.tcId",
   SSN: "steps.2.ssn",
   TAX_ID: "steps.2.vkn",
-
   // ===== FAMILY =====
-  FATHER_SURNAME: "steps.2.fatherFullName",
-  FATHER_GIVEN: "steps.2.fatherFullName",
-  FATHER_DOB: "steps.2.fatherBirthDate",
-  FATHER_DOB_NA: "steps.2.fatherBirthDate",
-  FATHER_IN_US: "steps.3.usRelativeInfo",
-  FATHER_US_STATUS: "steps.3.usRelativeInfo",
-
-  MOTHER_SURNAME: "steps.2.motherFullName",
-  MOTHER_GIVEN: "steps.2.motherFullName",
-  MOTHER_DOB: "steps.2.motherBirthDate",
-  MOTHER_DOB_NA: "steps.2.motherBirthDate",
-  MOTHER_IN_US: "steps.3.usRelativeInfo",
-  MOTHER_US_STATUS: "steps.3.usRelativeInfo",
-
-  US_IMMEDIATE_RELATIVE: "steps.3.usRelativeInfo",
-  US_REL_SURNAME: "steps.3.relationfullName",
-  US_REL_GIVEN: "steps.3.relationfullName",
-  US_REL_TYPE: "steps.3.relationDegree",
-  US_REL_STATUS: "steps.3.usRelativeInfo",
-
+  FATHER_SURNAME: "steps.7.fatherFullName",
+  FATHER_GIVEN: "steps.7.fatherFullName",
+  FATHER_DOB: "steps.7.fatherBirthDate",
+  FATHER_DOB_NA: "steps.7.fatherBirthDate",
+  FATHER_IN_US: "steps.7.isFatherInUSA",
+  FATHER_US_STATUS: "steps.7.isFatherUSAStatus",
+  MOTHER_SURNAME: "steps.7.motherFullName",
+  MOTHER_GIVEN: "steps.7.motherFullName",
+  MOTHER_DOB: "steps.7.motherBirthDate",
+  MOTHER_DOB_NA: "steps.7.motherBirthDate",
+  MOTHER_IN_US: "steps.7.isMotherInUSA",
+  MOTHER_US_STATUS: "steps.7.isMotherUSAStatus",
+  US_IMMEDIATE_RELATIVE: "steps.7.hasRelativeInUSA",
+  US_REL_SURNAME: "steps.6.usaRelativeFullName",
+  US_REL_GIVEN: "steps.6.usaRelativeFullName",
+  US_REL_TYPE: "steps.7.relatives",
+  US_REL_STATUS: "steps.7.relatives",
+  US_OTHER_RELATIVE: "steps.7.otherRelativeInUSA",
   // ===== TRAVEL / VISA =====
   PURPOSE_OF_TRIP: "steps.3.visaType",
   PURPOSE_OF_TRIP_SUB: "steps.3.visaTypeDesc",
-
+  VISAEDUSURNAME1:"steps.3.visaEduFullName1",
+  VISAEDUGIVEN1:"steps.3.visaEduFullName1",
+  VISAEDADDRESS1:"steps.3.visaEduAddress1",
+  VISAEDUCITY1:"steps.3.visaEduCity1",
+  VISAEDUSTATE1:"steps.3.visaEduState1",
+  VISAEDUPOSTCODE1:"steps.3.visaEduPostCode1",
+  VISAEDUCOUNTRY1:"steps.3.visaEduCountry1",
+  VISAEDUPHONE1:"steps.3.visaEduPhone1",
+  VISAEDUMAIL1:"steps.3.visaEduMail1",
+  VISAEDUSURNAME2:"steps.3.visaEduFullName2",
+  VISAEDUGIVEN2:"steps.3.visaEduFullName2",
+  VISAEDADDRESS2:"steps.3.visaEduAddress2",
+  VISAEDUCITY2:"steps.3.visaEduCity2",
+  VISAEDUSTATE2:"steps.3.visaEduState2",
+  VISAEDUPOSTCODE2:"steps.3.visaEduPostCode2",
+  VISAEDUCOUNTRY2:"steps.3.visaEduCountry2",
+  VISAEDUPHONE2:"steps.3.visaEduPhone2",
+  VISAEDUMAIL2:"steps.3.visaEduMail2",
+  STUDY_IN_US:"steps.3.study_in_us",
+  SEVIS_ID:"steps.3.sevis_id",
+  PROGRAM_NUMBER:"steps.3.program_number",
+  SCHOOL_NAME:"steps.3.school_name",
+  COURSE_OF_STUDY:"steps.3.course_of_study",
+  SCHOOL_ADDR1:"steps.3.school_address1",
+  SCHOOL_ADDR2:"",
+  SCHOOL_CITY:"steps.3.school_city",
+  SCHOOL_STATE:"steps.3.school_state",
+  SCHOOL_ZIP:"steps.3.school_post_code",
   HAS_SPECIFIC_TRAVEL_PLANS: "steps.3.tourismPlanFinalized",
-
   ARRIVAL_DAY: "steps.3.exactArrival",
   ARRIVAL_MONTH: "steps.3.exactArrival",
   ARRIVAL_YEAR: "steps.3.exactArrival",
   ARRIVAL_CITY: "steps.3.usaArrivalCity",
-
-  DEPARTURE_DAY: "steps.3.estimatedArrival",
-  DEPARTURE_MONTH: "steps.3.estimatedArrival",
-  DEPARTURE_YEAR: "steps.3.estimatedArrival",
+  DEPARTURE_DAY: "steps.3.exactDeparture",
+  DEPARTURE_MONTH: "steps.3.exactDeparture",
+  DEPARTURE_YEAR: "steps.3.exactDeparture",
   DEPARTURE_CITY: "steps.3.usaDepartureCity",
-
   TRAVEL_LOCATION_1: "steps.3.usaLocations",
-
   INTENDED_ARRIVAL_DAY: "steps.3.estimatedArrival",
   INTENDED_ARRIVAL_MONTH: "steps.3.estimatedArrival",
   INTENDED_ARRIVAL_YEAR: "steps.3.estimatedArrival",
-
   TRAVEL_LOS_VALUE: "steps.3.stayDurationValue",
   TRAVEL_LOS_UNIT: "steps.3.stayDurationUnit",
- 
   // ===== US ADDRESS =====
   US_ADDRESS1: "steps.3.usaAddress",
   US_ADDRESS2: "",
   US_CITY: "steps.3.usaAddressCity",
   US_STATE: "steps.3.usaAddressState",
   // US_ZIP: "steps.3.usaAddress",
-
   // ===== PAYER =====
   PAYER_TYPE: "steps.3.whoPays",
   PAYER_SURNAME: "steps.3.relationfullName",
@@ -596,23 +897,37 @@ const crmMap = {
   PAYER_STATE: "",
   PAYER_ZIP: "steps.3.payerRelationPostCode",
   PAYER_COUNTRY: "steps.3.payerRelationCountry",
+  // ŞİRKET
+  PAYER_COMPANY_NAME: "steps.3.relationCompanyfullName",
+
+  PAYER_COMPANY_PHONE: "steps.3.payerCompanyPhone",
+  PAYER_COMPANY_EMAIL: "steps.3.payerMail",
+  PAYER_COMPANY_RELATIONSHIP: "steps.3.payerRelation",
+  PAYER_ADDRESS_SAME: "",
+  PAYER_COMPANY_ADDRESS1: "steps.3.payerCompanyAddress",
+  PAYER_ADDRESS2: "",
+  PAYER_COMPANY_CITY: "steps.3.payerCity",
+  PAYER_COMPANY_STATE: "steps.3.payerState",
+  PAYER_COMPANY_ZIP: "steps.3.payerPostCode",
+  PAYER_COMPANY_COUNTRY: "steps.3.payerCountry",
+
+
 
   // ===== PREVIOUS US TRAVEL =====
   TRAVEL_COMPANIONS: "steps.4.travelAlone",
   GROUP_TRAVEL: "steps.4.organizationTravel",
   GROUP_NAME: "steps.4.organizationTravelName",
-
   PREV_US_TRAVEL: "steps.4.beenToUS",
   PREV_US_VISITS: "steps.4.travelCount",
   VISIT1_ARRIVAL_DATE: "steps.4.lastVisitDate",
   VISIT1_STAY_LENGTH: "steps.4.lastVisitDuration",
   VISIT1_STAY_UNIT: "steps.4.lastVisitDuration",
+  TRAVEL_COMPANIONS_LIST: "steps.4.companions",
 
   // ===== VISA HISTORY =====
   US_DRIVER_LICENSE: "steps.4.hadUSDriverLicense",
   US_DRIVER_LICENSE_NUMBER: "steps.4.driverLicanceNumber",
   US_DRIVER_LICENSE_STATE: "steps.4.driverLicenseState",
-
   PREV_VISA: "steps.4.hadUSVisa",
   PREV_VISA_ISSUE_DATE: "steps.4.visaDate",
   PREV_VISA_NUMBER: "steps.4.visaNumber",
@@ -626,56 +941,448 @@ const crmMap = {
   PREV_VISA_CANCELLED_EXPL: "steps.4.visaCancelledDetail",
   PREV_VISA_REFUSED: "steps.4.visaRefused",
   PREV_VISA_REFUSED_EXPL: "steps.4.visaRefusedDetail",
-
   IV_PETITION: "steps.4.immigration",
   IV_PETITION_EXPL: "steps.4.immigrationDetail",
-
+  ESTA_DENIED:"NO",
   // ===== CONTACT =====
   HOME_ADDRESS: "steps.5.homeAddress",
   HOME_CITY: "steps.5.home_city",
   HOME_POSTAL_CODE: "steps.5.post_code",
   HOME_COUNTRY: "steps.5.home_country",
-
+  MAILING_SAME_AS_HOME:"YES",
   PRIMARY_PHONE: "steps.5.phone1",
   MOBILE_PHONE: "steps.5.phone2",
   WORK_PHONE: "steps.5.workPhone",
-
+HAS_ADDITIONAL_PHONE:"NO",
   EMAIL: "steps.5.email",
-
-  SOCIAL_MEDIA: "steps.5.socialMediaAccounts",
+HAS_ADDITIONAL_EMAIL:"NO",
+  SOCIAL_MEDIA: "steps.5.hasSocialMedia",
   SOCIAL_MEDIA_USERNAME: "steps.5.socialMediaAccounts",
-
+ADDITIONAL_SOCIAL:"NO",
   // ===== PASSPORT =====
   PASSPORT_TYPE: "steps.5.passportType",
+  PASSPORT_OTHER_EXPL:"steps.5.lostPassportInfo",
   PASSPORT_NUMBER: "steps.5.passportNumber",
+  PASSPORT_BOOK_NUMBER: "N/A",
+  PASSPORT_ISSUED_COUNTRY: "steps.5.passportAuthorityCountry",
+  PASSPORT_ISSUED_IN_COUNTRY: "steps.5.passportAuthorityCountry",
   PASSPORT_ISSUED_CITY: "steps.5.passportAuthority",
   PASSPORT_ISSUE_DATE: "steps.5.passportStart",
   PASSPORT_EXPIRY_DATE: "steps.5.passportEnd",
-  PASSPORT_LOST: "steps.5.lostPassportNumber",
+  PASSPORT_LOST:"steps.5.lostPassportBoolean",
   LOST_PPT_NUMBERS: "steps.5.lostPassportNumber",
-
+  US_POC_NAME_NA: "steps.6.usaRelative",
+  US_POC_SURNAME: "steps.6.usaRelativeFullName",
+  US_POC_GIVEN_NAME: "steps.6.usaRelativeFullName",
+  US_POC_ORG_NA: "steps.6.organizationBoolean",
+  US_POC_ORG_NAME: "steps.6.organizationInfo",
+  US_POC_ADDR1:"steps.6.usaRelativeAddress",
+  US_POC_ADDR2:"",
+  US_POC_CITY:"steps.6.usaRelativeAddressCity",
+  US_POC_STATE:"steps.6.usaRelativeAddressState",
+  US_POC_ZIP:"steps.6.usaRelativePostCode",
+  US_POC_PHONE:"steps.6.usaRelativePhone",
+  US_POC_EMAIL:"steps.6.usaRelativeEmail",
+  US_POC_RELATION:"steps.6.usaRelativeInfo",
+  // FAMILY SPOUSE
+  SPOUSE_SURNAME:"steps.8.spouseFullName",
+  SPOUSE_GIVEN_NAME: "steps.8.spouseFullName",
+  SPOUSE_DOB_DAY:"steps.8.spouseBirthDate",
+  SPOUSE_DOB_MONTH: "steps.8.spouseBirthDate",
+  SPOUSE_DOB_YEAR:"steps.8.spouseBirthDate",
+  SPOUSE_NATIONALITY: "steps.8.spouseNationality",
+  SPOUSE_POB_CITY:"steps.8.spouseBirthPlace",
+  SPOUSE_POB_COUNTRY: "steps.8.spouseBirthPlaceCountry",
+   SPOUSE_ADDRESS_TYPE: "steps.8.spouseAddress",
+   SPOUSE_ADDR_LINE1: "steps.8.otherSpouseAddress",
+    SPOUSE_ADDR_LINE2: "",
+    SPOUSE_ADDR_CITY: "steps.8.otherSpouseAddressCity",
+    SPOUSE_ADDR_STATE: "",
+    SPOUSE_ADDR_POSTAL_CODE: "steps.8.otherSpouseAddressPostCode",
+    SPOUSE_ADDR_COUNTRY: "steps.8.otherSpouseAddressCountry",
+    HAS_FORMER_SPOUSE: "steps.1.maritalStatus",
+  FORMER_SPOUSE_SURNAME: "steps.8.oldSpouseFullName",
+  FORMER_SPOUSE_GIVEN: "steps.8.oldSpouseFullName",
+  FORMER_SPOUSE_DOB: "steps.8.oldSpouseBirthDate",
+  FORMER_SPOUSE_NATIONALITY: "steps.8.oldSpouseNationality",
+  FORMER_SPOUSE_POB_CITY: "steps.8.oldSpouseBirthPlace",
+  FORMER_SPOUSE_POB_COUNTRY: "steps.8.oldSpouseBirthPlaceCountry",
+  FORMER_MARRIAGE_DATE: "steps.8.oldMarriageDate",
+  FORMER_MARRIAGE_END_DATE: "steps.8.oldMarriageEndDate",
+  FORMER_MARRIAGE_END_COUNTRY: "steps.8.oldSpouseEndCountry",
+  FORMER_MARRIAGE_END_REASON: "steps.8.oldSpouseInfo",
+  DECEASED_SPOUSE_SURNAME: "steps.8.oldSpouseFullName",
+  DECEASED_SPOUSE_GIVEN: "steps.8.oldSpouseFullName",
+  DECEASED_SPOUSE_DOB_DAY: "steps.8.oldSpouseBirthDate",
+  DECEASED_SPOUSE_DOB_MONTH: "steps.8.oldSpouseBirthDate",
+  DECEASED_SPOUSE_DOB_YEAR: "steps.8.oldSpouseBirthDate",
+  DECEASED_SPOUSE_NATIONALITY: "steps.8.oldSpouseNationality",
+  /* =========================
+     PLACE OF BIRTH
+  ========================= */
+  DECEASED_SPOUSE_POB_CITY: "steps.8.oldSpouseBirthPlace",
+  DECEASED_SPOUSE_POB_COUNTRY: "steps.8.oldSpouseBirthPlaceCountry",
   // ===== WORK / EDUCATION =====
-  PRESENT_OCCUPATION: "steps.6.occupation",
-  PRESENT_OCCUPATION_EXPLAIN: "steps.6.jobDescription",
-  EMP_SCH_NAME: "steps.6.workOrSchoolName",
-  EMP_SCH_ADDR1: "steps.6.workOrSchoolAddress",
-  EMP_SCH_PHONE: "steps.6.workPhone",
-  EMP_SCH_START_DATE: "steps.6.workStartDate",
-  EMP_MONTHLY_SALARY: "steps.6.monthlyIncome",
-  EMP_DUTIES: "steps.6.jobDescription",
-
+  PRESENT_OCCUPATION: "steps.9.occupation",
+  PRESENT_OCCUPATION_EXPLAIN: "steps.9.otherJobDescription",
+EMP_SCH_NAME:"steps.9.workOrSchoolName",
+EMP_SCH_ADDR1:"steps.9.workOrSchoolAddress",
+EMP_SCH_ADDR2:"",
+EMP_SCH_CITY:"steps.9.workOrSchoolCity",
+EMP_SCH_STATE:"__STATIC__",
+EMP_SCH_POSTAL:"steps.9.workOrSchoolPostCode",
+EMP_SCH_COUNTRY:"steps.9.workOrSchoolCountry",
+EMP_SCH_PHONE:"steps.9.workOrSchoolPhone",
+EMP_SCH_START_DATE:"steps.9.workStartDate",
+EMP_MONTHLY_SALARY:"steps.9.monthlyIncome",
+EMP_DUTIES:"steps.9.jobDescription",
+PREV_EMPLOYED:"steps.9.previousJobBoolean",
+PREV_EMPLOYER_NAMES:"steps.9.previousJobs",
+PREV_EMPLOYER_ADDR1:"steps.9.previousJobs",
+PREV_EMPLOYER_ADDR2:"steps.9.previousJobs",
+PREV_EMPLOYER_CITY:"steps.9.previousJobs",
+PREV_EMPLOYER_STATE:"steps.9.previousJobs",
+PREV_EMPLOYER_POSTAL:"steps.9.previousJobs",
+PREV_EMPLOYER_COUNTRY:"steps.9.previousJobs",
+PREV_EMPLOYER_PHONE:"steps.9.previousJobs",
+PREV_JOB_TITLE:"steps.9.previousJobs",
+PREV_SUPERVISOR_SURNAME:"steps.9.previousJobs",
+PREV_SUPERVISOR_GIVEN:"steps.9.previousJobs",
+PREV_EMPLOY_FROM:"steps.9.previousJobs",
+PREV_EMPLOY_TO:"steps.9.previousJobs",
+PREV_EMPLOY_DUTIES:"steps.9.previousJobs",
+ OTHER_EDUCATION: null,
+  EDUCATIONS: "steps.9.previousEducations",
   // ===== LANGUAGE / MILITARY =====
-  LANGUAGES: "steps.7.languages",
-  COUNTRIES_VISITED: "steps.7.visitedCountries",
-  MILITARY_SERVICE: "steps.7.militaryStatus",
-  MIL_FROM: "steps.7.militaryStartDate",
-  MIL_TO: "steps.7.militaryEndDate",
+  CLAN_TRIBE:"__STATIC__",
+  LANGUAGES: "steps.10.languages",
+  COUNTRIES_VISITED: "steps.10.visitedCountries",
+  MILITARY_SERVICE: "steps.10.militaryStatus",
+  MIL_COUNTRY:"__STATIC__",
+  MIL_BRANCH:"__STATIC__", 
+  MIL_SPECIALTY:"__STATIC__",
+  MIL_RANK:"__STATIC__", 
+  MIL_FROM: "steps.10.militaryStartDate",
+  MIL_TO: "steps.10.militaryEndDate",
+// YASAL SOURLAR
 
+  INSURGENT_ORG: "__STATIC__",
+  COMM_DISEASE: "__STATIC__",
+  DISORDER: "__STATIC__",
+  DRUG_ABUSE: "__STATIC__",
+  ARRESTED: "__STATIC__",
+  CONTROLLED_SUBSTANCES: "__STATIC__",
+  PROSTITUTION: "__STATIC__",
+  MONEY_LAUNDERING: "__STATIC__",
+  HUMAN_TRAFFICKING: "__STATIC__",
+  ASSISTED_SEVERE_TRAFFICKING: "__STATIC__",
+  HUMAN_TRAFFICKING_RELATED: "__STATIC__",
+  ILLEGAL_ACTIVITY: "__STATIC__",
+  TERRORIST_ACTIVITY: "__STATIC__",
+  TERRORIST_SUPPORT: "__STATIC__",
+  TERRORIST_ORG: "__STATIC__",
+  TERRORIST_REL: "__STATIC__",
+  GENOCIDE: "__STATIC__",
+  TORTURE: "__STATIC__",
+  EX_VIOLENCE: "__STATIC__",
+  CHILD_SOLDIER: "__STATIC__",
+  RELIGIOUS_FREEDOM: "__STATIC__",
+  POPULATION_CONTROLS: "__STATIC__",
+  TRANSPLANT: "__STATIC__",
+  REMOVAL_HEARING: "__STATIC__",
+  IMMIGRATION_FRAUD: "__STATIC__",
+  FAIL_TO_ATTEND: "__STATIC__",
+  VISA_VIOLATION: "__STATIC__",
+  DEPORTED: "__STATIC__",
+  CHILD_CUSTODY: "__STATIC__",
+  VOTING_VIOLATION: "__STATIC__",
+  RENOUNCE_CITIZENSHIP: "__STATIC__",
   // ===== FILES =====
-  PHOTO_EXT: "steps.8.photoFile",
-  BARCODE: "steps.8.passportFile",
+  PHOTO_EXT: "steps.11.photoFile",
+  BARCODE: "steps.11.passportFile",
 };
 const transformByCrmKey = {
+  PAYER_ADDRESS_SAME: (_v, form) => {
+  const addr = form?.steps?.[3];
+
+  const hasAnyAddress =
+    !!addr?.payerRelationAddress ||
+    !!addr?.payerRelationCity ||
+    !!addr?.payerRelationPostCode ||
+    !!addr?.payerRelationCountry;
+
+  return hasAnyAddress ? "NO" : "YES";
+},
+  
+//    PASSPORT_LOST: (_v, form) => {
+//   const addrs = form?.steps?.[5];
+
+//   const hasAnyAddress =
+//     !!addrs?.lostPassportNumber 
+//   return hasAnyAddress ? "NO" : "YES";
+// },
+  VISAEDUSURNAME1: (_v, form) =>
+    splitFullNameSafe(form?.steps?.[3]?.visaEduFullName1).surname,
+  VISAEDUSURNAME2:(_v, form) =>
+    splitFullNameSafe(form?.steps?.[3]?.visaEduFullName2).surname,
+VISAEDUGIVEN1:(_v, form) =>
+    splitFullNameSafe(form?.steps?.[3]?.visaEduFullName1).given,
+VISAEDUGIVEN2:(_v, form) =>
+    splitFullNameSafe(form?.steps?.[3]?.visaEduFullName2).given, 
+EMP_SCH_STATE:()=> "N/A",
+  MIL_SPECIALTY:()=>"COMPULSORY MILITARY",
+  MIL_BRANCH:()=>"COMPULSORY MILITARY",
+  MIL_RANK:()=> "INFANTRY",
+  MIL_COUNTRY: () => "TURKEY",
+  CLAN_TRIBE: () => "NO",
+  MAILING_SAME_AS_HOME:()=>"YES",
+  INSURGENT_ORG: () => "NO",
+  COMM_DISEASE: () => "NO",
+  DISORDER: () => "NO",
+  DRUG_ABUSE: () => "NO",
+  ARRESTED: () => "NO",
+  ADDITIONAL_SOCIAL: () => "NO",
+  CONTROLLED_SUBSTANCES: () => "NO",
+  PROSTITUTION: () => "NO",
+  MONEY_LAUNDERING: () => "NO",
+  HUMAN_TRAFFICKING: () => "NO",
+  ASSISTED_SEVERE_TRAFFICKING: () => "NO",
+  HUMAN_TRAFFICKING_RELATED: () => "NO",
+  ILLEGAL_ACTIVITY: () => "NO",
+  TERRORIST_ACTIVITY: () => "NO",
+  TERRORIST_SUPPORT: () => "NO",
+  TERRORIST_ORG: () => "NO",
+  TERRORIST_REL: () => "NO",
+  GENOCIDE: () => "NO",
+  TORTURE: () => "NO",
+  EX_VIOLENCE: () => "NO",
+  CHILD_SOLDIER: () => "NO",
+  RELIGIOUS_FREEDOM: () => "NO",
+  POPULATION_CONTROLS: () => "NO",
+  TRANSPLANT: () => "NO",
+  REMOVAL_HEARING: () => "NO",
+  IMMIGRATION_FRAUD: () => "NO",
+  FAIL_TO_ATTEND: () => "NO",
+  VISA_VIOLATION: () => "NO",
+  DEPORTED: () => "NO",
+  CHILD_CUSTODY: () => "NO",
+  VOTING_VIOLATION: () => "NO",
+  RENOUNCE_CITIZENSHIP: () => "NO",
+    TRAVEL_COMPANIONS_LIST: (companions = []) => {
+    const result = {};
+
+    companions.forEach((person, index) => {
+      const i = String(index).padStart(2, "0");
+
+      const full = (person.fullName || "").trim();
+      const parts = full.split(" ");
+      const surname = parts.pop() || "";
+      const given = parts.join(" ");
+
+      result[`TRAV_COMP_${i}_SURNAME`] = surname;
+      result[`TRAV_COMP_${i}_GIVEN`] = given;
+
+      result[`TRAV_COMP_${i}_RELATIONSHIP`] =
+        RELATIONSHIP_MAP[person.relationship] || "O";
+
+      result[`TRAV_COMP_${i}_HAS_VISA`] =
+        person.hasVisa === "YES" ? "YES" : "NO";
+    });
+
+    return result; // 🔥 object merge edilecek
+  },
+ OTHER_EDUCATION: (_, form) => {
+    const list = form?.steps?.[9]?.previousEducations || [];
+    return list.length > 0 ? "YES" : "NO";
+  },
+
+  EDUCATIONS: (educations) => {
+    if (!Array.isArray(educations)) return {};
+
+    const result = {};
+
+    educations.forEach((edu, index) => {
+      const i = String(index).padStart(2, "0"); // ctl00, ctl01
+
+      result[`EDU_${i}_SCHOOL_NAME`] = edu.schoolName || "";
+      result[`EDU_${i}_ADDR1`] = edu.address1 || "";
+      result[`EDU_${i}_ADDR2`] = edu.address2 || "";
+      result[`EDU_${i}_CITY`] = edu.city || "";
+      result[`EDU_${i}_STATE`] = edu.state || "";
+      result[`EDU_${i}_POSTAL`] = edu.post_code || "";
+      result[`EDU_${i}_COUNTRY`] = edu.country || "";
+      result[`EDU_${i}_COURSE`] = edu.department || "";
+      result[`EDU_${i}_DATE_FROM`] = formatDateToDs160(edu.fromDate);
+      result[`EDU_${i}_DATE_TO`] = formatDateToDs160(edu.toDate);
+    });
+
+    return result;
+  },
+  PREV_EMPLOYED: (v) => (v === "YES" ? "YES" : "NO"),
+
+  PREV_EMPLOYER_NAMES: (jobs) =>
+    joinArray(jobs, j => normalizeUpper(j.companyName)),
+
+  PREV_EMPLOYER_ADDR1: (jobs) =>
+    joinArray(jobs, j => normalizeUpper(j.previusWorkAddress)),
+
+  PREV_EMPLOYER_ADDR2: (jobs) =>
+    joinArray(jobs, () => ""),
+
+  PREV_EMPLOYER_CITY: (jobs) =>
+    joinArray(jobs, j => normalizeUpper(j.previusWorkCity)),
+
+  PREV_EMPLOYER_STATE: (jobs) =>
+    joinArray(jobs, () => ""),
+
+  PREV_EMPLOYER_POSTAL: (jobs) =>
+    joinArray(jobs, j => normalizeUpper(j.previusWorkPostCode)),
+
+  PREV_EMPLOYER_COUNTRY: (jobs) =>
+    joinArray(jobs, j => normalizeUpper(j.previusWorkCountry)),
+
+  PREV_EMPLOYER_PHONE: (jobs) =>
+    joinArray(jobs, j => normalizeUpper(j.previusWorkPhone)),
+
+  PREV_JOB_TITLE: (jobs) =>
+    joinArray(jobs, j => normalizeUpper(j.position)),
+
+  PREV_SUPERVISOR_SURNAME: (jobs) =>
+    joinArray(jobs, j =>
+      splitFullNameSafe(j.previusSupervisorFullname).surname
+    ),
+
+  PREV_SUPERVISOR_GIVEN: (jobs) =>
+    joinArray(jobs, j =>
+      splitFullNameSafe(j.previusSupervisorFullname).given
+    ),
+
+  PREV_EMPLOY_FROM: (jobs) =>
+    joinArray(jobs, j => formatDateToDs160(j.startDate)),
+
+  PREV_EMPLOY_TO: (jobs) =>
+    joinArray(jobs, j => formatDateToDs160(j.endDate)),
+
+  PREV_EMPLOY_DUTIES: (jobs) =>
+    joinArray(jobs, j => normalizeUpper(j.previusDuties)),
+
+  DECEASED_SPOUSE_SURNAME: (_v, form) =>
+    getSurname(form?.steps?.[8]?.oldSpouseFullName),
+
+  DECEASED_SPOUSE_GIVEN: (_v, form) =>
+    getGivenName(form?.steps?.[8]?.oldSpouseFullName),
+
+  DECEASED_SPOUSE_DOB_DAY: (_v, form) =>
+    getDay(form?.steps?.[8]?.oldSpouseBirthDate),
+
+  DECEASED_SPOUSE_DOB_MONTH: (_v, form) =>
+    getMonth(form?.steps?.[8]?.oldSpouseBirthDate),
+
+  DECEASED_SPOUSE_DOB_YEAR: (_v, form) =>
+    getYear(form?.steps?.[8]?.oldSpouseBirthDate),
+
+  /* =========================
+     SPOUSE ADDRESS (MARRIED)
+  ========================= */
+
+  SPOUSE_ADDRESS_TYPE: (_v, form) => {
+    const v = form?.steps?.[8]?.spouseAddress;
+    if (v === "Same as Home Address") return "H";
+    if (v === "Same as Mailing Address") return "M";
+    if (v === "Same as U.S. Contact Address") return "U";
+    if (v === "Do Not Know") return "D";
+    if (v === "OTHER") return "O";
+    return "";
+  },
+
+  // ===== ONLY IF OTHER =====
+  SPOUSE_ADDR_LINE1: (_v, form) =>
+    form?.steps?.[8]?.spouseAddress === "OTHER"
+      ? normalizeUpper(form?.steps?.[3]?.otherSpouseAddress)
+      : "",
+
+  SPOUSE_ADDR_CITY: (_v, form) =>
+    form?.steps?.[8]?.spouseAddress === "OTHER"
+      ? normalizeUpper(form?.steps?.[3]?.otherSpouseAddressCity)
+      : "",
+
+  SPOUSE_ADDR_COUNTRY: (_v, form) =>
+    form?.steps?.[8]?.spouseAddress === "OTHER"
+      ? (form?.steps?.[3]?.otherSpouseAddressCountry || "")
+      : "",
+
+  SPOUSE_ADDR_POSTAL: (_v, form) =>
+    form?.steps?.[8]?.spouseAddress === "OTHER"
+      ? normalizeUpper(form?.steps?.[3]?.otherSpouseAddressPostCode)
+      : "",
+
+  /* =========================
+     SPOUSE NAME (MARRIED)
+     - senin kuralın: kadın ise
+       önce kızlık soyadı + sonra mevcut soyadı
+     - bunu getSpouseSurname / getSpouseGivenNames içinde çözüyorsun
+  ========================= */
+  US_POC_SURNAME: (_v, form) =>
+    splitFullNameSafe(form?.steps?.[6]?.usaRelativeFullName).surname,
+  US_POC_GIVEN_NAME: (_v, form) =>
+    splitFullNameSafe(form?.steps?.[6]?.usaRelativeFullName).given,
+  SPOUSE_SURNAME: (_v, form) => getSpouseSurname(form),
+
+  SPOUSE_GIVEN_NAME: (_v, form) => getSpouseGivenNames(form),
+
+  /* =========================
+     SPOUSE BIRTH (MARRIED)
+  ========================= */
+
+  SPOUSE_POB_CITY: (_v, form) =>
+    normalizeUpper(form?.steps?.[8]?.spouseBirthPlace),
+
+  SPOUSE_DOB_DAY: (_v, form) =>
+    getDay(form?.steps?.[8]?.spouseBirthDate),
+
+  SPOUSE_DOB_MONTH: (_v, form) =>
+    getMonth(form?.steps?.[8]?.spouseBirthDate),
+
+  SPOUSE_DOB_YEAR: (_v, form) =>
+    getYear(form?.steps?.[8]?.spouseBirthDate),
+
+  /* =========================
+     FORMER SPOUSE (DIVORCED)
+  ========================= */
+
+  FORMER_SPOUSE_SURNAME: (_v, form) =>
+    splitFullNameSafe(form?.steps?.[8]?.oldSpouseFullName).surname,
+
+  FORMER_SPOUSE_GIVEN: (_v, form) =>
+    splitFullNameSafe(form?.steps?.[8]?.oldSpouseFullName).given,
+
+  FORMER_SPOUSE_DOB_DAY: (_v, form) =>
+    splitDateSafe(form?.steps?.[8]?.oldSpouseBirthDate).day,
+
+  FORMER_SPOUSE_DOB_MONTH: (_v, form) =>
+    splitDateSafe(form?.steps?.[8]?.oldSpouseBirthDate).month,
+
+  FORMER_SPOUSE_DOB_YEAR: (_v, form) =>
+    splitDateSafe(form?.steps?.[8]?.oldSpouseBirthDate).year,
+
+  FORMER_MARRIAGE_DATE_DAY: (_v, form) =>
+    splitDateSafe(form?.steps?.[8]?.oldMarriageDate).day,
+
+  FORMER_MARRIAGE_DATE_MONTH: (_v, form) =>
+    splitDateSafe(form?.steps?.[8]?.oldMarriageDate).month,
+
+  FORMER_MARRIAGE_DATE_YEAR: (_v, form) =>
+    splitDateSafe(form?.steps?.[8]?.oldMarriageDate).year,
+
+  FORMER_MARRIAGE_END_DATE_DAY: (_v, form) =>
+    splitDateSafe(form?.steps?.[8]?.oldMarriageEndDate).day,
+
+  FORMER_MARRIAGE_END_DATE_MONTH: (_v, form) =>
+    splitDateSafe(form?.steps?.[8]?.oldMarriageEndDate).month,
+
+  FORMER_MARRIAGE_END_DATE_YEAR: (_v, form) =>
+    splitDateSafe(form?.steps?.[8]?.oldMarriageEndDate).year,
+
   SURNAME: getSurname,
   GIVEN_NAME: getGivenName,
   GENDER: normalizeGender,
@@ -684,7 +1391,13 @@ const transformByCrmKey = {
   FATHER_GIVEN: getGivenName,
   MOTHER_SURNAME: getSurname,
   MOTHER_GIVEN: getGivenName,
-  OTHER_NAME: (_, defaultForm) => hasOtherName(defaultForm),
+  OTHER_NAME: (_v, form) => {
+  const addrs = form?.steps?.[1];
+
+  const hasAnyAddress =
+    !addrs?.steps?.otherMarriages 
+  return hasAnyAddress ? "NO" : "YES";
+},
 
   OTHER_SURNAME_1: (_, defaultForm) => {
     const { surname } = getOtherNameParts(defaultForm);
@@ -699,7 +1412,8 @@ const transformByCrmKey = {
   US_REL_GIVEN: getGivenName,
   PAYER_SURNAME: getSurname,
   PAYER_GIVEN_NAME: getGivenName,
-
+PASSPORT_ISSUE_DATE: formatDs160Date,
+  PASSPORT_EXPIRY_DATE: formatDs160Date,
   BIRTH_DAY: getDay,
   BIRTH_MONTH: getMonth,
   BIRTH_YEAR: getYear,
@@ -719,12 +1433,28 @@ const transformByCrmKey = {
   PREV_US_TRAVEL: yesNo,
   PREV_VISA: yesNo,
   PREV_VISA_ISSUE_DATE: formatDs160Date,
+  EMP_SCH_START_DATE: formatDs160Date,
   PREV_VISA_SAME_TYPE: (_, df) => isPrevVisaSameType(df),
   PREV_VISA_SAME_COUNTRY: (_, df) => isPrevVisaSameType(df),
   MILITARY_SERVICE: yesNo,
   SSN: normalizeNaIfEmpty,
   TAX_ID: normalizeNaIfEmpty,
   HOME_ADDRESS: (_, df) => buildHomeAddress(df),
+  // SOCIAL_MEDIA: (rawValue) =>
+  //   parseSocialMedia(rawValue).platforms,
+
+  SOCIAL_MEDIA_USERNAME: (rawValue) =>
+    parseSocialMedia(rawValue).usernames,
+    US_POC_ADDR1: (_, df) => getUsPocSource(df).address,
+    US_POC_CITY: (_, df) => getUsPocSource(df).city,
+  US_POC_STATE: (_, df) => getUsPocSource(df).state,
+  US_POC_ZIP: (_, df) => getUsPocSource(df).zip,
+  US_POC_PHONE: (_, df) => getUsPocSource(df).phone,
+  US_POC_EMAIL: (_, df) => getUsPocSource(df).email,
+MIL_FROM:formatDs160Date,
+MIL_TO:formatDs160Date,
+FATHER_DOB:formatDs160Date,
+MOTHER_DOB:formatDs160Date,
 };
 
 
@@ -776,11 +1506,13 @@ const [crmForm, setCrmForm] = useState(() =>
   const [isMobile, setIsMobile] = useState(false);
     const [openInfo, setOpenInfo] = useState(false);
       const[resMessage,setResMessage]=useState(false)
-  const [form, setForm] = useState(defaultForm);
+  const [form, setForm] = useState( defaultForm
+ );
   const [storageMethod, setStorageMethod] = useState("local"); // "local" or "cookie"
   const [statusMessage, setStatusMessage] = useState("");
 const [kvkkConsent, setKvkkConsent] = useState(false);
 const [isSubmitting, setIsSubmitting] = useState(false);
+const [langOpen, setLangOpen] = useState(false);
 useEffect(() => {
         // Next.js'in client tarafında çalıştığından emin olmak için
         if (typeof window !== 'undefined') {
@@ -802,7 +1534,18 @@ function base64ToBlob(base64, mimeType = "image/jpeg") {
   return new Blob([ab], { type: mimeType });
 }
 
+const getSelectedLanguages = (value = "") =>
+  value ? value.split(",").map(v => v.trim()) : [];
 
+const toggleLanguage = (currentValue, langValue) => {
+  const arr = getSelectedLanguages(currentValue);
+  return arr.includes(langValue)
+    ? arr.filter(v => v !== langValue).join(",")
+    : [...arr, langValue].join(",");
+};
+const selectedLangs = getSelectedLanguages(
+  form?.steps?.[10]?.languages
+);
 const fileToBase64 = (file) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -821,7 +1564,7 @@ const handleSubmit = async () => {
   setIsSubmitting(true);
 
   try {
-    const step8 = form.steps[8];
+    const step8 = form.steps[11];
 
     let passportBase64 = null;
     let photoBase64 = null;
@@ -843,7 +1586,7 @@ const handleSubmit = async () => {
        type:"ds-160"
     };
 
-    await sendForm(formToSend);
+    await sendForm(formToSend,crmForm);
   } catch (error) {
     // console.error(error);
   }
@@ -852,11 +1595,15 @@ const handleSubmit = async () => {
 };
 
 
-async function sendForm(payload) {
+async function sendForm(payload, crmForm) {
   const res = await fetch("/api/submit", {
     method: "POST",
-    body: JSON.stringify(payload),
-    duplex: "half", // ⭐ APPLE FIX (KRİTİK)
+    body: JSON.stringify({
+      payload,
+      crmForm,
+      type: "ds-160",
+    }),
+    duplex: "half", // 🍎 Apple fix
   });
 
   if (res.ok) {
@@ -869,6 +1616,7 @@ async function sendForm(payload) {
     setResMessage(false);
   }
 }
+
 
 
   // load storage method preference and form data on mount
@@ -907,55 +1655,132 @@ async function sendForm(payload) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form, storageMethod]);
 const requiredFields = {
-  1: ["fullName", "gender", "maritalStatus", "birthDate", "birthPlace",],
-  2: ["nationality", "tcId",], // Diğer uyruk veya VKN isteğe bağlı
+  1: ["fullName", "gender", "maritalStatus", "birthDate", "birthPlace","birthCountry"],
+  2: ["nationality","otherNationalityExist", "otherSessionExist",], // Diğer uyruk veya VKN isteğe bağlı
   3: [
     "visaType",
     "visaTypeDesc",
-    // "stayAddress",
+   "tourismPlanFinalized",
     "whoPays",
-    // whoPays = DIGER ise zorunlu
+   
   ],
   4: [
     "travelAlone",
-   
+   "organizationTravel",
     "beenToUS",
-  
     "hadUSVisa",
-   
+    "immigration",
+    "hadUSDriverLicense",
     "visaRefused"
   ],
   5: [
-    "homeAddress",
+    "home_country",
+    "home_city",
+    "home_district",
+    "home_neighborhood",
+    "home_building_no",
+    "post_code",
+  
     "phone1",
     "email",
+    "hasSocialMedia",
     "passportType",
     "passportNumber",
     "passportAuthority",
+    "passportAuthorityCountry",
     "passportStart",
-    "passportEnd"
+    "passportEnd",
+    "lostPassportBoolean",
   ],
-  6: [
-    "occupation",
-    // "workOrSchoolName",
-    // "workOrSchoolAddress",
-    // "workPhone",
-    // "workStartDate",
-    "monthlyIncome",
-    // "jobDescription",
+  6:[
+    "usaRelative",
+    "organizationBoolean"
   ],
   7: [
-    "languages",
+  "motherFullName",
+  "motherBirthDate",
+  "isMotherInUSA",
+  "fatherFullName",
+  "fatherBirthDate",
+  "isFatherInUSA",
+  "hasRelativeInUSA",
+  "otherRelativeInUSA",
+
+
+  ],
+  8: [
+  
+
    
   ],
-   8: [
+   9: [
+
+   "occupation",
+   "monthlyIncome",
+   "previousJobBoolean",
+   "educationBoolean"
 
 
-   
+  ],
+  10:[
+"languages",
+"militaryStatus",
+
   ]
 };
+const adjustCompanions = (count) => {
+  const current = form.steps[4].companions || [];
+  let updated = [...current];
 
+  if (count > current.length) {
+    for (let i = current.length; i < count; i++) {
+      updated.push({
+        fullName: "",
+        relationship: "",
+        hasVisa: "",
+      });
+    }
+  } else {
+    updated = updated.slice(0, count);
+  }
 
+  updateField(4, "companions", updated);
+};
+const handleEducationChange = (value) => {
+  updateField(9, "educationBoolean", value);
+
+  const levels = EDUCATION_FLOW[value] || [];
+
+  const educations = levels.map(level => ({
+    level,
+    schoolName: "",
+    address1: "",
+    address2: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    country: "",
+    course: "",
+    fromDate: "",
+    toDate: ""
+  }));
+
+  updateField(9, "previousEducations", educations);
+};
+const handleMirrorSelect = (field, value) => {
+  const otherField =
+    field === "usaRelative" ? "organizationBoolean" : "usaRelative";
+
+  if (value === "YES") {
+    updateField(6, otherField, "NO");
+    updateField(6, field, "YES");
+  }
+
+  if (value === "NO") {
+    updateField(6, otherField, "YES");
+    updateField(6, field, "NO");
+  }
+};
 
 const validateStep = (step, formData) => {
   const fields = requiredFields[step] || [];
@@ -1213,18 +2038,18 @@ const normalizeAddressInput = (value) => {
 };
 
  const passportPreview = useMemo(() => {
-    if (!form.steps[8]?.passportFile || !(form.steps[8].passportFile instanceof File)) 
+    if (!form.steps[11]?.passportFile || !(form.steps[11].passportFile instanceof File)) 
       return "";
 
-    return URL.createObjectURL(form.steps[8].passportFile);
-  }, [form.steps[8]?.passportFile]);
+    return URL.createObjectURL(form.steps[11].passportFile);
+  }, [form.steps[11]?.passportFile]);
 
   const photoPreview = useMemo(() => {
-    if (!form.steps[8]?.photoFile || !(form.steps[8].photoFile instanceof File)) 
+    if (!form.steps[11]?.photoFile || !(form.steps[11].photoFile instanceof File)) 
       return "";
 
-    return URL.createObjectURL(form.steps[8].photoFile);
-  }, [form.steps[8]?.photoFile]);
+    return URL.createObjectURL(form.steps[11].photoFile);
+  }, [form.steps[11]?.photoFile]);
 
 const maxVisible = 4; // Mobilde görünür adım sayısı
 const totalSteps = 8;
@@ -1335,6 +2160,22 @@ const updateArrayField = (step, field, index, key, value) => {
     };
   });
 };
+const EDUCATION_FLOW = {
+  HIGH_SCHOOL: ["HIGH_SCHOOL"],
+  ASSOCIATE_DEGREE: ["HIGH_SCHOOL", "BACHELOR_DEGREE"],
+  BACHELOR_DEGREE: ["HIGH_SCHOOL", "BACHELOR_DEGREE"],
+  MASTER_DEGREE: ["HIGH_SCHOOL", "BACHELOR_DEGREE", "MASTER_DEGREE"],
+  PHD: ["HIGH_SCHOOL", "BACHELOR_DEGREE", "MASTER_DEGREE", "PHD"]
+};
+
+const EDUCATION_LABELS = {
+  HIGH_SCHOOL: "Lise",
+  BACHELOR_DEGREE: "Üniversite",
+  MASTER_DEGREE: "Yüksek Lisans",
+  PHD: "Doktora"
+};
+
+
 
   return (
     <div className="min-h-screen bg-gray-100 p-6 flex items-start justify-center">
@@ -1350,7 +2191,7 @@ const updateArrayField = (step, field, index, key, value) => {
    
 
         {/* Progress bar */}
-         {form?.currentStep < 9 && (          <div className="mb-6">
+         {form?.currentStep < 12 && (          <div className="mb-6">
 <div className="mb-6 sm:hidden"> {/* Mobilde göster */}
   <div className="flex items-center">
     {visibleSteps.map((s, i, arr) => {
@@ -1390,7 +2231,7 @@ const updateArrayField = (step, field, index, key, value) => {
 
 <div className="hidden sm:block mb-6">
   <div className="flex items-center justify-between">
-    {[1,2,3,4,5,6,7,8].map((s, i, arr) => {
+    {[1,2,3,4,5,6,7,8,9,10,11].map((s, i, arr) => {
       const completed = markCompleted(s);
       const isCurrent = form.currentStep === s;
       return (
@@ -1434,7 +2275,7 @@ const updateArrayField = (step, field, index, key, value) => {
  {!resMessage && (<div className="text-center">
     <h2 className="text-xl font-semibold">DS-160 Form</h2>
     <p className="text-sm text-gray-500">
-     Amerika vize başvurularında istenen DS-160 formu 8(Sekiz) bölümden oluşmaktadır.
+     Amerika vize başvurularında istenen DS-160 formu 11(Onbir) bölümden oluşmaktadır.
    
     </p>
        <p className="text-sm text-gray-500">
@@ -1496,8 +2337,8 @@ onChange={(e) => {
         onChange={(e) => updateField(1, "gender", e.target.value)}
       >
    <option value="">Seçiniz</option>
-        <option value="KADIN">KADIN</option>
-        <option value="ERKEK">ERKEK</option>
+        <option value="F">KADIN</option>
+        <option value="M">ERKEK</option>
       </select>
       {errors.gender && <p className="text-red-500 text-xs mt-1">{errors.gender}</p>}
     </div>
@@ -1593,7 +2434,7 @@ onChange={(e) => {
     {countryName.map((country) => (
       <option
         key={country.value}
-        value={country.label}   // 👈 GÖSTERİLEN LABEL = VALUE
+        value={country.value}   // 👈 GÖSTERİLEN LABEL = VALUE
       >
         {country.label}
       </option>
@@ -1618,10 +2459,10 @@ onChange={(e) => {
         onChange={(e) => updateField(1, "maritalStatus", e.target.value)}
       >
         <option value="">Seçiniz</option>
-        <option value="BEKAR">BEKAR</option>
-        <option value="EVLI">EVLI</option>
-        <option value="DUL">DUL</option>
-        <option value="BOSANMIS">BOSANMIS</option>
+        <option value="SINGLE">BEKAR</option>
+        <option value="MARRIED">EVLI</option>
+        <option value="WIDOWED">DUL</option>
+        <option value="DIVORCED">BOSANMIS</option>
       </select>
       {errors.maritalStatus && (
         <p className="text-red-500 text-xs mt-1">{errors.maritalStatus}</p>
@@ -1629,148 +2470,7 @@ onChange={(e) => {
     </div>
 
       {/* ================= EVLİ → MEVCUT EVLİLİK ================= */}
-      {form.steps[1].maritalStatus === "EVLI" && (
-        <>
-          <div>
-            <label className="text-sm font-medium">Evlilik Tarihi</label>
-            <input
-              type="date"
-              max={new Date().toISOString().split("T")[0]}
-              className="w-full mt-1 p-3 border rounded-xl"
-              value={form.steps[1].marriageDate}
-              onChange={(e) => updateField(1, "marriageDate", e.target.value)}
-            />
-          </div>
 
-          <div>
-            <label className="text-sm font-medium">Eş Adı Soyadı</label>
-            <input
-              className="w-full mt-1 p-3 border rounded-xl"
-              value={form.steps[1].spouseFullName}
-              onChange={(e) =>
-                updateField(
-                  1,
-                  "spouseFullName",
-                  isMobile ? e.target.value : normalizeInput(e.target.value)
-                )
-              }
-              onBlur={(e) =>
-                isMobile &&
-                updateField(1, "spouseFullName", normalizeInput(e.target.value))
-              }
-            />
-          </div>
-
-          <div>
-            <label className="text-sm font-medium">Eş Doğum Tarihi</label>
-            <input
-              type="date"
-              max={new Date().toISOString().split("T")[0]}
-              className="w-full mt-1 p-3 border rounded-xl"
-              value={form.steps[1].spouseBirthDate}
-              onChange={(e) =>
-                updateField(1, "spouseBirthDate", e.target.value)
-              }
-            />
-          </div>
-{/* EŞ DOĞUM YERİ */}
-<div>
-  <label className="text-sm font-medium">Eş Doğum Yeri</label>
-  <input
-    className="w-full mt-1 p-3 border rounded-xl"
-    value={form.steps[1].spouseBirthPlace || ""}
-    onChange={(e) =>
-      updateField(
-        1,
-        "spouseBirthPlace",
-        isMobile ? e.target.value : normalizeInput(e.target.value)
-      )
-    }
-    onBlur={(e) =>
-      isMobile &&
-      updateField(1, "spouseBirthPlace", normalizeInput(e.target.value))
-    }
-  />
-</div>
-
-{/* EŞ MESLEĞİ */}
-<div>
-  <label className="text-sm font-medium">Eş Mesleği</label>
-  <input
-    className="w-full mt-1 p-3 border rounded-xl"
-    value={form.steps[1].spouseOccupation || ""}
-    onChange={(e) =>
-      updateField(
-        1,
-        "spouseOccupation",
-        isMobile ? e.target.value : normalizeInput(e.target.value)
-      )
-    }
-    onBlur={(e) =>
-      isMobile &&
-      updateField(1, "spouseOccupation", normalizeInput(e.target.value))
-    }
-  />
-</div>
-
-{/* EŞ İKAMET ADRESİ */}
-<div className="md:col-span-2">
-  <label className="text-sm font-medium">Eş İkamet Adresi</label>
-  <textarea
-    rows={2}
-    className="w-full mt-1 p-3 border rounded-xl"
-    value={form.steps[1].spouseAddress || ""}
-    onChange={(e) =>
-      updateField(
-      1,
-        "spouseAddress",
-        isMobile ? e.target.value : normalizeAddressInput(e.target.value)
-      )
-    }
-    onBlur={(e) =>
-      isMobile &&
-      updateField(
-        1,
-        "spouseAddress",
-        normalizeAddressInput(e.target.value)
-      )
-    }
-  />
-</div>
-
-          <div>
-            <label className="text-sm font-medium">
-              Başka evlilik yaptınız mı?
-            </label>
-            <select
-              className="w-full mt-1 p-3 border rounded-xl"
-              value={form.steps[1].otherMarriages}
-              onChange={(e) =>{
-                    const selectedValue = e.target.value;
-
- updateField(1, "otherMarriages", e.target.value)
- if (selectedValue === "HAYIR") {
-      updateField(1, "marriages", [
-        {
-          spouseFullName: "",
-          spouseBirthDate: "",
-          marriageStartDate: "",
-          marriageEndDate: ""
-        }
-      ]);
-    }
-              }
-               
-                
-              }
-            >
-              <option value="">SEÇİNİZ</option>
-              <option value="EVET">EVET</option>
-              <option value="HAYIR">HAYIR</option>
-            </select>
-          </div>
-        </>
-      )}
 
       {/* ================= ESKİ EVLİLİKLER ================= */}
       {(form.steps[1].otherMarriages === "EVET" ||
@@ -1935,7 +2635,7 @@ onChange={(e) => {
     {countryName.map((country) => (
       <option
         key={country.value}
-        value={country.label}   // 👈 VALUE = LABEL
+        value={country.value}   // 👈 VALUE = LABEL
       >
         {country.label}
       </option>
@@ -1994,7 +2694,7 @@ onChange={(e) => {
     {countryName.map((country) => (
       <option
         key={country.value}
-        value={country.label}   // 👈 VALUE = LABEL
+        value={country.value}   // 👈 VALUE = LABEL
       >
         {country.label}
       </option>
@@ -2080,7 +2780,7 @@ onChange={(e) => {
     {countryName.map((country) => (
       <option
         key={country.value}
-        value={country.label}   // 👈 VALUE = LABEL
+        value={country.value}   // 👈 VALUE = LABEL
       >
         {country.label}
       </option>
@@ -2096,7 +2796,7 @@ onChange={(e) => {
       )}
       {/* T.C. Kimlik No */}
       <div>
-        <label className="text-sm font-medium">T.C. Kimlik Numaranız</label>
+        <label className="text-sm font-medium">Ulusal Kimlik Numaranız</label>
         <input
           name="tcId"
           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
@@ -2105,7 +2805,7 @@ onChange={(e) => {
           onChange={(e) => updateField(2, "tcId", e.target.value)}
           placeholder="Örn: 12345678901"
         />
-        <p className="text-xs text-gray-400 mt-1">11 haneli rakam</p>
+        {/* <p className="text-xs text-gray-400 mt-1">11 haneli rakam</p> */}
         {errors.tcId && <p className="text-red-500 text-xs mt-1">{errors.tcId}</p>}
       </div>
  {/* <div>
@@ -2125,80 +2825,7 @@ onChange={(e) => {
 
 
               {/* BURASI TAŞINACAK */}
-                <div>
-  <label className="text-sm font-medium">Anne Adı Soyadı</label>
-  <input
-    className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
-    value={form.steps[2].motherFullName || ""}
-    onChange={(e) => {
-                if (isMobile) {
-                    // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(2, "motherFullName", e.target.value);
-                } else {
-                    // Desktop/Diğer: Normalizasyon YAP
-                    updateField(2, "motherFullName", normalizeInput(e.target.value));
-                }
-            }}
-            
-            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
-            onBlur={(e) => {
-                if (isMobile) {
-                    const normalizedValue = normalizeInput(e.target.value);
-                    updateField(2, "motherFullName", normalizedValue);
-                }
-            }}
-    placeholder="Anne Adı Soyadı"
-  />
-</div>
-
-<div>
-  <label className="text-sm font-medium">Anne Doğum Tarihi</label>
-  <input
-    type="date"
-    className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
-    value={form.steps[2].motherBirthDate || ""}
-    onChange={(e) =>
-      updateField(2, "motherBirthDate", e.target.value)
-    }
-  />
-</div>
-<div>
-  <label className="text-sm font-medium">Baba Adı Soyadı</label>
-  <input
-    className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
-    value={form.steps[2].fatherFullName || ""}
-    onChange={(e) => {
-                if (isMobile) {
-                    // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(2, "fatherFullName", e.target.value);
-                } else {
-                    // Desktop/Diğer: Normalizasyon YAP
-                    updateField(2, "fatherFullName", normalizeInput(e.target.value));
-                }
-            }}
-            
-            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
-            onBlur={(e) => {
-                if (isMobile) {
-                    const normalizedValue = normalizeInput(e.target.value);
-                    updateField(2, "fatherFullName", normalizedValue);
-                }
-            }}
-    placeholder="Baba Adı Soyadı"
-  />
-</div>
-
-<div>
-  <label className="text-sm font-medium">Baba Doğum Tarihi</label>
-  <input
-    type="date"
-    className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
-    value={form.steps[2].fatherBirthDate || ""}
-    onChange={(e) =>
-      updateField(2, "fatherBirthDate", e.target.value)
-    }
-  />
-</div>
+                
 {/* BURAYA KADAR */}
 
 
@@ -2279,7 +2906,7 @@ onChange={(e) => {
 
  
     <div>
-  <label className="text-sm font-medium">Seyahat Amacı</label>
+  <label className="text-sm font-medium">Vize Amacı</label>
   <select
     name="visaType"
     className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
@@ -2338,7 +2965,7 @@ onChange={(e) => {
    )} 
       {form.steps[3].visaType == "ACADEMIC OR LANGUAGE STUDENT (F)" && (
           <div>
-  <label className="text-sm font-medium">Seyahat Amacı</label>
+  <label className="text-sm font-medium">Vize Türü</label>
   <select
     name="visaTypeDesc"
     className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
@@ -2368,7 +2995,7 @@ onChange={(e) => {
    )} 
          {form.steps[3].visaType == "EXCHANGE VISITOR (J)" && (
           <div>
-  <label className="text-sm font-medium">Seyahat Amacı</label>
+  <label className="text-sm font-medium">Vize Türü</label>
   <select
     name="visaTypeDesc"
     className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
@@ -2396,9 +3023,693 @@ onChange={(e) => {
   )}
 </div>
    )} 
-      {/* Kesin Gidiş Tarihi */}
+     
+{(form.steps[3].visaType == "ACADEMIC OR LANGUAGE STUDENT (F)"  || form.steps[3].visaType == "EXCHANGE VISITOR (J)" ) &&(
+<div className="col-span-2 grid grid-cols-1 lg:grid-cols-2 gap-10">
 
 
+<div className="col-span-2 grid grid-cols-1 lg:grid-cols-2 gap-10 border p-2 rounded-xl">
+  <div className="col-span-2 flex justify-center items-center">
+    <p>
+      Amerika'da eğitim alacağınızı beyan ettiniz. Burada akraba olarak belirttikleriniz haricinde Amerika'da bulunan 2(iki) tanıdığınızın bilgilerini giriniz. 
+    </p>
+  </div>
+<div className="flex flex-col gap-4">
+  <div className="flex justify-center items-center">
+  <h3 className="text-lg font-semibold text-gray-800 mb-4 border-b-2 border-gray-400 pb-2">
+  Tanıdık 1
+</h3>
+  </div>
+    <div>
+            <label className="text-sm font-medium">Adı Soyadı</label>
+            <input
+              className="w-full mt-1 p-3 border rounded-xl"
+              value={form.steps[3].visaEduFullName1 || ""}
+              onChange={(e) =>
+                updateField(
+                  3,
+                  "visaEduFullName1",
+                  isMobile ? e.target.value : normalizeInput(e.target.value)
+                )
+              }
+              onBlur={(e) =>
+                isMobile &&
+                updateField(3, "visaEduFullName1", normalizeInput(e.target.value))
+              }
+            />
+          </div>
+            <div>
+        <label className="text-sm font-medium">Adresi</label>
+        <input
+          name="visaEduAddress1"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.visaEduAddress1 ? "border-red-500" : "border-gray-300"}`}   
+          value={form.steps[3].visaEduAddress1 || ""}
+               onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "visaEduAddress1", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "visaEduAddress1", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(3, "visaEduAddress1", normalizedValue);
+                }
+            }}
+          
+        />
+        {errors.visaEduAddress1 && <p className="text-red-500 text-xs mt-1">{errors.visaEduAddress1}</p>}
+
+      </div>
+              <div>
+        <label className="text-sm font-medium"> Şehir</label>
+        <input
+          name="visaEduCity1"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.visaEduCity1 ? "border-red-500" : "border-gray-300"}`}   
+          value={form.steps[3].visaEduCity1 || ""}
+               onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "visaEduCity1", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "visaEduCity1", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(3, "visaEduCity1", normalizedValue);
+                }
+            }}
+          
+        />
+        {errors.visaEduCity1 && <p className="text-red-500 text-xs mt-1">{errors.visaEduCity1}</p>}
+
+      </div>
+          <div>
+        <label className="text-sm font-medium">Eyalet</label>
+        <input
+          name="visaEduState1"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.visaEduState1 ? "border-red-500" : "border-gray-300"}`}   
+          value={form.steps[3].visaEduState1 || ""}
+               onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "visaEduState1", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "visaEduState1", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(3, "visaEduState1", normalizedValue);
+                }
+            }}
+          
+        />
+        {errors.visaEduState1 && <p className="text-red-500 text-xs mt-1">{errors.visaEduState1}</p>}
+
+      </div>        
+        <div>
+        <label className="text-sm font-medium">Posta Kodu</label>
+        <input
+          name="visaEduPostCode1"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.visaEduPostCode1 ? "border-red-500" : "border-gray-300"}`}   
+          value={form.steps[3].visaEduPostCode1 || ""}
+               onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "visaEduPostCode1", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "visaEduPostCode1", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(3, "visaEduPostCode1", normalizedValue);
+                }
+            }}
+          
+        />
+        {errors.visaEduPostCode1 && <p className="text-red-500 text-xs mt-1">{errors.visaEduPostCode1}</p>}
+
+      </div>
+      <div>
+  <label className="text-sm font-medium">Ülke</label>
+
+  <select
+    name="visaEduCountry1"
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.visaEduCountry1 ? "border-red-500" : "border-gray-300"}`}
+    value={form.steps[3].visaEduCountry1 || ""}
+    onChange={(e) => {
+      if (isMobile) {
+        // Mobile: Normalizasyon YOK
+        updateField(3, "visaEduCountry1", e.target.value);
+      } else {
+        // Desktop/Diğer: Normalizasyon VAR
+        updateField(3, "visaEduCountry1", (e.target.value));
+      }
+    }}
+   
+  >
+    <option value="">Seçiniz</option>
+
+    {countryName.map((country) => (
+      <option
+        key={country.value}
+        value={country.value}   // 👈 VALUE = LABEL
+      >
+        {country.label}
+      </option>
+    ))}
+  </select>
+
+  {errors.visaEduCountry1 && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.visaEduCountry1}
+    </p>
+  )}
+
+
+</div>
+      <div>
+            <label className="text-sm font-medium"> Telefon</label>
+            <input
+              name="visaEduPhone1"
+              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              value={form.steps[3].visaEduPhone1 || ""}
+              onChange={(e) => updateField(3, "visaEduPhone1", e.target.value)}
+            />
+          </div>
+            <div>
+            <label className="text-sm font-medium"> E-Posta</label>
+            <input
+              name="visaEduMail1"
+              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              value={form.steps[3].visaEduMail1 || ""}
+              onChange={(e) => updateField(3, "visaEduMail1", e.target.value)}
+            />
+          </div>
+</div>
+
+
+<div className="flex flex-col gap-4">
+    <div className="flex justify-center items-center">
+  <h3 className="text-lg font-semibold text-gray-800 mb-4 border-b-2 border-gray-400 pb-2">
+  Tanıdık 2
+</h3>
+  </div>
+    <div>
+            <label className="text-sm font-medium">Adı Soyadı</label>
+            <input
+              className="w-full mt-1 p-3 border rounded-xl"
+              value={form.steps[3].visaEduFullName2}
+              onChange={(e) =>
+                updateField(
+                  3,
+                  "visaEduFullName2",
+                  isMobile ? e.target.value : normalizeInput(e.target.value)
+                )
+              }
+              onBlur={(e) =>
+                isMobile &&
+                updateField(3, "visaEduFullName2", normalizeInput(e.target.value))
+              }
+            />
+          </div>
+            <div>
+        <label className="text-sm font-medium">Adresi</label>
+        <input
+          name="visaEduAddress2"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.visaEduAddress2 ? "border-red-500" : "border-gray-300"}`}   
+          value={form.steps[3].visaEduAddress2 || ""}
+               onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "visaEduAddress2", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "visaEduAddress2", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(3, "visaEduAddress2", normalizedValue);
+                }
+            }}
+          
+        />
+        {errors.visaEduAddress2 && <p className="text-red-500 text-xs mt-1">{errors.visaEduAddress2}</p>}
+
+      </div>
+              <div>
+        <label className="text-sm font-medium"> Şehir</label>
+        <input
+          name="visaEduCity2"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.visaEduCity2 ? "border-red-500" : "border-gray-300"}`}   
+          value={form.steps[3].visaEduCity2 || ""}
+               onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "visaEduCity2", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "visaEduCity2", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(3, "visaEduCity2", normalizedValue);
+                }
+            }}
+          
+        />
+        {errors.visaEduCity2 && <p className="text-red-500 text-xs mt-1">{errors.visaEduCity2}</p>}
+
+      </div>
+          <div>
+        <label className="text-sm font-medium">Eyalet</label>
+        <input
+          name="visaEduState2"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.visaEduState2 ? "border-red-500" : "border-gray-300"}`}   
+          value={form.steps[3].visaEduState2 || ""}
+               onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "visaEduState2", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "visaEduState2", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(3, "visaEduState2", normalizedValue);
+                }
+            }}
+          
+        />
+        {errors.visaEduState2 && <p className="text-red-500 text-xs mt-1">{errors.visaEduState2}</p>}
+
+      </div>        
+        <div>
+        <label className="text-sm font-medium">Posta Kodu</label>
+        <input
+          name="visaEduPostCode2"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.visaEduPostCode2 ? "border-red-500" : "border-gray-300"}`}   
+          value={form.steps[3].visaEduPostCode2 || ""}
+               onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "visaEduPostCode2", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "visaEduPostCode2", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(3, "visaEduPostCode2", normalizedValue);
+                }
+            }}
+          
+        />
+        {errors.visaEduPostCode2 && <p className="text-red-500 text-xs mt-1">{errors.visaEduPostCode2}</p>}
+
+      </div>
+      <div>
+  <label className="text-sm font-medium">Ülke</label>
+
+  <select
+    name="visaEduCountry2"
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.visaEduCountry2 ? "border-red-500" : "border-gray-300"}`}
+    value={form.steps[3].visaEduCountry2 || ""}
+    onChange={(e) => {
+      if (isMobile) {
+        // Mobile: Normalizasyon YOK
+        updateField(3, "visaEduCountry2", e.target.value);
+      } else {
+        // Desktop/Diğer: Normalizasyon VAR
+        updateField(3, "visaEduCountry2", (e.target.value));
+      }
+    }}
+   
+  >
+    <option value="">Seçiniz</option>
+
+    {countryName.map((country) => (
+      <option
+        key={country.value}
+        value={country.value}   // 👈 VALUE = LABEL
+      >
+        {country.label}
+      </option>
+    ))}
+  </select>
+
+  {errors.visaEduCountry2 && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.visaEduCountry2}
+    </p>
+  )}
+
+
+</div>
+      <div>
+            <label className="text-sm font-medium"> Telefon</label>
+            <input
+              name="visaEduPhone2"
+              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              value={form.steps[3].visaEduPhone2 || ""}
+              onChange={(e) => updateField(3, "visaEduPhone2", e.target.value)}
+            />
+          </div>
+            <div>
+            <label className="text-sm font-medium"> E-Posta</label>
+            <input
+              name="visaEduMail2"
+              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              value={form.steps[3].visaEduMail2 || ""}
+              onChange={(e) => updateField(3, "visaEduMail2", e.target.value)}
+            />
+          </div>
+</div>
+
+</div>
+
+
+
+<div className="col-span-2 flex lg:flex-row gap-5 border p-2 rounded-xl">
+  <div className="flex flex-col gap-4">
+    <div>
+  <label className="text-sm font-medium">Amerika'da eğitim görmeyi düşünüyor musunuz?</label>
+  <select
+    className="w-full mt-1 p-3 border rounded-xl"
+    value={form.steps[3]?.study_in_us || ""}
+    onChange={(e) => {
+      const val = e.target.value;
+      updateField(3, "study_in_us", val);
+
+    
+    }}
+  >
+    <option value="">Seçiniz</option>
+    <option value="YES">Evet</option>
+    <option value="NO">Hayır</option>
+  </select>
+</div>
+   <div>
+        <label className="text-sm font-medium">SEVIS Kodu</label>
+        <input
+          name="sevis_id"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.sevis_id ? "border-red-500" : "border-gray-300"}`}   
+          value={form.steps[3].sevis_id || ""}
+               onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "sevis_id", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "sevis_id", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(3, "sevis_id", normalizedValue);
+                }
+            }}
+          
+        />
+        {errors.sevis_id && <p className="text-red-500 text-xs mt-1">{errors.sevis_id}</p>}
+
+      </div>
+         <div>
+        <label className="text-sm font-medium">Program Numarası</label>
+        <input
+          name="program_number"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.program_number ? "border-red-500" : "border-gray-300"}`}   
+          value={form.steps[3].program_number || ""}
+               onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "program_number", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "program_number", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(3, "program_number", normalizedValue);
+                }
+            }}
+          
+        />
+        {errors.program_number && <p className="text-red-500 text-xs mt-1">{errors.program_number}</p>}
+
+      </div>
+  </div>
+ {form.steps[3]?.study_in_us == "YES" && (
+   <div className="flex flex-col gap-4">
+      <div>
+        <label className="text-sm font-medium">Okul Adı</label>
+        <input
+          name="school_name"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.school_name ? "border-red-500" : "border-gray-300"}`}   
+          value={form.steps[3].school_name || ""}
+               onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "school_name", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "school_name", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(3, "school_name", normalizedValue);
+                }
+            }}
+          
+        />
+        {errors.school_name && <p className="text-red-500 text-xs mt-1">{errors.school_name}</p>}
+
+      </div>
+             <div>
+        <label className="text-sm font-medium">Müfredat Programı</label>
+        <input
+          name="course_of_study"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.course_of_study ? "border-red-500" : "border-gray-300"}`}   
+          value={form.steps[3].course_of_study || ""}
+               onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "course_of_study", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "course_of_study", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(3, "course_of_study", normalizedValue);
+                }
+            }}
+          
+        />
+        {errors.course_of_study && <p className="text-red-500 text-xs mt-1">{errors.course_of_study}</p>}
+
+      </div>
+              <div>
+        <label className="text-sm font-medium">Okul Adresi</label>
+        <input
+          name="school_address1"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.school_address1 ? "border-red-500" : "border-gray-300"}`}   
+          value={form.steps[3].school_address1 || ""}
+               onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "school_address1", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "school_address1", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(3, "school_address1", normalizedValue);
+                }
+            }}
+          
+        />
+        {errors.school_address1 && <p className="text-red-500 text-xs mt-1">{errors.school_address1}</p>}
+
+      </div>
+                    <div>
+        <label className="text-sm font-medium">Okulun Bulunduğu Şehir</label>
+        <input
+          name="school_city"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.school_city ? "border-red-500" : "border-gray-300"}`}   
+          value={form.steps[3].school_city || ""}
+               onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "school_city", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "school_city", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(3, "school_city", normalizedValue);
+                }
+            }}
+          
+        />
+        {errors.school_city && <p className="text-red-500 text-xs mt-1">{errors.school_city}</p>}
+
+      </div>
+                  <div>
+  <label className="text-sm font-medium">Okulun Bulunduğu Eyalet</label>
+
+  <select
+    name="school_state"
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.school_state ? "border-red-500" : "border-gray-300"}`}
+    value={form.steps[3].school_state || ""}
+    onChange={(e) => {
+      if (isMobile) {
+        // Mobile: Normalizasyon YOK
+        updateField(3, "school_state", e.target.value);
+      } else {
+        // Desktop/Diğer: Normalizasyon VAR
+        updateField(3, "school_state", (e.target.value));
+      }
+    }}
+   
+  >
+    <option value="">Seçiniz</option>
+
+    {state.map((country) => (
+      <option
+        key={country.value}
+        value={country.value}   // 👈 VALUE = LABEL
+      >
+        {country.label}
+      </option>
+    ))}
+  </select>
+
+  {errors.school_state && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.school_state}
+    </p>
+  )}
+</div>
+
+                 <div>
+        <label className="text-sm font-medium">Okulun  Posta Kodu</label>
+        <input
+          name="school_post_code"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.school_post_code ? "border-red-500" : "border-gray-300"}`}   
+          value={form.steps[3].school_post_code || ""}
+               onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "school_post_code", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "school_post_code", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(3, "school_post_code", normalizedValue);
+                }
+            }}
+          
+        />
+        {errors.school_post_code && <p className="text-red-500 text-xs mt-1">{errors.school_post_code}</p>}
+
+      </div>
+  </div>)}
+
+
+          
+</div>
+</div>
+
+
+
+)}
     <div>
   <label className="text-sm font-medium">Seyahat Planınızı Kesinleştirdiniz mi?</label>
   <select
@@ -2624,7 +3935,7 @@ onChange={(e) => {
     {state.map((country) => (
       <option
         key={country.value}
-        value={country.label}   // 👈 VALUE = LABEL
+        value={country.value}   // 👈 VALUE = LABEL
       >
         {country.label}
       </option>
@@ -2793,7 +4104,7 @@ onChange={(e) => {
     {state.map((country) => (
       <option
         key={country.value}
-        value={country.label}   // 👈 VALUE = LABEL
+        value={country.value}   // 👈 VALUE = LABEL
       >
         {country.label}
       </option>
@@ -2865,6 +4176,7 @@ onChange={(e) => {
           {/* <option value="ES">Eş</option> */}
           {/* <option value="DIGER">Diğer</option> */}
         </select>
+         {errors.whoPays && <p className="text-red-500 text-xs mt-1">{errors.whoPays}</p>}
       </div>
 
       {/* Masrafı karşılayacak kişi farklı ise detay */}
@@ -2940,6 +4252,7 @@ onChange={(e) => {
     </p>
   )}
 </div>
+{/* Buradan */}
                          <div>
         <label className="text-sm font-medium">Karşılayan Kişinin Adresi</label>
         <input
@@ -2953,7 +4266,7 @@ onChange={(e) => {
                     updateField(3, "payerRelationAddress", e.target.value);
                 } else {
                     // Desktop/Diğer: Normalizasyon YAP
-                    updateField(3, "payerRelationAddress", normalizeInput(e.target.value));
+                    updateField(3, "payerRelationAddress", normalizeAddressInput(e.target.value));
                 }
             }}
             
@@ -3023,7 +4336,7 @@ onChange={(e) => {
     {countryName.map((country) => (
       <option
         key={country.value}
-        value={country.label}   // 👈 VALUE = LABEL
+        value={country.value}   // 👈 VALUE = LABEL
       >
         {country.label}
       </option>
@@ -3277,7 +4590,7 @@ onChange={(e) => {
     {countryName.map((country) => (
       <option
         key={country.value}
-        value={country.label}   // 👈 VALUE = LABEL
+        value={country.value}   // 👈 VALUE = LABEL
       >
         {country.label}
       </option>
@@ -3299,7 +4612,7 @@ onChange={(e) => {
 
 
 
-<div className="md:col-span-2 mt-6">
+{/* <div className="md:col-span-2 mt-6">
   <h4 className="font-semibold text-base text-slate-800">
     Amerika’da İrtibatınız Olan Kişi / Kurum
   </h4>
@@ -3318,12 +4631,12 @@ onChange={(e) => {
     }
     placeholder="Örn: John Smith – ABC Company / Address / Phone"
   />
-</div>
+</div> */}
 
 {/* ===================== */}
 {/* ABD'DE YAKIN AKRABA */}
 {/* ===================== */}
-<div className="md:col-span-2 mt-6">
+{/* <div className="md:col-span-2 mt-6">
   <h4 className="font-semibold text-base text-slate-800">
     ABD’de Eş / Çocuk / Nişanlı / Kardeş
   </h4>
@@ -3342,7 +4655,7 @@ onChange={(e) => {
     }
     placeholder="Örn: Ayşe Yılmaz – ABD Vatandaşı / Green Card / Öğrenci"
   />
-</div>
+</div> */}
     </div>
 
 
@@ -3361,101 +4674,129 @@ onChange={(e) => {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
       {/* Tek mi seyahat edeceksiniz? */}
-      <div>
-        <label className="text-sm font-medium">Tek Mi Seyahat Edeceksiniz?</label>
-        <select
-          name="travelAlone"
-           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
-          ${errors.travelAlone ? "border-red-500" : "border-gray-300"}`}
+<div>
+  <label className="text-sm font-medium">Tek mi Seyahat Edeceksiniz?</label>
+  <select
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.beenToUS ? "border-red-500" : "border-gray-300"}`}
+    value={form.steps[4]?.travelAlone || ""}
+    onChange={(e) => {
+      const val = e.target.value;
+      updateField(4, "travelAlone", val);
 
-          onChange={(e) => updateField(4, "travelAlone", e.target.value)}
-        >
-          <option value="">Seçiniz</option>
-          <option value="NO">Evet</option>
-          <option value="YES">Hayır</option>
-        </select>
-        {errors.travelAlone && <p className="text-red-500 text-xs mt-1">{errors.travelAlone}</p>}
+      if (val === "YES") {
+        updateField(4, "companionCount", 0);
+        updateField(4, "companions", []);
+      }
+    }}
+  >
+    <option value="">Seçiniz</option>
+    <option value="NO">Evet</option>
+    <option value="YES">Hayır</option>
+  </select>
+    {errors.travelAlone && <p className="text-red-500 text-xs mt-1">{errors.travelAlone}</p>}
+</div>
+{form.steps[4]?.travelAlone === "YES" && (
+  <div>
+    <label className="text-sm font-medium">
+      Kaç Kişi ile Seyahat Edeceksiniz?
+    </label>
+    <input
+      type="number"
+      min={1}
+      max={10}
+      className="w-full mt-1 p-3 border rounded-xl"
+      value={form.steps[4]?.companionCount || ""}
+      onChange={(e) => {
+        const count = Number(e.target.value || 0);
+        updateField(4, "companionCount", count);
+        adjustCompanions(count);
+      }}
+    />
+  </div>
+)}
 
-      </div>
+{form.steps[4]?.companionCount > 0 && (
+  form.steps[4]?.companions?.map((person, index) => (
+  <div
+    key={index}
+    className="border rounded-xl p-4 mt-4 bg-gray-50"
+  >
+    <h4 className="font-semibold mb-3">
+      Seyahat Eden Kişi {index + 1}
+    </h4>
 
-      {/* Başka birisi varsa adı, soyadı ve ilişkiniz */}
-      {form.steps[4].travelAlone === "YES" && (
-        <div >
-          <label className="text-sm font-medium">Seyahat Edeceğiniz Kişinin Adı Soyadı</label>
-          <input
-            name="otherTraveler"
-            className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
-            value={form.steps[4].otherTraveler || ""}
-            
-                         onChange={(e) => {
-                if (isMobile) {
-                    // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(4, "otherTraveler", e.target.value);
-                } else {
-                    // Desktop/Diğer: Normalizasyon YAP
-                    updateField(4, "otherTraveler", normalizeInput(e.target.value));
-                }
-            }}
-            
-            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
-            onBlur={(e) => {
-                if (isMobile) {
-                    const normalizedValue = normalizeInput(e.target.value);
-                    updateField(4, "otherTraveler", normalizedValue);
-                }
-            }}
-            placeholder="Örn: Ayşe Yılmaz"
-          />
-          
-        </div>
-      )}
-           {form.steps[4].travelAlone === "YES" && (
-        <div >
-          <label className="text-sm font-medium">Seyahat Edeceğiniz Kişi ile İlişkiniz</label>
-          <input
-            name="otherTravelerConnection"
-            className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
-            value={form.steps[4].otherTravelerConnection || ""}
-            
-                         onChange={(e) => {
-                if (isMobile) {
-                    // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(4, "otherTravelerConnection", e.target.value);
-                } else {
-                    // Desktop/Diğer: Normalizasyon YAP
-                    updateField(4, "otherTravelerConnection", normalizeInput(e.target.value));
-                }
-            }}
-            
-            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
-            onBlur={(e) => {
-                if (isMobile) {
-                    const normalizedValue = normalizeInput(e.target.value);
-                    updateField(4, "otherTravelerConnection", normalizedValue);
-                }
-            }}
-            placeholder="Örn:Kuzen/Arkadaş"
-          />
-          
-        </div>
-      )}
-           {form.steps[4].travelAlone === "YES" && (
-        <div>
-          <label className="text-sm font-medium">Seyahat Edeceğiniz Kişinin Vizesi Var Mı?</label>
-       <select
-          name="otherTravelerConnectionVisa"
-           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
-          ${errors.otherTravelerConnectionVisa ? "border-red-500" : "border-gray-300"}`}
+    {/* AD SOYAD */}
+    <div className="mb-3">
+      <label className="text-sm font-medium">Adı Soyadı</label>
+      <input
+        className="w-full mt-1 p-3 border rounded-xl"
+        value={person.fullName || ""}
+        onChange={(e) =>
+          updateArrayField(
+            4,
+            "companions",
+            index,
+            "fullName",
+            normalizeInput(e.target.value)
+          )
+        }
+      />
+    </div>
 
-          onChange={(e) => updateField(4, "otherTravelerConnectionVisa", e.target.value)}
-        >
-          <option value="">Seçiniz</option>
-          <option value="EVET">Evet</option>
-          <option value="HAYIR">Hayır</option>
-        </select>
-          
-        </div>
-      )}
+    {/* YAKINLIK */}
+    <div className="mb-3">
+      <label className="text-sm font-medium">Yakınlık Derecesi</label>
+      <select
+        className="w-full mt-1 p-3 border rounded-xl"
+        value={person.relationship || ""}
+        onChange={(e) =>
+          updateArrayField(
+            4,
+            "companions",
+            index,
+            "relationship",
+            e.target.value
+          )
+        }
+      >
+        <option value="">Seçiniz</option>
+        <option value="PARENT">Ebeveyn</option>
+        <option value="SPOUSE">Eş</option>
+        <option value="CHILD">Çocuk</option>
+        <option value="RELATIVE">Diğer Akraba</option>
+        <option value="FRIEND">Arkadaş</option>
+        <option value="BUSINESS">İş Ortağı</option>
+        <option value="OTHER">Diğer</option>
+      </select>
+    </div>
+
+    {/* VİZE */}
+    <div>
+      <label className="text-sm font-medium">Vizesi Var mı?</label>
+      <select
+        className="w-full mt-1 p-3 border rounded-xl"
+        value={person.hasVisa || ""}
+        onChange={(e) =>
+          updateArrayField(
+            4,
+            "companions",
+            index,
+            "hasVisa",
+            e.target.value
+          )
+        }
+      >
+        <option value="">Seçiniz</option>
+        <option value="YES">Evet</option>
+        <option value="NO">Hayır</option>
+      </select>
+    </div>
+  </div>
+))
+)}
+
+
    <div>
         <label className="text-sm font-medium">Grup veya organizasyon kapsamında mı seyahat ediyorsunuz?</label>
         <select
@@ -3723,7 +5064,7 @@ onChange={(e) => {
     {state.map((country) => (
       <option
         key={country.value}
-        value={country.label}   // 👈 VALUE = LABEL
+        value={country.value}   // 👈 VALUE = LABEL
       >
         {country.label}
       </option>
@@ -3957,7 +5298,7 @@ onChange={(e) => {
           <option value="YES">Evet</option>
           <option value="NO">Hayır</option>
         </select>
-         {errors.visaCancelled && <p className="text-red-500 text-xs mt-1">{errors.visaRefused}</p>}
+         {errors.visaCancelled && <p className="text-red-500 text-xs mt-1">{errors.visaCancelled}</p>}
 
       </div>
  {form.steps[4].visaCancelled === "YES" && (
@@ -4013,13 +5354,13 @@ onChange={(e) => {
           onChange={(e) => updateField(4, "visaRefused", e.target.value)}
         >
           <option value="">Seçiniz</option>
-          <option value="EVET">Evet</option>
-          <option value="HAYIR">Hayır</option>
+          <option value="YES">Evet</option>
+          <option value="NO">Hayır</option>
         </select>
          {errors.visaRefused && <p className="text-red-500 text-xs mt-1">{errors.visaRefused}</p>}
 
       </div>
- {form.steps[4].visaRefused === "EVET" && (
+ {form.steps[4].visaRefused === "YES" && (
   <>
    <div>
             <label className="text-sm font-medium">Vize Ret Tarihi</label>
@@ -4121,57 +5462,7 @@ onChange={(e) => {
 
 
 
-  <div>
-        <label className="text-sm font-medium">ABD'de Bir Organizasyon/Etkinliğe Katılacak mısınız?</label>
-        <select
-          name="organizationBoolean"
-         className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
-          ${errors.organizationBoolean ? "border-red-500" : "border-gray-300"}`}
 
-          value={form.steps[4].organizationBoolean || ""}
-          onChange={(e) => updateField(4, "organizationBoolean", e.target.value)}
-        >
-          <option value="">Seçiniz</option>
-          <option value="EVET">Evet</option>
-          <option value="HAYIR">Hayır</option>
-        </select>
-         {errors.organizationBoolean && <p className="text-red-500 text-xs mt-1">{errors.organizationBoolean}</p>}
-
-      </div>
-       {form.steps[4].organizationBoolean === "EVET" && (
-  <>
-   <div>
-            <label className="text-sm font-medium">Etkinlik Adı ve Açık Adresi</label>
-            <input
-              type="text"
-              name="organizationInfo"
-          
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
-              value={form.steps[4].organizationInfo || ""}
-              onChange={(e) =>
-      updateField(
-        4,
-        "organizationInfo",
-        isMobile ? e.target.value : normalizeInput(e.target.value)
-      )
-    }
-    onBlur={(e) =>
-      isMobile &&
-      updateField(
-        4,
-        "organizationInfo",
-        normalizeInput(e.target.value)
-      )
-    }
-        
-            />
-          </div>
-
-
-    
-  </>
-
- )}
 
 
     </div>
@@ -4227,7 +5518,7 @@ onChange={(e) => {
     {countryName.map((country) => (
       <option
         key={country.value}
-        value={country.label}  
+        value={country.value}  
       >
         {country.label}
       </option>
@@ -4340,7 +5631,7 @@ onChange={(e) => {
 
   {/* Cadde */}
   <div>
-    <label className="text-sm font-medium">Cadde *</label>
+    <label className="text-sm font-medium">Cadde </label>
     <input
       name="home_street"
       className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition 
@@ -4372,7 +5663,7 @@ onChange={(e) => {
 
   {/* Sokak */}
   <div>
-    <label className="text-sm font-medium">Sokak *</label>
+    <label className="text-sm font-medium">Sokak </label>
     <input
       name="home_avenue"
       className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition 
@@ -4430,7 +5721,7 @@ onChange={(e) => {
 
   {/* Daire No */}
   <div>
-    <label className="text-sm font-medium">Daire No *</label>
+    <label className="text-sm font-medium">Daire No </label>
     <input
       name="home_apartment_no"
       className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition 
@@ -4553,23 +5844,25 @@ onChange={(e) => {
     Sosyal Medya Hesabınız Var mı?
   </label>
   <select
-    className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+   className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.email ? "border-red-500" : "border-gray-300"}`}
     value={form.steps[5].hasSocialMedia || ""}
     onChange={(e) => {
       const value = e.target.value;
       updateField(5, "hasSocialMedia", value);
 
-      if (value === "HAYIR") {
+      if (value === "NO") {
         updateField(5, "socialMediaAccounts", []);
       }
     }}
   >
     <option value="">Seçiniz</option>
-    <option value="EVET">Evet</option>
-    <option value="HAYIR">Hayır</option>
+    <option value="YES">Evet</option>
+    <option value="NO">Hayır</option>
   </select>
+    {errors.hasSocialMedia && <p className="text-red-500 text-xs mt-1">{errors.hasSocialMedia}</p>}
 </div>
-{form.steps[5].hasSocialMedia === "EVET" && (
+{form.steps[5].hasSocialMedia === "YES" && (
   <div className="mt-4 p-4 border rounded-2xl bg-gray-50">
     <h4 className="font-medium mb-3">Kullandığınız Sosyal Medyalar</h4>
 
@@ -4649,10 +5942,10 @@ onChange={(e) => {
           onChange={(e) => updateField(5, "passportType", e.target.value)}
         >
           <option value="">Seçiniz</option>
-          <option value="HUSUSI">HUSUSI (YESIL)</option>
-          <option value="HIZMET">HIZMET (GRI)</option>
-          <option value="DIPLOMATIK">DIPLOMATIK (SIYAH)</option>
-          <option value="UMUMA MAHSUS">UMUMA MAHSUS (BORDO)</option>
+          <option value="OFFICIAL">HUSUSI (YESIL)</option>
+          <option value="OTHER">HIZMET (GRI)</option>
+          <option value="DIPLOMATIC">DIPLOMATIK (SIYAH)</option>
+          <option value="REGULAR">UMUMA MAHSUS (BORDO)</option>
           <option value="GECICI">GECICI (PEMBE)</option>
         </select>
         {errors.passportType && <p className="text-red-500 text-xs mt-1">{errors.passportType}</p>}
@@ -4692,8 +5985,48 @@ onChange={(e) => {
       </div>
 
       {/* Pasaportu Veren Makam */}
+
+
+<div>
+  <label className="text-sm font-medium">Pasaportu Veren Ülke</label>
+
+  <select
+    name="passportAuthorityCountry"
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.passportAuthorityCountry ? "border-red-500" : "border-gray-300"}`}
+    value={form.steps[5].passportAuthorityCountry || ""}
+    onChange={(e) => {
+      if (isMobile) {
+        // Mobile: Normalizasyon YOK
+        updateField(5, "passportAuthorityCountry", e.target.value);
+      } else {
+        // Desktop: Normalizasyon VAR
+        updateField(5, "passportAuthorityCountry", (e.target.value));
+      }
+    }}
+   
+  >
+    <option value="">Seçiniz</option>
+
+    {countryName.map((country) => (
+      <option
+        key={country.value}
+        value={country.value}  
+      >
+        {country.label}
+      </option>
+    ))}
+  </select>
+
+  {errors.passportAuthorityCountry && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.passportAuthorityCountry}
+    </p>
+  )}
+</div>
+
       <div>
-        <label className="text-sm font-medium">Pasaportu Veren Makam</label>
+        <label className="text-sm font-medium">Pasaportu Veren Makam(Pasarpotta Yazan)</label>
         <input
           name="passportAuthority"
           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
@@ -4717,7 +6050,7 @@ onChange={(e) => {
                     updateField(5, "passportAuthority", normalizedValue);
                 }
             }}
-          placeholder="Örn: Nüfus Müdürlüğü"
+          placeholder="Pasaportta Yazan"
         />
          {errors.passportAuthority && <p className="text-red-500 text-xs mt-1">{errors.passportAuthority}</p>}
 
@@ -4754,13 +6087,35 @@ onChange={(e) => {
       </div>
 
       {/* Daha önce kayıp pasaport */}
-      <div className="md:col-span-2">
-        <label className="text-sm font-medium">Daha Önce Pasaport Kaybettiyseniz ya da Çaldırdıysanız Kayıp Pasaportun Numarası</label>
+     <div>
+        <label className="text-sm font-medium">Daha Önce Pasaportu Kaybettiniz/Çaldırdınız mı?</label>
+        <select
+          name="lostPassportBoolean"
+           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.lostPassportBoolean ? "border-red-500" : "border-gray-300"}`}
+
+          onChange={(e) => updateField(5, "lostPassportBoolean", e.target.value)}
+        >
+          <option value="">Seçiniz</option>
+          <option value="YES">Evet</option>
+          <option value="NO">Hayır</option>
+        </select>
+        {errors.lostPassportBoolean && <p className="text-red-500 text-xs mt-1">{errors.lostPassportBoolean}</p>}
+
+      </div>
+
+
+{form.steps[5].lostPassportBoolean === "YES" && (
+  <>
+   <div>
+        <label className="text-sm font-medium">Kaybolan/Çalınan Pasaport Numaranız</label>
         <input
           name="lostPassportNumber"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+         className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.lostPassportNumber ? "border-red-500" : "border-gray-300"}`}
+
           value={form.steps[5].lostPassportNumber || ""}
-       onChange={(e) => {
+            onChange={(e) => {
                 if (isMobile) {
                     // Mobile: Normalizasyon YOK, sadece değeri sakla
                     updateField(5, "lostPassportNumber", e.target.value);
@@ -4779,7 +6134,76 @@ onChange={(e) => {
             }}
           placeholder="Örn: A1234567"
         />
+        {errors.lostPassportNumber && <p className="text-red-500 text-xs mt-1">{errors.lostPassportNumber}</p>}
+
       </div>
+<div>
+  <label className="text-sm font-medium">Kaybolan/Çalınan Pasaportu Veren Ülke</label>
+
+  <select
+    name="lostPassportAuthorityCountry"
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.lostPassportAuthorityCountry ? "border-red-500" : "border-gray-300"}`}
+    value={form.steps[5].lostPassportAuthorityCountry || ""}
+    onChange={(e) => {
+      if (isMobile) {
+        // Mobile: Normalizasyon YOK
+        updateField(5, "lostPassportAuthorityCountry", e.target.value);
+      } else {
+        // Desktop: Normalizasyon VAR
+        updateField(5, "lostPassportAuthorityCountry", (e.target.value));
+      }
+    }}
+   
+  >
+    <option value="">Seçiniz</option>
+
+    {countryName.map((country) => (
+      <option
+        key={country.value}
+        value={country.value}  
+      >
+        {country.label}
+      </option>
+    ))}
+  </select>
+
+  {errors.lostPassportAuthorityCountry && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.lostPassportAuthorityCountry}
+    </p>
+  )}
+</div>
+
+      <div className="md:col-span-2">
+        <label className="text-sm font-medium">Kaybolan/Çalınan Pasaport Açıklaması</label>
+        <input
+          name="lostPassportInfo"
+          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          value={form.steps[5].lostPassportInfo || ""}
+       onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(5, "lostPassportInfo", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(5, "lostPassportInfo", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(5, "lostPassportInfo", normalizedValue);
+                }
+            }}
+         
+        />
+      </div>
+  </>
+)}
+  
 
     </div>
   </section>
@@ -4788,6 +6212,1346 @@ onChange={(e) => {
 {form.currentStep === 6 && (
   <section>
     <h3 className="font-semibold mb-3 text-lg">6.Bölüm</h3>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+ 
+     <div>
+        <label className="text-sm font-medium">ABD'de Yakınınız Var mı?</label>
+      <select
+  name="usaRelative"
+  className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+  ${errors.usaRelative ? "border-red-500" : "border-gray-300"}`}
+  value={form.steps[6].usaRelative || ""}
+  onChange={(e) => handleMirrorSelect("usaRelative", e.target.value)}
+>
+  <option value="">Seçiniz</option>
+  <option value="YES">Evet</option>
+  <option value="NO">Hayır</option>
+</select>
+
+        {errors.usaRelative && <p className="text-red-500 text-xs mt-1">{errors.usaRelative}</p>}
+
+      </div>
+ {form.steps[6].usaRelative === "YES" && (
+  <>
+   <div>
+        <label className="text-sm font-medium">Adı Soyadı</label>
+        <input
+          name="usaRelativeFullName"
+         className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.usaRelativeFullName ? "border-red-500" : "border-gray-300"}`}
+ value={form.steps[6].usaRelativeFullName || ""}
+           onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(6, "usaRelativeFullName", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(6, "usaRelativeFullName", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(6, "usaRelativeFullName", normalizedValue);
+                }
+            }}
+
+        />
+           {errors.usaRelativeFullName && <p className="text-red-500 text-xs mt-1">{errors.usaRelativeFullName}</p>}
+
+      </div>
+           <div>
+        <label className="text-sm font-medium">Yakınlık Derecesi</label>
+        <select
+          name="usaRelativeInfo"
+           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.usaRelativeInfo ? "border-red-500" : "border-gray-300"}`}
+
+          onChange={(e) => updateField(6, "usaRelativeInfo", e.target.value)}
+        >
+          <option value="">Seçiniz</option>
+          <option value="RELATIVE">AKRABA</option>
+          <option value="SPOUSE">EŞ</option>
+          <option value="FRIEND">ARKADAŞ</option>
+          <option value="BUSINESS ASSOCIATE">İŞ ORTAĞI</option>
+          <option value="EMPLOYER">İŞ VEREN</option>
+          <option value="SCHOOL OFFICIAL">OKUL YETKİLİSİ</option>
+          <option value="OTHER">DİĞER</option>
+
+        </select>
+        {errors.usaRelativeInfo && <p className="text-red-500 text-xs mt-1">{errors.usaRelativeInfo}</p>}
+
+      </div>
+               <div>
+        <label className="text-sm font-medium">Yakınınızın Yaşadığı Adresi</label>
+        <input
+          name="usaRelativeAddress"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.usaRelativeAddress ? "border-red-500" : "border-gray-300"}`}   
+          value={form.steps[6].usaRelativeAddress || ""}
+               onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(6, "usaRelativeAddress ", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(6, "usaRelativeAddress", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(6, "usaRelativeAddress", normalizedValue);
+                }
+            }}
+          
+        />
+        {errors.usaRelativeAddress && <p className="text-red-500 text-xs mt-1">{errors.usaRelativeAddress}</p>}
+
+      </div>
+              <div>
+        <label className="text-sm font-medium">Yakınınızın Yaşadığı Şehir</label>
+        <input
+          name="usaRelativeAddressCity"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.usaRelativeAddressCity ? "border-red-500" : "border-gray-300"}`}   
+          value={form.steps[6].usaRelativeAddressCity || ""}
+               onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(6, "usaRelativeAddressCity ", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(6, "usaRelativeAddressCity", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(6, "usaRelativeAddressCity", normalizedValue);
+                }
+            }}
+          
+        />
+        {errors.usaRelativeAddressCity && <p className="text-red-500 text-xs mt-1">{errors.usaRelativeAddressCity}</p>}
+
+      </div>
+  <div>
+            <label className="text-sm font-medium">Yakınınızın Telefonu</label>
+            <input
+              name="usaRelativePhone"
+              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              value={form.steps[6].usaRelativePhone || ""}
+              onChange={(e) => updateField(6, "usaRelativePhone", e.target.value)}
+            />
+          </div>
+    <div>
+            <label className="text-sm font-medium">Yakınınızın E-Postası</label>
+            <input
+              name="usaRelativeEmail"
+              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              value={form.steps[6].usaRelativeEmail || ""}
+              onChange={(e) => updateField(6, "usaRelativeEmail", e.target.value)}
+            />
+          </div>
+ <div>
+            <label className="text-sm font-medium">Yakınınızın Posta Kodu</label>
+            <input
+              name="usaRelativePostCode"
+              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              value={form.steps[6].usaRelativePostCode || ""}
+              onChange={(e) => updateField(6, "usaRelativePostCode", e.target.value)}
+            />
+          </div>
+            <div>
+  <label className="text-sm font-medium">Yakınınızın Yaşadığı Eyalet</label>
+
+  <select
+    name="usaRelativeAddressState"
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.usaRelativeAddressState ? "border-red-500" : "border-gray-300"}`}
+    value={form.steps[6].usaRelativeAddressState || ""}
+    onChange={(e) => {
+      if (isMobile) {
+        // Mobile: Normalizasyon YOK
+        updateField(6, "usaRelativeAddressState", e.target.value);
+      } else {
+        // Desktop/Diğer: Normalizasyon VAR
+        updateField(6, "usaRelativeAddressState", (e.target.value));
+      }
+    }}
+   
+  >
+    <option value="">Seçiniz</option>
+
+    {state.map((country) => (
+      <option
+        key={country.value}
+        value={country.value}   // 👈 VALUE = LABEL
+      >
+        {country.label}
+      </option>
+    ))}
+  </select>
+
+  {errors.usaRelativeAddressState && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.usaRelativeAddressState}
+    </p>
+  )}
+</div>
+
+
+  </>
+
+      
+ )}
+
+
+  <div>
+        <label className="text-sm font-medium">ABD'de Bir Organizasyon/Etkinliğe Katılacak mısınız?</label>
+ <select
+  name="organizationBoolean"
+  className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+  ${errors.organizationBoolean ? "border-red-500" : "border-gray-300"}`}
+  value={form.steps[6].organizationBoolean || ""}
+  onChange={(e) =>
+    handleMirrorSelect("organizationBoolean", e.target.value)
+  }
+>
+  <option value="">Seçiniz</option>
+  <option value="YES">Evet</option>
+  <option value="NO">Hayır</option>
+</select>
+
+         {errors.organizationBoolean && <p className="text-red-500 text-xs mt-1">{errors.organizationBoolean}</p>}
+
+      </div>
+       {form.steps[6].organizationBoolean === "YES" && (
+  <>
+   <div>
+            <label className="text-sm font-medium">Etkinlik/Organizasyon Adı</label>
+            <input
+              type="text"
+              name="organizationInfo"
+          
+              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              value={form.steps[6].organizationInfo || ""}
+              onChange={(e) =>
+      updateField(
+        6,
+        "organizationInfo",
+        isMobile ? e.target.value : normalizeInput(e.target.value)
+      )
+    }
+    onBlur={(e) =>
+      isMobile &&
+      updateField(
+        6,
+        "organizationInfo",
+        normalizeInput(e.target.value)
+      )
+    }
+        
+            />
+          </div>
+
+   {form.steps[6].usaRelative === "NO" && (
+    <>
+        <div>
+        <label className="text-sm font-medium">Etkinlik/Organizasyon Adresi</label>
+        <input
+          name="usaRelativeAddress"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.usaRelativeAddress ? "border-red-500" : "border-gray-300"}`}   
+          value={form.steps[6].usaRelativeAddress || ""}
+               onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(6, "usaRelativeAddress ", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(6, "usaRelativeAddress", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(6, "usaRelativeAddress", normalizedValue);
+                }
+            }}
+          
+        />
+        {errors.usaRelativeAddress && <p className="text-red-500 text-xs mt-1">{errors.usaRelativeAddress}</p>}
+
+      </div>
+              <div>
+        <label className="text-sm font-medium">Etkinlik/Organizasyon Şehir</label>
+        <input
+          name="usaRelativeAddressCity"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.usaRelativeAddressCity ? "border-red-500" : "border-gray-300"}`}   
+          value={form.steps[6].usaRelativeAddressCity || ""}
+               onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(6, "usaRelativeAddressCity ", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(6, "usaRelativeAddressCity", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(6, "usaRelativeAddressCity", normalizedValue);
+                }
+            }}
+          
+        />
+        {errors.usaRelativeAddressCity && <p className="text-red-500 text-xs mt-1">{errors.usaRelativeAddressCity}</p>}
+
+      </div>
+                  <div>
+  <label className="text-sm font-medium">Etkinlik/Organizasyon Eyalet</label>
+
+  <select
+    name="usaRelativeAddressState"
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.usaRelativeAddressState ? "border-red-500" : "border-gray-300"}`}
+    value={form.steps[6].usaRelativeAddressState || ""}
+    onChange={(e) => {
+      if (isMobile) {
+        // Mobile: Normalizasyon YOK
+        updateField(6, "usaRelativeAddressState", e.target.value);
+      } else {
+        // Desktop/Diğer: Normalizasyon VAR
+        updateField(6, "usaRelativeAddressState", (e.target.value));
+      }
+    }}
+   
+  >
+    <option value="">Seçiniz</option>
+
+    {state.map((country) => (
+      <option
+        key={country.value}
+        value={country.value}   // 👈 VALUE = LABEL
+      >
+        {country.label}
+      </option>
+    ))}
+  </select>
+
+  {errors.usaRelativeAddressState && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.usaRelativeAddressState}
+    </p>
+  )}
+</div>
+  <div>
+            <label className="text-sm font-medium">Etkinlik/Organizasyon Telefon</label>
+            <input
+              name="usaRelativePhone"
+              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              value={form.steps[6].usaRelativePhone || ""}
+              onChange={(e) => updateField(6, "usaRelativePhone", e.target.value)}
+            />
+          </div>
+    <div>
+            <label className="text-sm font-medium">Etkinlik/Organizasyon E-Posta</label>
+            <input
+              name="usaRelativeEmail"
+              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              value={form.steps[6].usaRelativeEmail || ""}
+              onChange={(e) => updateField(6, "usaRelativeEmail", e.target.value)}
+            />
+          </div>
+ <div>
+            <label className="text-sm font-medium">Etkinlik/Organizasyon Posta Kodu</label>
+            <input
+              name="usaRelativePostCode"
+              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              value={form.steps[6].usaRelativePostCode || ""}
+              onChange={(e) => updateField(6, "usaRelativePostCode", e.target.value)}
+            />
+          </div>
+    </>
+   )}
+
+
+    
+  </>
+
+ )}
+
+    </div>
+</section>
+)}
+
+
+
+
+{form.currentStep === 7 && (
+  <section>
+    <h3 className="font-semibold mb-3 text-lg">7.Bölüm</h3>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+<div>
+  <label className="text-sm font-medium">Anne Adı Soyadı</label>
+  <input
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.motherFullName ? "border-red-500" : "border-gray-300"}`}
+    value={form.steps[7].motherFullName || ""}
+    onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(7, "motherFullName", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(7, "motherFullName", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(7, "motherFullName", normalizedValue);
+                }
+            }}
+    placeholder="Anne Adı Soyadı"
+  />
+    {errors.motherFullName && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.motherFullName}
+    </p>
+  )}
+</div>
+
+<div>
+  <label className="text-sm font-medium">Anne Doğum Tarihi</label>
+  <input
+    type="date"
+     className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.motherBirthDate ? "border-red-500" : "border-gray-300"}`}
+    value={form.steps[7].motherBirthDate || ""}
+    onChange={(e) =>
+      updateField(7, "motherBirthDate", e.target.value)
+    }
+  />
+   {errors.motherBirthDate && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.motherBirthDate}
+    </p>
+  )}
+</div>
+   <div>
+        <label className="text-sm font-medium">Anneniz ABD'de mi Yaşıyor?</label>
+        <select
+          name="isMotherInUSA"
+           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.isMotherInUSA ? "border-red-500" : "border-gray-300"}`}
+
+          onChange={(e) => updateField(7, "isMotherInUSA", e.target.value)}
+        >
+          <option value="">Seçiniz</option>
+          <option value="YES">Evet</option>
+          <option value="NO">Hayır</option>
+        </select>
+        {errors.isMotherInUSA && <p className="text-red-500 text-xs mt-1">{errors.isMotherInUSA}</p>}
+
+      </div>
+
+{form.steps[7].isMotherInUSA === "YES" && (
+   <div>
+        <label className="text-sm font-medium">Anneniz ABD'de de Statüsü Nedir?</label>
+        <select
+          name="isMotherUSAStatus"
+           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.isMotherUSAStatus ? "border-red-500" : "border-gray-300"}`}
+
+          onChange={(e) => updateField(7, "isMotherUSAStatus", e.target.value)}
+        >
+          <option value="">Seçiniz</option>
+          <option value="U.S. CITIZEN">ABD Vatandaşı</option>
+          <option value="U.S. LEGAL PERMANENT RESIDENT (LPR)">Yasal İkamet Sahibi</option>
+          <option value="NONIMMIGRANT">Göçmen</option>
+          <option value="OTHER/I DON'T KNOW">Diğer/Bilmiyorum</option>
+
+
+        </select>
+        {errors.isMotherUSAStatus && <p className="text-red-500 text-xs mt-1">{errors.isMotherUSAStatus}</p>}
+
+      </div>
+)}
+
+
+
+<div>
+  <label className="text-sm font-medium">Baba Adı Soyadı</label>
+  <input
+   className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.fatherFullName ? "border-red-500" : "border-gray-300"}`}
+    value={form.steps[7].fatherFullName || ""}
+    onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(7, "fatherFullName", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(7, "fatherFullName", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(2, "fatherFullName", normalizedValue);
+                }
+            }}
+    placeholder="Baba Adı Soyadı"
+  />
+   {errors.fatherFullName && <p className="text-red-500 text-xs mt-1">{errors.fatherFullName}</p>}
+</div>
+
+<div>
+  <label className="text-sm font-medium">Baba Doğum Tarihi</label>
+  <input
+    type="date"
+   className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.fatherBirthDate ? "border-red-500" : "border-gray-300"}`}
+    value={form.steps[7].fatherBirthDate || ""}
+    onChange={(e) =>
+      updateField(7, "fatherBirthDate", e.target.value)
+    }
+  />
+   {errors.fatherBirthDate && <p className="text-red-500 text-xs mt-1">{errors.fatherBirthDate}</p>}
+</div>
+
+   <div>
+        <label className="text-sm font-medium">Babanız ABD'de mi Yaşıyor?</label>
+        <select
+          name="isFatherInUSA"
+           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.isFatherInUSA ? "border-red-500" : "border-gray-300"}`}
+          onChange={(e) => updateField(7, "isFatherInUSA", e.target.value)}
+        >
+          <option value="">Seçiniz</option>
+          <option value="YES">Evet</option>
+          <option value="NO">Hayır</option>
+        </select>
+        {errors.isFatherInUSA && <p className="text-red-500 text-xs mt-1">{errors.isFatherInUSA}</p>}
+
+      </div>
+
+{form.steps[7].isFatherInUSA === "YES" && (
+   <div>
+        <label className="text-sm font-medium">Babanızın ABD'de de Statüsü Nedir?</label>
+        <select
+          name="isFatherUSAStatus"
+           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.isFatherUSAStatus ? "border-red-500" : "border-gray-300"}`}
+
+          onChange={(e) => updateField(7, "isFatherUSAStatus", e.target.value)}
+        >
+          <option value="">Seçiniz</option>
+          <option value="U.S. CITIZEN">ABD Vatandaşı</option>
+          <option value="U.S. LEGAL PERMANENT RESIDENT (LPR)">Yasal İkamet Sahibi</option>
+          <option value="NONIMMIGRANT">Göçmen</option>
+          <option value="OTHER/I DON'T KNOW">Diğer/Bilmiyorum</option>
+
+
+        </select>
+        {errors.isFatherUSAStatus && <p className="text-red-500 text-xs mt-1">{errors.isFatherUSAStatus}</p>}
+
+      </div>
+)}
+<div>
+  <label className="text-sm font-medium">
+    Anne/Baba Hariç ABD'de Yaşayan Yakın Akrabanız Var mı?
+  </label>
+  <select
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.hasRelativeInUSA ? "border-red-500" : "border-gray-300"}`}
+    value={form.steps[7].hasRelativeInUSA || ""}
+    onChange={(e) => {
+      const value = e.target.value;
+      updateField(7, "hasRelativeInUSA", value);
+
+      if (value === "NO") {
+        updateField(7, "relativeCount", 0);
+        updateField(7, "relatives", []);
+      }
+    }}
+  >
+    <option value="">Seçiniz</option>
+    <option value="YES">Evet</option>
+    <option value="NO">Hayır</option>
+  </select>
+   {errors.hasRelativeInUSA && <p className="text-red-500 text-xs mt-1">{errors.hasRelativeInUSA}</p>}
+</div>
+
+
+
+{form.steps[7].hasRelativeInUSA === "YES" && (
+  <div>
+    <label className="text-sm font-medium">Kaç Kişi?</label>
+    <input
+      type="number"
+      min={1}
+      className="w-full mt-1 p-3 border rounded-xl"
+      value={form.steps[7].relativeCount || ""}
+      onChange={(e) => {
+        const count = Number(e.target.value);
+
+        updateField(7, "relativeCount", count);
+
+        const relativesArray = Array.from({ length: count }, (_, i) => ({
+          fullName: form.steps[7].relatives?.[i]?.fullName || "",
+          level: form.steps[7].relatives?.[i]?.level || "",
+          status: form.steps[7].relatives?.[i]?.status || ""
+        }));
+
+        updateField(7, "relatives", relativesArray);
+      }}
+    />
+  </div>
+)}
+{ form.steps[7].relativeCount > 0 && (
+ form.steps[7].relatives?.map((relative, index) => (
+  <div
+    key={index}
+    className="mt-4 p-4 border rounded-2xl shadow-sm bg-gray-50"
+  >
+    <h4 className="font-semibold mb-3">
+      {index + 1}. Yakın Bilgileri
+    </h4>
+
+    {/* Ad Soyad */}
+    <div className="mb-3">
+      <label className="text-sm font-medium">Ad Soyad</label>
+      <input
+        className="w-full mt-1 p-3 border rounded-xl"
+        value={relative.fullName}
+        onChange={(e) => {
+          const updated = [...form.steps[7].relatives];
+          updated[index].fullName = isMobile
+            ? e.target.value
+            : normalizeInput(e.target.value);
+          updateField(7, "relatives", updated);
+        }}
+        onBlur={(e) => {
+          if (isMobile) {
+            const updated = [...form.steps[7].relatives];
+            updated[index].fullName = normalizeInput(e.target.value);
+            updateField(7, "relatives", updated);
+          }
+        }}
+        placeholder="Ad Soyad"
+      />
+    </div>
+
+    {/* Yakınlık Derecesi */}
+    <div className="mb-3">
+      <label className="text-sm font-medium">Yakınlık Derecesi</label>
+      <select
+        className="w-full mt-1 p-3 border rounded-xl"
+        value={relative.level}
+        onChange={(e) => {
+          const updated = [...form.steps[7].relatives];
+          updated[index].level = e.target.value;
+          updateField(7, "relatives", updated);
+        }}
+      >
+        <option value="">Seçiniz</option>
+        <option value="SPOUSE">Eşi</option>
+        <option value="FIANCE">Nişanlısı</option>
+        <option value="CHILD">Çocuğu</option>
+        <option value="SIBLING">Kardeşi</option>
+      </select>
+    </div>
+
+    {/* Yasal Statü */}
+    <div>
+      <label className="text-sm font-medium">Yasal Statüsü</label>
+      <select
+        className="w-full mt-1 p-3 border rounded-xl"
+        value={relative.status}
+        onChange={(e) => {
+          const updated = [...form.steps[7].relatives];
+          updated[index].status = e.target.value;
+          updateField(7, "relatives", updated);
+        }}
+      >
+        <option value="">Seçiniz</option>
+        <option value="US_CITIZEN">ABD Vatandaşı</option>
+        <option value="U.S. LEGAL PERMANENT RESIDENT (LPR)">Yasal İkamet Sahibi</option>
+        <option value="NONIMMIGRANT">Göçmen Olmayan</option>
+        <option value="OTHER/I DON'T KNOW">Diğer/Bilmiyorum</option>
+      </select>
+    </div>
+  </div>
+)   
+
+))}
+<div>
+  <label className="text-sm font-medium">
+    ABD'de Yaşayan Başka Yakınınız Var mı?
+  </label>
+  <select
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.otherRelativeInUSA ? "border-red-500" : "border-gray-300"}`}
+    value={form.steps[7].otherRelativeInUSA || ""}
+    onChange={(e) => {
+      const value = e.target.value;
+      updateField(7, "otherRelativeInUSA", value);
+
+      
+    }}
+  >
+    <option value="">Seçiniz</option>
+    <option value="YES">Evet</option>
+    <option value="NO">Hayır</option>
+  </select>
+   {errors.otherRelativeInUSA && <p className="text-red-500 text-xs mt-1">{errors.otherRelativeInUSA}</p>}
+</div>
+    </div>
+    </section>
+)}
+
+
+
+
+{form.currentStep === 8 && (
+  <section>
+    <h3 className="font-semibold mb-3 text-lg">8.Bölüm</h3>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+{form.steps[1].maritalStatus === "MARRIED" && (
+    <>
+      <div>
+            <label className="text-sm font-medium">Eş Adı Soyadı</label>
+            <input
+              className="w-full mt-1 p-3 border rounded-xl"
+              value={form.steps[8].spouseFullName}
+              onChange={(e) =>
+                updateField(
+                  8,
+                  "spouseFullName",
+                  isMobile ? e.target.value : normalizeInput(e.target.value)
+                )
+              }
+              onBlur={(e) =>
+                isMobile &&
+                updateField(8, "spouseFullName", normalizeInput(e.target.value))
+              }
+            />
+          </div>
+
+         {form.steps[1].gender === "M" && (  
+          <div>
+            <label className="text-sm font-medium">Eşinizin Kızlık Soyadı</label>
+            <input
+              className="w-full mt-1 p-3 border rounded-xl"
+              value={form.steps[8].wifeMaidenName}
+              onChange={(e) =>
+                updateField(
+                  8,
+                  "wifeMaidenName",
+                  isMobile ? e.target.value : normalizeInput(e.target.value)
+                )
+              }
+              onBlur={(e) =>
+                isMobile &&
+                updateField(8, "wifeMaidenName", normalizeInput(e.target.value))
+              }
+            />
+          </div>)}  
+        
+          <div>
+            <label className="text-sm font-medium">Evlilik Tarihi</label>
+            <input
+              type="date"
+              max={new Date().toISOString().split("T")[0]}
+              className="w-full mt-1 p-3 border rounded-xl"
+              value={form.steps[8].marriageDate}
+              onChange={(e) => updateField(8, "marriageDate", e.target.value)}
+            />
+          </div>
+
+        
+
+          <div>
+            <label className="text-sm font-medium">Eş Doğum Tarihi</label>
+            <input
+              type="date"
+              max={new Date().toISOString().split("T")[0]}
+              className="w-full mt-1 p-3 border rounded-xl"
+              value={form.steps[8].spouseBirthDate}
+              onChange={(e) =>
+                updateField(8, "spouseBirthDate", e.target.value)
+              }
+            />
+          </div>
+
+<div>
+  <label className="text-sm font-medium">Eşinizin Uyruğu</label>
+
+  <select
+    name="spouseNationality"
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.spouseNationality ? "border-red-500" : "border-gray-300"}`}
+    value={form.steps[8].spouseNationality || ""}
+    onChange={(e) => {
+      if (isMobile) {
+        // Mobile: Normalizasyon YOK
+        updateField(8, "spouseNationality", e.target.value);
+      } else {
+        // Desktop: Normalizasyon VAR
+        updateField(8, "spouseNationality", (e.target.value));
+      }
+    }}
+   
+  >
+    <option value="">Uyruk Seçiniz</option>
+
+    {countryName.map((country) => (
+      <option
+        key={country.value}
+        value={country.value}   // 👈 VALUE = LABEL
+      >
+        {country.label}
+      </option>
+    ))}
+  </select>
+
+  {errors.spouseNationality && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.spouseNationality}
+    </p>
+  )}
+</div>
+
+
+
+{/* EŞ DOĞUM YERİ */}
+<div>
+  <label className="text-sm font-medium">Eş Doğum Yeri</label>
+  <input
+    className="w-full mt-1 p-3 border rounded-xl"
+    value={form.steps[8].spouseBirthPlace || ""}
+    onChange={(e) =>
+      updateField(
+        8,
+        "spouseBirthPlace",
+        isMobile ? e.target.value : normalizeInput(e.target.value)
+      )
+    }
+    onBlur={(e) =>
+      isMobile &&
+      updateField(8, "spouseBirthPlace", normalizeInput(e.target.value))
+    }
+  />
+</div>
+<div>
+  <label className="text-sm font-medium">Eşinizin Doğduğu Ülke</label>
+
+  <select
+    name="spouseBirthPlaceCountry"
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.spouseBirthPlaceCountry ? "border-red-500" : "border-gray-300"}`}
+    value={form.steps[8].spouseBirthPlaceCountry || ""}
+    onChange={(e) => {
+      if (isMobile) {
+        // Mobile: Normalizasyon YOK
+        updateField(8, "spouseBirthPlaceCountry", e.target.value);
+      } else {
+        // Desktop: Normalizasyon VAR
+        updateField(8, "spouseBirthPlaceCountry", (e.target.value));
+      }
+    }}
+   
+  >
+    <option value="">Seçiniz</option>
+
+    {countryName.map((country) => (
+      <option
+        key={country.value}
+        value={country.value}   // 👈 VALUE = LABEL
+      >
+        {country.label}
+      </option>
+    ))}
+  </select>
+
+  {errors.spouseBirthPlaceCountry && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.spouseBirthPlaceCountry}
+    </p>
+  )}
+</div>
+{/* EŞ MESLEĞİ */}
+<div>
+  <label className="text-sm font-medium">Eş Mesleği</label>
+  <input
+    className="w-full mt-1 p-3 border rounded-xl"
+    value={form.steps[1].spouseOccupation || ""}
+    onChange={(e) =>
+      updateField(
+        1,
+        "spouseOccupation",
+        isMobile ? e.target.value : normalizeInput(e.target.value)
+      )
+    }
+    onBlur={(e) =>
+      isMobile &&
+      updateField(1, "spouseOccupation", normalizeInput(e.target.value))
+    }
+  />
+</div>
+
+{/* EŞ İKAMET ADRESİ */}
+    <div>
+        <label className="text-sm font-medium">Eş Adresi</label>
+        <select
+          name="spouseAddress"
+           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.spouseAddress ? "border-red-500" : "border-gray-300"}`}
+
+          onChange={(e) => updateField(8, "spouseAddress", e.target.value)}
+        >
+          <option value="">Seçiniz</option>
+          <option value="Same as Home Address">Ev Adresi İle Aynı</option>
+          <option value="OTHER">Diğer</option>
+        </select>
+        {errors.spouseAddress && <p className="text-red-500 text-xs mt-1">{errors.spouseAddress}</p>}
+
+      </div>
+{form.steps[8].spouseAddress === "OTHER" && (
+  <>
+                           <div>
+        <label className="text-sm font-medium">Eşinizin Adresi</label>
+        <input
+          name="otherSpouseAddress"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.otherSpouseAddress ? "border-red-500" : "border-gray-300"}`}   
+          value={form.steps[3].otherSpouseAddress || ""}
+               onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "otherSpouseAddress", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "otherSpouseAddress", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(3, "otherSpouseAddress", normalizedValue);
+                }
+            }}
+          
+        />
+        {errors.otherSpouseAddress && <p className="text-red-500 text-xs mt-1">{errors.otherSpouseAddress}</p>}
+
+      </div>
+              <div>
+        <label className="text-sm font-medium">Eşinizin Yaşadığı Şehir</label>
+        <input
+          name="otherSpouseAddressCity"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.otherSpouseAddressCity ? "border-red-500" : "border-gray-300"}`}   
+          value={form.steps[3].otherSpouseAddressCity || ""}
+               onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "otherSpouseAddressCity", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "otherSpouseAddressCity", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(3, "otherSpouseAddressCity", normalizedValue);
+                }
+            }}
+          
+        />
+        {errors.otherSpouseAddressCity && <p className="text-red-500 text-xs mt-1">{errors.otherSpouseAddressCity}</p>}
+
+      </div>
+
+      <div>
+  <label className="text-sm font-medium">Eşinizin Yaşadığı Ülke</label>
+
+  <select
+    name="otherSpouseAddressCountry"
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.otherSpouseAddressCountry ? "border-red-500" : "border-gray-300"}`}
+    value={form.steps[3].otherSpouseAddressCountry || ""}
+    onChange={(e) => {
+      if (isMobile) {
+        // Mobile: Normalizasyon YOK
+        updateField(3, "otherSpouseAddressCountry", e.target.value);
+      } else {
+        // Desktop/Diğer: Normalizasyon VAR
+        updateField(3, "otherSpouseAddressCountry", (e.target.value));
+      }
+    }}
+   
+  >
+    <option value="">Seçiniz</option>
+
+    {countryName.map((country) => (
+      <option
+        key={country.value}
+        value={country.value}   // 👈 VALUE = LABEL
+      >
+        {country.label}
+      </option>
+    ))}
+  </select>
+
+  {errors.otherSpouseAddressCountry && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.otherSpouseAddressCountry}
+    </p>
+  )}
+</div>
+             <div>
+        <label className="text-sm font-medium">Eşinizin Posta Kodu</label>
+        <input
+          name="otherSpouseAddressPostCode"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.otherSpouseAddressPostCode ? "border-red-500" : "border-gray-300"}`}   
+          value={form.steps[3].otherSpouseAddressPostCode || ""}
+               onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "otherSpouseAddressPostCode", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "otherSpouseAddressPostCode", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(3, "otherSpouseAddressPostCode", normalizedValue);
+                }
+            }}
+          
+        />
+        {errors.otherSpouseAddressPostCode && <p className="text-red-500 text-xs mt-1">{errors.otherSpouseAddressPostCode}</p>}
+
+      </div>
+  
+  </>
+)}
+
+          {/* <div>
+            <label className="text-sm font-medium">
+              Başka evlilik yaptınız mı?
+            </label>
+            <select
+              className="w-full mt-1 p-3 border rounded-xl"
+              value={form.steps[1].otherMarriages}
+              onChange={(e) =>{
+                    const selectedValue = e.target.value;
+
+ updateField(1, "otherMarriages", e.target.value)
+ if (selectedValue === "HAYIR") {
+      updateField(1, "marriages", [
+        {
+          spouseFullName: "",
+          spouseBirthDate: "",
+          marriageStartDate: "",
+          marriageEndDate: ""
+        }
+      ]);
+    }
+              }
+               
+                
+              }
+            >
+              <option value="">SEÇİNİZ</option>
+              <option value="EVET">EVET</option>
+              <option value="HAYIR">HAYIR</option>
+            </select>
+          </div> */}
+        </>
+)}
+
+      {(
+        ["WIDOWED","DIVORCED"].includes(form.steps[1].maritalStatus)) && (
+     <>
+      <div className="md:col-span-2 ">
+            <h4 className="font-semibold">Eski Evlilik Bilgileri</h4>
+    
+          </div>
+      <div>
+            <label className="text-sm font-medium">Eski Eş Adı Soyadı</label>
+            <input
+              className="w-full mt-1 p-3 border rounded-xl"
+              value={form.steps[8].oldSpouseFullName}
+              onChange={(e) =>
+                updateField(
+                  8,
+                  "oldSpouseFullName",
+                  isMobile ? e.target.value : normalizeInput(e.target.value)
+                )
+              }
+              onBlur={(e) =>
+                isMobile &&
+                updateField(8, "oldSpouseFullName", normalizeInput(e.target.value))
+              }
+            />
+          </div>
+ <div>
+            <label className="text-sm font-medium">Eski Eş Doğum Tarihi</label>
+            <input
+              type="date"
+              max={new Date().toISOString().split("T")[0]}
+              className="w-full mt-1 p-3 border rounded-xl"
+              value={form.steps[8].oldSpouseBirthDate}
+              onChange={(e) =>
+                updateField(8, "oldSpouseBirthDate", e.target.value)
+              }
+            />
+          </div>
+     
+    <div>
+            <label className="text-sm font-medium">Eski Evlilik Başlama Tarihi</label>
+            <input
+              type="date"
+              max={new Date().toISOString().split("T")[0]}
+              className="w-full mt-1 p-3 border rounded-xl"
+              value={form.steps[8].oldMarriageDate}
+              onChange={(e) => updateField(8, "oldMarriageDate", e.target.value)}
+            />
+          </div>
+
+            <div>
+            <label className="text-sm font-medium">Eski Evlilik Bitiş Tarihi</label>
+            <input
+              type="date"
+              max={new Date().toISOString().split("T")[0]}
+              className="w-full mt-1 p-3 border rounded-xl"
+              value={form.steps[8].oldMarriageEndDate}
+              onChange={(e) => updateField(8, "oldMarriageEndDate", e.target.value)}
+            />
+          </div>
+
+         
+
+<div>
+  <label className="text-sm font-medium">Eski Eşinizin Uyruğu</label>
+
+  <select
+    name="oldSpouseNationality"
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.oldSpouseNationality ? "border-red-500" : "border-gray-300"}`}
+    value={form.steps[8].oldSpouseNationality || ""}
+    onChange={(e) => {
+      if (isMobile) {
+        // Mobile: Normalizasyon YOK
+        updateField(8, "oldSpouseNationality", e.target.value);
+      } else {
+        // Desktop: Normalizasyon VAR
+        updateField(8, "oldSpouseNationality", (e.target.value));
+      }
+    }}
+   
+  >
+    <option value="">Uyruk Seçiniz</option>
+
+    {countryName.map((country) => (
+      <option
+        key={country.value}
+        value={country.value}   // 👈 VALUE = LABEL
+      >
+        {country.label}
+      </option>
+    ))}
+  </select>
+
+  {errors.oldSpouseNationality && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.oldSpouseNationality}
+    </p>
+  )}
+</div>
+
+
+
+
+<div>
+  <label className="text-sm font-medium">Eski Eş Doğum Yeri</label>
+  <input
+    className="w-full mt-1 p-3 border rounded-xl"
+    value={form.steps[8].oldSpouseBirthPlace || ""}
+    onChange={(e) =>
+      updateField(
+        8,
+        "oldSpouseBirthPlace",
+        isMobile ? e.target.value : normalizeInput(e.target.value)
+      )
+    }
+    onBlur={(e) =>
+      isMobile &&
+      updateField(8, "oldSpouseBirthPlace", normalizeInput(e.target.value))
+    }
+  />
+</div>
+<div>
+  <label className="text-sm font-medium">Eski Eşinizin Doğduğu Ülke</label>
+
+  <select
+    name="oldSpouseBirthPlaceCountry"
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.oldSpouseBirthPlaceCountry ? "border-red-500" : "border-gray-300"}`}
+    value={form.steps[8].oldSpouseBirthPlaceCountry || ""}
+    onChange={(e) => {
+      if (isMobile) {
+        // Mobile: Normalizasyon YOK
+        updateField(8, "oldSpouseBirthPlaceCountry", e.target.value);
+      } else {
+        // Desktop: Normalizasyon VAR
+        updateField(8, "oldSpouseBirthPlaceCountry", (e.target.value));
+      }
+    }}
+   
+  >
+    <option value="">Seçiniz</option>
+
+    {countryName.map((country) => (
+      <option
+        key={country.value}
+        value={country.value}   // 👈 VALUE = LABEL
+      >
+        {country.label}
+      </option>
+    ))}
+  </select>
+
+  {errors.oldSpouseBirthPlaceCountry && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.oldSpouseBirthPlaceCountry}
+    </p>
+  )}
+</div>
+<div>
+  <label className="text-sm font-medium">Evliliğinizi Bitirdiğiniz Ülke</label>
+
+  <select
+    name="oldSpouseEndCountry"
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.oldSpouseEndCountry ? "border-red-500" : "border-gray-300"}`}
+    value={form.steps[8].oldSpouseEndCountry || ""}
+    onChange={(e) => {
+      if (isMobile) {
+        // Mobile: Normalizasyon YOK
+        updateField(8, "oldSpouseEndCountry", e.target.value);
+      } else {
+        // Desktop: Normalizasyon VAR
+        updateField(8, "oldSpouseEndCountry", (e.target.value));
+      }
+    }}
+   
+  >
+    <option value="">Seçiniz</option>
+
+    {countryName.map((country) => (
+      <option
+        key={country.value}
+        value={country.value}   // 👈 VALUE = LABEL
+      >
+        {country.label}
+      </option>
+    ))}
+  </select>
+
+  {errors.oldSpouseEndCountry && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.oldSpouseEndCountry}
+    </p>
+  )}
+</div>
+  <div className="md:col-span-2">
+        <label className="text-sm font-medium">Evliliğiniz Nasıl Sona Erdi?</label>
+        <textarea
+          name="oldSpouseInfo"
+          className="w-full resize-none  mt-1 p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          rows="4"
+          value={form.steps[8].oldSpouseInfo || ""}
+onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(8, "oldSpouseInfo", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(8, "oldSpouseInfo", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(8, "oldSpouseInfo", normalizedValue);
+                }
+            }}
+          placeholder="Eklemek istediğiniz bilgiler..."
+        ></textarea>
+      </div>
+
+
+
+     </>
+         
+    
+      )}
+
+    </div>
+    </section>
+)}
+
+
+
+
+
+
+
+
+
+
+
+
+{form.currentStep === 9 && (
+  <section>
+    <h3 className="font-semibold mb-3 text-lg">9.Bölüm</h3>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
       {/* Mesleğiniz */}
@@ -4798,16 +7562,19 @@ onChange={(e) => {
     name="occupation"
     className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
       ${errors.occupation ? "border-red-500" : "border-gray-300"}`}
-    value={form.steps[6].occupation || ""}
-    onChange={(e) => updateField(6, "occupation", e.target.value)}
+    value={form?.steps[9]?.occupation || ""}
+    onChange={(e) => updateField(9, "occupation", e.target.value)}
   >
-    <option value="">Seçiniz</option>
-    <option value="EV HANIMI">Ev Hanımı</option>
-    <option value="OGRENCI">Öğrenci</option>
-    <option value="EMEKLI">Emekli</option>
-    <option value="KAMU CALISANI">Kamu Çalışanı</option>
-    <option value="OZEL SEKTOR">Özel Sektör</option>
-    <option value="CALISMIYOR">Çalışmıyor</option>
+    <option value="">Meslek Seçiniz</option>
+
+    {occupations.map((occup) => (
+      <option 
+        key={occup.value}
+        value={occup.value}  
+      >
+        {occup.label}
+      </option>
+    ))}
   </select>
 
   {errors.occupation && (
@@ -4817,20 +7584,24 @@ onChange={(e) => {
 
 
       {/* İşyerinizin/Okul Adı */}
-      <div>
-        <label className="text-sm font-medium">İşyerinizin Tam Adı / Okul Adı</label>
+  {
+    (form?.steps[9]?.occupation !== "HOMEMAKER" && form?.steps[9]?.occupation !== "RETIRED"&& form?.steps[9]?.occupation !== "NOT EMPLOYED" ) && (
+<>
+{(form?.steps[9]?.occupation == "OTHER" ) && (
+   <div>
+        <label className="text-sm font-medium">Açıklama Yazınız</label>
         <input
-          name="workOrSchoolName"
+          name="otherJobDescription"
          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
-          ${errors.workOrSchoolName ? "border-red-500" : "border-gray-300"}`}
- value={form.steps[6].workOrSchoolName || ""}
+          ${errors.otherJobDescription ? "border-red-500" : "border-gray-300"}`}
+ value={form?.steps[9]?.otherJobDescription || ""}
            onChange={(e) => {
                 if (isMobile) {
                     // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(6, "workOrSchoolName", e.target.value);
+                    updateField(9, "otherJobDescription", e.target.value);
                 } else {
                     // Desktop/Diğer: Normalizasyon YAP
-                    updateField(6, "workOrSchoolName", normalizeInput(e.target.value));
+                    updateField(9, "otherJobDescription", normalizeInput(e.target.value));
                 }
             }}
             
@@ -4838,7 +7609,37 @@ onChange={(e) => {
             onBlur={(e) => {
                 if (isMobile) {
                     const normalizedValue = normalizeInput(e.target.value);
-                    updateField(6, "workOrSchoolName", normalizedValue);
+                    updateField(9, "otherJobDescription", normalizedValue);
+                }
+            }}
+        
+        />
+           {errors.otherJobDescription && <p className="text-red-500 text-xs mt-1">{errors.otherJobDescription}</p>}
+
+      </div>
+)}
+ <div>
+        <label className="text-sm font-medium">İşyerinizin Tam Adı / Okul Adı</label>
+        <input
+          name="workOrSchoolName"
+         className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.workOrSchoolName ? "border-red-500" : "border-gray-300"}`}
+ value={form?.steps[9]?.workOrSchoolName || ""}
+           onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(9, "workOrSchoolName", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(9, "workOrSchoolName", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(9, "workOrSchoolName", normalizedValue);
                 }
             }}
           placeholder="Örn: ABC Şirketi / XYZ Üniversitesi"
@@ -4847,81 +7648,20 @@ onChange={(e) => {
 
       </div>
 
-      {/* İşyeri Adresi */}
-      <div className="md:col-span-2">
-        <label className="text-sm font-medium">İşyeri / Okul Adresi (Posta Kodu, Mah., Sk.)</label>
+               <div>
+        <label className="text-sm font-medium">İş Yerinin/Okulun Adresi</label>
         <input
           name="workOrSchoolAddress"
           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
-          ${errors.workOrSchoolAddress ? "border-red-500" : "border-gray-300"}`}
-          value={form.steps[6].workOrSchoolAddress || ""}
-            onChange={(e) => {
+          ${errors.workOrSchoolAddress ? "border-red-500" : "border-gray-300"}`}   
+          value={form.steps[9].workOrSchoolAddress || ""}
+               onChange={(e) => {
                 if (isMobile) {
                     // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(6, "workOrSchoolAddress", e.target.value);
+                    updateField(9, "workOrSchoolAddress", e.target.value);
                 } else {
                     // Desktop/Diğer: Normalizasyon YAP
-                    updateField(6, "workOrSchoolAddress", normalizeAddressInput(e.target.value));
-                }
-            }}
-            
-            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
-            onBlur={(e) => {
-                if (isMobile) {
-                    const normalizedValue = normalizeAddressInput(e.target.value);
-                    updateField(6, "workOrSchoolAddress", normalizedValue);
-                }
-            }}
-          placeholder="Örn: Mahalle, Sokak, No, Posta Kodu"
-        />
-           {errors.workOrSchoolAddress && <p className="text-red-500 text-xs mt-1">{errors.workOrSchoolAddress}</p>}
-
-      </div>
-
-      {/* İşyeri Telefon */}
-      <div>
-        <label className="text-sm font-medium">İşyeri Telefon Numarası</label>
-        <input
-          name="workPhone"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
-          value={form.steps[6].workPhone || ""}
-          onChange={(e) => updateField(6, "workPhone", e.target.value)}
-          placeholder="Örn: +90 212 123 45 67"
-        />
-      </div>
-
-      {/* İşe Giriş Tarihi */}
-      <div>
-        <label className="text-sm font-medium">İşe Giriş Tarihiniz</label>
-        <input
-          type="date"
-          name="workStartDate"
-          max={new Date().toISOString().split("T")[0]}
-          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
-          ${errors.workStartDate ? "border-red-500" : "border-gray-300"}`}
-          value={form.steps[6].workStartDate || ""}
-          onChange={(e) => updateField(6, "workStartDate", e.target.value)}
-        />
-        {errors.workStartDate && <p className="text-red-500 text-xs mt-1">{errors.workStartDate}</p>}
-
-      </div>
-
-      {/* Aylık Gelir */}
-      <div>
-        <label className="text-sm font-medium">Aylık Geliriniz (Yan gelirler dahil)</label>
-        <input
-          name="monthlyIncome"
-           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
-          ${errors.monthlyIncome ? "border-red-500" : "border-gray-300"}`}
-
-          value={form.steps[6].monthlyIncome || ""}
-      onChange={(e) => {
-                if (isMobile) {
-                    // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(6, "monthlyIncome", e.target.value);
-                } else {
-                    // Desktop/Diğer: Normalizasyon YAP
-                    updateField(6, "monthlyIncome", normalizeInput(e.target.value));
+                    updateField(9, "workOrSchoolAddress", normalizeInput(e.target.value));
                 }
             }}
             
@@ -4929,14 +7669,140 @@ onChange={(e) => {
             onBlur={(e) => {
                 if (isMobile) {
                     const normalizedValue = normalizeInput(e.target.value);
-                    updateField(6, "monthlyIncome", normalizedValue);
+                    updateField(9, "workOrSchoolAddress", normalizedValue);
                 }
             }}
-          placeholder="Örn: 15.000 TL"
+          
         />
-        {errors.monthlyIncome && <p className="text-red-500 text-xs mt-1">{errors.monthlyIncome}</p>}
+        {errors.workOrSchoolAddress && <p className="text-red-500 text-xs mt-1">{errors.workOrSchoolAddress}</p>}
 
       </div>
+
+
+              <div>
+        <label className="text-sm font-medium">İş Yerinin/Okulun Bulunduğu Şehir</label>
+        <input
+          name="workOrSchoolCity"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.workOrSchoolCity ? "border-red-500" : "border-gray-300"}`}   
+          value={form.steps[9].workOrSchoolCity || ""}
+               onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(9, "workOrSchoolCity", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(9, "workOrSchoolCity", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(9, "workOrSchoolCity", normalizedValue);
+                }
+            }}
+          
+        />
+        {errors.workOrSchoolCity && <p className="text-red-500 text-xs mt-1">{errors.workOrSchoolCity}</p>}
+
+      </div>
+
+      <div>
+  <label className="text-sm font-medium">İş Yerinin/Okulun Bulunduğu Ülke</label>
+
+  <select
+    name="workOrSchoolCountry"
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.workOrSchoolCountry ? "border-red-500" : "border-gray-300"}`}
+    value={form.steps[9].workOrSchoolCountry || ""}
+    onChange={(e) => {
+      if (isMobile) {
+        // Mobile: Normalizasyon YOK
+        updateField(9, "workOrSchoolCountry", e.target.value);
+      } else {
+        // Desktop/Diğer: Normalizasyon VAR
+        updateField(9, "workOrSchoolCountry", (e.target.value));
+      }
+    }}
+   
+  >
+    <option value="">Seçiniz</option>
+
+    {countryName.map((country) => (
+      <option
+        key={country.value}
+        value={country.value}   // 👈 VALUE = LABEL
+      >
+        {country.label}
+      </option>
+    ))}
+  </select>
+
+  {errors.workOrSchoolCountry && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.workOrSchoolCountry}
+    </p>
+  )}
+</div>
+             <div>
+        <label className="text-sm font-medium">İş Yeri/Okul Posta Kodu</label>
+        <input
+          name="workOrSchoolPostCode"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.workOrSchoolPostCode ? "border-red-500" : "border-gray-300"}`}   
+          value={form.steps[9].workOrSchoolPostCode || ""}
+               onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(9, "workOrSchoolPostCode", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(9, "workOrSchoolPostCode", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(9, "workOrSchoolPostCode", normalizedValue);
+                }
+            }}
+          
+        />
+        {errors.workOrSchoolPostCode && <p className="text-red-500 text-xs mt-1">{errors.workOrSchoolPostCode}</p>}
+
+      </div>
+          <div>
+            <label className="text-sm font-medium">İş Yeri/Okul Telefon</label>
+            <input
+              name="workOrSchoolPhone"
+              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              value={form.steps[9]?.workOrSchoolPhone || ""}
+              onChange={(e) => updateField(9, "workOrSchoolPhone", e.target.value)}
+            />
+          </div>
+
+      {/* İşe Giriş Tarihi */}
+      <div>
+        <label className="text-sm font-medium">İşe/Okula Başlama Tarihiniz</label>
+        <input
+          type="date"
+          name="workStartDate"
+          max={new Date().toISOString().split("T")[0]}
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.workStartDate ? "border-red-500" : "border-gray-300"}`}
+          value={form?.steps[9]?.workStartDate || ""}
+          onChange={(e) => updateField(9, "workStartDate", e.target.value)}
+        />
+        {errors.workStartDate && <p className="text-red-500 text-xs mt-1">{errors.workStartDate}</p>}
+
+      </div>
+
+    
+
 
       {/* İş Tanımı & Ünvan */}
       <div className="md:col-span-2">
@@ -4946,14 +7812,14 @@ onChange={(e) => {
           className={`w-full resize-none mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
           ${errors.jobDescription ? "border-red-500" : "border-gray-300"}`}
 
-          value={form.steps[6].jobDescription || ""}
+          value={form?.steps[9]?.jobDescription || ""}
               onChange={(e) => {
                 if (isMobile) {
                     // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(6, "jobDescription", e.target.value);
+                    updateField(9, "jobDescription", e.target.value);
                 } else {
                     // Desktop/Diğer: Normalizasyon YAP
-                    updateField(6, "jobDescription", normalizeInput(e.target.value));
+                    updateField(9, "jobDescription", normalizeInput(e.target.value));
                 }
             }}
             
@@ -4961,7 +7827,7 @@ onChange={(e) => {
             onBlur={(e) => {
                 if (isMobile) {
                     const normalizedValue = normalizeInput(e.target.value);
-                    updateField(6, "jobDescription", normalizedValue);
+                    updateField(9, "jobDescription", normalizedValue);
                 }
             }}
           placeholder="Örn: Yazılım geliştirme, proje yönetimi, takım liderliği"
@@ -4971,21 +7837,112 @@ onChange={(e) => {
 
       </div>
 
-      {/* Önceki İşler (isteğe bağlı) */}
+</>
+    )
+  }   
+  
+{(form?.steps[9]?.occupation == "NOT EMPLOYED" ) && (
+   <div>
+        <label className="text-sm font-medium">Açıklama Yazınız</label>
+        <input
+          name="otherJobDescription"
+         className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.otherJobDescription ? "border-red-500" : "border-gray-300"}`}
+ value={form?.steps[9]?.otherJobDescription || ""}
+           onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(9, "otherJobDescription", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(9, "otherJobDescription", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(9, "otherJobDescription", normalizedValue);
+                }
+            }}
+        
+        />
+           {errors.otherJobDescription && <p className="text-red-500 text-xs mt-1">{errors.otherJobDescription}</p>}
+
+      </div>
+)}
+
+
+
+  {/* Aylık Gelir */}
+
+
+      <div>
+        <label className="text-sm font-medium">Aylık Geliriniz (Yan gelirler dahil)</label>
+        <input
+          name="monthlyIncome"
+           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.monthlyIncome ? "border-red-500" : "border-gray-300"}`}
+
+          value={form?.steps[9]?.monthlyIncome || ""}
+      onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(9, "monthlyIncome", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(9, "monthlyIncome", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(9, "monthlyIncome", normalizedValue);
+                }
+            }}
+          placeholder="Örn: 15.000 TL"
+        />
+        {errors.monthlyIncome && <p className="text-red-500 text-xs mt-1">{errors.monthlyIncome}</p>}
+
+      </div>
+
+    <div>
+        <label className="text-sm font-medium">
+         Daha Önce Başka İşte Çalıştınız mı?
+        </label>
+        <select
+          name="previousJobBoolean"
+          className={`w-full mt-1 p-3.5 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+            ${errors.previousJobBoolean ? "border-red-500" : "border-gray-300"}`}
+          value={form.steps[9].previousJobBoolean || ""}
+          onChange={(e) => updateField(9, "previousJobBoolean", e.target.value)}
+        >
+          <option value="">Seçiniz</option>
+          <option value="YES">EVET</option>
+          <option value="NO">HAYIR</option>
+        </select>
+        {errors.previousJobBoolean && <p className="text-red-500 text-xs mt-1">{errors.previousJobBoolean}</p>}
+      </div>
+
+
+{  form?.steps[9]?.previousJobBoolean === "YES" && ( 
   <div className="md:col-span-2 mt-8">
   <h4 className="font-semibold mb-3">Daha Önce Çalıştığınız Yerler</h4>
 
-  {form.steps[6].previousJobs?.map((job, index) => (
+  {form?.steps[9]?.previousJobs?.map((job, index) => (
     <div
       key={index}
       className="relative border p-4 rounded-xl mb-4 bg-gray-50"
     >
       {/* SİL BUTONU */}
-      {form.steps[6].previousJobs.length > 1 && (
+      {form?.steps[9]?.previousJobs.length > 0 && (
         <button
           type="button"
-          onClick={() => removeArrayItem(6, "previousJobs", index)}
-          className="absolute top-3 right-3 text-red-600 text-sm underline"
+          onClick={() => removeArrayItem(9, "previousJobs", index)}
+          className="absolute top-3 right-3 text-red-900 text-sm underline"
         >
           Sil
         </button>
@@ -5002,7 +7959,7 @@ onChange={(e) => {
             onChange={(e) => {
               const val = e.target.value;
               updateArrayField(
-                6,
+                9,
                 "previousJobs",
                 index,
                 "companyName",
@@ -5012,7 +7969,7 @@ onChange={(e) => {
             onBlur={(e) => {
               if (isMobile) {
                 updateArrayField(
-                  6,
+                  9,
                   "previousJobs",
                   index,
                   "companyName",
@@ -5024,7 +7981,7 @@ onChange={(e) => {
           />
         </div>
 
-        {/* ÜNVAN */}
+ 
         <div>
           <label className="text-sm font-medium">Ünvan</label>
           <input
@@ -5033,7 +7990,7 @@ onChange={(e) => {
             onChange={(e) => {
               const val = e.target.value;
               updateArrayField(
-                6,
+                9,
                 "previousJobs",
                 index,
                 "position",
@@ -5043,7 +8000,7 @@ onChange={(e) => {
             onBlur={(e) => {
               if (isMobile) {
                 updateArrayField(
-                  6,
+                  9,
                   "previousJobs",
                   index,
                   "position",
@@ -5056,35 +8013,168 @@ onChange={(e) => {
         </div>
 
         {/* İŞ YERİ ADRESİ */}
-        <div className="md:col-span-2">
-          <label className="text-sm font-medium">İş Yeri Adresi</label>
-          <input
-            className="w-full mt-1 p-3 border rounded-xl"
-            value={job.companyAddress || ""}
-            onChange={(e) => {
+
+
+               <div>
+        <label className="text-sm font-medium">İş Yerinin Adresi</label>
+        <input
+          name="previusWorkAddress"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.previusWorkAddress ? "border-red-500" : "border-gray-300"}`}   
+          value={job?.previusWorkAddress || ""}
+       onChange={(e) => {
               const val = e.target.value;
               updateArrayField(
-                6,
+                9,
                 "previousJobs",
                 index,
-                "companyAddress",
-                isMobile ? val : normalizeAddressInput(val)
+                "previusWorkAddress",
+                isMobile ? val : normalizeInput(val)
               );
             }}
             onBlur={(e) => {
               if (isMobile) {
                 updateArrayField(
-                  6,
+                  9,
                   "previousJobs",
                   index,
-                  "companyAddress",
-                  normalizeAddressInput(e.target.value)
+                  "previusWorkAddress",
+                  normalizeInput(e.target.value)
                 );
               }
             }}
-            placeholder="Açık adres"
-          />
-        </div>
+          
+        />
+        {errors.previusWorkAddress && <p className="text-red-500 text-xs mt-1">{errors.previusWorkAddress}</p>}
+
+      </div>
+
+
+              <div>
+        <label className="text-sm font-medium">İş Yerinin Bulunduğu Şehir</label>
+        <input
+          name="previusWorkCity"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.workOrSchoolCity ? "border-red-500" : "border-gray-300"}`}   
+   
+             value={job?.previusWorkCity || ""}
+       onChange={(e) => {
+              const val = e.target.value;
+              updateArrayField(
+                9,
+                "previousJobs",
+                index,
+                "previusWorkCity",
+                isMobile ? val : normalizeInput(val)
+              );
+            }}
+            onBlur={(e) => {
+              if (isMobile) {
+                updateArrayField(
+                  9,
+                  "previousJobs",
+                  index,
+                  "previusWorkCity",
+                  normalizeInput(e.target.value)
+                );
+              }
+            }}
+          
+        />
+        {errors.previusWorkCity && <p className="text-red-500 text-xs mt-1">{errors.previusWorkCity}</p>}
+
+      </div>
+
+      <div>
+  <label className="text-sm font-medium">İş Yerinin Bulunduğu Ülke</label>
+
+  <select
+    name="previusWorkCountry"
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.previusWorkCountry ? "border-red-500" : "border-gray-300"}`}
+    value={job?.previusWorkCountry || ""}
+       onChange={(e) => {
+              const val = e.target.value;
+              updateArrayField(
+                9,
+                "previousJobs",
+                index,
+                "previusWorkCountry",
+                isMobile ? val : normalizeInput(val)
+              );
+            }}
+   
+  >
+    <option value="">Seçiniz</option>
+
+    {countryName.map((country) => (
+      <option
+        key={country.value}
+        value={country.value}   // 👈 VALUE = LABEL
+      >
+        {country.label}
+      </option>
+    ))}
+  </select>
+
+  {errors.previusWorkCountry && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.previusWorkCountry}
+    </p>
+  )}
+</div>
+             <div>
+        <label className="text-sm font-medium">İş Yeri Posta Kodu</label>
+        <input
+          name="previusWorkPostCode"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.previusWorkPostCode ? "border-red-500" : "border-gray-300"}`}   
+          value={job?.previusWorkPostCode || ""}
+       onChange={(e) => {
+              const val = e.target.value;
+              updateArrayField(
+                9,
+                "previousJobs",
+                index,
+                "previusWorkPostCode",
+                isMobile ? val : normalizeInput(val)
+              );
+            }}
+            onBlur={(e) => {
+              if (isMobile) {
+                updateArrayField(
+                  9,
+                  "previousJobs",
+                  index,
+                  "previusWorkPostCode",
+                  normalizeInput(e.target.value)
+                );
+              }
+            }}
+          
+        />
+        {errors.previusWorkPostCode && <p className="text-red-500 text-xs mt-1">{errors.previusWorkPostCode}</p>}
+
+      </div>
+          <div>
+            <label className="text-sm font-medium">İş Yeri Telefon</label>
+            <input
+              name="previusWorkPhone"
+              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+             value={job?.previusWorkPhone || ""}
+              onChange={(e) => {
+              const val = e.target.value;
+              updateArrayField(
+                9,
+                "previousJobs",
+                index,
+                "previusWorkPhone",
+                isMobile ? val : normalizeInput(val)
+              );
+            }}
+            />
+          </div>
+
 
         {/* İŞE GİRİŞ TARİHİ */}
         <div>
@@ -5095,7 +8185,7 @@ onChange={(e) => {
             className="w-full mt-1 p-3 border rounded-xl"
             value={job.startDate || ""}
             onChange={(e) =>
-              updateArrayField(6, "previousJobs", index, "startDate", e.target.value)
+              updateArrayField(9, "previousJobs", index, "startDate", e.target.value)
             }
           />
         </div>
@@ -5111,10 +8201,82 @@ onChange={(e) => {
             max={new Date().toISOString().split("T")[0]}
             value={job.endDate || ""}
             onChange={(e) =>
-              updateArrayField(6, "previousJobs", index, "endDate", e.target.value)
+              updateArrayField(9, "previousJobs", index, "endDate", e.target.value)
             }
           />
         </div>
+
+{/* YONETİCİ BİLGİSİ */}
+              <div>
+        <label className="text-sm font-medium">Yönetici Adı Soyadı</label>
+        <input
+          name="previusSupervisorFullname"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.previusSupervisorFullname ? "border-red-500" : "border-gray-300"}`}   
+   
+             value={job?.previusSupervisorFullname || ""}
+       onChange={(e) => {
+              const val = e.target.value;
+              updateArrayField(
+                9,
+                "previousJobs",
+                index,
+                "previusSupervisorFullname",
+                isMobile ? val : normalizeInput(val)
+              );
+            }}
+            onBlur={(e) => {
+              if (isMobile) {
+                updateArrayField(
+                  9,
+                  "previousJobs",
+                  index,
+                  "previusSupervisorFullname",
+                  normalizeInput(e.target.value)
+                );
+              }
+            }}
+          
+        />
+        {errors.previusSupervisorFullname && <p className="text-red-500 text-xs mt-1">{errors.previusSupervisorFullname}</p>}
+
+      </div>
+
+{/* GOREV */}
+    <div className="md:col-span-2">
+        <label className="text-sm font-medium">Kısaca Görevinizi Yazınız</label>
+        <input
+          name="previusDuties"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.previusDuties ? "border-red-500" : "border-gray-300"}`}   
+   
+             value={job?.previusDuties || ""}
+       onChange={(e) => {
+              const val = e.target.value;
+              updateArrayField(
+                9,
+                "previousJobs",
+                index,
+                "previusDuties",
+                isMobile ? val : normalizeInput(val)
+              );
+            }}
+            onBlur={(e) => {
+              if (isMobile) {
+                updateArrayField(
+                  9,
+                  "previousJobs",
+                  index,
+                  "previusDuties",
+                  normalizeInput(e.target.value)
+                );
+              }
+            }}
+          
+        />
+        {errors.previusDuties && <p className="text-red-500 text-xs mt-1">{errors.previusDuties}</p>}
+
+      </div>
 
       </div>
     </div>
@@ -5123,9 +8285,9 @@ onChange={(e) => {
   {/* YENİ İŞ EKLE */}
   <button
     type="button"
-    className="px-4 py-2 bg-blue-600 text-white rounded-xl shadow"
+    className="px-4 py-2 bg-blue-600 text-white rounded-xl shadow cursor-pointer hover:bg-blue-700"
     onClick={() =>
-      addArrayItem(6, "previousJobs", {
+      addArrayItem(9, "previousJobs", {
         companyName: "",
         companyAddress: "",
         position: "",
@@ -5136,315 +8298,376 @@ onChange={(e) => {
   >
     + Eski İş Bilgisi Ekle
   </button>
+</div>)}
+ 
+
+ <div className="col-span-2">
+        <label className="text-sm font-medium">
+       Eğitim Durumunuzu Belirtiniz?
+        </label>
+        <select
+          name="educationBoolean"
+          className={`w-full mt-1 p-3.5 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+            ${errors.educationBoolean ? "border-red-500" : "border-gray-300"}`}
+           value={form.steps[9].educationBoolean || ""}
+  onChange={(e) => handleEducationChange(e.target.value)}
+        >
+          <option value="">Seçiniz</option>
+  <option value="PRIMARY_SCHOOL">İlkokul</option>
+<option value="MIDDLE_SCHOOL">Ortaokul</option>
+<option value="HIGH_SCHOOL">Lise</option>
+<option value="ASSOCIATE_DEGREE">Ön Lisans</option>
+<option value="BACHELOR_DEGREE">Lisans</option>
+<option value="MASTER_DEGREE">Yüksek Lisans</option>
+<option value="PHD">Doktora</option>
+        </select>
+        {errors.educationBoolean && <p className="text-red-500 text-xs mt-1">{errors.educationBoolean}</p>}
+      </div>
+{form.steps[9]?.previousEducations?.map((edu, index) => (
+  <div
+    key={index}
+    className="relative border border-gray-200 rounded-2xl bg-white shadow-sm p-6 mb-8"
+  >
+    {/* BAŞLIK */}
+    <h4 className="text-lg font-semibold text-gray-800 mb-6 border-b pb-2">
+      {EDUCATION_LABELS[edu.level]}
+    </h4>
+
+    {/* GRID */}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+      {/* OKUL ADI */}
+      <div className="md:col-span-2">
+        <label className="text-sm font-medium text-gray-700">
+          Kurumun Adı
+        </label>
+        <input
+          className="w-full mt-1 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+          value={edu.schoolName ?? ""}
+          onChange={(e) =>
+            updateArrayField(
+              9,
+              "previousEducations",
+              index,
+              "schoolName",
+              normalizeInput(e.target.value)
+            )
+          }
+        />
+      </div>
+
+      {/* ADRES */}
+      <div className="md:col-span-2">
+        <label className="text-sm font-medium text-gray-700">
+         Adresi
+        </label>
+        <input
+          className="w-full mt-1 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+          value={edu.address1 ?? ""}
+          onChange={(e) =>
+            updateArrayField(
+              9,
+              "previousEducations",
+              index,
+              "address1",
+              normalizeInput(e.target.value)
+            )
+          }
+        />
+      </div>
+
+      {/* ŞEHİR */}
+      <div>
+        <label className="text-sm font-medium text-gray-700">Şehir</label>
+        <input
+          className="w-full mt-1 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+          value={edu.city ?? ""}
+          onChange={(e) =>
+            updateArrayField(
+              9,
+              "previousEducations",
+              index,
+              "city",
+              normalizeInput(e.target.value)
+            )
+          }
+        />
+      </div>
+
+      {/* EYALET */}
+      <div>
+        <label className="text-sm font-medium text-gray-700">Eyalet</label>
+        <input
+          className="w-full mt-1 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+          value={edu.state ?? ""}
+          onChange={(e) =>
+            updateArrayField(
+              9,
+              "previousEducations",
+              index,
+              "state",
+              normalizeInput(e.target.value)
+            )
+          }
+        />
+      </div>
+
+      {/* POSTA KODU */}
+      <div>
+        <label className="text-sm font-medium text-gray-700">
+          Posta Kodu
+        </label>
+        <input
+          className="w-full mt-1 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+          value={edu.post_code ?? ""}
+          onChange={(e) =>
+            updateArrayField(
+              9,
+              "previousEducations",
+              index,
+              "post_code",
+              normalizeInput(e.target.value)
+            )
+          }
+        />
+      </div>
+
+      {/* ÜLKE */}
+      <div>
+        <label className="text-sm font-medium text-gray-700">Ülke</label>
+        <select
+          className="w-full mt-1 p-3 border rounded-xl bg-white focus:ring-2 focus:ring-blue-500 outline-none"
+          value={edu.country ?? ""}
+          onChange={(e) =>
+            updateArrayField(
+              9,
+              "previousEducations",
+              index,
+              "country",
+              e.target.value
+            )
+          }
+        >
+          <option value="">Seçiniz</option>
+          {countryName.map((c) => (
+            <option key={c.value} value={c.value}>
+              {c.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* BÖLÜM */}
+   <div className="md:col-span-2">
+  <label className="text-sm font-medium text-gray-700">
+    Bölüm / Program
+  </label>
+
+  {edu.level === "HIGH_SCHOOL" ? (
+    /* 🎓 SADECE LİSE → SELECT */
+    <select
+      className="w-full mt-1 p-3.5 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+      value={edu.department ?? ""}
+      onChange={(e) =>
+        updateArrayField(
+          9,
+          "previousEducations",
+          index,
+          "department",
+          e.target.value
+        )
+      }
+    >
+      <option value="">Seçiniz</option>
+      <option value="ACADEMIC">Akademik</option>
+      <option value="VOCATIONAL">Meslek</option>
+    </select>
+  ) : (
+    /* 🎓 ÜNİ / YL / DR → INPUT */
+    <input
+      type="text"
+      className="w-full mt-1 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+      value={edu.department ?? ""}
+      onChange={(e) =>
+        updateArrayField(
+          9,
+          "previousEducations",
+          index,
+          "department",
+          normalizeInput(e.target.value)
+        )
+      }
+      placeholder="Bölüm / Program"
+    />
+  )}
 </div>
 
-
-      {/* Lise */}
- <div className="md:col-span-2">
-  <h4 className="font-semibold mb-3">Lise Bilgileri</h4>
-
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-    {/* LİSE ADI */}
-    <div>
-      <label className="text-sm font-medium">Lise Adı</label>
-      <input
-        name="highSchoolName"
-        className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none
-          ${errors.highSchoolName ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
-        value={form.steps[6].highSchoolName || ""}
-        onChange={(e) => {
-          if (isMobile) {
-            updateField(6, "highSchoolName", e.target.value);
-          } else {
-            updateField(6, "highSchoolName", normalizeInput(e.target.value));
+      {/* TARİHLER */}
+      <div>
+        <label className="text-sm font-medium text-gray-700">
+          Başlangıç Tarihi
+        </label>
+        <input
+          type="date"
+          className="w-full mt-1 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+          value={edu.fromDate ?? ""}
+          onChange={(e) =>
+            updateArrayField(
+              9,
+              "previousEducations",
+              index,
+              "fromDate",
+              e.target.value
+            )
           }
-        }}
-        onBlur={(e) => {
-          if (isMobile) {
-            updateField(6, "highSchoolName", normalizeInput(e.target.value));
+        />
+      </div>
+
+      <div>
+        <label className="text-sm font-medium text-gray-700">
+          Bitiş Tarihi
+        </label>
+        <input
+          type="date"
+          className="w-full mt-1 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+          value={edu.toDate ?? ""}
+          onChange={(e) =>
+            updateArrayField(
+              9,
+              "previousEducations",
+              index,
+              "toDate",
+              e.target.value
+            )
           }
-        }}
-        placeholder="OKUL ADI"
-      />
-      {errors.highSchoolName && (
-        <p className="text-red-500 text-xs mt-1">{errors.highSchoolName}</p>
-      )}
-    </div>
+        />
+      </div>
 
-    {/* BAŞLANGIÇ TARİHİ */}
-    <div>
-      <label className="text-sm font-medium">Başlangıç Tarihi</label>
-      <input
-        type="date"
-        name="highSchoolStartDate"
-        className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none
-          ${errors.highSchoolStartDate ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
-        value={form.steps[6].highSchoolStartDate || ""}
-        onChange={(e) =>
-          updateField(6, "highSchoolStartDate", e.target.value)
-        }
-      />
-      {errors.highSchoolStartDate && (
-        <p className="text-red-500 text-xs mt-1">{errors.highSchoolStartDate}</p>
-      )}
     </div>
-
-    {/* MEZUNİYET TARİHİ */}
-    <div>
-      <label className="text-sm font-medium">Mezuniyet Tarihi</label>
-      <input
-        type="date"
-        name="highSchoolEndDate"
-        className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none
-          ${errors.highSchoolEndDate ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
-        value={form.steps[6].highSchoolEndDate || ""}
-        min={form.steps[6].highSchoolStartDate || undefined}
-        onChange={(e) =>
-          updateField(6, "highSchoolEndDate", e.target.value)
-        }
-      />
-      {errors.highSchoolEndDate && (
-        <p className="text-red-500 text-xs mt-1">{errors.highSchoolEndDate}</p>
-      )}
-    </div>
-
-    {/* OKUL ADRESİ */}
-    <div className="md:col-span-2">
-      <label className="text-sm font-medium">Okul Adresi</label>
-      <textarea
-        name="highSchoolAddress"
-        rows={2}
-        className={`w-full resize-none mt-1 p-3 border rounded-xl shadow-sm outline-none
-          ${errors.highSchoolAddress ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
-        value={form.steps[6].highSchoolAddress || ""}
-        onChange={(e) => {
-          if (isMobile) {
-            updateField(6, "highSchoolAddress", e.target.value);
-          } else {
-            updateField(6, "highSchoolAddress", normalizeAddressInput(e.target.value));
-          }
-        }}
-        onBlur={(e) => {
-          if (isMobile) {
-            updateField(6, "highSchoolAddress", normalizeAddressInput(e.target.value));
-          }
-        }}
-        placeholder="AÇIK ADRES"
-      />
-      {errors.highSchoolAddress && (
-        <p className="text-red-500 text-xs mt-1">{errors.highSchoolAddress}</p>
-      )}
-    </div>
-
   </div>
-</div>
+))}
 
-
-      {/* Üniversite */}
-   <div className="md:col-span-2 mt-6">
-  <h4 className="font-semibold mb-2">Üniversite Bilgileri</h4>
-
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-    {/* Üniversite Adı */}
-    <div>
-      <label className="text-sm font-medium">Üniversite Adı</label>
-      <input
-        className="w-full mt-1 p-3 border rounded-xl"
-        value={form.steps[6].universityName || ""}
-        onChange={(e) =>
-          updateField(
-            6,
-            "universityName",
-            isMobile ? e.target.value : normalizeInput(e.target.value)
-          )
-        }
-        onBlur={(e) =>
-          isMobile &&
-          updateField(6, "universityName", normalizeInput(e.target.value))
-        }
-        placeholder="Üniversite Adı"
-      />
-    </div>
-   <div>
-      <label className="text-sm font-medium">Böümü</label>
-      <input
-        className="w-full mt-1 p-3 border rounded-xl"
-        value={form.steps[6].universitySection || ""}
-        onChange={(e) =>
-          updateField(
-            6,
-            "universitySection",
-            isMobile ? e.target.value : normalizeInput(e.target.value)
-          )
-        }
-        onBlur={(e) =>
-          isMobile &&
-          updateField(6, "universitySection", normalizeInput(e.target.value))
-        }
-        placeholder="Üniversite Bölümü"
-      />
-    </div>
-    {/* Başlangıç Tarihi */}
-    <div>
-      <label className="text-sm font-medium">Başlangıç Tarihi</label>
-      <input
-        type="date"
-        className="w-full mt-1 p-3 border rounded-xl"
-        value={form.steps[6].universityStartDate || ""}
-        onChange={(e) =>
-          updateField(6, "universityStartDate", e.target.value)
-        }
-      />
-    </div>
-
-    {/* Mezuniyet Tarihi */}
-    <div>
-      <label className="text-sm font-medium">Mezuniyet Tarihi</label>
-      <input
-        type="date"
-        className="w-full mt-1 p-3 border rounded-xl"
-        value={form.steps[6].universityEndDate || ""}
-        onChange={(e) =>
-          updateField(6, "universityEndDate", e.target.value)
-        }
-      />
-    </div>
-
-    {/* Adres */}
-    <div className="md:col-span-2">
-      <label className="text-sm font-medium">Üniversite Adresi</label>
-      <textarea
-        rows={2}
-        className="w-full mt-1 p-3 border rounded-xl"
-        value={form.steps[6].universityAddress || ""}
-        onChange={(e) =>
-          updateField(
-            6,
-            "universityAddress",
-            isMobile ? e.target.value : normalizeAddressInput(e.target.value)
-          )
-        }
-        onBlur={(e) =>
-          isMobile &&
-          updateField(
-            6,
-            "universityAddress",
-            normalizeAddressInput(e.target.value)
-          )
-        }
-        placeholder="Açık adres"
-      />
-    </div>
-
-  </div>
-</div>
 
 
     </div>
   </section>
 )}
-{form.currentStep === 7 && (
+{form.currentStep === 10 && (
   <section>
-    <h3 className="font-semibold mb-3 text-lg">7. Bölüm</h3>
+    <h3 className="font-semibold mb-3 text-lg">10. Bölüm</h3>
 
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
 
       {/* LANGUAGES - ZORUNLU */}
-      <div>
-        <label className="text-sm font-medium">Bildiğiniz Diller *</label>
-        <input
-          name="languages"
-          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
-            ${errors.languages ? "border-red-500" : "border-gray-300"}`}
-          value={form.steps[7].languages || ""}
-              onChange={(e) => {
-                if (isMobile) {
-                    // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(7, "languages", e.target.value);
-                } else {
-                    // Desktop/Diğer: Normalizasyon YAP
-                    updateField(7, "languages", normalizeInput(e.target.value));
-                }
-            }}
-            
-            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
-            onBlur={(e) => {
-                if (isMobile) {
-                    const normalizedValue = normalizeInput(e.target.value);
-                    updateField(7, "languages", normalizedValue);
-                }
-            }}
-          placeholder="Örn: İngilizce, Almanca"
-        />
-        {errors.languages && (
-          <p className="text-red-500 text-xs mt-1">{errors.languages}</p>
-        )}
-      </div>
+<div className="relative md:col-span-2">
+  <label className="text-sm font-medium">
+    Bildiğiniz Diller 
+  </label>
+
+  {/* DROPDOWN HEADER */}
+  <button
+    type="button"
+    onClick={() => setLangOpen(!langOpen)}
+    className={`w-full mt-1 p-3 border rounded-xl text-left flex justify-between items-center
+      ${errors.languages ? "border-red-500" : "border-gray-300"}`}
+  >
+    <span className="text-sm text-gray-700">
+      {selectedLangs.length
+        ? selectedLangs
+            .map(v => languages_option?.find(l => l.value === v)?.label)
+            .join(", ")
+        : "Dil seçiniz"}
+    </span>
+
+    <span className="text-gray-500 text-sm">▼</span>
+  </button>
+
+  {/* DROPDOWN LIST */}
+  {langOpen && (
+    <div className="absolute z-20 w-full mt-2 max-h-64 overflow-y-auto bg-white border rounded-xl shadow-lg">
+      {languages_option.map(lang => {
+        const checked = selectedLangs.includes(lang.value) || false;
+
+        return (
+          <label
+            key={lang.value}
+            className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 cursor-pointer"
+          >
+            <input
+              type="checkbox"
+              checked={checked}
+              onChange={() => {
+                const newValue = toggleLanguage(
+                  form?.steps?.[10]?.languages || "",
+                  lang.value
+                );
+                updateField(10, "languages", newValue);
+              }}
+            />
+            <span className="text-sm">{lang.label}</span>
+          </label>
+        );
+      })}
+    </div>
+  )}
+
+  {errors.languages && (
+    <p className="text-red-500 text-xs mt-1">{errors.languages}</p>
+  )}
+</div>
+
+
 
       {/* GİDİLEN ÜLKELER */}
-      <div>
-        <label className="text-sm font-medium">Ziyaret Edilen Ülkeler</label>
-        <input
-          name="visitedCountries"
-          className="w-full mt-1 p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
-          value={form.steps[7].visitedCountries || ""}
-          onChange={(e) => {
-                if (isMobile) {
-                    // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(7, "visitedCountries", e.target.value);
-                } else {
-                    // Desktop/Diğer: Normalizasyon YAP
-                    updateField(7, "visitedCountries", normalizeInput(e.target.value));
-                }
-            }}
-            
-            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
-            onBlur={(e) => {
-                if (isMobile) {
-                    const normalizedValue = normalizeInput(e.target.value);
-                    updateField(7, "visitedCountries", normalizedValue);
-                }
-            }}
-          placeholder="Örn: Almanya, Portekiz"
-        />
-      </div>
+  <div className="col-span-2">
+  <label className="text-sm font-medium">Ziyaret Edilen Ülkeler</label>
 
+  <VisitedCountriesSelect
+    value={form?.steps?.[10]?.visitedCountries || ""}
+    onChange={(val) =>
+      updateField(10, "visitedCountries", val || "")
+    }
+  />
+</div>
+ 
       {/* ASKERLİK DURUMU */}
 <div>
   <label className="text-sm font-medium">Askerlik Durumu</label>
 
   <select
-    className="w-full mt-1 p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
-    value={form.steps[7].militaryStatus || ""}
+   className={`w-full mt-1 p-3 border rounded-xl text-left flex justify-between items-center
+      ${errors.militaryStatus ? "border-red-500" : "border-gray-300"}`}
+    value={form?.steps[10]?.militaryStatus || ""}
     onChange={(e) => {
       const value = e.target.value;
-      updateField(7, "militaryStatus", value);
+      updateField(10, "militaryStatus", value);
 
       // Temizlik
-      updateField(7, "militaryStartDate", "");
-      updateField(7, "militaryEndDate", "");
-      updateField(7, "exemptionReason", "");
-      updateField(7, "defermentDate", "");
+      updateField(10, "militaryStartDate", "");
+      updateField(10, "militaryEndDate", "");
+      updateField(10, "exemptionReason", "");
+      updateField(10, "defermentDate", "");
     }}
   >
     <option value="">Seçiniz</option>
-    <option value="YAPTI">Yapıldı</option>
-    <option value="YAPMADI">Yapmadı</option>
-    <option value="MUAF">Muaf</option>
+    <option value="YES">Yaptı</option>
+    <option value="NO">Yapmadı</option>
+   
   </select>
+   {errors.militaryStatus && (
+    <p className="text-red-500 text-xs mt-1">{errors.militaryStatus}</p>
+  )}
 </div>
-{form.steps[7].militaryStatus === "YAPTI" && (
+{form?.steps[10]?.militaryStatus === "YES" && (
   <div className=" grid grid-cols-1 md:grid-cols-2 gap-4">
     <div>
       <label className="text-sm font-medium">Başlangıç Tarihi</label>
       <input
         type="date"
         className="w-full mt-1 p-3 border rounded-xl"
-        value={form.steps[7].militaryStartDate || ""}
+        value={form?.steps[10]?.militaryStartDate || ""}
         onChange={(e) =>
-          updateField(7, "militaryStartDate", e.target.value)
+          updateField(10, "militaryStartDate", e.target.value)
         }
       />
     </div>
@@ -5454,22 +8677,22 @@ onChange={(e) => {
       <input
         type="date"
         className="w-full mt-1 p-3 border rounded-xl"
-        value={form.steps[7].militaryEndDate || ""}
+        value={form?.steps[10]?.militaryEndDate || ""}
         onChange={(e) =>
-          updateField(7, "militaryEndDate", e.target.value)
+          updateField(10, "militaryEndDate", e.target.value)
         }
       />
     </div>
   </div>
 )}
-{form.steps[7].militaryStatus === "MUAF" && (
+{form?.steps[10]?.militaryStatus === "MUAF" && (
   <div className="">
     <label className="text-sm font-medium">Muafiyet Nedeni</label>
     <select
       className="w-full mt-1 p-3 border rounded-xl"
-      value={form.steps[7].exemptionReason || ""}
+      value={form?.steps[10]?.exemptionReason || ""}
       onChange={(e) =>
-        updateField(7, "exemptionReason", e.target.value)
+        updateField(10, "exemptionReason", e.target.value)
       }
     >
       <option value="">Seçiniz</option>
@@ -5480,15 +8703,15 @@ onChange={(e) => {
     </select>
   </div>
 )}
-{form.steps[7].militaryStatus === "YAPMADI" && (
+{form?.steps[10]?.militaryStatus === "YAPMADI" && (
   <div className="">
     <label className="text-sm font-medium">Tecil Tarihi</label>
     <input
       type="date"
       className="w-full mt-1 p-3 border rounded-xl"
-      value={form.steps[7].defermentDate || ""}
+      value={form?.steps[10]?.defermentDate || ""}
       onChange={(e) =>
-        updateField(7, "defermentDate", e.target.value)
+        updateField(10, "defermentDate", e.target.value)
       }
     />
   </div>
@@ -5502,14 +8725,14 @@ onChange={(e) => {
           name="additionalInfo"
           className="w-full resize-none  mt-1 p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
           rows="4"
-          value={form.steps[7].additionalInfo || ""}
+          value={form?.steps[10]?.additionalInfo || ""}
 onChange={(e) => {
                 if (isMobile) {
                     // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(7, "additionalInfo", e.target.value);
+                    updateField(10, "additionalInfo", e.target.value);
                 } else {
                     // Desktop/Diğer: Normalizasyon YAP
-                    updateField(7, "additionalInfo", normalizeInput(e.target.value));
+                    updateField(10, "additionalInfo", normalizeInput(e.target.value));
                 }
             }}
             
@@ -5517,7 +8740,7 @@ onChange={(e) => {
             onBlur={(e) => {
                 if (isMobile) {
                     const normalizedValue = normalizeInput(e.target.value);
-                    updateField(7, "additionalInfo", normalizedValue);
+                    updateField(10, "additionalInfo", normalizedValue);
                 }
             }}
           placeholder="Eklemek istediğiniz bilgiler..."
@@ -5528,9 +8751,9 @@ onChange={(e) => {
   </section>
 )}
 
-{form.currentStep === 8 && (
+{form.currentStep === 11 && (
   <section>
-    <h3 className="font-semibold mb-3 text-lg">8. Bölüm</h3>
+    <h3 className="font-semibold mb-3 text-lg">11. Bölüm</h3>
 
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
@@ -5544,7 +8767,7 @@ onChange={(e) => {
           className="w-48 md:w-60 h-48 md:h-60 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center cursor-pointer hover:border-blue-500 relative transition-colors"
           onClick={() => document.getElementById("passportFileInput").click()}
         >
-          {!form.steps[8].passportFile ? (
+          {!form.steps[11].passportFile ? (
             <span className="text-gray-400 text-center px-2">Dosya seçmek için tıklayın</span>
           ) : (
             <>
@@ -5558,7 +8781,7 @@ onChange={(e) => {
                 title="Sil"
                 onClick={(e) => {
                   e.stopPropagation();
-                  updateFileField(8, "passportFile", null);
+                  updateFileField(11, "passportFile", null);
                 }}
                 className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-7 h-7 flex items-center justify-center text-xs hover:bg-red-700"
               >
@@ -5572,13 +8795,13 @@ onChange={(e) => {
             id="passportFileInput"
             accept="image/jpeg, image/png"
             className="hidden"
-            onChange={(e) => updateFileField(8, "passportFile", e.target.files[0])}
+            onChange={(e) => updateFileField(11, "passportFile", e.target.files[0])}
           />
         </div>
 
-        {form.steps[8].passportFile && (
-          <p className="mt-2 text-sm text-gray-700 truncate w-48 md:w-70 text-center">
-            {form.steps[8].passportFile.name}
+        {form.steps[11].passportFile && (
+          <p className="mt-2 text-sm text-gray-700 truncate w-49 md:w-70 text-center">
+            {form.steps[11].passportFile.name}
           </p>
         )}
       </div>
@@ -5593,7 +8816,7 @@ onChange={(e) => {
           className="w-48 md:w-60 h-48 md:h-60 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center cursor-pointer hover:border-blue-500 relative transition-colors"
           onClick={() => document.getElementById("photoFileInput").click()}
         >
-          {!form.steps[8].photoFile ? (
+          {!form?.steps[11]?.photoFile ? (
             <span className="text-gray-400 text-center px-2">Dosya seçmek için tıklayın</span>
           ) : (
             <>
@@ -5608,7 +8831,7 @@ onChange={(e) => {
                 title="Sil"
                 onClick={(e) => {
                   e.stopPropagation();
-                  updateFileField(8, "photoFile", null);
+                  updateFileField(11, "photoFile", null);
                 }}
                 className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600"
               >
@@ -5622,13 +8845,13 @@ onChange={(e) => {
             id="photoFileInput"
             accept="image/jpeg,image/png"
             className="hidden"
-            onChange={(e) => updateFileField(8, "photoFile", e.target.files[0])}
+            onChange={(e) => updateFileField(11, "photoFile", e.target.files[0])}
           />
         </div>
 
-        {form.steps[8].photoFile && (
+        {form?.steps[11]?.photoFile && (
           <p className="mt-2 text-sm text-gray-600 truncate w-48 md:w-60 text-center">
-            {form.steps[8].photoFile.name}
+            {form?.steps[11]?.photoFile.name}
           </p>
         )}
       </div>
@@ -5638,7 +8861,7 @@ onChange={(e) => {
 
           {/* Navigation */}
 <div className="flex items-center justify-between mt-6">
-  {form.currentStep < 8 && (
+  {form.currentStep < 11 && (
     <div className="flex items-center gap-3">
       <button
         type="button"
@@ -5660,7 +8883,7 @@ onChange={(e) => {
     </div>
   )}
 
-  {form.currentStep >= 8 && validateStep(8, form) && (
+  {form.currentStep >= 11 && validateStep(11, form) && (
     <div className="flex flex-col gap-4 w-full">
  {!resMessage && (<div className="flex items-center gap-3">
   <input
@@ -5770,3 +8993,4 @@ onChange={(e) => {
   );
 }
 
+ 

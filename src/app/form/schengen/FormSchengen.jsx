@@ -198,8 +198,7 @@ const handleSubmit = async () => {
 
 async function sendForm(payload) {
   const res = await fetch(process.env.NEXT_PUBLIC_SUBMIT_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
+      method: "POST",
     body: JSON.stringify(payload),
     duplex: "half",
   });
