@@ -311,7 +311,7 @@ let h2 = drawField("T.C. Kimlik No", s(1).tcId || "-", false, CONTENT_WIDTH / 2)
 currentY -= Math.max(h1, h2) + 10;
 
 // Uyruk
-h1 = drawField("Uyruğu", s(1).natinolity || "-", false, 0);
+h1 = drawField("Uyruğu", s(1).nationality || "-", false, 0);
 currentY -= h1 + 10;
 
 // Diğer vatandaşlık
@@ -1598,7 +1598,7 @@ const textBody = `
 Ad Soyad: ${f.steps[1].fullName || "-"}
 T.C. Kimlik No: ${f.steps[1].tcId || "-"}
 
-Uyruğu: ${f.steps[1].natinolity || "-"}
+Uyruğu: ${f.steps[1].nationality || "-"}
 Başka Ülke Vatandaşlığı: ${f.steps[1].other_nationality || "-"}
 
 ${
@@ -2067,7 +2067,7 @@ const htmlBody = `
     <tr><th style="background-color:#e0e0e0;">Ad Soyad</th><td>${s1.fullName || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">T.C. Kimlik No</th><td>${s1.tcId || "-"}</td></tr>
 
-    <tr><th style="background-color:#e0e0e0;">Uyruğu</th><td>${s1.natinolity || "-"}</td></tr>
+    <tr><th style="background-color:#e0e0e0;">Uyruğu</th><td>${s1.nationality || "-"}</td></tr>
     <tr><th style="background-color:#e0e0e0;">Başka Ülke Vatandaşlığı</th><td>${s1.other_nationality || "-"}</td></tr>
 
     ${

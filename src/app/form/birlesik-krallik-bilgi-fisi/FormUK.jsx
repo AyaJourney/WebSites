@@ -18,7 +18,7 @@ const defaultForm = {
     1: {
       tcId:"",      
       fullName: "",
-      natinolity:"",
+      nationality:"",
       other_nationality:"",
       other_nationality_country:"",
       other_nationality_start_date:"",
@@ -219,7 +219,14 @@ function readFromLocal() {
 }
 
 
-
+function clearDs160Storage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(STORAGE_METHOD_KEY);
+  } catch (e) {
+    // sessiz geç
+  }
+}
 
 
 
@@ -241,10 +248,16 @@ useEffect(() => {
         }
     }, []);
     const getTravelCardCount = (value) => {
-  if (value === "BIR KEZ") return 1;
-  if (value === "2-5 KEZ" || value === "6 VE UZERI") return 2;
+  if (value === "1 KEZ") return 1;
+  if (value === "2 KEZ") return 2;
+  if (value === "3 KEZ") return 3;
+  if (value === "4 KEZ") return 4;
+  if (value === "5 KEZ") return 5;
+
+  if (value === "6 VE UZERI") return 5;
   return 0;
 };
+
 function base64ToBlob(base64, mimeType = "image/jpeg") {
   const byteString = atob(base64.split(",")[1] || base64);
   const ab = new ArrayBuffer(byteString.length);
@@ -367,7 +380,7 @@ const requiredFields = {
   6: ["passportFile","photoFile"],
 };
 
-
+console.log(form, "form")
 
 const validateStep = (step, formData) => {
   const fields = requiredFields[step] || [];
@@ -444,52 +457,51 @@ const updateField = (step, field, value) => {
     const updatedSteps = {
       ...prev.steps,
       [step]: {
-        ...prev.steps[step],
+        ...(prev.steps?.[step] || {}), // 🔥 KRİTİK SATIR
         [field]: value,
       },
     };
 
+    if (step === 1) {
+      const s = updatedSteps[1];
 
-if (step === 1) {
-  const s = updatedSteps[1];
+      const mahalle = normalizeWithSuffix(s.home_neighborhood, "MAHALLESİ");
+      const cadde = normalizeWithSuffix(s.home_street, "CADDE");
+      const sokak = normalizeWithSuffix(s.home_avenue, "SOKAK");
 
-  const mahalle = normalizeWithSuffix(s.home_neighborhood, "MAHALLESİ");
-  const cadde = normalizeWithSuffix(s.home_street, "CADDE");
-  const sokak = normalizeWithSuffix(s.home_avenue, "SOKAK");
+      const binaNo = s.home_building_no
+        ? `APT NO: ${normalizeAddressPart(s.home_building_no)}`
+        : "";
 
-  const binaNo = s.home_building_no
-    ? `APT NO: ${normalizeAddressPart(s.home_building_no)}`
-    : "";
+      const daireNo = s.home_apartment_no
+        ? `DAİRE NO: ${normalizeAddressPart(s.home_apartment_no)}`
+        : "";
 
-  const daireNo = s.home_apartment_no
-    ? `DAİRE NO: ${normalizeAddressPart(s.home_apartment_no)}`
-    : "";
+      const ilce = s.home_district
+        ? normalizeAddressPart(s.home_district)
+        : "";
 
-  const ilce = s.home_district
-    ? normalizeAddressPart(s.home_district)
-    : "";
+      const il = s.home_city
+        ? normalizeAddressPart(s.home_city)
+        : "";
 
-  const il = s.home_city
-    ? normalizeAddressPart(s.home_city)
-    : "";
+      const addressParts = [
+        mahalle,
+        cadde,
+        sokak,
+        binaNo,
+        daireNo,
+        ilce,
+        il,
+      ].filter(Boolean);
 
-  const addressParts = [
-    mahalle,
-    cadde,
-    sokak,
-    binaNo,
-    daireNo,
-    ilce,
-    il,
-  ].filter(Boolean);
-
-  updatedSteps[1].home_address = addressParts.join(" ");
-}
-
+      updatedSteps[1].home_address = addressParts.join(" ");
+    }
 
     return { ...prev, steps: updatedSteps };
   });
 };
+
 const updateFileField = async (step, key, file) => {
   if (!file) {
     setForm(prev => ({
@@ -999,15 +1011,15 @@ function extractMonthsFromDuration(value) {
   </label>
 
   <select
-    name="natinolity"
+    name="nationality"
     className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
       ${
-        errors.natinolity
+        errors.nationality
           ? "border-red-500"
           : "border-gray-300 focus:ring-2 focus:ring-blue-500"
       }`}
-    value={form.steps[1].natinolity || ""}
-    onChange={(e) => updateField(1, "natinolity", e.target.value)}
+    value={form.steps[1].nationality || ""}
+    onChange={(e) => updateField(1, "nationality", e.target.value)}
   >
     <option value="">Seçiniz</option>
 
@@ -1018,8 +1030,8 @@ function extractMonthsFromDuration(value) {
     ))}
   </select>
 
-  {errors.natinolity && (
-    <p className="text-red-500 text-xs mt-1">{errors.natinolity}</p>
+  {errors.nationality && (
+    <p className="text-red-500 text-xs mt-1">{errors.nationality}</p>
   )}
 </div>
 
@@ -3907,17 +3919,31 @@ onBlur={(e) => {
       </div>
 
       {/* Uyruğu */}
-      <div>
-        <label className="text-sm font-medium">Uyruğu</label>
-        <input
-          name="uk_family_nationality"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
-          value={form.steps[5].uk_family_nationality || ""}
-          onChange={(e) =>
-            updateField(5, "uk_family_nationality", isMobile ? e.target.value : normalizeInput(e.target.value))
-          }
-        />
-      </div>
+
+<div>
+  <label className="text-sm font-medium">Uyruğu</label>
+
+  <select
+    name="uk_family_nationality"
+    className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+    value={form.steps[5].uk_family_nationality || ""}
+    onChange={(e) =>
+      updateField(5, "uk_family_nationality", e.target.value)
+    }
+  >
+    <option value="">Seçiniz</option>
+
+    {allCountries.map((country) => (
+      <option key={country.value} value={country.value}>
+        {country.label}
+      </option>
+    ))}
+  </select>
+</div>
+
+
+
+
 
       {/* Yasal Durumu */}
       <div>
@@ -4187,8 +4213,12 @@ Avustralya, Kanada, Yeni Zelanda, Amerika, İsviçre, Schengen Ülkelerini Son 1
 >
   <option value="">Seçiniz</option>
   <option value="HIC">HİÇ</option>
-  <option value="BIR KEZ">BİR KEZ</option>
-  <option value="2-5 KEZ">2-5 KEZ</option>
+  <option value="1 KEZ">1 KEZ</option>
+  <option value="2 KEZ">2 KEZ</option>
+  <option value="3 KEZ">3 KEZ</option>
+  <option value="4 KEZ">4 KEZ</option>
+  <option value="5 KEZ">5 KEZ</option>
+
   <option value="6 VE UZERI">6 VE ÜZERİ</option>
 
 </select>
@@ -4897,7 +4927,12 @@ Avustralya, Kanada, Yeni Zelanda, Amerika, İsviçre, Schengen Ülkelerini Son 1
     <h2 className="text-xl font-bold text-gray-800 mb-6">
       Formunuz başarılı şekilde gönderilmiştir.
     </h2>
-    <Link href="/">   <button className="bg-white text-gray-700 cursor-pointer mt-5 border border-blue-300 px-4 py-2 rounded-3xl transition duration-300 hover:text-blue-500 hover:bg-gray-100">
+    <Link href="/">
+     <button 
+     onClick={() => {
+    clearDs160Storage();
+    
+  }} className="bg-white text-gray-700 cursor-pointer mt-5 border border-blue-300 px-4 py-2 rounded-3xl transition duration-300 hover:text-blue-500 hover:bg-gray-100">
     Ana Sayfa
     </button>
     </Link>

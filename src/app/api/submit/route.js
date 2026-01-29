@@ -14,31 +14,38 @@ if (!fs.existsSync(FAILED_DIR)) fs.mkdirSync(FAILED_DIR)
 /* ======================================================
    CRM'E GÖNDER (SADECE TAŞIYICI)
    ====================================================== */
-async function sendToCrm(crmForm, meta = {}) {
+/* ======================================================
+   CRM'E GÖNDER (TYPE-BASED PAYLOAD)
+   ====================================================== */
+async function sendToCrm({ type, crmForm, rawData, meta }) {
   const baseUrl = process.env.NEXT_PUBLIC_CRM_PUBLIC_URL;
-  const url = baseUrl
-    ? baseUrl.replace(/\/$/, "") + "/api/public/visa-form"
-    : null;
+  if (!baseUrl) {
+    throw new Error("sendToCrm: CRM URL missing");
+  }
 
-  if (!url) {
-    fs.appendFileSync(
-      LOG_FILE,
-      `${new Date().toISOString()} - [CRM] ERROR CRM URL missing\n`
-    );
-    return false;
+  const url =
+    baseUrl.replace(/\/$/, "") + "/api/public/visa-form";
+
+  // 🔥 TYPE'A GÖRE PAYLOAD
+  const payload = {
+    visa_type: type,
+    name: meta?.name || "Web Form",
+    email: meta?.email ?? null,
+    phone: meta?.phone ?? null,
+  };
+
+  if (type === "ds-160") {
+    if (!crmForm || !crmForm.steps) {
+      throw new Error("sendToCrm: DS-160 crmForm missing");
+    }
+
+    payload.form_data = crmForm;
+  } else {
+    // ✅ UK / Schengen / Canada → RAW DATA
+    payload.data = rawData;
   }
 
   try {
-    const payload = {
-      visa_type: meta.type || "unknown",
-      name: meta.name || "Web Form",
-      email: meta.email ?? null,
-      phone: meta.phone ?? null,
-
-      // 🔥 ASIL OLAY
-      form_data: crmForm,
-    };
-
     const res = await fetch(url, {
       method: "POST",
       headers: {
@@ -52,18 +59,19 @@ async function sendToCrm(crmForm, meta = {}) {
 
     fs.appendFileSync(
       LOG_FILE,
-      `${new Date().toISOString()} - [CRM] POST status=${res.status} response=${text}\n`
+      `${new Date().toISOString()} - [CRM][${type}] status=${res.status} response=${text}\n`
     );
 
     return res.ok;
   } catch (err) {
     fs.appendFileSync(
       LOG_FILE,
-      `${new Date().toISOString()} - [CRM] ERROR ${err.message}\n`
+      `${new Date().toISOString()} - [CRM][${type}] ERROR ${err.message}\n`
     );
-    return false;
+    throw err;
   }
 }
+
 
 
 /* ======================================================
@@ -151,17 +159,16 @@ export async function POST(request) {
     );
 
     // 🔥 CRM SADECE crmMap ÜRÜNÜNÜ ALIR
- sendToCrm(crmForm, {
-      type: webForm.type,
-      name: webForm.name || webForm.fullName,
-      email: webForm.email,
-      phone: webForm.phone,
-    }).catch(err => {
-      fs.appendFileSync(
-        LOG_FILE,
-        `${new Date().toISOString()} - sendToCrm error: ${err.message}\n`
-      )
-    })
+await sendToCrm({
+  type: webForm.type,
+  crmForm,        // sadece DS-160 için
+  rawData: webForm, // UK / diğerleri için
+  meta: {
+    name: webForm.name || webForm.fullName,
+    email: webForm.email,
+    phone: webForm.phone,
+  },
+});
 
     // 🔥 Web API’ye gönder (fire & forget)
     sendToApi(
