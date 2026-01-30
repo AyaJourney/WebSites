@@ -3,8 +3,22 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import data from "@/helper/educationPrograms.json";
+import PosterModal from "./modal/PosterModal";
 
 export default function EducationPage() {
+const [isModalOpen, setIsModalOpen] = useState(false);
+const [slide, setSlide] = useState(0);
+
+const posterImages = [
+  "/afis/1.webp",
+  "/afis/2.webp",
+  "/afis/3.webp",
+  "/afis/4.webp",
+  "/afis/5.webp",
+  "/afis/6.webp",
+  "/afis/7.webp",
+  "/afis/8.webp",
+];
   const programs = data.programs ?? [];
 
   const [active, setActive] = useState(() =>
@@ -110,39 +124,61 @@ export default function EducationPage() {
             </p>
 
           <div className="space-y-6">
-  {current.sections.map((sec, i) => {
-    const isErasmusDocs =
-      sec.title === "Erasmus Vizesi İçin Gerekli Evraklar";
+{current.sections.map((sec, i) => {
+  const isErasmusDocs =
+    sec.title === "Erasmus Vizesi İçin Gerekli Evraklar";
 
-    const items = isErasmusDocs
-      ? sec.content.split(",").map((item) => item.trim())
-      : [];
+  const isOpenPositions =
+    sec.title === "Açık Pozisyonlar";
 
-    return (
-      <div
-        key={i}
-        className="edu-animate edu-fade-up relative rounded-2xl bg-[#f9fafb] p-8 border border-gray-200 transition-all duration-300 hover:shadow-md hakkimizda-hover-fill hakkimizda-scale-init"
-      >
-        <h3 className="font-semibold text-xl mb-4">
-          {sec.title}
-        </h3>
+  const items = isErasmusDocs
+    ? sec.content.split(",").map((item) => item.trim())
+    : [];
 
-        {isErasmusDocs ? (
-          <ul className="space-y-2 text-sm text-gray-700 list-disc pl-5 text-justify">
-            {items.map((item, idx) => (
-              <li key={idx} className="leading-relaxed">
-                {item}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-gray-700 leading-relaxed text-sm">
-            {sec.content}
-          </p>
-        )}
-      </div>
-    );
-  })}
+  return (
+    <div
+      key={i}
+      className="edu-animate edu-fade-up relative rounded-2xl bg-[#f9fafb] p-8 border border-gray-200 transition-all duration-300 hover:shadow-md hakkimizda-hover-fill hakkimizda-scale-init"
+    >
+      <h3 className="font-semibold text-xl mb-4">
+        {sec.title}
+      </h3>
+
+      {/* ERASMUS EVRAKLAR */}
+      {isErasmusDocs && (
+        <ul className="space-y-2 text-sm text-gray-700 list-disc pl-5 text-justify">
+          {items.map((item, idx) => (
+            <li key={idx} className="leading-relaxed">
+              {item}
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {/* AÇIK POZİSYONLAR */}
+      {isOpenPositions && (
+        <p className="text-gray-700 leading-relaxed text-sm">
+          Mevcut açık pozisyonları görmek için{" "}
+         <span
+  onClick={() => setIsModalOpen(true)}
+  className="underline cursor-pointer font-medium text-blue-600 hover:text-blue-800 transition relative z-10 pointer-events-auto"
+>
+  tıklayınız
+</span>
+          
+        </p>
+      )}
+
+      {/* NORMAL CONTENT */}
+      {!isErasmusDocs && !isOpenPositions && (
+        <p className="text-gray-700 leading-relaxed text-sm">
+          {sec.content}
+        </p>
+      )}
+    </div>
+  );
+})}
+
 </div>
 
           </div>
@@ -162,8 +198,17 @@ export default function EducationPage() {
               />
             </div>
           </div>
+          <PosterModal
+  isOpen={isModalOpen}
+  onClose={() => setIsModalOpen(false)}
+  images={posterImages}
+  title="Açık Pozisyonlar"
+  slide={slide}
+  setSlide={setSlide}
+/>
         </section>
       )}
+
 
       {/* SEO SCHEMA */}
       <script
@@ -189,3 +234,4 @@ export default function EducationPage() {
     </main>
   );
 }
+

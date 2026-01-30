@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import "../globals.css";
+import PosterModal from "./modal/PosterModal";
 
 const isMobileOrAndroid = () => {
   if (typeof window === "undefined") return false;
@@ -11,6 +12,19 @@ const isMobileOrAndroid = () => {
 };
 
 const CardEgitim = () => {
+const [isModalOpen, setIsModalOpen] = useState(false);
+const [slide, setSlide] = useState(0);
+
+const posterImages = [
+  "/afis/1.webp",
+  "/afis/2.webp",
+  "/afis/3.webp",
+  "/afis/4.webp",
+  "/afis/5.webp",
+  "/afis/6.webp",
+  "/afis/7.webp",
+  "/afis/8.webp",
+];
   const [isMobile, setIsMobile] = useState(false);
 
   // Refs for animations
@@ -86,11 +100,22 @@ const CardEgitim = () => {
               İncele
             </button>
           </Link>
+              <button   onClick={() => setIsModalOpen(true)} className="ml-2 bg-white text-gray-700 cursor-pointer mt-6 border border-blue-300 px-5 py-2.5 rounded-3xl transition duration-300 hover:text-blue-500 hover:bg-gray-100">
+             Açık Pozisyonları Gör
+            </button>
         </div>
       </div>
-
+<PosterModal
+  isOpen={isModalOpen}
+  onClose={() => setIsModalOpen(false)}
+  images={posterImages}
+  title="Açık Pozisyonlar"
+  slide={slide}
+  setSlide={setSlide}
+/>
     </section>
   );
+  
 };
 
 export default CardEgitim;
