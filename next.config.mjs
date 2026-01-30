@@ -10,8 +10,7 @@ const nextConfig = {
   },
 
   experimental: {
-    optimizePackageImports: ["react", "lodash"],
-    turbo: false, // ⬅️ TURBOPACK KAPALI (KRİTİK)
+    // optimizePackageImports: ["react", "lodash"],
   },
 
   output: "standalone",
