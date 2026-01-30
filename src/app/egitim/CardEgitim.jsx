@@ -37,7 +37,7 @@ const CardEgitim = () => {
     return () => observer.disconnect();
   }, []);
 
-  const imageSrc = isMobile ? "/images/MOBIL_BANNER.webp" : "/images/PC_BANNER.webp";
+  const imageSrc = isMobile ? "/images/chefs.jpg" : "/images/chefs.jpg";
 
   return (
     <section className="relative w-full h-screen overflow-hidden">
@@ -55,7 +55,7 @@ const CardEgitim = () => {
       />
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/30 z-10" />
+      <div className="absolute inset-0 bg-black/1 z-10" />
 
       {/* ⭐ BADGE — Sağdan Gelsin */}
       <div

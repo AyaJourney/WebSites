@@ -26,51 +26,38 @@ async function sendToCrm({ type, crmForm, rawData, meta }) {
   const url =
     baseUrl.replace(/\/$/, "") + "/api/public/visa-form";
 
-  // 🔥 TYPE'A GÖRE PAYLOAD
   const payload = {
     visa_type: type,
-    name: meta?.name || "Web Form",
     email: meta?.email ?? null,
     phone: meta?.phone ?? null,
   };
 
   if (type === "ds-160") {
-    if (!crmForm || !crmForm.steps) {
-      throw new Error("sendToCrm: DS-160 crmForm missing");
-    }
-
     payload.form_data = crmForm;
   } else {
-    // ✅ UK / Schengen / Canada → RAW DATA
-    payload.data = rawData;
+    // 🔥 SADECE FORM DATA
+    payload.data = rawData.form_data || rawData;
   }
 
-  try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-crm-key": process.env.CRM_SHARED_SECRET || "",
-      },
-      body: JSON.stringify(payload),
-    });
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-crm-key": process.env.CRM_SHARED_SECRET || "",
+    },
+    body: JSON.stringify(payload),
+  });
 
-    const text = await res.text();
+  const text = await res.text();
 
-    fs.appendFileSync(
-      LOG_FILE,
-      `${new Date().toISOString()} - [CRM][${type}] status=${res.status} response=${text}\n`
-    );
+  fs.appendFileSync(
+    LOG_FILE,
+    `${new Date().toISOString()} - [CRM][${type}] status=${res.status} response=${text}\n`
+  );
 
-    return res.ok;
-  } catch (err) {
-    fs.appendFileSync(
-      LOG_FILE,
-      `${new Date().toISOString()} - [CRM][${type}] ERROR ${err.message}\n`
-    );
-    throw err;
-  }
+  return res.ok;
 }
+
 
 
 

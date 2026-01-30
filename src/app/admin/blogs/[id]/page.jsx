@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import PutWarningModal from "../modal/PutWarningModal";
 import { supabase } from "@/lib/supabase";
+import BlogEditor from "@/app/components/blogeditor/BlogEditor";
 export default function EditBlogPage() {
   const { id } = useParams();
   const router = useRouter();
@@ -167,15 +168,12 @@ const handleImageUpload = async (e) => {
           {/* İçerik */}
           <div>
             <label className="block text-sm font-medium mb-1">Ana İçerik</label>
-            <textarea
-              name="content"
-              value={form?.content}
-              onChange={handleChange}
-              rows={10}
-              className="w-full rounded-xl border px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
-              placeholder="Blog içeriği"
-              required
-            />
+                   <BlogEditor
+            value={form?.content || ""}
+            onChange={(html) =>
+              setForm((prev) => ({ ...prev, content: html }))
+            }
+          />
           </div>
   <div>
             <label className="block text-sm font-medium mb-1">Ana İçerik</label>

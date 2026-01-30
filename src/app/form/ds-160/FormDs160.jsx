@@ -733,6 +733,13 @@ function getSpouseGivenNames(form) {
 
   return turkishToEnglish(parts.join(" ")).toUpperCase();
 }
+const splitName = (fullName = "") => {
+  const parts = fullName.trim().split(" ");
+  return {
+    given: parts.slice(0, -1).join(" "),
+    surname: parts.slice(-1)[0] || ""
+  };
+};
 function normalizeUpper(val = "") {
   if (typeof val !== "string") return "";
   return turkishToEnglish(val).toUpperCase();
@@ -826,8 +833,8 @@ const crmMap = {
   MOTHER_IN_US: "steps.7.isMotherInUSA",
   MOTHER_US_STATUS: "steps.7.isMotherUSAStatus",
   US_IMMEDIATE_RELATIVE: "steps.7.hasRelativeInUSA",
-  US_REL_SURNAME: "steps.6.usaRelativeFullName",
-  US_REL_GIVEN: "steps.6.usaRelativeFullName",
+  US_REL_SURNAME: "steps.7.relatives",
+  US_REL_GIVEN: "steps.7.relatives",
   US_REL_TYPE: "steps.7.relatives",
   US_REL_STATUS: "steps.7.relatives",
   US_OTHER_RELATIVE: "steps.7.otherRelativeInUSA",
@@ -956,7 +963,7 @@ const crmMap = {
 HAS_ADDITIONAL_PHONE:"NO",
   EMAIL: "steps.5.email",
 HAS_ADDITIONAL_EMAIL:"NO",
-  SOCIAL_MEDIA: "steps.5.hasSocialMedia",
+  SOCIAL_MEDIA: "steps.5.socialMediaAccounts",
   SOCIAL_MEDIA_USERNAME: "steps.5.socialMediaAccounts",
 ADDITIONAL_SOCIAL:"NO",
   // ===== PASSPORT =====
@@ -1102,6 +1109,22 @@ PREV_EMPLOY_DUTIES:"steps.9.previousJobs",
   BARCODE: "steps.11.passportFile",
 };
 const transformByCrmKey = {
+    US_REL_SURNAME: (relatives = []) =>
+    relatives.map((r) => splitName(r.fullName).surname),
+
+  US_REL_GIVEN: (relatives = []) =>
+    relatives.map((r) => splitName(r.fullName).given),
+
+  US_REL_TYPE: (relatives = []) =>
+    relatives.map((r) => r.level),
+
+  US_REL_STATUS: (relatives = []) =>
+    relatives.map((r) => r.status),
+  SOCIAL_MEDIA: (accounts = []) =>
+    accounts.map((a) => a.platform),
+
+  SOCIAL_MEDIA_USERNAME: (accounts = []) =>
+    accounts.map((a) => a.username),
   PAYER_ADDRESS_SAME: (_v, form) => {
   const addr = form?.steps?.[3];
 
@@ -1408,8 +1431,8 @@ EMP_SCH_STATE:()=> "N/A",
     const { givenName } = getOtherNameParts(defaultForm);
     return turkishToEnglish(givenName).toUpperCase();
   },
-  US_REL_SURNAME: getSurname,
-  US_REL_GIVEN: getGivenName,
+  // US_REL_SURNAME: getSurname,
+  // US_REL_GIVEN: getGivenName,
   PAYER_SURNAME: getSurname,
   PAYER_GIVEN_NAME: getGivenName,
 PASSPORT_ISSUE_DATE: formatDs160Date,
@@ -1440,11 +1463,6 @@ PASSPORT_ISSUE_DATE: formatDs160Date,
   SSN: normalizeNaIfEmpty,
   TAX_ID: normalizeNaIfEmpty,
   HOME_ADDRESS: (_, df) => buildHomeAddress(df),
-  // SOCIAL_MEDIA: (rawValue) =>
-  //   parseSocialMedia(rawValue).platforms,
-
-  SOCIAL_MEDIA_USERNAME: (rawValue) =>
-    parseSocialMedia(rawValue).usernames,
     US_POC_ADDR1: (_, df) => getUsPocSource(df).address,
     US_POC_CITY: (_, df) => getUsPocSource(df).city,
   US_POC_STATE: (_, df) => getUsPocSource(df).state,
@@ -2175,8 +2193,27 @@ const EDUCATION_LABELS = {
   PHD: "Doktora"
 };
 
+const fillOrganizationFallback = () => {
+  // Şartlar sağlanmıyorsa çık
+  if (
+    form.steps[6].usaRelative !== "NO" ||
+    form.steps[6].organizationBoolean !== "NO"
+  ) {
+    return;
+  }
 
-
+  updateField(6, "organizationInfo", "XXXX XXXX");
+  updateField(6, "usaRelativeAddress", "XXXX XXX XXXXX XXXXX");
+  updateField(6, "usaRelativeAddressCity", "XXXXXXXX");
+  updateField(6, "usaRelativeAddressState", "CALIFORNIA");
+  updateField(6, "usaRelativePhone", "+905556664487");
+  updateField(6, "usaRelativeEmail", "deneme@deneme.com");
+  updateField(6, "usaRelativePostCode", "06580");
+  updateField(6, "usaRelativeInfo", "OTHER");
+};
+useEffect(() => {
+  fillOrganizationFallback();
+}, [form.steps[6].usaRelative, form.steps[6].organizationBoolean]);
   return (
     <div className="min-h-screen bg-gray-100 p-6 flex items-start justify-center">
       {/* A4-like container */}
@@ -6221,7 +6258,7 @@ onChange={(e) => {
   className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
   ${errors.usaRelative ? "border-red-500" : "border-gray-300"}`}
   value={form.steps[6].usaRelative || ""}
-  onChange={(e) => handleMirrorSelect("usaRelative", e.target.value)}
+  onChange={(e) => updateField(6, "usaRelative", e.target.value)}
 >
   <option value="">Seçiniz</option>
   <option value="YES">Evet</option>
@@ -6268,7 +6305,7 @@ onChange={(e) => {
           name="usaRelativeInfo"
            className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
           ${errors.usaRelativeInfo ? "border-red-500" : "border-gray-300"}`}
-
+        value={form.steps[6].usaRelativeInfo || ""}
           onChange={(e) => updateField(6, "usaRelativeInfo", e.target.value)}
         >
           <option value="">Seçiniz</option>
@@ -6421,9 +6458,7 @@ onChange={(e) => {
   className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
   ${errors.organizationBoolean ? "border-red-500" : "border-gray-300"}`}
   value={form.steps[6].organizationBoolean || ""}
-  onChange={(e) =>
-    handleMirrorSelect("organizationBoolean", e.target.value)
-  }
+onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
 >
   <option value="">Seçiniz</option>
   <option value="YES">Evet</option>

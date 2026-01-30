@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Giris = () => {
-  const [videoEnded, setVideoEnded] = useState(false);
+  const [videoEnded, setVideoEnded] = useState(true);
   const [showTitle, setShowTitle] = useState(false);
   const [showText, setShowText] = useState(false);
   const [showButton, setShowButton] = useState(false);

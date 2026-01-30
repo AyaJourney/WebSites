@@ -1,5 +1,7 @@
 @import "tailwindcss";
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 :root {
   --background: #ffff;
   --foreground: #171717;
@@ -1040,4 +1042,3 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
- 

@@ -5,6 +5,7 @@ import { supabase } from "@/lib/supabase";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import PostWarningModal from "../modal/PostWarningModal";
+import BlogEditor from "@/app/components/blogeditor/BlogEditor";
 export default function NewBlogPage() {
   const [form, setForm] = useState({
     title: "",
@@ -124,15 +125,12 @@ const postBlogText = async()=>{
           <label className="block text-sm font-medium mb-1">
             Ana İçerik
           </label>
-          <textarea
-            name="content"
-            rows={10}
-            value={form.content}
-            onChange={handleChange}
-            required
-            placeholder="Blog içeriğini yazınız..."
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none resize-none"
-          />
+         <BlogEditor
+  value={form?.content || ""}
+  onChange={(html) =>
+    setForm((prev) => ({ ...prev, content: html }))
+  }
+/>
         </div>
 
         {/* Kategori */}
