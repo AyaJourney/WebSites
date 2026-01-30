@@ -5,7 +5,12 @@ import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import PutWarningModal from "../modal/PutWarningModal";
 import { supabase } from "@/lib/supabase";
-import BlogEditor from "@/app/components/blogeditor/BlogEditor";
+import dynamic from "next/dynamic";
+
+const BlogEditor = dynamic(
+  () => import("@/app/components/blogeditor/BlogEditor"),
+  { ssr: false }
+);
 export default function EditBlogPage() {
   const { id } = useParams();
   const router = useRouter();

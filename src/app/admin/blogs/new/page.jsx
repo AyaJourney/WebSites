@@ -5,7 +5,12 @@ import { supabase } from "@/lib/supabase";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import PostWarningModal from "../modal/PostWarningModal";
-import BlogEditor from "@/app/components/blogeditor/BlogEditor";
+import dynamic from "next/dynamic";
+
+const BlogEditor = dynamic(
+  () => import("@/app/components/blogeditor/BlogEditor"),
+  { ssr: false }
+);
 export default function NewBlogPage() {
   const [form, setForm] = useState({
     title: "",
