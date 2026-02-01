@@ -9,226 +9,167 @@ const AmericaVisaHero = () => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("ava-show");
-        }
-      },
-      { threshold: 0.2 }
+      ([entry]) => entry.isIntersecting && entry.target.classList.add("ava-show"),
+      { threshold: 0.25 }
     );
 
-    if (sectionRef.current) observer.observe(sectionRef.current);
+    sectionRef.current && observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
 return (
   <section
     ref={sectionRef}
-    className="relative min-h-[100svh] overflow-hidden ava-fade-init"
+    className="relative min-h-[100svh] bg-white overflow-hidden ava-fade-init"
   >
-    {/* BACKGROUND */}
-    <div className="absolute inset-0">
-      <Image
-        src="/images/visaamericaexam.webp"
-        alt="AYA Journey ABD Vize Yol Haritası"
-        fill
-        priority
-        className="object-cover"
-      />
-      <div className="absolute inset-0 bg-white/80" />
-    </div>
+    <div className="relative max-w-7xl mx-auto px-6 py-24 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-    {/* ================= MOBILE SLIDER ================= */}
-    <div className="relative md:hidden flex overflow-x-auto snap-x snap-mandatory">
-      
-      {/* SLIDE 1 – LEFT (AYNI İÇERİK) */}
-      <div className="snap-center shrink-0 w-full px-6 py-24">
-        <div className="space-y-8 text-justify">
-<h1 className="relative z-10 text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
-  <span className="bg-gradient-to-r from-red-600 via-red-500 to-blue-600 bg-clip-text text-transparent">
-   Hayalleri Süsleyen  Amerika 
-  </span>
-  
-  <br />
-   <span className="text-slate-900">
-     Turist Vizesi (B1/B2), Ögrenci Vizesi (F1),  kültürel değişim programları vizesi (J1) ve daha fazlasında uzmanlığa güvenin
-  </span>
-</h1>
+      {/* ================= MOBILE IMAGE CARD (TOP) ================= */}
+      <div className="relative w-full h-[320px] rounded-2xl overflow-hidden shadow-xl lg:hidden">
 
+        <Image
+          src="/images/visaamericaexam.webp"
+          alt="Amerika Vizesi Süreci"
+          fill
+          priority
+          className="object-cover"
+        />
 
-          <p className="text-base text-slate-700">
-            ABD vizesi; Schengen, Kanada veya İngiltere vizelerinden farklı olarak
-            evrak incelemesiyle değil, vize memuru ile yapılan birebir görüşmeyle
-            sonuçlanır. Görüşmenin sonucu aynı anda açıklanır.
-          </p>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/70" />
 
-          <div className="grid gap-4">
+        <div className="relative z-10 h-full p-6 flex flex-col justify-end text-white">
+          <h3 className="text-2xl font-extrabold">
+            Amerika Vizesi Süreci
+          </h3>
+
+          <div className="mt-4 space-y-3">
             {[
-              "Birebir görüşme odaklı hazırlık",
-              "10 yıla kadar geçerli vize",
-              "Anında sonuç",
-            ].map((text, i) => (
-              <div
-                key={i}
-                className="flex items-center gap-3 bg-white/90 backdrop-blur border border-slate-200 rounded-xl px-4 py-3 shadow"
-              >
-                <FaCheckCircle className="text-orange-600 shrink-0" />
-                <span className="text-sm font-medium text-slate-800">
-                  {text}
-                </span>
+              "Profil analizi ve risk değerlendirmesi",
+              "DS-160 ve randevu sürecinin yönetimi",
+              "Konsolosluk mülakatına birebir hazırlık",
+            ].map((step, i) => (
+              <div key={i} className="flex gap-2">
+                <FaCheckCircle className="text-emerald-400 mt-1 shrink-0" />
+                <p className="text-sm text-white/90">
+                  {step}
+                </p>
               </div>
             ))}
           </div>
-                  <div className="mt-6 w-full max-w-xl mx-auto lg:mx-0 rounded-2xl border border-emerald-200 bg-emerald-50 px-6 py-5 text-left shadow-sm">
-  <div className="flex items-start gap-4">
-    <div className="text-2xl">🎯</div>
-
-    <div className="space-y-2">
-      <h4 className="text-base font-extrabold text-emerald-900">
-        Amerika Vize Şansınızı Öğrenin
-      </h4>
-
-      <p className="text-sm text-emerald-800 leading-relaxed">
-        Yapay zeka destekli analiz ile <strong  className="mr-2">ABD vizesi hazırlık skorunuzu </strong>
-        2 dakikada öğrenin. Sonuçlar anında gösterilir.
-      </p>
-
-      <Link href="/amerika-vizesi?test=1">
-        <button className="mt-2 cursor-pointer inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-emerald-700 transition">
-          Analizi Başlat →
-        </button>
-      </Link>
-    </div>
-  </div>
-</div>
         </div>
       </div>
 
-      {/* SLIDE 2 – RIGHT (AYNI İÇERİK) */}
-      <div className="snap-center shrink-0 w-full px-6 py-24">
-        <div className="relative w-full max-w-lg mx-auto rounded-3xl bg-white/95 backdrop-blur border border-slate-200 p-10 shadow-xl space-y-6">
-          <h3 className="text-2xl font-semibold text-slate-900 text-center">
-            Süreç Nasıl İşliyor?
-          </h3>
+      {/* ================= LEFT CONTENT ================= */}
+      <div className="space-y-10 text-center lg:text-start">
 
-          {[
-            "Profilinizi analiz ediyoruz",
-            "Randevunuzu alıyor ve takip ediyoruz",
-            "Görüşmeye birebir hazırlıyoruz",
-          ].map((step, i) => (
-            <div key={i} className="flex gap-3">
-              <FaCheckCircle className="text-green-600 mt-1 shrink-0" />
-              <p className="text-sm text-slate-700 leading-relaxed">
-                {step}
-              </p>
-            </div>
-          ))}
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight text-slate-900 ">
+          Ankara ve İstanbul’da
+          <span className="block mt-3">
+            Profesyonel Amerika Vize Danışmanlığı
+          </span>
+        </h1>
 
-          <div className="pt-6 border-t border-slate-200 text-sm text-slate-600">
-            İstisnai durumlar hariç ABD turist vizeleri genellikle
-            <strong> 10 yıllık</strong> verilir ve her girişte
-            <strong> 180 güne kadar</strong> kalış hakkı tanır.
-          </div>
-        </div>
-      </div>
-    </div>
+        <h2 className="max-w-3xl text-base sm:text-lg md:text-2xl text-slate-700 leading-relaxed">
+          Turist <strong>(B1/B2)</strong>, Öğrenci <strong>(F1)</strong>,
+          Kültürel Değişim <strong>(J1)</strong> ve diğer
+          <strong> ABD vize türlerinde</strong> birebir uzman danışmanlık.
+        </h2>
 
-    {/* ================= DESKTOP / TABLET (AYNI HALİ) ================= */}
-    <div className="relative hidden md:grid max-w-7xl mx-auto px-6 grid-cols-1 lg:grid-cols-2 gap-16 min-h-[100svh] items-center">
-      
-      {/* LEFT */}
-      <div className="space-y-8 text-center lg:text-justify">
-<h1 className="relative z-10 text-3xl sm:text-4xl md:text-6xl font-bold leading-tight text-center">
-  <span className="bg-gradient-to-r from-red-600 via-red-500 to-blue-600 bg-clip-text text-transparent">
-    Hayalleri Süsleyen Amerika
-  </span>
-
-  <div className="mt-4 text-slate-900 md:text-3xl text-justify max-w-4xl mx-auto font-normal">
-    Turist Vizesi (B1/B2), Öğrenci Vizesi (F1), kültürel değişim programları
-    vizesi (J1) ve daha fazlasında uzmanlığa güvenin
-  </div>
-</h1>
-
-        <p className="text-base sm:text-lg text-slate-700 max-w-xl mx-auto lg:mx-0">
-         Gezmekten yaşamaya, çalışmaktan eğitim almaya kadar Amerika Birleşik Devletleri hayallerinizi gerçeğe dönüştürüyoruz.
+        <p className="max-w-xl text-base sm:text-lg text-slate-700">
+          ABD vizesi, evrak değil <strong>konsolosluk mülakatı</strong> ile
+          sonuçlanır. Başvurudan görüşmeye kadar süreci sizin için
+          stratejik ve eksiksiz şekilde yönetiyoruz.
         </p>
 
-        <div className="grid sm:grid-cols-2 gap-4 max-w-xl mx-auto lg:mx-0">
+        <div className="grid sm:grid-cols-2 gap-4 max-w-xl">
           {[
-            "Birebir görüşme odaklı hazırlık",
-            "10 yıla kadar geçerli vize",
-            "Anında sonuç",
-          ].map((text, i) => (
+            "Kişiye özel vize stratejisi",
+            "DS-160 ve randevu yönetimi",
+            "10 yıla kadar ABD vizesi",
+          ].map((item, i) => (
             <div
               key={i}
-              className="flex items-center gap-3 bg-white/90 backdrop-blur border border-slate-200 rounded-xl px-4 py-3 shadow"
+              className="flex items-center gap-3 rounded-xl bg-white border border-slate-200 px-4 py-3 shadow-sm"
             >
-              <FaCheckCircle className="text-indigo-600 shrink-0" />
-              <span className="text-md font-medium text-slate-800">
-                {text}
+              <FaCheckCircle className="text-emerald-600 shrink-0" />
+              <span className="text-sm font-medium text-slate-800">
+                {item}
               </span>
             </div>
           ))}
         </div>
-        <div className="mt-6 mb-20 w-full max-w-xl mx-auto lg:mx-0 rounded-2xl border border-emerald-200 bg-emerald-50 px-6 py-5 text-left shadow-sm">
-  <div className="flex items-start gap-4">
-    <div className="text-2xl">🎯</div>
 
-    <div className="space-y-2">
-      <h4 className="text-base font-extrabold text-emerald-900">
-        Amerika Vize Şansınızı Öğrenin
-      </h4>
-
-      <p className="text-sm text-emerald-800 leading-relaxed">
-        Yapay zeka destekli analiz ile <strong  className="mr-2">ABD vizesi hazırlık skorunuzu</strong>
-        2 dakikada öğrenin. Sonuçlar anında gösterilir.
-      </p>
-
-      <Link href="/amerika-vizesi?test=1">
-        <button className="mt-2 cursor-pointer inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-emerald-700 transition">
-           Analizi Başlat →
-        </button>
-      </Link>
-    </div>
-  </div>
-</div>
-
+        <div className="rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-white px-6 py-5 max-w-xl shadow-sm">
+          <div className="flex gap-4">
+            <span className="text-2xl">🎯</span>
+            <div>
+              <h3 className="font-extrabold text-emerald-900">
+                ABD Vize Şansınızı Öğrenin
+              </h3>
+              <p className="text-sm text-emerald-800 mt-1">
+                Yapay zeka destekli analiz ile
+                <strong> başvuru skorunuzu</strong> 2 dakikada görün.
+              </p>
+              <Link href="/amerika-vizesi?test=1">
+                <button className="mt-3 rounded-xl bg-emerald-600 px-6 py-2.5 text-sm font-bold text-white hover:bg-emerald-700 transition">
+                  Analizi Başlat →
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* RIGHT */}
-      <div className="hidden md:flex justify-center lg:justify-end self-center">
-        <div className="relative w-full max-w-lg rounded-3xl bg-white/95 backdrop-blur border border-slate-200 p-10 shadow-xl space-y-6">
-          <h3 className="text-2xl font-semibold text-slate-900">
-            Süreç Nasıl İşliyor?
-          </h3>
+      {/* ================= RIGHT IMAGE CARD (DESKTOP) ================= */}
+      <div className="hidden lg:block relative w-full max-w-lg h-[520px] rounded-3xl overflow-hidden shadow-2xl">
 
-          {[
-            "Profilinizi analiz ediyoruz",
-            "Randevunuzu alıyor ve takip ediyoruz",
-            "Görüşmeye birebir hazırlıyoruz",
-          ].map((step, i) => (
-            <div key={i} className="flex gap-3">
-              <FaCheckCircle className="text-green-600 mt-1 shrink-0" />
-              <p className="text-md text-slate-700 leading-relaxed">
-                {step}
-              </p>
+        <Image
+          src="/images/visaamericaexam.webp"
+          alt="Amerika Vizesi Süreci"
+          fill
+          priority
+          className="object-cover"
+        />
+
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+
+        <div className="relative z-10 h-full p-10 flex flex-col justify-between text-white">
+          <div>
+            <h3 className="text-3xl font-extrabold">
+              Amerika Vizesi Süreci
+            </h3>
+
+            <div className="mt-6 space-y-4">
+              {[
+                "Profil analizi ve risk değerlendirmesi",
+                "DS-160 ve randevu sürecinin yönetimi",
+                "Konsolosluk mülakatına birebir hazırlık",
+              ].map((step, i) => (
+                <div key={i} className="flex gap-3">
+                  <FaCheckCircle className="text-emerald-400 mt-1 shrink-0" />
+                  <p className="text-sm text-white/90">
+                    {step}
+                  </p>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
 
-          <div className="pt-6 border-t border-slate-200 text-sm text-slate-600">
-            İstisnai durumlar hariç ABD turist vizeleri genellikle
-            <strong> 10 yıllık</strong> verilir ve her girişte
+          <div className="pt-6 border-t border-white/30 text-sm text-white/90">
+            ABD turist vizeleri çoğu durumda
+            <strong> 10 yıla kadar</strong> geçerlidir ve her girişte
             <strong> 180 güne kadar</strong> kalış hakkı tanır.
           </div>
         </div>
       </div>
+
     </div>
 
-    {/* CTA */}
-    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10">
+    {/* ================= SECONDARY CTA ================= */}
+    <div className="mt-16 flex justify-center">
       <Link href="/amerika-vizesi">
-        <button className="bg-white text-gray-700 cursor-pointer mt-6 border border-blue-300 px-8 py-2.5 rounded-3xl transition duration-300 hover:text-blue-500 hover:bg-gray-100">
-        Hemen İncele
+        <button className="rounded-full bg-white border border-blue-300 px-8 py-3 text-sm font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition">
+          Amerika Vizesi Detaylarını İncele
         </button>
       </Link>
     </div>

@@ -17,18 +17,18 @@ import SideNav from "./components/home/SideNav";
 
 export const metadata = {
 
-  title: "Aya Journey Vize Danışmanlık | ABD, İngiltere,Portekiz, Schengen Vizesi ve Göçmenlik Uzmanı",
+  title: "Aya Journey Vize Danışmanlık | Amerika Vizesi Danışmanlık Ankara ve İstanbul,İngiltere Vizesi Danışmanlık Ankara ve İstanbul, Portekiz Vizesi Danışmanlık Ankara ve İstanbul,  Schengen Vizesi Danışmanlık Ankara ve İstanbul ve Göçmenlik Uzmanı",
 
 
   description: "Aya Journey ile vize reddi riskini azaltın! Portekiz, ABD, İngiltere ve Schengen vize başvurularınızda kişiye özel, hızlı ve hatasız danışmanlık hizmeti alın.",
 };
 export default function Home() {
   return (
-    <main className="flex flex-col w-full font-sans bg-white">
+    <main className="flex flex-col w-full bg-white">
 
       {/* HERO */}
    <SideNav />
-      <section className="w-full min-h-[100svh] mb-15 mt-9" id="giris-1" >
+      <section className="w-full min-h-[100svh]  mt-9" id="giris-1" >
         <Giris />
       </section>
 

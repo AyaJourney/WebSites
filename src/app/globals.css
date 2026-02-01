@@ -6,13 +6,13 @@
   --background: #ffff;
   --foreground: #171717;
 }
-@font-face {
+/* @font-face {
   font-family: "Arboria";
   src: url("/fonts/arboria.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
-}
+} */
 
 /* @theme inline {
   --color-background: var(--background);
@@ -42,7 +42,7 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* font-family: Arial, Helvetica, sans-serif; */
 }
 /* Card hover flip efekt için */
 .perspective {

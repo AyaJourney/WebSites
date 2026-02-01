@@ -62,7 +62,7 @@ const GoogleYorum = () => {
   return (
  <div className="w-full max-w-9xl h-auto mx-auto p-4 bg-gradient-to-b from-gray-50/50 to-white rounded-lg flex flex-col justify-start items-center gap-6 py-8 ">
   <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 bg-clip-text text-transparent mb-2 text-center px-4 max-w-4xl leading-tight">
-   Herkes kendini över Siz en iyisi daha önce bizimle calışan yüzlerce kişiye kulak verin
+   Herkes kendini över. Siz en iyisi daha önce bizimle çalışan yüzlerce kişiye kulak verin.
   </h2>
 
   <div className="flex flex-col sm:flex-row w-full max-w-7xl gap-6 px-2">

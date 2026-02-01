@@ -6,9 +6,15 @@ import Footer from "./components/Footer";
 import Cookies from "./components/Cookies";
 import WhatsappButton from "./components/WhatsappButton";
 import ScrollToTop from "./components/ScrollTop";
+import { Plus_Jakarta_Sans } from "next/font/google";
 export const dynamic = "force-static";
 export const revalidate = 60;
-
+export const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+  variable: "--font-plus-jakarta",
+});
 export const metadata = {
   metadataBase: new URL("https://ayajourney.com"),
 
@@ -26,7 +32,7 @@ export const metadata = {
     "Kanada vizesi",
     "İngiltere vizesi",
     "Schengen vizesi",
-    "vize danışmanlığı",
+    "Vize danışmanlığı",
     "Aya Journey",
   ],
 
@@ -92,7 +98,7 @@ export const viewport = {
 />
 export default function RootLayout({ children }) {
   return (
-    <html lang="tr" className="font-arboria bg-white">
+    <html lang="tr" className={plusJakartaSans.variable}>
       <body 
         
       >

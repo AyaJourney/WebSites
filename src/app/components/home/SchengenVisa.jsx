@@ -31,7 +31,9 @@ const SchengenIntro = () => {
         {/* SOL – METİN */}
         <div className="space-y-8 text-center lg:text-left">
          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
-  <span className="bg-gradient-to-r from-[#003399] via-blue-600 to-[#FFCC00] bg-clip-text text-transparent">
+  <span 
+  // className="bg-gradient-to-r from-[#003399] via-blue-600 to-[#FFCC00] bg-clip-text text-transparent"
+  >
     Schengen vizesi
   </span>{" "}
   <span className="text-slate-900">

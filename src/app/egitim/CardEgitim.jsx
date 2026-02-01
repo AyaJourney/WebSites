@@ -51,10 +51,10 @@ const posterImages = [
     return () => observer.disconnect();
   }, []);
 
-  const imageSrc = isMobile ? "/images/chefs.jpg" : "/images/chefs.jpg";
+  const imageSrc = isMobile ? "/images/chefsVertical.jpg" : "/images/chefs.jpg";
 
   return (
-    <section className="relative w-full h-screen overflow-hidden">
+   <section className="relative w-full min-h-[100svh] md:h-screen overflow-hidden">
 
       {/* Background Image */}
       <Image
@@ -63,15 +63,14 @@ const posterImages = [
         fill
         priority
         sizes="100vw"
-        className="object-cover object-center"
-        // placeholder="blur"
-        // blurDataURL="/images/placeholder-small.jpg"
+        className="object-contain md:object-cover object-center "
+    
       />
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/1 z-10" />
+    <div className="absolute inset-0 z-10"/>
 
-      {/* ⭐ BADGE — Sağdan Gelsin */}
+   
       <div
         ref={badgeRef}
         className=" slide-right-init absolute w-[350px] md:w-[500px] z-30 rounded-full px-6 py-8 text-[#2a2a2a] font-semibold text-md sm:text-xl md:text-2xl  shadow-[0_0_12px_rgba(255,180,40,0.45)] backdrop-blur-md  flex items-center bg-gradient-to-r from-amber-300 via-yellow-300 to-orange-300  top-6 left-1/2-translate-x-1/2 md:top-18 md:left-auto md:right-10 md:-translate-x-0  transition-all duration-300 hover:scale-105">

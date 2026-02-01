@@ -1,90 +1,99 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
 const Giris = () => {
-  const [videoEnded, setVideoEnded] = useState(true);
-  const [showTitle, setShowTitle] = useState(false);
-  const [showText, setShowText] = useState(false);
-  const [showButton, setShowButton] = useState(false);
+  const linesMobile = ["Hadi,", "topla", "bavulları!"];
+  const lineDesktop = "Hadi, topla bavulları!";
+
+  // tüm karakter sayısı (mobil için)
+  const totalCharsMobile = linesMobile.join("").length;
+  const totalCharsDesktop = lineDesktop.length;
+
+  const [visibleLetters, setVisibleLetters] = useState(0);
 
   useEffect(() => {
-    if (videoEnded) {
-      setTimeout(() => setShowTitle(true), 300);
-      setTimeout(() => setShowText(true), 600);
-      setTimeout(() => setShowButton(true), 900);
+    const maxChars =
+      typeof window !== "undefined" && window.innerWidth < 768
+        ? totalCharsMobile
+        : totalCharsDesktop;
+
+    if (visibleLetters < maxChars) {
+      const timeout = setTimeout(() => {
+        setVisibleLetters((prev) => prev + 1);
+      }, 80);
+      return () => clearTimeout(timeout);
     }
-  }, [videoEnded]);
+  }, [visibleLetters, totalCharsMobile, totalCharsDesktop]);
+
+  let charCounter = 0;
 
   return (
-    <section
-      className="relative w-full overflow-hidden font-sans h-[80svh] md:h-[90svh] lg:h-[85svh]"
-    >
-      {/* VIDEO – TÜM EKRANLARDA */}
-      <video
-  autoPlay
-  muted
-  playsInline
-  preload="auto"
-  poster="/images/videosonu.webp"
-  onEnded={() => setVideoEnded(true)}
-  className="absolute inset-0 w-full h-full object-cover"
->
-  {/* Önce iOS uyumlu */}
-  <source src="/images/videopasaportmp4.mp4" type="video/mp4" />
+    <section className="relative flex items-center justify-center h-[80svh] md:h-[90svh] bg-white px-6">
+      <div className="max-w-7xl w-full">
 
-  {/* Sonra WEBM (Chrome vs) */}
-  <source src="/images/videopasaport.webm" type="video/webm" />
-</video>
+        {/* H1 */}
+        <h1 className="font-jakarta font-extrabold text-5xl sm:text-6xl md:text-6xl lg:text-8xl tracking-widest text-slate-900 leading-tight">
 
-      {/* FOTOĞRAF – VIDEO BİTİNCE */}
-      <div
-        className={`absolute inset-0 transition-opacity duration-300 ${videoEnded ? "opacity-100" : "opacity-0"}`}
-      >
-        <Image
-          src="/images/videosonu.webp"
-          alt="Hadi topla bavulları"
-          fill
-          priority
-          className="object-cover"
-        />
-      </div>
+          {/* MOBILE */}
+          <span className="block md:hidden">
+            {linesMobile.map((line, lineIndex) => (
+              <span key={lineIndex} className="block">
+                {line.split("").map((char, index) => {
+                  const isVisible = charCounter < visibleLetters;
+                  charCounter++;
 
-      {/* METİN KATMANI */}
-      <div className="absolute inset-0 flex items-center">
-       {showTitle && (  <div className="w-full px-6 md:px-12 lg:px-20 text-white bg-gradient-to-l from-black/50 to-transparent">
+                  return (
+                    <span
+                      key={index}
+                      className={`inline-block transition-all duration-300 ${
+                        isVisible
+                          ? "opacity-100 translate-y-0"
+                          : "opacity-0 translate-y-6"
+                      }`}
+                    >
+                      {char}
+                    </span>
+                  );
+                })}
+              </span>
+            ))}
+          </span>
 
-          {/* BAŞLIK */}
-          <h1
-            className={`font-bold drop-shadow-xl transition-all duration-700 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl ${showTitle ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10"}`}
-          >
-            Hadi, topla bavulları!
-          </h1>
-
-          {/* METİN */}
-          <p
-            className={`mt-4 max-w-2xl drop-shadow-lg transition-all duration-700 text-sm sm:text-base md:text-lg lg:text-xl ${showText ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}
-          >
-            Yurt dışında eğitim, iş ve vize danışmanlık ihtiyaçlarınız için
-            AYA Journey olarak her zaman yanınızdayız.
-          </p>
-
-          {/* BUTON */}
-          <div
-            className={`mt-6 transition-all duration-700 ${showButton ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
-          >
-            <Link href="/randevu">
-              <button
-                className=" bg-white text-gray-800 border border-blue-300 px-6 py-3 rounded-3xl font-semibold hover:text-blue-600 hover:bg-gray-100 transition"
+          {/* DESKTOP */}
+          <span className="hidden md:block">
+            {lineDesktop.split("").map((char, index) => (
+              <span
+                key={index}
+                className={`inline-block transition-all duration-300 ${
+                  index < visibleLetters
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-6"
+                }`}
               >
-                Randevu Al
-              </button>
-            </Link>
-          </div>
+                {char === " " ? "\u00A0" : char}
+              </span>
+            ))}
+          </span>
 
-        </div>)}
-      
+        </h1>
+
+        {/* SUBTEXT */}
+        <p className="mt-10 max-w-2xl text-base sm:text-lg md:text-xl text-slate-700 leading-relaxed">
+          Yurt dışında eğitim, iş ve vize danışmanlığı sürecinizde  
+          <strong className="text-blue-600"> AYA Journey</strong> olarak
+          her adımda yanınızdayız.
+        </p>
+
+        {/* CTA */}
+        <div className="mt-12">
+          <Link href="/randevu">
+            <button className="rounded-full border border-slate-900 px-10 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-900 hover:text-white">
+              Randevu Al →
+            </button>
+          </Link>
+        </div>
+
       </div>
     </section>
   );

@@ -11,7 +11,11 @@ export default {
       lg: "1024px",
       xl: "1130px", // SENİN MAX WIDTH
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        jakarta: ["var(--font-plus-jakarta)", "sans-serif"],
+      },
+    },
   },
 plugins: [require("@tailwindcss/typography")],
 };

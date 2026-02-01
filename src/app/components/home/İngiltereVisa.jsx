@@ -31,7 +31,9 @@ const EnglandVisaHero = () => {
         {/* SOL – METİN */}
         <div className="space-y-8 text-center lg:text-left">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
-<span className="bg-gradient-to-r from-[#012169] via-slate-400 to-[#C8102E] bg-clip-text text-transparent">
+<span 
+// className="bg-gradient-to-r from-[#012169] via-slate-400 to-[#C8102E] bg-clip-text text-transparent"
+>
   İngiltere Vizesi
 </span>
 
