@@ -211,7 +211,7 @@ export default function SchengenPage() {
               <div className="absolute -inset-4 bg-gradient-to-br from-blue-500/15 via-indigo-500/10 to-fuchsia-500/10 blur-2xl" />
               <div className="relative rounded-3xl overflow-hidden border-4 border-white shadow-2xl">
                 <Image
-                  src="/images/vize.jpg"
+                  src="/images/visa schengen.jpg"
                   alt="Schengen Vize Danışmanlığı"
                   width={560}
                   height={600}

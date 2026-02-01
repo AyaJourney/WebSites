@@ -97,7 +97,7 @@ const SchengenIntro = () => {
         <div className="relative flex justify-center lg:justify-end">
           <div className="relative w-full max-w-lg h-100 rounded-3xl overflow-hidden border border-slate-200 bg-white shadow-xl">
             <Image
-              src="/images/vize.jpg"
+              src="/images/visa schengen.jpg"
               alt="Schengen Vize Başvuru Süreci"
               width={520}
               height={420}
