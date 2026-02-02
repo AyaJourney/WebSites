@@ -67,7 +67,7 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "https://ayajourney.com/images/og-image.JPG",
+        url: "https://ayajourney.com/images/ayaiconsmall.jpg",
         width: 1200,
         height: 630,
         alt: "Aya Journey",
@@ -79,7 +79,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Aya Journey",
     description: "Visa Education and Business",
-    images: ["https://ayajourney.com/images/og-image.jpg"],
+    images: ["https://ayajourney.com/images/ayaiconsmall.jpg"],
   },
 
   verification: {
