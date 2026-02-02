@@ -166,19 +166,8 @@ export default function Page() {
             "@type": "Answer",
             "text": "Hayır. Amerika vizesi dahil hiçbir vize başvurusu %100 garantili değildir. Nihai karar konsolosluk memuruna aittir."
           }
-        }
-      ]
-    })
-  }}
-/>
-<script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
+        },
+         {
           "@type": "Question",
           "name": "Amerika vizesi uzatılabilir mi?",
           "acceptedAnswer": {
@@ -262,6 +251,7 @@ export default function Page() {
     })
   }}
 />
+
 
    <USVisaClient />
   </>

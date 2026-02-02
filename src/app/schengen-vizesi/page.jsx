@@ -356,19 +356,8 @@ export default function SchengenPage() {
             "@type": "Answer",
             "text": "Bu, başvuru sahibinin profiline ve seyahat planına göre değişir. İlk Schengen vizesi başvurularında turistik ülkeler üzerinden, planla uyumlu ve belgeleri güçlü bir dosya ile başvurmak onay ihtimalini artırabilir."
           }
-        }
-      ]
-    })
-  }}
-/>
-<script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
+        },
+          {
           "@type": "Question",
           "name": "Schengen vizesi reddi neden olur?",
           "acceptedAnswer": {
@@ -524,6 +513,7 @@ export default function SchengenPage() {
     })
   }}
 />
+
        <main className="min-h-screen bg-white text-gray-800">
 
       {/* HERO */}
