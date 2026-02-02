@@ -187,19 +187,18 @@ const categories = useMemo(() => {
     className="group relative block overflow-hidden rounded-[28px]"
   >
     {/* IMAGE */}
-  <div className="relative h-[260px] sm:h-[320px] lg:h-[420px]">
-
-      <img
-        src={featured.image || "/images/icon.png"}
-        alt={featured.title}
-        className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
-      />
-    </div>
+ <div className="relative h-[260px] sm:h-[320px] lg:h-[620px] bg-slate-100 overflow-hidden rounded-xl">
+  <img
+    src={featured.image || "/images/icon.png"}
+    alt={featured.title}
+    className="w-full h-full object-cover object-center transition duration-700"
+  />
+</div>
 
     {/* BLUR + CONTENT AREA */}
     <div className="absolute bottom-0 left-0 right-0">
       {/* gradient geçiş */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/25 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent" />
 
       {/* blur alan */}
   <div className="relative p-4 sm:p-6 lg:p-8 backdrop-blur-xs bg-black/10">
