@@ -123,39 +123,155 @@ export default function RootLayout({ children }) {
      <footer>
         <Footer />
      </footer>
-      <script
+<script
   type="application/ld+json"
   dangerouslySetInnerHTML={{
     __html: JSON.stringify({
       "@context": "https://schema.org",
-      "@type": "TravelAgency",
-      "name": "AyaJourney",
-      "url": "https://ayajourney.com",
-      "logo": "https://ayajourney.com/images/logo.png",
-      "description": "Kanada, ABD, İngiltere,Portekiz ve Schengen vizeleri için profesyonel danışmanlık hizmeti.",
+      "@type": ["TravelAgency", "LocalBusiness"],
+      "name": "AYA Journey",
+      "url": "https://www.ayajourney.com",
+      "logo": "https://www.ayajourney.com/images/logo.png",
+      "image": "https://www.ayajourney.com/images/ayaiconsmall.jpg",
+      "description":
+        "Amerika, Kanada, İngiltere, Portekiz D7 ve Schengen vizeleri ile yurt dışı eğitim programları için Ankara ve İstanbul'da profesyonel danışmanlık hizmeti.",
       "telephone": "+90 312 870 15 84",
+      "priceRange": "$$",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "Kızılırmak Mahallesi Ufuk Ünv. Caddesi No: 3 Paragon Tower",
+        "streetAddress":
+          "Kızılırmak Mahallesi Ufuk Üniversitesi Caddesi No:3 Paragon Tower",
         "addressLocality": "Ankara",
         "postalCode": "06510",
         "addressCountry": "TR"
       },
-      "image": "https://ayajourney.com/images/logo.png",
-      "priceRange": "$$",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "39.903",
+        "longitude": "32.760"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Türkiye"
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "09:00",
+        "closes": "18:00"
+      },
+       "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "625"
+      },
+ "hasOfferCatalog": {
+  "@type": "OfferCatalog",
+  "name": "Vize ve Yurt Dışı Eğitim Hizmetleri",
+  "itemListElement": [
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Amerika Vizesi Danışmanlığı",
+        "areaServed": [
+          {
+            "@type": "City",
+            "name": "Ankara"
+          },
+          {
+            "@type": "City",
+            "name": "İstanbul"
+          }
+        ]
+      }
+    },
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "İngiltere Vizesi Danışmanlığı",
+        "areaServed": [
+          {
+            "@type": "City",
+            "name": "Ankara"
+          },
+          {
+            "@type": "City",
+            "name": "İstanbul"
+          }
+        ]
+      }
+    },
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Schengen Vizesi Danışmanlığı",
+        "areaServed": [
+          {
+            "@type": "City",
+            "name": "Ankara"
+          },
+          {
+            "@type": "City",
+            "name": "İstanbul"
+          }
+        ]
+      }
+    },
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Portekiz D7 Oturum Vizesi Danışmanlığı",
+        "areaServed": [
+          {
+            "@type": "City",
+            "name": "Ankara"
+          },
+          {
+            "@type": "City",
+            "name": "İstanbul"
+          }
+        ]
+      }
+    },
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "ABD Yurt Dışı Eğitim Programları",
+        "areaServed": [
+          {
+            "@type": "City",
+            "name": "Ankara"
+          },
+          {
+            "@type": "City",
+            "name": "İstanbul"
+          }
+        ]
+      }
+    }
+  ]
+},
       "sameAs": [
         "https://www.instagram.com/ayajourneyvize/",
         "https://www.linkedin.com/company/ayajourney/",
         "https://x.com/ayajourneyvize",
         "https://www.youtube.com/@aya.journey"
-      ],
-      "areaServed": {
-        "@type": "Country",
-        "name": "Türkiye"
-      }
+      ]
     })
   }}
 />
+
 
       </body>
     </html>
