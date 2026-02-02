@@ -331,6 +331,153 @@ F1 Vize alma ihtimalinizi ölçün!
           ))}
         </div>
       </section>
+{/* FAQ – Schema ile birebir eşleşen HTML */}
+{/* FAQ – Schema ile birebir uyumlu */}
+<section
+  id="faq"
+  className="max-w-6xl mx-auto px-6 py-16"
+>
+  <div className="mb-10">
+    <p className="text-sm text-slate-500 uppercase">Sık Sorulan Sorular</p>
+    <h2 className="text-3xl font-bold text-slate-900">
+      Amerika Vizesi Hakkında Sık Sorulan Sorular
+    </h2>
+  </div>
+
+  <div className="space-y-4">
+
+    {/* ÖNE ÇIKAN SORULAR */}
+    {[
+      {
+        q: "Amerika vizesi almak zor mu?",
+        a: "Amerika vizesi almak iyi doldurulmuş bir DS-160 formu ve doğru bir mülakat hazırlığı ile zor değildir. Ancak yapılacak basit hatalar vize reddine yol açabilir."
+      },
+      {
+        q: "Amerika turist vizesi kaç yıl geçerli?",
+        a: "Türk vatandaşları için Amerika turist vizesi (B1/B2) standart olarak 10 yıl geçerli verilmektedir. Ancak bazı durumlarda daha kısa süreli vizeler de düzenlenebilir."
+      },
+      {
+        q: "Amerika vizesi mülakatı Türkçe mi yapılır?",
+        a: "Amerika vizesi mülakat dili başvurulan vize türüne göre değişir. Turistik vizelerde Türkçe mülakat yapılabilirken, öğrenci ve staj vizelerinde İngilizce mülakat beklenir."
+      },
+      {
+        q: "Amerika vizesi reddi neden olur?",
+        a: "Amerika vizesi reddi genellikle 214(b) maddesi kapsamında göçmenlik şüphesi nedeniyle verilir. Ekonomik durumun zayıf görülmesi, boş pasaport ve geri dönüş bağlarının yetersizliği başlıca nedenlerdir."
+      }
+    ].map((item, i) => (
+      <details
+        key={i}
+        className="group rounded-xl border border-slate-200 bg-white p-5"
+        open={i === 0}
+      >
+        <summary className="cursor-pointer font-semibold text-slate-900 flex justify-between items-center">
+          {item.q}
+          <span className="ml-4 transition group-open:rotate-180">⌄</span>
+        </summary>
+        <p className="mt-3 text-slate-700 leading-relaxed">
+          {item.a}
+        </p>
+      </details>
+    ))}
+
+    {/* DİĞER TÜM SORULAR */}
+<details className="rounded-xl border border-slate-200 bg-white p-5">
+  <summary className="cursor-pointer font-semibold text-slate-900">
+    Diğer sık sorulan sorular
+  </summary>
+
+  <div className="mt-4 space-y-4 text-slate-700">
+
+    <p><strong>Amerika vizesi reddinden sonra tekrar başvuru yapılabilir mi?</strong><br />
+    Amerika vizesi reddinden sonra tekrar başvuru yapmak mümkündür. Sistem izin verdiği sürece ertesi gün dahi başvuru yapılabilir ancak anlamlı değişiklikler olmadan yeniden başvurmak farklı bir sonuç doğurmayabilir.</p>
+
+    <p><strong>DS-160 formu nedir?</strong><br />
+    DS-160 formu, göçmen olmayan Amerika vizesi başvurularında doldurulması zorunlu olan online başvuru formudur. İngilizce doldurulur ve elektronik olarak imzalanır.</p>
+
+    <p><strong>DS-160 formu yanlış doldurulursa ne olur?</strong><br />
+    DS-160 formu imzalandıktan sonra değiştirilemez. Hata fark edilirse yeni bir form doldurulmalı, randevu alınmışsa yeni form numarası ile başvuru yenilenmelidir.</p>
+
+    <p><strong>Amerika vizesi randevusu ne kadar sürede bulunur?</strong><br />
+    Amerika vizesi randevuları İstanbul ve Ankara’da yapılmaktadır. Turist vize randevuları genellikle 6 ay içerisinde bulunabilmektedir.</p>
+
+    <p><strong>Amerika vizesi için sponsor gerekli mi?</strong><br />
+    Amerika vizesi için sponsor zorunlu değildir. Ancak ekonomik yeterliliği olmayan başvurular sponsorlu olarak yapılabilir.</p>
+
+    <p><strong>Amerika vizesiyle kaç ay kalınabilir?</strong><br />
+    Amerika vizesiyle bir yıl içerisinde en fazla 6 ay kalınabilir. Daha uzun kalışlar göçmenlik şüphesi doğurabilir.</p>
+
+    <p><strong>Amerika vizesi alındıktan sonra hemen seyahat etmek gerekir mi?</strong><br />
+    Hayır. Amerika vizesi alındıktan sonra hemen seyahat etmek zorunlu değildir. Vize geçerlilik süresi boyunca uygun bir tarihte seyahat edilebilir.</p>
+
+    <p><strong>Amerika vizesi uzatılabilir mi?</strong><br />
+    Amerika vizesi, bitiş tarihinden itibaren 12 ay içinde başvurulması şartıyla mülakatsız olarak yenilenebilir. Çocuk yaşta alınan vizeler bu kapsama girmez.</p>
+
+    <p><strong>Amerika vizesi ile çalışabilir miyim?</strong><br />
+    Amerika turist vizesi ile çalışılamaz. Ancak iş görüşmeleri, toplantılar ve pazar araştırmaları yapılabilir.</p>
+
+    <p><strong>Amerika vizesi mülakatı kaç dakika sürer?</strong><br />
+    Amerika vize mülakatı genellikle birkaç dakika sürer. Konsolosluk memuru gerekli görürse süreyi uzatabilir.</p>
+
+    <p><strong>Amerika vizesi mülakatında ne giymeli?</strong><br />
+    Mülakata temiz, bakımlı ve şık bir şekilde gitmek yeterlidir. Özel bir kıyafet zorunluluğu bulunmamaktadır.</p>
+
+    <p><strong>Amerika vizesi için uçak bileti almak gerekir mi?</strong><br />
+    Hayır. Amerika vizesi başvurusu için uçak bileti satın almak veya rezervasyon yaptırmak zorunlu değildir.</p>
+
+    <p><strong>Amerika vizesi için otel rezervasyonu şart mı?</strong><br />
+    Hayır. DS-160 formunda kalınacak yerin belirtilmesi yeterlidir.</p>
+
+    <p><strong>Amerika vizesi reddi pasaporta işlenir mi?</strong><br />
+    Amerika vizesi reddi pasaporta fiziksel olarak işlenmez. Ancak konsolosluk kayıtlarında yer alır.</p>
+
+    <p><strong>Amerika vizesi reddi sicile işler mi?</strong><br />
+    Amerika vizesi reddi özel bir sicile işlemez. Ancak konsolosluk sisteminde kayıtlı kalır.</p>
+
+    <p><strong>Amerika vizesi ilk başvuruda çıkar mı?</strong><br />
+    Evet. Amerika vizesi ilk başvuruda da alınabilir. Başvurunun kaçıncı olduğu değil, başvuru sahibinin profili önemlidir.</p>
+
+    <p><strong>Amerika vizesi için evli olmak avantaj mı?</strong><br />
+    Evli olmak bazı durumlarda geri dönüş bağlarını güçlendirebilir ancak tek başına bir avantaj değildir. Gelir, kariyer ve seyahat geçmişi daha belirleyicidir.</p>
+
+    <p><strong>Amerika vizesi için davetiye gerekli mi?</strong><br />
+    Davetiye zorunlu değildir. Ancak bir etkinlik veya özel ziyaret için gidiliyorsa davetiye başvuruyu destekleyebilir.</p>
+
+    <p><strong>Amerika vizesiyle Amerika’da kalıcı olunur mu?</strong><br />
+    Amerika turist vizesi ile statü değiştirmeden kalıcı olunamaz. Kalıcı olmak farklı vize türleri veya Green Card gerektirir.</p>
+
+    <p><strong>Amerika vizesiyle Green Card alınır mı?</strong><br />
+    Hayır. Amerika turist vizesi ile Green Card alınamaz. Green Card için ayrı başvuru yolları vardır.</p>
+
+    <p><strong>Amerika vizesi mülakatında heyecan sorun olur mu?</strong><br />
+    Heyecan tek başına sorun değildir. Ancak sorulara tutarsız veya çelişkili cevaplar verilmesine neden olursa olumsuz etkileyebilir.</p>
+
+    <p><strong>Amerika vizesi için sabıka kaydı istenir mi?</strong><br />
+    Sabıka kaydı zorunlu değildir. DS-160 formunda belirli suçlarla ilgili sorular yer alır, nadiren ek belge istenebilir.</p>
+
+    <p><strong>Amerika vizesi çocuklar için nasıl alınır?</strong><br />
+    Çocuklar için de bireysel vize başvurusu yapılır ve mülakata ebeveynlerinden biri eşlik eder.</p>
+
+    <p><strong>Amerika vizesi kaç günde sonuçlanır?</strong><br />
+    Vize sonucu genellikle mülakat sırasında sözlü olarak bildirilir. Pasaportun teslim süresi ortalama 1 haftadır.</p>
+
+    <p><strong>Amerika vizesi mülakatına geç kalınırsa ne olur?</strong><br />
+    Mesai saatleri içinde kalındığı sürece genellikle mülakata alınabilirsiniz. Mesai saatleri sonrasında giriş mümkün olmayabilir.</p>
+
+    <p><strong>Amerika vizesi mülakatına kimler girmez?</strong><br />
+    Türkçe, İngilizce veya Farsça dillerinden hiçbirini bilmeyen kişiler için mülakat verimsiz olabilir. Bunun dışında genel bir engel bulunmamaktadır.</p>
+
+    <p><strong>Amerika vizesi iptal edilir mi?</strong><br />
+    Evet. Vize ihlali, amacı dışında kullanım veya yanlış beyan gibi durumlarda Amerika vizesi iptal edilebilir.</p>
+
+    <p><strong>Amerika vizesi alındıktan sonra reddedilebilir mi?</strong><br />
+    Evet. Mülakat sonrası yapılan ek incelemeler sonucunda vize reddine dönülebilir. Ayrıca vize almak Amerika’ya giriş garantisi değildir.</p>
+
+  </div>
+</details>
+
+  </div>
+</section>
+
 
       {/* WHY + CTA */}
       <section className="max-w-6xl mx-auto px-6 pb-20">
@@ -404,63 +551,7 @@ F1 Vize alma ihtimalinizi ölçün!
 
 
 
-        {/* FAQ SCHEMA */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              "mainEntity": [
-                {
-                  "@type": "Question",
-                  "name": "Amerika vizesi kaç yıllık verilir?",
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text":
-                      "İstisnai durumlar haricinde ABD turist vizeleri genellikle 10 yıllık olarak verilir."
-                  }
-                },
-                {
-                  "@type": "Question",
-                  "name": "ABD vizesi evrakla mı verilir?",
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text":
-                      "Hayır. ABD vizesi mülakat esaslıdır. Evraklardan çok vize memuru ile yapılan birebir görüşme belirleyicidir."
-                  }
-                },
-                {
-                  "@type": "Question",
-                  "name": "Amerika vize sonucu ne zaman belli olur?",
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text":
-                      "Vize sonucu mülakatın hemen sonunda başvuru sahibine sözlü olarak bildirilir."
-                  }
-                },
-                {
-                  "@type": "Question",
-                  "name": "AYA Journey vize garantisi veriyor mu?",
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text":
-                      "Hayır. Vize kararı tamamen konsolosluk memuruna aittir. AYA Journey profesyonel danışmanlık sunar."
-                  }
-                },
-                {
-                  "@type": "Question",
-                  "name": "Amerika vizesine nereden başvurulur?",
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text":
-                      "İkamet ettiğiniz şehir fark etmeksizin başvurunuzu İstanbul veya Ankara’daki ABD temsilciliklerinden yapabilirsiniz."
-                  }
-                }
-              ]
-            })
-          }}
-        />
+     
       </section>
   <AmericaVisaTestModal open={open} setOpen={setOpen} />
   <TestModal openF1={openF1} setOpenF1={setOpenF1}/>

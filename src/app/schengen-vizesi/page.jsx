@@ -165,7 +165,366 @@ export default function SchengenPage() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-white text-gray-800">
+    <>
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi almak zor mu?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Evet, eskisine göre daha zor ama imkansız değil. Konsolosluklar düzensiz göç riskini azaltmak için başvurularda geri dönüş niyeti ve finansal yeterliliği daha detaylı inceler. Doğru evrak, tutarlı seyahat planı ve güçlü profil ile Schengen vizesi almak mümkündür."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi kaç ülke için geçerlidir?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Schengen vizesi Almanya, Avusturya, Belçika, Bulgaristan, Çekya, Danimarka, Estonya, Finlandiya, Fransa, Hollanda, İspanya, İsveç, İsviçre, İtalya, İzlanda, Letonya, Litvanya, Lüksemburg, Macaristan, Malta, Norveç, Polonya, Portekiz, Romanya, Slovakya, Slovenya, Yunanistan ve Lihtenştayn ülkeleri için geçerlidir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi Schengen ülkeleri arasında serbest dolaşım sağlar mı?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Evet. Geçerli bir Schengen vizeniz olduğunda Schengen bölgesindeki 29 üye ülke arasında iç sınır kontrolleri olmadan serbestçe dolaşabilirsiniz. Ancak vize kuralları gereği seyahatinize vizeyi aldığınız (başvurduğunuz) ülke üzerinden başlamanız tavsiye edilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi ile tüm Schengen ülkelerine girilebilir mi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Evet, aldığınız Schengen vizesi ile tüm Schengen ülkelerine giriş yapabilirsiniz. Yine de uygulamada sorun yaşamamak için seyahate vizeyi aldığınız ülkeden başlamak ve planınızı başvurunuzla tutarlı yürütmek önerilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi ile kaç gün kalınabilir?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Schengen vizesiyle, vizenizin üzerinde yazan süreyi aşmamak kaydıyla 180 günlük zaman dilimi içinde en fazla 90 gün kalabilirsiniz. 90/180 kuralı tüm Schengen alanı için geçerlidir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi kaç yıl verilir?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Vize süresi tamamen konsolosluğun inisiyatifindedir. Seyahat geçmişiniz ve profilinize bağlı olarak, seyahat sürenizden başlayıp 5 yıla kadar uzayabilir. Güçlü vize geçmişi ve düzenli seyahat profili, daha uzun süreli vize ihtimalini artırabilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi başvurusu online mı yapılır?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Süreç hibrit şekilde ilerler. Randevu ve hazırlıkların önemli kısmı online gerçekleşir; ancak randevu günü fiziken başvuru merkezine gidip parmak izi (biyometri) vermeniz ve evrak teslimi yapmanız beklenir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi randevusu nasıl alınır?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Randevular genellikle ilgili ülkenin yetkilendirdiği aracı kurumlar/vize başvuru merkezleri üzerinden alınır. Başvuru formu doldurulur, vize türü seçilir ve uygun bir tarih belirlenerek randevu oluşturulur."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi başvurusu kaç günde sonuçlanır?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Schengen vizesi sonuçlanma süresi ortalama bir aydır. Bazı ülkelerde 15 gün içerisinde de sonuç alınabilir. Yoğun dönemler, resmi tatiller ve ek evrak talepleri süreyi uzatabilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi ne kadar sürede çıkar?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Schengen vizesi için açıklanma süresi çoğunlukla ortalama bir ay olarak görülebilir; bazı başvurular 15 gün içinde de sonuçlanabilir. Değerlendirme süresi ülkeye, döneme ve dosyanın içeriğine göre değişir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hangi ülkeye Schengen başvurusu yapmalıyım?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "En uzun konaklamayı yapacağınız ülkeye başvuru yapılmalıdır. Konaklama günleri eşitse ilk giriş yapacağınız ülkeye başvurulur. Profil, seyahat geçmişi ve meslek gibi etkenlere göre başvuru stratejisi kişiye özel şekillendirilebilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi hangi ülke üzerinden alınmalı?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Birden fazla ülkeyi ziyaret edecekseniz en çok vakit geçireceğiniz ülke üzerinden başvuru yapmalısınız. Eğer süreler eşitse ilk giriş ülkesine başvurmak gerekir. Başvurunun seyahat planıyla tutarlı olması önemlidir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi için banka hesabında ne kadar para olmalı?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hesabınızda göstereceğiniz bakiyenin amacı, seyahat edebilecek yeterlilikte bir profil olduğunuzu ve ülkenizde de yeterli birikim ve kazanca sahip olduğunuzu ispat etmektir. Seyahat gün sayısı ve planlanan harcamalara göre günlük ortalama Euro baz alınarak masrafları karşılayacak bakiye göstermek gerekir. Düzenli gelir ve tutarlı hesap hareketleri de önemlidir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi için hesap dökümü kaç aylık olmalı?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Genellikle ülkeler 3 aylık hesap dökümü talep eder. Bazı ülkeler ve profiller için 6 aylık hesap dökümü de istenebilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi için maaş bordrosu şart mı?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Çalışan olarak başvuruda bulunuyorsanız, maaş bordrosu sunulması zorunludur. Sponsorunuz çalışan ise sponsorun maaş bordrosu da dosyaya eklenmelidir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi için uçak bileti almak gerekir mi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ülkeden ülkeye değişmekle birlikte genel olarak satın alınmış uçak bileti zorunlu değildir. Çoğu durumda gidiş-dönüş tarihlerinizi gösteren uçak rezervasyonu sunmanız yeterlidir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi için otel rezervasyonu şart mı?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Evet. Seyahat sürecinizi kapsayacak şekilde otel rezervasyonu sunmak zorunludur. Alternatif olarak, bir yakının yanında kalacaksanız davetiye/konaklama belgesi otel yerine geçebilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi için seyahat sağlık sigortası zorunlu mu?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Evet, zorunludur. En az 30.000 Euro teminatlı ve tüm seyahat sürenizi kapsayan seyahat sağlık sigortası poliçesi sunmanız gerekir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi için davetiye gerekli mi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hayır. Turistik başvurularda davetiye zorunlu değildir. Ancak bir akraba veya arkadaş yanında konaklayacaksanız, onaylı davetiye otel rezervasyonu yerine geçebilir ve konaklama belgesi olarak sunulur."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi ilk başvuruda çıkar mı?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Vize onayı tamamen konsolosluğun takdirindedir ve hiçbir başvurunun %100 garantisi yoktur. İlk başvuruda da onay alınabilir; dosyanın tutarlılığı ve başvuru sahibinin profili belirleyicidir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi garantili mi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hayır. Hiçbir Schengen vizesi başvurusu %100 garantili değildir. Nihai karar konsolosluğa aittir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi danışmanlık almak avantaj sağlar mı?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Danışmanlık almak evrak hatalarını minimize etmeye, size özel başvuru stratejisi oluşturmaya ve randevu/evrak takibini doğru yapmaya yardımcı olabilir. Bu da dosyanın ikna ediciliğini artırarak onay şansına olumlu katkı sağlayabilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi hangi ülkeden daha kolay alınır?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Bu, başvuru sahibinin profiline ve seyahat planına göre değişir. İlk Schengen vizesi başvurularında turistik ülkeler üzerinden, planla uyumlu ve belgeleri güçlü bir dosya ile başvurmak onay ihtimalini artırabilir."
+          }
+        }
+      ]
+    })
+  }}
+/>
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi reddi neden olur?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Schengen vizesi reddi; geri döneceğinize dair ülkenizle bağların zayıf görülmesi, yetersiz finansal kaynaklar, sahte/çelişkili evrak, eksik belge, tutarsız banka hareketleri, şüpheli seyahat planı ve geçmiş reddler gibi nedenlerle verilebilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi reddi pasaporta işlenir mi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pasaportunuzun içine 'vize reddi' yazan fiziksel bir damga vurulmaz veya yazı yazılmaz. Ancak ret kararı Schengen ülkelerinin ortak dijital veri tabanına kaydedilebilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi reddi sicile işler mi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Konsoloslukların ortak veri tabanında (Schengen Bilgi Sistemi gibi) ret kararları kayıtlı kalabilir. Bu kayıtlar sonraki başvuruların değerlendirilmesinde etkili olabilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi reddinden sonra tekrar başvuru yapılabilir mi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Evet, ret aldıktan sonra tekrar başvuru yapabilirsiniz. Ancak yeni başvuruda önceki ret gerekçelerini belgelerle çürütemezseniz sonuç büyük ihtimalle yine ret olacaktır."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi reddinden sonra ne kadar süre beklenmeli?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Eğer seyahat planınız sabitse, ret gerekçelerini güçlü evraklarla gidererek kısa sürede yeniden başvuru yapılabilir. Farklı bir seyahat planı oluşturacaksanız 4–5 ay beklemek daha sağlıklı olabilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi çok girişli (multiple) olur mu?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Evet. Schengen vizesi 'MULT' ibaresiyle çok girişli olarak verilebilir; böylece vize geçerlilik süresi boyunca Schengen bölgesine defalarca girip çıkabilirsiniz."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi kaç girişlidir?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Schengen vizesinde giriş hakkı üç şekilde tanımlanır: Tek giriş (single), ikili giriş (double) ve çoklu giriş (multiple/MULT)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi ile çalışabilir miyim?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Kısa dönem C tipi Schengen vizesi ile çalışamazsınız. Çalışma hakkı, D tipi ulusal vize veya oturum izni gibi başvurularda vize türüne göre mümkündür."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi ile başka ülkelere gidilebilir mi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "İlk girişi vize aldığınız ülkeden yapmak mantıklı olandır. Sonrasında Schengen bölgesi içinde farklı ülkelere geçiş sağlayabilirsiniz."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi uzatılabilir mi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Schengen vizesinin uzatılması genellikle istisnai durumlarda mümkündür ve her başvuru kabul edilmez. Uzatma koşulları ülkeye ve duruma göre değerlendirilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi express başvuru var mı?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hayır. Schengen vize başvurularında resmi bir 'express' başvuru hizmeti sunulmaz."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi alındıktan sonra iptal edilir mi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Evet. Vize onayından sonra otel veya uçuş rezervasyonlarının iptal edilmesi, yanıltıcı belge sunulduğunun sonradan tespit edilmesi gibi durumlarda vize iptal edilebilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi alındıktan sonra reddedilebilir mi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Evet. Vize onaylanıp pasaporta basıldıktan sonra bile sahte belge tespiti, konaklama/uçuş rezervasyonlarının iptali veya sınır kapısında sunulan çelişkili bilgiler nedeniyle vize iptal edilebilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi çocuklar için nasıl alınır?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Çocuklar için de bireysel vize başvurusu zorunludur. Başvuru formu ebeveynler tarafından imzalanmalıdır. Çocuk ebeveynleri dışında biriyle seyahat edecekse, her iki ebeveynden noter onaylı muvafakatname dosyaya eklenmelidir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi ev hanımları için nasıl alınır?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ev hanımları için başvuru genellikle sponsorlu şekilde ilerler. Seyahat masraflarını karşılayacak birinci derece yakının (çoğunlukla eşin) mali belgeleri ile başvuru yapılır."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi serbest meslek sahipleri için zor mu?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hayır, zor değildir. Şirketin ticaret sicil kayıtları, güncel vergi levhası ve şahsi banka hesaplarının düzenli akışı ile gelirin şeffaf şekilde belgelenmesi önemlidir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi neden zor veriliyor?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Schengen vizesinin zor verilmesinin temel nedeni, Avrupa ülkelerinin artan düzensiz göç riskini önlemek istemesi ve başvuranın ülkesine geri döneceğinden ve seyahat masraflarını karşılayabileceğinden emin olmaya çalışmasıdır."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi en uzun hangi ülke veriyor?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Bu durum başvuru sahibinin profiline göre değişir. Güçlü vize geçmişi, ticari bağlantılar veya kanıtlanmış turistik seyahat profili olan kişilere bazı ülkeler daha uzun süreli vize verme eğiliminde olabilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schengen vizesi için tapu veya araba ruhsatı gerekli mi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Zorunlu değildir. Ancak tapu ve araç ruhsatı gibi belgeler, ülkenizdeki bağlarınızı ve maddi durumunuzu destekleyen ek evrak olarak dosyayı güçlendirebilir."
+          }
+        }
+      ]
+    })
+  }}
+/>
+       <main className="min-h-screen bg-white text-gray-800">
 
       {/* HERO */}
       <section
@@ -437,6 +796,160 @@ export default function SchengenPage() {
           </div>
         </div>
       </section>
+{/* FAQ – Schengen vizesi (Schema ile birebir uyumlu) */}
+<section
+  id="faq"
+  className="max-w-6xl mx-auto px-6 py-16"
+>
+  <div className="mb-10">
+    <p className="text-sm text-slate-500 uppercase">Sık Sorulan Sorular</p>
+    <h2 className="text-3xl font-bold text-slate-900">
+      Schengen Vizesi Hakkında Sık Sorulan Sorular
+    </h2>
+  </div>
+
+  <div className="space-y-4">
+
+    {/* ÖNE ÇIKAN SORULAR */}
+    {[
+      {
+        q: "Schengen vizesi almak zor mu?",
+        a: "Schengen vizesi eskisine göre daha zorlayıcı kriterlere sahip olsa da doğru evrak, tutarlı seyahat planı ve güçlü bir profil ile alınması mümkündür. İmkansız değildir."
+      },
+      {
+        q: "Schengen vizesi kaç ülke için geçerlidir?",
+        a: "Schengen vizesi Almanya, Fransa, İtalya, İspanya, Hollanda, Yunanistan dahil olmak üzere toplam 29 Schengen ülkesinde geçerlidir."
+      },
+      {
+        q: "Schengen vizesi kaç yıl verilir?",
+        a: "Schengen vizesinin süresi tamamen konsolosluğun inisiyatifindedir. Başvuru sahibinin seyahat geçmişi ve profiline göre seyahat süresi kadar ya da 1 yıldan 5 yıla kadar verilebilir."
+      },
+      {
+        q: "Schengen vizesi ile kaç gün kalınabilir?",
+        a: "Schengen vizesi ile 180 günlük zaman dilimi içerisinde en fazla 90 gün kalınabilir. Bu kural tüm Schengen bölgesi için geçerlidir."
+      }
+    ].map((item, i) => (
+      <details
+        key={i}
+        className="group rounded-xl border border-slate-200 bg-white p-5"
+        open={i === 0}
+      >
+        <summary className="cursor-pointer font-semibold text-slate-900 flex justify-between items-center">
+          {item.q}
+          <span className="ml-4 transition group-open:rotate-180">⌄</span>
+        </summary>
+        <p className="mt-3 text-slate-700 leading-relaxed">
+          {item.a}
+        </p>
+      </details>
+    ))}
+
+    {/* DİĞER TÜM SORULAR */}
+<details className="rounded-xl border border-slate-200 bg-white p-5">
+  <summary className="cursor-pointer font-semibold text-slate-900">
+    Diğer sık sorulan sorular
+  </summary>
+
+  <div className="mt-4 space-y-4 text-slate-700">
+
+    <p><strong>Schengen vizesi başvurusu online mı yapılır?</strong><br />
+    Schengen vizesi başvuru süreci hibrit şekilde ilerler. Randevu alma ve başvuru formu doldurma işlemleri online yapılır; randevu günü ise fiziken parmak izi verilmesi ve evrak teslimi gerçekleştirilir.</p>
+
+    <p><strong>Schengen vizesi randevusu nasıl alınır?</strong><br />
+    Randevular, başvuru yapılacak ülkenin yetkilendirdiği vize başvuru merkezleri üzerinden online olarak alınır.</p>
+
+    <p><strong>Schengen vizesi ne kadar sürede çıkar?</strong><br />
+    Schengen vizesi genellikle 7–15 iş günü içerisinde sonuçlanır. Konsolosluk yoğunluğu ve resmi tatiller süreci uzatabilir.</p>
+
+    <p><strong>Hangi ülkeye Schengen vizesi başvurusu yapılmalıdır?</strong><br />
+    En uzun süre konaklama yapılacak ülkeye başvuru yapılmalıdır. Konaklama süreleri eşitse ilk giriş yapılacak ülke esas alınır.</p>
+
+    <p><strong>Schengen vizesi için banka hesabında ne kadar para olmalı?</strong><br />
+    Banka hesabında seyahat süresince masrafları karşılayabilecek yeterli bakiye bulunmalıdır. Günlük harcama ortalaması baz alınır ve düzenli hesap hareketleri önemlidir.</p>
+
+    <p><strong>Schengen vizesi için hesap dökümü kaç aylık olmalı?</strong><br />
+    Genellikle son 3 aylık banka hesap dökümü talep edilir. Bazı ülkeler ve profiller için 6 aylık hesap dökümü istenebilir.</p>
+
+    <p><strong>Schengen vizesi için maaş bordrosu şart mı?</strong><br />
+    Çalışan olarak başvuruda bulunuyorsanız maaş bordrosu sunulması zorunludur. Sponsorlu başvurularda sponsorun maaş bordrosu da eklenmelidir.</p>
+
+    <p><strong>Schengen vizesi için uçak bileti almak gerekir mi?</strong><br />
+    Satın alınmış uçak bileti zorunlu değildir. Çoğu ülke için gidiş-dönüş tarihlerini gösteren uçak rezervasyonu yeterlidir.</p>
+
+    <p><strong>Schengen vizesi için otel rezervasyonu şart mı?</strong><br />
+    Evet. Seyahat süresini kapsayan otel rezervasyonu veya geçerli bir konaklama belgesi sunulmalıdır.</p>
+
+    <p><strong>Schengen vizesi için seyahat sağlık sigortası zorunlu mu?</strong><br />
+    Evet. En az 30.000 Euro teminatlı ve tüm seyahat süresini kapsayan seyahat sağlık sigortası zorunludur.</p>
+
+    <p><strong>Schengen vizesi için davetiye gerekli mi?</strong><br />
+    Turistik başvurularda davetiye zorunlu değildir. Ancak bir yakının yanında konaklanacaksa onaylı davetiye otel yerine geçebilir.</p>
+
+    <p><strong>Schengen vizesi ilk başvuruda çıkar mı?</strong><br />
+    İlk başvuruda da Schengen vizesi alınabilir. Ancak başvurunun sonucu tamamen konsolosluğun değerlendirmesine bağlıdır.</p>
+
+    <p><strong>Schengen vizesi reddi neden olur?</strong><br />
+    Yetersiz finansal durum, eksik veya hatalı evrak, tutarsız seyahat planı ve geri dönüş bağlarının zayıf görülmesi başlıca ret nedenleridir.</p>
+
+    <p><strong>Schengen vizesi reddinden sonra tekrar başvuru yapılabilir mi?</strong><br />
+    Evet, ret sonrası tekrar başvuru yapılabilir. Ancak önceki ret gerekçeleri yeni başvuruda güçlü belgelerle giderilmelidir.</p>
+
+    <p><strong>Schengen vizesi reddi pasaporta işlenir mi?</strong><br />
+    Vize reddi pasaporta fiziksel olarak işlenmez. Ancak ret kararı Schengen Bilgi Sistemi (SIS) üzerinde kayıtlı kalır.</p>
+
+    <p><strong>Schengen vizesi reddi sicile işler mi?</strong><br />
+    Ret kararları Schengen ülkelerinin ortak veri tabanı olan SIS sisteminde kayıtlı tutulur.</p>
+
+    <p><strong>Schengen vizesi reddinden sonra ne kadar süre beklenmeli?</strong><br />
+    Ret gerekçeleri giderilebiliyorsa kısa sürede yeniden başvuru yapılabilir. Farklı bir seyahat planı varsa 4–5 ay beklemek daha sağlıklı olabilir.</p>
+
+    <p><strong>Schengen vizesi çok girişli (multiple) olur mu?</strong><br />
+    Evet. Schengen vizesi MULT ibaresiyle çok girişli olarak verilebilir ve vize süresi boyunca birden fazla giriş-çıkış yapılabilir.</p>
+
+    <p><strong>Schengen vizesi kaç girişlidir?</strong><br />
+    Schengen vizeleri tek girişli, çift girişli veya çok girişli (multiple) olarak düzenlenebilir.</p>
+
+    <p><strong>Schengen vizesi ile çalışabilir miyim?</strong><br />
+    Hayır. Kısa dönem C tipi Schengen vizesi ile çalışma hakkı bulunmamaktadır.</p>
+
+    <p><strong>Schengen vizesi ile başka ülkelere gidilebilir mi?</strong><br />
+    İlk girişin vize alınan ülkeden yapılması tavsiye edilir. Sonrasında Schengen bölgesi içinde serbestçe seyahat edilebilir.</p>
+
+    <p><strong>Schengen vizesi uzatılabilir mi?</strong><br />
+    Schengen vizesi yalnızca istisnai durumlarda ve nadiren uzatılabilir. Her başvuru kabul edilmez.</p>
+
+    <p><strong>Schengen vizesi express başvuru var mı?</strong><br />
+    Hayır. Schengen vize başvurularında resmi bir express başvuru hizmeti bulunmamaktadır.</p>
+
+    <p><strong>Schengen vizesi alındıktan sonra iptal edilir mi?</strong><br />
+    Yanıltıcı belge sunulması, rezervasyonların iptali veya vize şartlarının ihlal edilmesi durumunda vize iptal edilebilir.</p>
+
+    <p><strong>Schengen vizesi alındıktan sonra reddedilebilir mi?</strong><br />
+    Evet. Vize onaylandıktan sonra dahi sahte belge tespiti veya sınır kapısında verilen çelişkili bilgiler nedeniyle iptal edilebilir.</p>
+
+    <p><strong>Schengen vizesi çocuklar için nasıl alınır?</strong><br />
+    Çocuklar için de bireysel başvuru yapılır. Ebeveyn imzaları ve gerekli durumlarda noter onaylı muvafakatname sunulmalıdır.</p>
+
+    <p><strong>Schengen vizesi ev hanımları için nasıl alınır?</strong><br />
+    Ev hanımları için başvurular genellikle sponsorlu şekilde yapılır ve masrafları karşılayan birinci derece yakının belgeleri sunulur.</p>
+
+    <p><strong>Schengen vizesi serbest meslek sahipleri için zor mu?</strong><br />
+    Hayır. Ticaret sicil kayıtları, güncel vergi levhası ve düzenli banka hesap hareketleri ile başvuru yapılabilir.</p>
+
+    <p><strong>Schengen vizesi neden zor veriliyor?</strong><br />
+    Avrupa ülkeleri düzensiz göç riskini azaltmak amacıyla başvurularda geri dönüş niyetini ve finansal yeterliliği daha sıkı incelemektedir.</p>
+
+    <p><strong>Schengen vizesi en uzun hangi ülke veriyor?</strong><br />
+    Bu durum başvuru sahibinin profiline bağlıdır. Güçlü vize geçmişi olan kişilere bazı ülkeler daha uzun süreli vize verebilmektedir.</p>
+
+    <p><strong>Schengen vizesi garantili midir?</strong><br />
+    Hayır. Hiçbir Schengen vizesi başvurusu %100 garantili değildir.</p>
+
+  </div>
+</details>
+
+  </div>
+</section>
 
       {/* CTA FOOTER */}
       <section
@@ -500,57 +1013,12 @@ export default function SchengenPage() {
       </section>
 
       {/* FAQ JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: [
-              {
-                "@type": "Question",
-                name: "Schengen vizesi için gerekli belgeler nelerdir?",
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: "Schengen vizesi için pasaport, banka hesap dökümleri, iş/öğrenci belgeleri, seyahat sağlık sigortası, biyometrik fotoğraf, uçak ve konaklama rezervasyonları gereklidir. Bazı profiller için ek belgeler talep edilebilir.",
-                },
-              },
-              {
-                "@type": "Question",
-                name: "Schengen vizesi ne kadar sürede çıkar?",
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: "Schengen vizesi genellikle 7–15 iş günü içinde sonuçlanır. Ancak yoğun dönemlerde bu süre uzayabilir.",
-                },
-              },
-              {
-                "@type": "Question",
-                name: "Schengen vizesi randevusu nasıl alınır?",
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: "Randevular aracı kurumlar üzerinden alınır. Başvuru formu doldurulduktan sonra vize türü seçilir ve uygun bir tarih belirlenir.",
-                },
-              },
-              {
-                "@type": "Question",
-                name: "Hangi ülkeye Schengen başvurusu yapmalıyım?",
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: "En uzun konaklamayı yapacağınız veya ilk giriş yapacağınız ülkeye başvuru yapılmalıdır. Profil, seyahat geçmişi ve meslek gibi durumlara göre en uygun ülke kişiye özel belirlenir.",
-                },
-              },
-              {
-                "@type": "Question",
-                name: "Schengen vizesi reddi neden olur?",
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: "Yetersiz finansal durum, şüpheli seyahat planı, eksik belge, hatalı rezervasyonlar, tutarsız banka hareketleri ve geçmiş reddler başlıca nedenlerdir.",
-                },
-              },
-            ],
-          }),
-        }}
-      />
+
+
+
+
     </main>
+    </>
+ 
   );
 }
