@@ -19,13 +19,13 @@ const IletisimClient = () => {
 
 
   return (
-   <main className="flex flex-col w-full max-w-7xl mx-auto bg-zinc-50 font-sans  mt-20 px-4 md:px-6 lg:px-8">
+   <main className="flex flex-col w-full max-w-7xl mx-auto bg-zinc-50 font-sans  mt-40 px-4 md:px-6 lg:px-8">
       <div className="flex flex-col md:flex-row gap-6 w-full">
         {/* Sol taraf — Form */}
 
 <Contact/>
         {/* Sağ taraf — Harita ve iletişim */}
- <div className="bg-white dark:bg-zinc-900 shadow-lg rounded-2xl p-4 w-full md:w-1/2 flex flex-col">
+ <div className="bg-white  shadow-lg rounded-2xl p-4 w-full md:w-1/2 flex flex-col">
         {/* Butonlar */}
         <div className="flex gap-4 mb-4 justify-center">
           <button
@@ -36,7 +36,7 @@ const IletisimClient = () => {
       ${
         location === "ankara"
           ? "bg-blue-600 text-white border-blue-600 shadow-lg"
-          : "bg-white dark:bg-zinc-800 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-zinc-700 hover:bg-gray-100 dark:hover:bg-zinc-700"
+          : "bg-white  text-gray-800  border-gray-300  hover:bg-gray-100 "
       }
       cursor-pointer
     `}
@@ -51,7 +51,7 @@ const IletisimClient = () => {
       ${
         location === "istanbul"
           ? "bg-blue-600 text-white border-blue-600 shadow-lg"
-          : "bg-white dark:bg-zinc-800 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-zinc-700 hover:bg-gray-100 dark:hover:bg-zinc-700"
+          : "bg-white  text-gray-800  border-gray-300  hover:bg-gray-100 "
       }
       cursor-pointer
     `}
@@ -74,15 +74,15 @@ const IletisimClient = () => {
 
         {/* Adres bilgileri */}
 {/* Adres */}
-<div className="mt-6 p-4 rounded-xl border border-gray-200 dark:border-zinc-700 shadow-sm bg-white dark:bg-zinc-800 transition-all">
+<div className="mt-6 p-4 rounded-xl border border-gray-200  shadow-sm bg-white  transition-all">
   {location === "ankara" && (
     <div className="space-y-2">
-      <h4 className="font-semibold text-lg text-gray-800 dark:text-gray-100">Ankara Paragon Tower</h4>
-      <p className="text-sm text-gray-600 dark:text-gray-300">
+      <h4 className="font-semibold text-lg text-gray-800 ">Ankara Paragon Tower</h4>
+      <p className="text-sm text-gray-600 ">
         Kızılırmak, Çukurambar, Ufuk Ünv. Cd No:3, 06510 Çankaya/Ankara
       </p>
        <a href="tel:+903128701584" aria-label="Telefon numarasını ara" className="flex items-center gap-3  hover:opacity-80 transition">
-              <p className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-200">
+              <p className="flex items-center gap-2 text-sm text-gray-700 ">
         <span className="text-blue-500">📞</span> +90 312 870 15 84
       </p>
        </a>
@@ -92,8 +92,8 @@ const IletisimClient = () => {
                 aria-label="E-Posta gönder"
                 className="flex items-center gap-3 mt-2 hover:opacity-80 transition"
               >
-                  <p className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-200">
-        <span className="text-green-500">📧</span> vizedestek@ayajourneys.com
+                  <p className="flex items-center gap-2 text-sm text-gray-700 ">
+        <span className="text-green-500">📧</span> vizedestek@ayajourney.com
       </p>
               </a>
     
@@ -102,12 +102,12 @@ const IletisimClient = () => {
 
   {location === "istanbul" && (
     <div className="space-y-2">
-      <h4 className="font-semibold text-lg text-gray-800 dark:text-gray-100">İstanbul Sun Plaza</h4>
-      <p className="text-sm text-gray-600 dark:text-gray-300">
+      <h4 className="font-semibold text-lg text-gray-800 ">İstanbul Sun Plaza</h4>
+      <p className="text-sm text-gray-600 ">
         Maslak, Bilim Sk. No:5, 34398 Sarıyer/İstanbul
       </p>
        <a href="tel:+905304853115" aria-label="Telefon numarasını ara" className="flex items-center gap-3  hover:opacity-80 transition">
-             <p className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-200">
+             <p className="flex items-center gap-2 text-sm text-gray-700 ">
         <span className="text-blue-500">📞</span> +90 530 485 31 15
       </p> 
        </a>
@@ -117,8 +117,8 @@ const IletisimClient = () => {
                 aria-label="E-Posta gönder"
                 className="flex items-center gap-3 mt-2 hover:opacity-80 transition"
               >
-                  <p className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-200">
-        <span className="text-green-500">📧</span> vizedestek@ayajourneys.com
+                  <p className="flex items-center gap-2 text-sm text-gray-700 ">
+        <span className="text-green-500">📧</span> vizedestek@ayajourney.com
       </p>
               </a>
     </div>

@@ -24,11 +24,11 @@ export const metadata = {
 };
 export default function Home() {
   return (
-    <main className="flex flex-col w-full bg-white">
+    <main className="flex flex-col w-full bg-white mt-9">
 
       {/* HERO */}
    <SideNav />
-      <section className="w-full min-h-[100svh]  mt-9" id="giris-1" >
+      <section className="w-full min-h-[100svh]  " id="giris-1" >
         <Giris />
       </section>
 

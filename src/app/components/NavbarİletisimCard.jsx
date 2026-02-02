@@ -6,23 +6,26 @@ import {
   FaWhatsapp,
 } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import SearchIcon from "./SearchIcon";
+import Header from "./Header";
+
 export default function TopContactBar() {
   return (
-    <div className="w-full bg-slate-900 text-slate-100 text-sm">
-      <div className="max-w-[1320px] mx-auto px-4 py-2 flex flex-col sm:flex-row justify-between items-center gap-3">
+    <div className="w-full bg-slate-900 text-slate-100 text-[13px] leading-none">
+      <div className="max-w-[1320px] mx-auto px-4 py-1 flex flex-row justify-between items-center gap-4">
 
         {/* SOL – İLETİŞİM */}
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 items-center">
+        <div className="flex gap-4 items-center">
           <a
             href="tel:+903128701584"
-            className="hover:text-emerald-400 transition"
+            className="hover:text-emerald-400 transition whitespace-nowrap"
           >
             📞 +90 312 870 15 84
           </a>
 
           <a
-            href="mailto:vizedektek@ayajourney.com"
-            className="hover:text-emerald-400 transition"
+            href="mailto:vizedestek@ayajourney.com"
+            className="hover:text-emerald-400 transition whitespace-nowrap hidden sm:inline"
           >
             ✉️ vizedestek@ayajourney.com
           </a>
@@ -31,13 +34,13 @@ export default function TopContactBar() {
             href="https://wa.me/905302199056"
             target="_blank"
             rel="noreferrer"
-            className="hover:text-emerald-400 transition flex items-center gap-1"
+            className="hover:text-emerald-400 transition flex items-center gap-1 whitespace-nowrap"
           >
-            <FaWhatsapp /> WhatsApp
+            <FaWhatsapp className="text-base" /> WhatsApp
           </a>
         </div>
 
-        {/* SAĞ – SOSYAL */}
+        {/* SAĞ – SOSYAL + ARA */}
         <div className="flex gap-4 items-center">
           <a
             href="https://www.instagram.com/ayajourneyvize/"
@@ -78,6 +81,15 @@ export default function TopContactBar() {
           >
             <FaYoutube />
           </a>
+
+          {/* 🔍 Arama + Tooltip */}
+          <div className="relative group">
+            <Header />
+
+            <div className="absolute right-0 top-full mt-2 px-3 py-1 rounded-md bg-black text-white text-xs opacity-0 group-hover:opacity-100 transition pointer-events-none whitespace-nowrap">
+              Ara
+            </div>
+          </div>
         </div>
       </div>
     </div>
