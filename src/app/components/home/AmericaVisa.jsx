@@ -22,6 +22,12 @@ return (
     ref={sectionRef}
     className="relative min-h-[100svh] bg-white overflow-hidden ava-fade-init"
   >
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight text-slate-900 text-center ">
+          Ankara ve İstanbul’da
+          <span className="block mt-3">
+            Profesyonel Amerika Vize Danışmanlığı
+          </span>
+        </h1>
     <div className="relative max-w-7xl mx-auto px-6 py-24 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
       {/* ================= MOBILE IMAGE CARD (TOP) ================= */}
@@ -62,12 +68,7 @@ return (
       {/* ================= LEFT CONTENT ================= */}
       <div className="space-y-10 text-center lg:text-start">
 
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight text-slate-900 ">
-          Ankara ve İstanbul’da
-          <span className="block mt-3">
-            Profesyonel Amerika Vize Danışmanlığı
-          </span>
-        </h1>
+  
 
         <h2 className="max-w-3xl text-base sm:text-lg md:text-2xl text-slate-700 leading-relaxed">
           Turist <strong>(B1/B2)</strong>, Öğrenci <strong>(F1)</strong>,
@@ -135,7 +136,7 @@ return (
 
         <div className="relative z-10 h-full p-10 flex flex-col justify-between text-white">
           <div>
-            <h3 className="text-3xl font-extrabold">
+            <h3 className="text-4xl font-extrabold">
               Amerika Vizesi Süreci
             </h3>
 
@@ -147,7 +148,7 @@ return (
               ].map((step, i) => (
                 <div key={i} className="flex gap-3">
                   <FaCheckCircle className="text-emerald-400 mt-1 shrink-0" />
-                  <p className="text-sm text-white/90">
+                  <p className="text-md text-white/90">
                     {step}
                   </p>
                 </div>
@@ -166,7 +167,7 @@ return (
     </div>
 
     {/* ================= SECONDARY CTA ================= */}
-    <div className="mt-16 flex justify-center">
+    <div className="flex justify-center">
       <Link href="/amerika-vizesi">
         <button className="rounded-full bg-white border border-blue-300 px-8 py-3 text-sm font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition">
           Amerika Vizesi Detaylarını İncele

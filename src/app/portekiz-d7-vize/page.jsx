@@ -580,7 +580,7 @@ export default function Page() {
 
   <div className="space-y-4">
 
-    <details open className="rounded-xl border border-slate-200 bg-white p-5">
+    <details open className="rounded-xl border border-slate-200 bg-white p-5 text-justify">
       <summary className="font-semibold cursor-pointer">
        Portekiz D7 vizesi nedir?
       </summary>
@@ -590,7 +590,7 @@ export default function Page() {
       </p>
     </details>
 
-    <details className="rounded-xl border border-slate-200 bg-white p-5">
+    <details className="rounded-xl border border-slate-200 bg-white p-5 text-justify">
       <summary className="font-semibold cursor-pointer">
        Portekiz D7 vizesi kimler için uygundur?
       </summary>
@@ -600,7 +600,7 @@ export default function Page() {
       </p>
     </details>
 
-    <details className="rounded-xl border border-slate-200 bg-white p-5">
+    <details className="rounded-xl border border-slate-200 bg-white p-5 text-justify">
       <summary className="font-semibold cursor-pointer">
       Portekiz D7 vizesi almak zor mu?
       </summary>
@@ -610,7 +610,7 @@ export default function Page() {
       </p>
     </details>
 
-    <details className="rounded-xl border border-slate-200 bg-white p-5">
+    <details className="rounded-xl border border-slate-200 bg-white p-5 text-justify">
       <summary className="font-semibold cursor-pointer">
        Portekiz D7 vizesi ile Portekiz’de yaşanır mı?
 
@@ -621,7 +621,7 @@ export default function Page() {
       </p>
     </details>
 
-    <details className="rounded-xl border border-slate-200 bg-white p-5">
+    <details className="rounded-xl border border-slate-200 bg-white p-5 text-justify">
       <summary className="font-semibold cursor-pointer">
      Portekiz D7 vizesi ne kadar süreyle verilir?
 
@@ -636,7 +636,7 @@ export default function Page() {
     Diğer sık sorulan sorular
   </summary>
 
-  <div className="mt-4 space-y-4 text-slate-700">
+  <div className="mt-4 space-y-4 text-slate-700 text-justify">
 
     <p><strong>Portekiz D7 vizesi ile oturum izni alınır mı?</strong><br />
     Evet, Portekiz D7 vizesi ile oturum izni alınır. D7 vizesi aslında iki aşamalı bir süreçtir: önce ülke dışından D7 vizesi başvurusu yapılır ve onaylanırsa 4 aylık giriş vizesi verilir. Bu vize ile Portekiz'e giriş yaptıktan sonra, belirtilen süre içinde (genellikle 3-4 ay) yerel göçmenlik makamlarına başvurarak geçici oturum izni (temporary residence permit) almanız gerekir. Bu oturum izni, Portekiz'de yasal olarak yaşamanıza, seyahat etmenize ve çeşitli haklardan faydalanmanıza olanak tanır. İlk oturum izni 2 yıl geçerlidir ve düzenli olarak yenilenebilir. Oturum izni kartınız Schengen bölgesinde seyahat etmenize de imkan sağlar.

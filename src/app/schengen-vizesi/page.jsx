@@ -798,7 +798,7 @@ export default function SchengenPage() {
     </h2>
   </div>
 
-  <div className="space-y-4">
+  <div className="space-y-4 text-justify">
 
     {/* ÖNE ÇIKAN SORULAR */}
     {[

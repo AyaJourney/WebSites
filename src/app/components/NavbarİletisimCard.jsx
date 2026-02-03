@@ -12,20 +12,20 @@ import Header from "./Header";
 export default function TopContactBar() {
   return (
     <div className="w-full bg-slate-900 text-slate-100 text-[13px] leading-none">
-      <div className="max-w-[1320px] mx-auto px-4 py-1 flex flex-row justify-between items-center gap-4">
+      <div className="max-w-[1320px] mx-auto px-4 py-1.5 flex flex-row justify-between items-center gap-4">
 
         {/* SOL – İLETİŞİM */}
         <div className="flex gap-4 items-center">
           <a
             href="tel:+903128701584"
-            className="hover:text-emerald-400 transition whitespace-nowrap"
+            className="text-[15px] hover:text-emerald-600 transition whitespace-nowrap"
           >
             📞 +90 312 870 15 84
           </a>
 
           <a
             href="mailto:vizedestek@ayajourney.com"
-            className="hover:text-emerald-400 transition whitespace-nowrap hidden sm:inline"
+            className="text-[15px]  hover:text-emerald-400 transition whitespace-nowrap hidden sm:inline"
           >
             ✉️ vizedestek@ayajourney.com
           </a>
@@ -34,7 +34,7 @@ export default function TopContactBar() {
             href="https://wa.me/905302199056"
             target="_blank"
             rel="noreferrer"
-            className="hover:text-emerald-400 transition flex items-center gap-1 whitespace-nowrap"
+            className="text-[15px] hover:text-emerald-400 transition flex items-center gap-1 whitespace-nowrap"
           >
             <FaWhatsapp className="text-base" /> WhatsApp
           </a>
@@ -49,7 +49,7 @@ export default function TopContactBar() {
             aria-label="Instagram"
             className="hover:text-pink-500 transition"
           >
-            <FaInstagram />
+            <FaInstagram className="text-[20px] "/>
           </a>
 
           <a
@@ -59,7 +59,7 @@ export default function TopContactBar() {
             aria-label="LinkedIn"
             className="hover:text-blue-500 transition"
           >
-            <FaLinkedinIn />
+            <FaLinkedinIn  className="text-[20px] "/>
           </a>
 
           <a
@@ -69,7 +69,7 @@ export default function TopContactBar() {
             aria-label="X"
             className="hover:text-gray-300 transition"
           >
-            <FaXTwitter />
+            <FaXTwitter className="text-[20px] " />
           </a>
 
           <a
@@ -79,7 +79,7 @@ export default function TopContactBar() {
             aria-label="YouTube"
             className="hover:text-red-500 transition"
           >
-            <FaYoutube />
+            <FaYoutube className="text-[20px] "/>
           </a>
 
           {/* 🔍 Arama + Tooltip */}

@@ -29,7 +29,7 @@ const Giris = () => {
   let charCounter = 0;
 
   return (
-    <section className="relative flex items-center justify-center h-[80svh] md:h-[90svh] bg-white px-6">
+    <section className="bg-gradient-to-b from-[#4384c5] via-slate-50 to-white relative flex items-center justify-center h-[80svh] md:h-[90svh] bg-white px-6 ">
       <div className="max-w-7xl w-full">
 
         {/* H1 */}
@@ -61,7 +61,7 @@ const Giris = () => {
           </span>
 
           {/* DESKTOP */}
-          <span className="hidden md:block">
+          <span className="hidden md:block ">
             {lineDesktop.split("").map((char, index) => (
               <span
                 key={index}
@@ -81,7 +81,7 @@ const Giris = () => {
         {/* SUBTEXT */}
         <p className="mt-10 max-w-2xl text-base sm:text-lg md:text-xl text-slate-700 leading-relaxed">
           Yurt dışında eğitim, iş ve vize danışmanlığı sürecinizde  
-          <strong className="text-blue-600"> AYA Journey</strong> olarak
+          <strong className="text-[#4384c5]"> AYA Journey</strong> olarak
           her adımda yanınızdayız.
         </p>
 

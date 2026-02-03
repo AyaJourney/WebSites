@@ -1,26 +1,6 @@
 export const titleCase = [
-  { 
-    "id": 1,
-    "name": "Ahmet Yavuz AYBAŞ",
-    "title": "Ankara",
-    // "descriptions": [
-    //   "Kurumsal iş ortaklıklarını ve yurt dışı yatırımcı görüşmelerini yönetir.",
-    //   "Şirketlerin iş geliştirme stratejilerine liderlik eder.",
-    //   "Üst düzey vize süreçlerinin koordinasyonunu ve takibini sağlar."
-    // ],
-    "photo": "/images/defaultuserimage.svg"
-  },
-  {
-    "id": 2,
-    "name": "Ahmet Gani KÜÇÜK",
-    "title": "Ankara",
-    "descriptions": [
-      "Özellikle daha önce vize reddi almış kişilerin dosyalarında uzmandır.",
-      "Ret nedenlerinin kapsamlı analizini yapar.",
-      "Başarılı başvuru için kapsamlı stratejik danışmanlık hizmeti sunar."
-    ],
-    "photo": "/images/defaultuserimage.svg"
-  },
+
+
   {
     "id": 3,
     "name": "Ali EREN",
@@ -75,7 +55,32 @@ export const titleCase = [
       "Başvuru formlarının doldurulması ve randevu takibi süreçlerini yönetir."
     ],
     "photo": "/images/defaultuserimage.svg"
-  }
+  },
+    {
+    "id": 2,
+    "name": "Av. Ahmet Gani KÜÇÜK",
+    "title": "Ankara",
+    "descriptions": [
+      "Özellikle daha önce vize reddi almış kişilerin dosyalarında uzmandır.",
+      "Ret nedenlerinin kapsamlı analizini yapar.",
+      "Başarılı başvuru için kapsamlı stratejik danışmanlık hizmeti sunar."
+    ],
+    "photo": "/images/defaultuserimage.svg"
+  },
+    { 
+    "id": 1,
+    "name": "Ahmet Yavuz AYBAŞ",
+    "title": "Ankara",
+    "descriptions": [
+      // "Kurumsal iş ortaklıklarını ve yurt dışı yatırımcı görüşmelerini yönetir.",
+      // "Şirketlerin iş geliştirme stratejilerine liderlik eder.",
+      // "Üst düzey vize süreçlerinin koordinasyonunu ve takibini sağlar."
+      "Kurumsal görüşmeler ",
+      "Genel kurmay ve prensipler ",
+
+    ],
+    "photo": "/images/defaultuserimage.svg"
+  },
 ];
 
 export const questionsAndAnswers = [
@@ -885,7 +890,7 @@ export const hizmetlerimiz =
     "description": "Hızlı ve güvenilir ABD vizesi başvuru desteği.",
     "longDescription": "ABD vize danışmanlığı hizmetimiz, tüm başvuru süreçlerini eksiksiz ve hızlı şekilde yürütmenizi sağlar. Evrak kontrolünden randevu alınmasına, form doldurmadan mülakat hazırlığına kadar her adımda profesyonel destek sunuyoruz.",
     "etiketler": ["Eğitim", "İş", "Turizm"],
-     "image":"/images/1.webp"
+     "image":"/images/usa.jpg"
   },
   {
     "id": 2,

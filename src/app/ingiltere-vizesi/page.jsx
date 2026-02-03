@@ -717,7 +717,7 @@ const UKVisaPage = () => {
 
   <div className="space-y-4">
 
-    <details open className="rounded-xl border border-slate-200 bg-white p-5">
+    <details open className="rounded-xl border border-slate-200 bg-white p-5 text-justify">
       <summary className="font-semibold cursor-pointer">
         İngiltere Schengen vizesi midir?
       </summary>
@@ -726,7 +726,7 @@ const UKVisaPage = () => {
       </p>
     </details>
 
-    <details className="rounded-xl border border-slate-200 bg-white p-5">
+    <details className="rounded-xl border border-slate-200 bg-white p-5 text-justify">
       <summary className="font-semibold cursor-pointer">
         Yeşil pasaportla İngiltere’ye vizesiz gidilir mi?
       </summary>
@@ -735,7 +735,7 @@ const UKVisaPage = () => {
       </p>
     </details>
 
-    <details className="rounded-xl border border-slate-200 bg-white p-5">
+    <details className="rounded-xl border border-slate-200 bg-white p-5 text-justify">
       <summary className="font-semibold cursor-pointer">
         İngiltere vizesi ne kadar süreli verilir?
       </summary>
@@ -744,7 +744,7 @@ const UKVisaPage = () => {
       </p>
     </details>
 
-    <details className="rounded-xl border border-slate-200 bg-white p-5">
+    <details className="rounded-xl border border-slate-200 bg-white p-5 text-justify">
       <summary className="font-semibold cursor-pointer">
         İngiltere vizesi kaç günde sonuçlanır?
       </summary>
@@ -753,7 +753,7 @@ const UKVisaPage = () => {
       </p>
     </details>
 
-    <details className="rounded-xl border border-slate-200 bg-white p-5">
+    <details className="rounded-xl border border-slate-200 bg-white p-5 text-justify">
       <summary className="font-semibold cursor-pointer">
        Randevular ne zamana veriliyor?
 
@@ -768,7 +768,7 @@ const UKVisaPage = () => {
     Diğer sık sorulan sorular
   </summary>
 
-  <div className="mt-4 space-y-4 text-slate-700">
+  <div className="mt-4 space-y-4 text-slate-700 text-justify">
 
     <p><strong>İngiltere vizesi multi mi?</strong><br />
     Evet. İngiltere vizesi çok girişlidir (multiple-entry). Ancak her bir girişte maksimum 6 ay kalma hakkınız bulunur.</p>

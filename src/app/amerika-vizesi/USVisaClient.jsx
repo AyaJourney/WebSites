@@ -337,14 +337,14 @@ F1 Vize alma ihtimalinizi ölçün!
   id="faq"
   className="max-w-6xl mx-auto px-6 py-16"
 >
-  <div className="mb-10">
+  <div className="mb-10 ">
     <p className="text-sm text-slate-500 uppercase">Sık Sorulan Sorular</p>
     <h2 className="text-3xl font-bold text-slate-900">
       Amerika Vizesi Hakkında Sık Sorulan Sorular
     </h2>
   </div>
 
-  <div className="space-y-4">
+  <div className="space-y-4 text-justify">
 
     {/* ÖNE ÇIKAN SORULAR */}
     {[

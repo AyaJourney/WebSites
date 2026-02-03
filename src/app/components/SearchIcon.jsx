@@ -5,7 +5,7 @@ export default function SearchIcon({ onClick }) {
     <button
       onClick={onClick}
       aria-label="Ara"
-      className="p-2 hover:opacity-70 transition"
+      className="p-2 hover:opacity-70 transition text-[20px]"
     >
       🔍
     </button>

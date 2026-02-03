@@ -63,7 +63,7 @@ return (
   <nav className="bg-white shadow-md sticky top-0 z-50">
 
     {/* ================= TOP BAR ================= */}
-    <div className="w-full max-w-[1520px] mx-auto px-4 flex justify-between h-24 items-center">
+    <div className="w-full max-w-[1520px] mx-auto px-4 flex justify-between h-24 items-center gap-4">
 
       {/* LOGO */}
       <Link href="/">
@@ -91,7 +91,7 @@ return (
       </div>
 
       {/* ================= DESKTOP MENU ================= */}
-      <div className="hidden xl:flex space-x-6 items-center">
+      <div className="hidden xl:flex space-x-8 items-center justify-end">
         {menuItems.map((item) =>
           item.submenu ? (
             <div
