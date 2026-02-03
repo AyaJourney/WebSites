@@ -10,7 +10,7 @@ const nextConfig = {
   },
 
   experimental: {
-    // optimizePackageImports: ["react", "lodash"],
+    turbo: false,
   },
 
   output: "standalone",
