@@ -1,9 +1,6 @@
 import { supabase } from "@/lib/supabase";
 
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
-
-export async function GET() {
+export default async function handler(req, res) {
   const { data: blogs } = await supabase
     .from("blogs")
     .select("slug, updated_at")
@@ -65,9 +62,6 @@ export async function GET() {
 ${urls.join("")}
 </urlset>`;
 
-  return new Response(sitemap, {
-    headers: {
-      "Content-Type": "application/xml",
-    },
-  });
+  res.setHeader("Content-Type", "application/xml");
+  res.status(200).send(sitemap);
 }
