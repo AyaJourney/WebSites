@@ -42,7 +42,7 @@ const [showScrollTop, setShowScrollTop] = useState(false);
 
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
-    playSound();
+    // playSound();
     setTyping(true);
 
     setTimeout(() => {
@@ -78,7 +78,7 @@ const [showScrollTop, setShowScrollTop] = useState(false);
       }
 
       setTyping(false);
-      playSound();
+      // playSound();
     }, 1000 + Math.random() * 1000);
   };
 useEffect(() => {
