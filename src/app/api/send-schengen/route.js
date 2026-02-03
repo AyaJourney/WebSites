@@ -4,6 +4,30 @@ import fs from "fs";
 import path from "path";
 import nodemailer from "nodemailer";
 import sharp from "sharp";
+
+const FONT_PATH = path.join(
+  process.cwd(),
+  "public",
+  "fonts",
+  "OpenSans_Condensed-Regular.ttf"
+);
+const LOGO_PATH = path.join(process.cwd(), "public", "images", "ayalogoxl.png");
+
+const fontCache = { checked: false, bytes: null };
+const logoCache = { checked: false, bytes: null };
+
+function getCachedFileBytes(filePath, cache) {
+  if (cache.checked) return cache.bytes;
+  cache.checked = true;
+  if (!fs.existsSync(filePath)) return null;
+  try {
+    cache.bytes = fs.readFileSync(filePath);
+    return cache.bytes;
+  } catch (err) {
+    console.warn("Dosya okunamadı, cache boş:", filePath, err);
+    return null;
+  }
+}
 function toTRDate(dateStr) {
   if (!dateStr) return "";
   const d = new Date(dateStr);
@@ -15,19 +39,42 @@ function toTRDate(dateStr) {
     year: "numeric"
   });
 }
-async function compressImage(base64) {
+async function compressImage(base64, options = {}) {
   try {
-    const inputBuffer = Buffer.from(base64, "base64");
+    if (!base64) return base64;
+    const {
+      maxWidth = 1200,
+      quality = 60,
+      skipBelowBytes = 200 * 1024,
+    } = options;
+
+    const cleanBase64 = base64.includes(",") ? base64.split(",")[1] : base64;
+    const inputBuffer = Buffer.from(cleanBase64, "base64");
+
+    if (inputBuffer.length <= skipBelowBytes) {
+      return cleanBase64;
+    }
+
+    let metadata = null;
+    try {
+      metadata = await sharp(inputBuffer).metadata();
+    } catch {
+      metadata = null;
+    }
+
+    if (metadata?.width && metadata.width <= maxWidth) {
+      return cleanBase64;
+    }
 
     const compressed = await sharp(inputBuffer)
-      .resize({ width: 1200 })          // max 1200px
-      .jpeg({ quality: 60 })            // kalite %60
+      .resize({ width: maxWidth, withoutEnlargement: true }) // max maxWidth px
+      .jpeg({ quality }) // kalite %quality
       .toBuffer();
 
     return compressed.toString("base64");
   } catch (err) {
     console.error("Image compression failed:", err);
-    return base64; // hata olursa orijinali kullan
+    return base64.includes(",") ? base64.split(",")[1] : base64; // hata olursa orijinali kullan
   }
 }
 /**
@@ -37,6 +84,12 @@ async function compressImage(base64) {
 export async function POST(req) {
   try {
     const formData = await req.json();
+    const steps = formData.steps || {};
+    const files = steps["6"] || {};
+
+    // Sıkıştırmayı erken başlat (PDF çizimi ile paralel)
+    const passportBase64Promise = compressImage(files.passportFileBase64);
+    const photoBase64Promise = compressImage(files.photoFileBase64);
 
     // --- PDF Dokümanı Oluştur ---
     const pdfDoc = await PDFDocument.create();
@@ -48,12 +101,11 @@ export async function POST(req) {
     let regularFont, boldFont;
     
     // Senin belirttiğin orijinal dosya yolu
-    const fontPath = path.join(process.cwd(), "public", "fonts", "OpenSans_Condensed-Regular.ttf");
+    const fontBytes = getCachedFileBytes(FONT_PATH, fontCache);
 
     // Font yükleme mantığı: Sadece senin dosyanı baz alıyoruz.
-    if (fs.existsSync(fontPath)) {
+    if (fontBytes) {
       try {
-        const fontBytes = fs.readFileSync(fontPath);
         const customFont = await pdfDoc.embedFont(fontBytes);
         
         // Hem normal hem bold değişkenine SENİN fontunu atıyoruz.
@@ -87,6 +139,28 @@ export async function POST(req) {
     const MARGIN = 40;
     const CONTENT_WIDTH = PAGE_WIDTH - (MARGIN * 2);
 
+    const logoBytes = getCachedFileBytes(LOGO_PATH, logoCache);
+    let logoImage = null;
+    if (logoBytes) {
+      try {
+        logoImage = await pdfDoc.embedPng(logoBytes);
+      } catch (err) {
+        console.warn("Logo embed edilemedi, yazıyla devam:", err);
+        logoImage = null;
+      }
+    }
+
+    const textWidthCache = new Map();
+    const getTextWidth = (font, size, text) => {
+      const fontKey = font === boldFont ? "b" : "r";
+      const key = `${fontKey}:${size}:${text}`;
+      if (textWidthCache.has(key)) return textWidthCache.get(key);
+      const width = font.widthOfTextAtSize(text, size);
+      if (textWidthCache.size > 2000) textWidthCache.clear();
+      textWidthCache.set(key, width);
+      return width;
+    };
+
     // --- Yardımcı Fonksiyonlar ---
 // const logoPath = path.join(process.cwd(), "public", "images", "aya_logo_100x70.png");
 // const logoBytes = fs.readFileSync(logoPath);
@@ -100,7 +174,7 @@ export async function POST(req) {
 
       for (let i = 1; i < words.length; i++) {
         const word = words[i];
-        const width = font.widthOfTextAtSize(`${currentLine} ${word}`, size);
+        const width = getTextWidth(font, size, `${currentLine} ${word}`);
         if (width < maxWidth) {
           currentLine += ` ${word}`;
         } else {
@@ -133,11 +207,7 @@ export async function POST(req) {
     // 3. Header (Sayfa Üstü)
 const drawHeader = async (page) => {
   // --- PNG Logo ---
-  const logoPath = path.join(process.cwd(), "public", "images", "ayalogoxl.png");
-  if (fs.existsSync(logoPath)) {
-    const logoBytes = fs.readFileSync(logoPath);
-    const logoImage = await pdfDoc.embedPng(logoBytes);
-
+  if (logoImage) {
     page.drawImage(logoImage, {
       x: MARGIN,
       y: PAGE_HEIGHT- 42, // Logo yüksekliği kadar yukarı çek
@@ -159,7 +229,7 @@ const drawHeader = async (page) => {
 
   // Doküman Başlığı
   page.drawText("SCHENGEN VİZE BAŞVURU FORMU BILGI FISI", {
-    x: PAGE_WIDTH - MARGIN - boldFont.widthOfTextAtSize("SCHENGEN VİZE BAŞVURU FORMU BILGI FISI", 10),
+    x: PAGE_WIDTH - MARGIN - getTextWidth(boldFont, 10, "SCHENGEN VİZE BAŞVURU FORMU BILGI FISI"),
     y: PAGE_HEIGHT - 38,
     size: 10,
     font: boldFont,
@@ -173,7 +243,7 @@ const drawHeader = async (page) => {
     // 4. Footer (Sayfa Altı)
     const drawFooter = (page, pNum) => {
       const text = `Sayfa ${pNum}`;
-      const width = regularFont.widthOfTextAtSize(text, 9);
+      const width = getTextWidth(regularFont, 9, text);
       page.drawText(text, {
         x: (PAGE_WIDTH - width) / 2,
         y: 20,
@@ -258,7 +328,7 @@ const drawHeader = async (page) => {
     
     // drawHeader(currentPage, true);
 
-    const s = (n) => formData.steps?.[String(n)] || {};
+    const s = (n) => steps[String(n)] || {};
 
     // --- BÖLÜM 1: Kişisel Bilgiler ---
        await drawHeader(currentPage);
@@ -440,8 +510,7 @@ drawFooter(currentPage, pageCount);
 // --- BÖLÜM 6: DOSYALAR ---
 // --- BÖLÜM 6: DOSYALAR ---
 // --- BÖLÜM 6: DOSYALAR ---
-const files = formData.steps["6"] || {};
-
+ 
 // 6. bölüm her zaman yeni sayfada başlasın
 drawFooter(currentPage, pageCount); // mevcut sayfayı bitir
 currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
@@ -454,8 +523,8 @@ drawFooter(currentPage, pageCount); // sayfa numarası için footer çizimi
 
 // Başlık
 drawSection("6. DOSYALAR");
-const passportBase64 = await compressImage(files.passportFileBase64);
-const photoBase64 = await compressImage(files.photoFileBase64);
+const passportBase64 = await passportBase64Promise;
+const photoBase64 = await photoBase64Promise;
 // Resim ekleme fonksiyonu
 const addFileImage = async (fileBase64, title, type) => {
     if (!fileBase64) return;

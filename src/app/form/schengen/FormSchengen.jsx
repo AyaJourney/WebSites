@@ -654,7 +654,7 @@ const normalizeWithSuffix = (value, suffix) => {
     <div className="min-h-screen bg-gray-100 p-6 flex items-start justify-center">
       {/* A4-like container */}
       <div
-        className="bg-white shadow-xl w-full max-w-[794px] p-8"
+        className="bg-white shadow-xl w-full max-w-198.5 p-8"
         style={{
           // A4-like height for screen; optional
           minHeight: "1122px", // ~A4 height px at 96dpi, adjust as needed
@@ -1413,7 +1413,7 @@ const normalizeWithSuffix = (value, suffix) => {
                     updateField(2, "passport_issuing_authority", normalizedValue);
                 }
             }}
-          placeholder="Örn: NÜFUS VE VATANDAŞLIK İŞLERİ"
+          placeholder="Pasaportta yazan kısmı giriniz"
         />
         {errors.passport_issuing_authority && (
           <p className="text-red-500 text-xs mt-1">
@@ -2465,7 +2465,7 @@ if (endDate && endDate > today) {
     className={`
       relative flex items-center justify-center px-8 py-3 rounded-xl font-semibold text-white transition-all duration-300 cursor-pointer
       ${kvkkConsent && !isSubmitting 
-        ? "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-lg hover:shadow-xl" 
+        ? "`bg-gradient-to-r` from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-lg hover:shadow-xl" 
         : "bg-gray-400 cursor-not-allowed"
       }
       max-w-xs w-full sm:w-auto
