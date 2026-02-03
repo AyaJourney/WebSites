@@ -2,7 +2,7 @@ import React from "react";
 
 const Page = () => {
   return (
-    <main className="max-w-[1200px] mx-auto px-4 py-12 text-gray-900">
+    <main className="max-w-1200 mx-auto px-4 py-12 text-gray-900">
 
       {/* HERO */}
       <section className="mb-12">

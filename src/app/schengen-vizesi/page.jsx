@@ -557,7 +557,7 @@ export default function SchengenPage() {
             className="schengen-scale-init w-full flex justify-center"
           >
             <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-br from-blue-500/15 via-indigo-500/10 to-fuchsia-500/10 blur-2xl" />
+              <div className="absolute -inset-4 `bg-gradient-to-br` from-blue-500/15 via-indigo-500/10 to-fuchsia-500/10 blur-2xl" />
               <div className="relative rounded-3xl overflow-hidden border-4 border-white shadow-2xl">
                 <Image
                   src="/images/visa schengen.jpg"
@@ -681,7 +681,7 @@ export default function SchengenPage() {
                 <ul className="text-sm text-gray-700 list-none space-y-3">
                   {block.items.map((it, j) => (
                     <li key={j} className="flex items-start">
-                      <FaCheckCircle className="text-green-500 mr-2 mt-1 flex-shrink-0" size={12} />
+                      <FaCheckCircle className="text-green-500 mr-2 mt-1 flex shrink-0" size={12} />
                       <span>{it}</span>
                     </li>
                   ))}
@@ -705,28 +705,28 @@ export default function SchengenPage() {
           </h3>
           <ul className="list-none pl-0 text-base space-y-4 text-gray-700">
             <li className="flex items-start">
-              <FaCheckCircle className="text-red-500 mr-3 mt-1 flex-shrink-0" />
+              <FaCheckCircle className="text-red-500 mr-3 mt-1 flex shrink-0" />
               <span>
                 Randevu tarihinden <strong>en az 10 gün önce</strong> hazırlıklara başlayın; son dakikaya
                 bırakmayın.
               </span>
             </li>
             <li className="flex items-start">
-              <FaCheckCircle className="text-red-500 mr-3 mt-1 flex-shrink-0" />
+              <FaCheckCircle className="text-red-500 mr-3 mt-1 flex shrink-0" />
               <span>
                 Banka dökümleri ve barkodlu e-devlet belgelerini <strong>son hafta</strong> alın; aracı kurum
                 güncel tarihli talep edebilir.
               </span>
             </li>
             <li className="flex items-start">
-              <FaCheckCircle className="text-red-500 mr-3 mt-1 flex-shrink-0" />
+              <FaCheckCircle className="text-red-500 mr-3 mt-1 flex shrink-0" />
               <span>
                 Randevuya gitmeme durumunda randevu ücreti <strong>yanar</strong>; yeniden randevu alınması
                 gerekir.
               </span>
             </li>
             <li className="flex items-start">
-              <FaCheckCircle className="text-red-500 mr-3 mt-1 flex-shrink-0" />
+              <FaCheckCircle className="text-red-500 mr-3 mt-1 flex shrink-0" />
               <span>
                 Almanya randevu süreci aracı kurum üzerinden farklı işlemektedir; onay e-postası ve ücret
                 sonrası rezervasyon tamamlanır.
