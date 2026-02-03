@@ -1,5 +1,8 @@
 import { supabase } from "@/lib/supabase";
 
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   const { data: blogs } = await supabase
     .from("blogs")
@@ -34,29 +37,26 @@ export async function GET() {
     "/form/birlesik-krallik-bilgi-fisi",
     "/form/kanada-basvuru-formu",
     "/sikca-sorulan-sorular",
-
   ];
 
   const urls = [
-    // Static pages
     ...staticPages.map(
       (path) => `
-      <url>
-        <loc>https://ayajourney.com${path}</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-      </url>`
+<url>
+  <loc>https://ayajourney.com${path}</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.8</priority>
+</url>`
     ),
 
-    // Blog detail pages
     ...(blogs || []).map(
       (blog) => `
-      <url>
-        <loc>https://ayajourney.com/blog/${blog.slug}</loc>
-        <lastmod>${new Date(blog.updated_at).toISOString()}</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-      </url>`
+<url>
+  <loc>https://ayajourney.com/blog/${blog.slug}</loc>
+  <lastmod>${new Date(blog.updated_at).toISOString()}</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>`
     ),
   ];
 
