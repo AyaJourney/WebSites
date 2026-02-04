@@ -2,121 +2,150 @@ import React from "react";
 
 const Page = () => {
   return (
-    <main className="max-w-[1200px] mx-auto px-4 py-12 text-gray-900">
-
-      {/* HERO */}
-      <section className="mb-12">
-        <h1 className="text-3xl md:text-4xl font-bold mb-4">
-          Amerika Vize Danışmanlığı İstanbul
+    <main className="max-w-300 mx-auto px-4 py-12 text-gray-900 leading-relaxed">
+      
+      {/* 1. HERO: Güçlü Başlık ve Güven Sinyalleri */}
+      <section className="mb-16">
+        <div className="inline-block bg-indigo-50 text-indigo-700 px-4 py-1 rounded-full text-sm font-bold mb-4 border border-indigo-100">
+          İstanbul'un Lider Amerika Vize Danışmanlık Merkezi
+        </div>
+        <h1 className="text-3xl md:text-5xl font-extrabold mb-6 tracking-tight text-slate-900">
+          Amerika Vize Danışmanlığı İstanbul: Garantili Randevu & Mülakat Hazırlığı
         </h1>
 
-        <p className="text-lg text-gray-700 max-w-3xl">
-          İstanbul’da Amerika vize danışmanlığı hizmeti sunan <strong>AYA Journey</strong>, 
-          ABD B1/B2 turist vizesi, F1 öğrenci vizesi ve J1 değişim programları için 
-          mülakat odaklı profesyonel danışmanlık sağlar.
+        <p className="text-xl text-gray-700 max-w-4xl mb-6">
+          <strong>AYA Journey İstanbul</strong>, ABD vize sürecindeki en zorlu engelleri profesyonelce aşmanızı sağlar. 
+          İstinye'deki Başkonsolosluk mülakatları için <strong>DS-160 form uzmanlığı</strong> ve birebir 
+          simülasyonlarla İstanbul'un en yüksek onay oranına sahip danışmanlık hizmetini sunuyoruz.
         </p>
 
-        <div className="mt-6">
-          <a
-            href="/iletisim"
-            className="inline-block bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition"
-          >
-            Ücretsiz Ön Danışmanlık Al
+        <div className="flex flex-wrap gap-4 mt-8">
+          <a href="/iletisim" className="inline-block bg-indigo-600 text-white font-bold px-8 py-4 rounded-lg hover:bg-indigo-700 transition shadow-xl transform hover:-translate-y-1">
+            Ücretsiz Vize Analizi Al
+          </a>
+          <a href="tel:+90 530 485 31 15" className="inline-block bg-white border-2 border-gray-300 text-gray-800 font-bold px-8 py-4 rounded-lg hover:bg-gray-50 transition">
+            Danışmanla Görüş
           </a>
         </div>
       </section>
 
-      {/* HİZMETLER */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-4">
-          İstanbul’da Amerika Vizesi Danışmanlık Hizmetimiz
-        </h2>
+      {/* 2. ETKİLEŞİM SAYACI & LOKAL GÜÇ */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16 py-8 border-y border-gray-100 shadow-sm rounded-2xl bg-white px-6">
+        <div className="text-center">
+          <p className="text-3xl font-bold text-indigo-600">Maslak</p>
+          <p className="text-xs text-gray-500 uppercase tracking-widest mt-1">Merkezi Ofis</p>
+        </div>
+        <div className="text-center border-x border-gray-100">
+          <p className="text-3xl font-bold text-indigo-600">10 Yıl</p>
+          <p className="text-xs text-gray-500 uppercase tracking-widest mt-1">ABD Vize Deneyimi</p>
+        </div>
+        <div className="text-center">
+          <p className="text-3xl font-bold text-indigo-600">%99</p>
+          <p className="text-xs text-gray-500 uppercase tracking-widest mt-1">DS-160 Doğruluğu</p>
+        </div>
+        <div className="text-center border-l border-gray-100">
+          <p className="text-3xl font-bold text-indigo-600">7/24</p>
+          <p className="text-xs text-gray-500 uppercase tracking-widest mt-1">Randevu Takibi</p>
+        </div>
+      </div>
 
-        <p className="text-gray-700 mb-4 max-w-3xl">
-          AYA Journey İstanbul ofisimizde Amerika vize başvuruları, başvuru sahibinin
-          profiline özel olarak değerlendirilir. Evrak kontrolünden DS-160 form
-          doldurmaya, mülakat hazırlığından başvuru sonrası sürece kadar tüm aşamalar
-          titizlikle yönetilir.
-        </p>
-
-        <ul className="list-disc pl-6 text-gray-700 space-y-2">
-          <li>B1/B2 Amerika turist vizesi danışmanlığı</li>
-          <li>F1 Amerika öğrenci vizesi danışmanlığı</li>
-          <li>J1 değişim programı vizesi danışmanlığı</li>
-          <li>DS-160 form doldurma ve kontrol</li>
-          <li>Mülakat simülasyonu ve birebir hazırlık</li>
-        </ul>
-      </section>
-
-      {/* LOKAL SİNYAL */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-4">
-          İstanbul Ofisimiz
-        </h2>
-
-        <p className="text-gray-700 max-w-3xl">
-          İstanbul’daki ofisimiz <strong>Levent</strong> bölgesinde yer almakta olup,
-          <strong> Beşiktaş, Şişli, Maslak ve Mecidiyeköy</strong> gibi merkezi
-          noktalardan kolay ulaşım imkânı sunmaktadır. Amerika vize başvurularınız
-          için yüz yüze danışmanlık hizmeti alabilirsiniz.
-        </p>
-      </section>
-
-      {/* FAQ */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-6">
-          İstanbul’dan Amerika Vizesi Hakkında Sıkça Sorulan Sorular
-        </h2>
-
-        <div className="space-y-4">
-          <div>
-            <h3 className="font-semibold">
-              Amerika vizesi İstanbul’dan başvurulur mu?
+      {/* 3. ÖZEL HİZMET DETAYLARI: Kullanıcı Niyetine Göre (User Intent) */}
+      <section className="mb-16">
+        <h2 className="text-3xl font-bold mb-10 text-center">İstanbul’da Sunduğumuz Profesyonel Çözümler</h2>
+        
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="group p-6 bg-white border border-gray-200 rounded-2xl hover:border-indigo-300 hover:shadow-lg transition">
+            <h3 className="text-xl font-bold mb-3 flex items-center gap-2 text-indigo-900">
+              <span className="w-2 h-2 bg-indigo-600 rounded-full"></span>
+              Stratejik DS-160 Formu Doldurma
             </h3>
-            <p className="text-gray-700">
-              Evet. İstanbul’dan Amerika vize başvurusu yapılabilir ve mülakatlar
-              ABD İstanbul Başkonsolosluğu’nda gerçekleştirilmektedir.
-            </p>
+            <p className="text-gray-600 text-sm italic">Amerika vizesinin temeli doğru formdur. İstanbul ofisimizde profilinizi en iyi yansıtan, konsolosluk algısına uygun İngilizce form girişi sağlıyoruz.</p>
           </div>
-
-          <div>
-            <h3 className="font-semibold">
-              İstanbul’da Amerika vize mülakatı nerede yapılır?
+          <div className="group p-6 bg-white border border-gray-200 rounded-2xl hover:border-indigo-300 hover:shadow-lg transition">
+            <h3 className="text-xl font-bold mb-3 flex items-center gap-2 text-indigo-900">
+              <span className="w-2 h-2 bg-indigo-600 rounded-full"></span>
+              Birebir Mülakat Koçluğu
             </h3>
-            <p className="text-gray-700">
-              Amerika vize mülakatları İstanbul’da ABD Başkonsolosluğu’nda yapılmaktadır.
-            </p>
+            <p className="text-gray-600 text-sm italic">İstinye ABD Başkonsolosluğu’ndaki mülakat öncesi, stres yönetimi ve soru-cevap simülasyonları ile özgüveninizi artırıyoruz.</p>
           </div>
-
-          <div>
-            <h3 className="font-semibold">
-              Amerika vizesi danışmanlık almak avantaj sağlar mı?
+          <div className="group p-6 bg-white border border-gray-200 rounded-2xl hover:border-indigo-300 hover:shadow-lg transition">
+            <h3 className="text-xl font-bold mb-3 flex items-center gap-2 text-indigo-900">
+              <span className="w-2 h-2 bg-indigo-600 rounded-full"></span>
+              Acil Vize Randevusu Takibi
             </h3>
-            <p className="text-gray-700">
-              Profesyonel danışmanlık, doğru başvuru stratejisi ve mülakat hazırlığı
-              ile vize alma ihtimalini artırabilir.
-            </p>
+            <p className="text-gray-600 text-sm italic">Eğitim veya acil iş seyahatleriniz için İstanbul ve çevre illerdeki en erken randevu tarihlerini sistem üzerinden anlık takip ediyoruz.</p>
+          </div>
+          <div className="group p-6 bg-white border border-gray-200 rounded-2xl hover:border-indigo-300 hover:shadow-lg transition">
+            <h3 className="text-xl font-bold mb-3 flex items-center gap-2 text-indigo-900">
+              <span className="w-2 h-2 bg-indigo-600 rounded-full"></span>
+              Vize Reddi Sonrası Başvuru
+            </h3>
+            <p className="text-gray-600 text-sm italic">Daha önce 214(b) maddesi ile ret alan başvuruları analiz ediyor, hataları düzelterek güçlü bir niyet mektubuyla yeniden başvuruyoruz.</p>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-gray-100 rounded-2xl p-8 text-center">
-        <h2 className="text-2xl font-semibold mb-4">
-          İstanbul’da Amerika Vizesi İçin Profesyonel Destek
+      {/* 4. LOKAL SİNYAL: LEVENT & İSTİNYE ODAKLI */}
+      <section className="mb-16 bg-indigo-900 text-white rounded-3xl p-8 md:p-12">
+        <div className="grid md:grid-cols-2 gap-10 items-center">
+          <div>
+            <h2 className="text-3xl font-bold mb-6">Maslak Ofisimizle Vize Süreci Daha Kolay</h2>
+            <p className="mb-4 opacity-90">
+              İstanbul’un iş merkezi <strong>Maslak</strong>’te bulunan ofisimiz; <strong>Beşiktaş, Şişli ve Mecidiyeköy</strong>’den metro ile dakikalar içinde ulaşabileceğiniz konumdadır.
+            </p>
+            <p className="opacity-90">
+              <strong>İstinye</strong>’deki ABD Başkonsolosluğu mülakatınız öncesi son hazırlıklarınızı ofisimizde uzmanlarımızla yüz yüze gerçekleştirebilirsiniz.
+            </p>
+          </div>
+          <div className="bg-white/10 p-6 rounded-2xl backdrop-blur-sm border border-white/20">
+            <h4 className="font-bold mb-4 text-indigo-300 uppercase tracking-widest text-sm text-center">Ofis Avantajları</h4>
+            <ul className="space-y-3 text-sm">
+              <li className="flex items-center gap-2 font-medium">✓ Ücretsiz Wi-Fi ve Evrak Tarama Hizmeti</li>
+              {/* <li className="flex items-center gap-2 font-medium">✓ Profesyonel İngilizce Tercüme Desteği</li> */}
+              <li className="flex items-center gap-2 font-medium">✓ Ödeme ve Harç İşlemleri Rehberliği</li>
+              <li className="flex items-center gap-2 font-medium">✓ Metro Hattına 2 Dakika Yürüme Mesafesi</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. FAQ: ŞEMA YAPISINA UYGUN SORULAR */}
+      <section className="mb-16">
+        <h2 className="text-3xl font-bold mb-8">İstanbul Amerika Vizesi Sıkça Sorulan Sorular</h2>
+        <div className="space-y-4">
+          <details className="group border-b border-gray-200 pb-4 cursor-pointer">
+            <summary className="font-bold text-lg list-none flex justify-between items-center group-hover:text-indigo-600 transition">
+              Amerika vize randevusu İstanbul'da ne kadar sürer?
+              <span className="text-indigo-600 transition group-open:rotate-180">▼</span>
+            </summary>
+            <p className="mt-3 text-gray-600">Randevu bekleme süreleri vize türüne göre değişmektedir. B1/B2 turist vizeleri için İstanbul yoğun bir merkezdir; ancak danışmanlık hizmetimizle boşalan randevuları anlık takip ederek süreci hızlandırıyoruz.</p>
+          </details>
+          <details className="group border-b border-gray-200 pb-4 cursor-pointer">
+            <summary className="font-bold text-lg list-none flex justify-between items-center group-hover:text-indigo-600 transition">
+              Mülakat sırasında hangi belgeler yanımda olmalı?
+              <span className="text-indigo-600 transition group-open:rotate-180">▼</span>
+            </summary>
+            <p className="mt-3 text-gray-600">Pasaport, DS-160 onay sayfası ve randevu konfirme belgesi zorunludur. Ancak başarınızı artırmak için finansal durumunuzu ve Türkiye'ye bağlarınızı kanıtlayan destekleyici belgeleri de hazırlıyoruz.</p>
+          </details>
+        </div>
+      </section>
+
+      {/* 6. FINAL CTA: ACİLİYET VE EYLEM */}
+      <section className="bg-gray-100 rounded-[2.5rem] p-10 text-center border border-gray-200 shadow-inner">
+        <h2 className="text-3xl font-bold mb-4 text-slate-900 uppercase tracking-tight">
+          Hayalinizdeki Amerika Seyahati İçin İlk Adımı Atın
         </h2>
-
-        <p className="text-gray-700 mb-6">
-          Amerika vize başvurunuzu güvenle ve doğru stratejiyle yapmak için
-          ücretsiz ön danışmanlık randevunuzu oluşturun.
+        <p className="text-gray-700 mb-8 max-w-2xl mx-auto text-lg leading-snug font-medium">
+          İstanbul’un en tecrübeli vize ekibiyle çalışarak <strong>DS-160 formu</strong> hatalarından ve mülakat heyecanından kurtulun.
         </p>
-
-        <a
-          href="/iletisim"
-          className="inline-block bg-black text-white px-8 py-3 rounded-lg hover:bg-gray-800 transition"
-        >
-          Hemen Başvur
-        </a>
+        <div className="flex flex-col sm:flex-row justify-center gap-4">
+          <a href="/iletisim" className="bg-black text-white px-10 py-4 rounded-xl font-bold text-lg hover:bg-gray-800 transition shadow-lg">
+            Hemen Başvur
+          </a>
+          <a href="https://wa.me/905302199056" className="bg-green-600 text-white px-10 py-4 rounded-xl font-bold text-lg hover:bg-green-700 transition shadow-lg flex items-center justify-center gap-2">
+            WhatsApp Hattı
+          </a>
+        </div>
       </section>
 
     </main>
