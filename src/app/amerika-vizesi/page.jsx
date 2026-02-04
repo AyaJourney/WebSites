@@ -61,6 +61,9 @@ export default function Page() {
             "@type": "LocalBusiness",
             "name": "AYA Journey",
             "url": "https://www.ayajourney.com",
+            "telephone": "+903128701584", // Kendi numaranı ekle
+            "priceRange": "$$", // Orta segment hizmet anlamında kullanılır
+            "image": "https://www.ayajourney.com/logo.png", // İşletme logosu
             "address": {
               "@type": "PostalAddress",
               "addressLocality": "İstanbul & Ankara",
