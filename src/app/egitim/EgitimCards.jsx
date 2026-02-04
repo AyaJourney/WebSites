@@ -47,7 +47,88 @@ const posterImages = [
   if (!programs.length) return null;
 
   return (
-    <main className="w-full bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.14),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(16,185,129,0.14),transparent_30%)] text-gray-900 font-sans overflow-hidden">
+    <>
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Service",
+          "name": "Yurtdışı Eğitim ve Kariyer Danışmanlığı",
+          "provider": {
+            "@type": "LocalBusiness",
+            "name": "AYA Journey",
+            "image": "https://www.ayajourney.com/logo.png",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Merkez Ofis Adresi",
+              "addressLocality": "Ankara/İstanbul",
+              "addressCountry": "TR"
+            }
+          }
+        },
+        // Programları Course ve FAQ olarak mapliyoruz
+        ...data.programs.map((p) => ({
+          "@type": "Course",
+          "name": p.title,
+          "description": p.intro,
+          "provider": {
+            "@type": "Organization",
+            "name": "AYA Journey"
+          }
+        })),
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Amerika Staj Programı'na (Internship) kimler başvurabilir?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Turizm veya gastronomi bölümü mezunları, orta seviye İngilizceye sahip ve genellikle 18–34 yaş arası adaylar AYA Journey Amerika staj programına başvurabilir."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Erasmus vizesi için hibe yazısı gerekli mi?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Evet, üniversite tarafından verilen ve öğrencinin hibeli veya hibesiz durumunu gösteren sponsorluk belgesi (hibe yazısı) vize başvurusu için zorunludur."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Au Pair programı ile dadılık arasındaki fark nedir?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Au Pair bir kültürel değişim programıdır. Katılımcılar bir Amerikalı ailenin yanında yaşar, çocuk bakımına destek olurken aynı zamanda eğitim bursu alır ve Amerikan kültürünü deneyimler."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "J-1 vizesi nedir ve kimlere verilir?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "J-1 vizesi, ABD Dışişleri Bakanlığı tarafından kültürel değişim programları (staj, Au Pair, öğrenci değişimi) kapsamında verilen ve katılımcılara çalışma/yaşama izni sağlayan bir vize türüdür."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Yurtdışı dil okullarında yaş sınırı var mı?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Dil okulu programlarına genellikle 16 yaş üstü herkes katılabilir. Herhangi bir dil seviyesi şartı aranmaz."
+              }
+            }
+          ]
+        }
+      ]
+    })
+  }}
+/>
+      <main className="w-full bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.14),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(16,185,129,0.14),transparent_30%)] text-gray-900 font-sans overflow-hidden">
       {/* HERO */}
       <section className="max-w-7xl mx-auto px-6 pt-24 pb-16 text-center">
         <h1 className="text-4xl md:text-5xl font-extrabold leading-tight edu-animate edu-fade-up">
@@ -188,7 +269,7 @@ const posterImages = [
             className="edu-animate edu-scale-in edu-soft-glow"
             style={{ "--edu-glow-color": current.theme.soft }}
           >
-            <div className="relative h-[320px] md:h-[500px] rounded-3xl overflow-hidden shadow-xl">
+            <div className="relative h-80 md:h-125s rounded-3xl overflow-hidden shadow-xl">
               <Image
                 src={current.image}
                 alt={current.title}
@@ -211,27 +292,10 @@ const posterImages = [
 
 
       {/* SEO SCHEMA */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "ItemList",
-            "itemListElement": programs.map((p, i) => ({
-              "@type": "Course",
-              "position": i + 1,
-              "name": p.title,
-              "description": p.intro,
-              "provider": {
-                "@type": "Organization",
-                "name": "AYA Journey",
-                "url": "https://ayajourney.com"
-              }
-            }))
-          })
-        }}
-      />
+
     </main>
+    </>
+  
   );
 }
 

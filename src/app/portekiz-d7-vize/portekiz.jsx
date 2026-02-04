@@ -528,7 +528,7 @@ export default function Portekiz() {
               key={i}
               ref={addRef}
               data-anim="portekiz-slide"
-              className="portekiz-slide-init flex flex-col items-center bg-white  rounded-xl p-6 shadow hover:shadow-lg transition hover:scale-105 hakkimizda-hover-fill  hakkimizda-scale-init  relative p-8 rounded-2xl bg-[#f9fafb]  transition-all duration-300 hover:shadow-md"
+              className="portekiz-slide-init flex flex-col items-center bg-white rounded-xl p-6 shadow hover:shadow-lg transition hover:scale-105 hakkimizda-hover-fill  hakkimizda-scale-init  relative p-8 rounded-2xl bg-[#f9fafb]  transition-all duration-300 hover:shadow-md"
             >
               <div className="text-red-500 text-4xl mb-3">{item.icon}</div>
               <p className="text-center text-gray-700 text-sm">{item.title}</p>

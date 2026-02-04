@@ -67,25 +67,25 @@ return (
             
             /* Paragraf Ayarları: Kitap tipi girinti */
             [&_p]:mb-8
-            [&_p]:[text-indent:40px]
+            [&_p]:[indent-10]
             
             /* Başlıklar: Sola yaslı ve girintisiz */
-            [&_h2]:text-3xl [&_h2]:font-bold [&_h2]:text-slate-900 [&_h2]:mt-14 [&_h2]:mb-6 [&_h2]:[text-indent:0px] [&_h2]:tracking-tight
-            [&_h3]:text-2xl [&_h3]:font-semibold [&_h3]:text-slate-900 [&_h3]:mt-10 [&_h3]:mb-4 [&_h3]:[text-indent:0px]
+            [&_h2]:text-3xl [&_h2]:font-bold [&_h2]:text-slate-900 [&_h2]:mt-14 [&_h2]:mb-6 [&_h2]:[indent-0] [&_h2]:tracking-tight
+            [&_h3]:text-2xl [&_h3]:font-semibold [&_h3]:text-slate-900 [&_h3]:mt-10 [&_h3]:mb-4 [&_h3]:[indent-0]
             
             /* Listeler: Modern Mavi Noktalar */
-            [&_ul]:list-none [&_ul]:pl-0 [&_ul]:mb-10 [&_ul]:[text-indent:0px]
+            [&_ul]:list-none [&_ul]:pl-0 [&_ul]:mb-10 [&_ul]:[indent-0]
             [&_ul_li]:relative [&_ul_li]:pl-8 [&_ul_li]:mb-4
             [&_ul_li]:before:content-[''] [&_ul_li]:before:absolute [&_ul_li]:before:left-0 [&_ul_li]:before:top-[0.75em] [&_ul_li]:before:w-2 [&_ul_li]:before:h-2 [&_ul_li]:before:bg-blue-500 [&_ul_li]:before:rounded-full
             
-            [&_ol]:list-decimal [&_ol]:pl-8 [&_ol]:mb-10 [&_ol]:[text-indent:0px]
-            [&_li_p]:mb-0 [&_li_p]:[text-indent:0px]
+            [&_ol]:list-decimal [&_ol]:pl-8 [&_ol]:mb-10 [&_ol]:[indent-0]
+            [&_li_p]:mb-0 [&_li_p]:[indent-0]
 
             /* İçerik Resimleri */
             [&_img]:rounded-2xl [&_img]:my-12 [&_img]:shadow-lg [&_img]:mx-auto [&_img]:max-w-full
             
             /* Alıntılar */
-            [&_blockquote]:border-l-4 [&_blockquote]:border-blue-500 [&_blockquote]:bg-slate-50 [&_blockquote]:py-6 [&_blockquote]:px-10 [&_blockquote]:rounded-r-2xl [&_blockquote]:italic [&_blockquote]:text-xl [&_blockquote]:text-slate-600 [&_blockquote]:mb-10 [&_blockquote]:[text-indent:0px]
+            [&_blockquote]:border-l-4 [&_blockquote]:border-blue-500 [&_blockquote]:bg-slate-50 [&_blockquote]:py-6 [&_blockquote]:px-10 [&_blockquote]:rounded-r-2xl [&_blockquote]:italic [&_blockquote]:text-xl [&_blockquote]:text-slate-600 [&_blockquote]:mb-10 [&_blockquote]:[indent-0]
           "
           dangerouslySetInnerHTML={{ __html: blog.content }}
         />

@@ -76,7 +76,7 @@ export default function EntryModal({ isOpen, onClose,featured  }) {
 
 
             {/* Sağ kutu - Test */}
-           <div className="group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-purple-100 bg-gradient-to-br from-purple-50 via-white to-pink-50 p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl cursor-pointer">
+           <div className="group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-purple-100 `bg-gradient-to-br` from-purple-50 via-white to-pink-50 p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl cursor-pointer">
 
   {/* Decorative glow */}
   <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">

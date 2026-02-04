@@ -129,7 +129,7 @@ const [openF1, setOpenF1] = useState(false);
   }, []);
 
   return (
-    <main className="bg-gradient-to-b from-white via-slate-50 to-white text-slate-900 min-h-screen">
+    <main className="`bg-gradient-to-b` from-white via-slate-50 to-white text-slate-900 min-h-screen">
       {/* HERO */}
       <section
         ref={register}
@@ -147,7 +147,7 @@ const [openF1, setOpenF1] = useState(false);
             </div>
 
             <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-         <span className="bg-gradient-to-r from-red-500/80 via-slate-400 to-blue-500/100 bg-clip-text text-transparent">
+         <span className="`bg-gradient-to-r` from-red-500/80 via-slate-400 to-blue-500 bg-clip-text text-transparent">
   Amerika Vizesi
 </span>
               ,
@@ -220,7 +220,7 @@ F1 Vize alma ihtimalinizi ölçün!
             className="ukvisa-scale-init flex-1"
           >
             <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-br from-blue-500/15 via-slate-200/10 to-red-500/10 blur-2xl" />
+              <div className="absolute -inset-4 `bg-gradient-to-br` from-blue-500/15 via-slate-200/10 to-red-500/10 blur-2xl" />
               <div className="relative rounded-3xl overflow-hidden border border-slate-200 shadow-xl">
                 <Image
                   src="/images/visaamericaexam.webp"
