@@ -67,7 +67,8 @@ const posterImages = [
               "@type": "PostalAddress",
               "streetAddress": "Merkez Ofis Adresi",
               "addressLocality": "Ankara/İstanbul",
-              "addressCountry": "TR"
+              "addressCountry": "TR",
+               "postalCode": "06530", // Posta Kodu (Kritik!)
             }
           }
         },

@@ -187,7 +187,7 @@ export default function SchengenPage() {
               "streetAddress": "Kızılırmak Mahallesi Ufuk Ünv. Caddesi Paragon Tower No:3/49", // Sokak, No ve Daire bilgisi
       "addressLocality": "Çankaya", // İlçe
       "addressRegion": "Ankara", // Şehir
-      "postalCode": "06510", // Posta Kodu (Kritik!)
+      "postalCode": "06530", // Posta Kodu (Kritik!)
       
            
               "addressCountry": "TR"
