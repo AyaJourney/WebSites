@@ -60,7 +60,9 @@ const posterImages = [
           "provider": {
             "@type": "LocalBusiness",
             "name": "AYA Journey",
-            "image": "https://www.ayajourney.com/logo.png",
+           "telephone": "+903128701584", // Kendi numaranı ekle
+            "priceRange": "$$", // Orta segment hizmet anlamında kullanılır
+            "image": "https://www.ayajourney.com/logo.png", // İşletme logosu
             "address": {
               "@type": "PostalAddress",
               "streetAddress": "Merkez Ofis Adresi",
