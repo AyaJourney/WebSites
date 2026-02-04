@@ -336,7 +336,7 @@ const highScoreText = `
       "x-web-secret": process.env.WEB_TO_CRM_SECRET,
     },
     body: JSON.stringify({
-      testKey:keyboardShortcut,
+      testKey:key,
       name,
       email,
       phoneNumber,
