@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import EntryModal from "../components/modals/EntryModal";
 
 /* ================= UTILS ================= */
 function cn(...classes) {
@@ -10,6 +11,7 @@ function cn(...classes) {
 
 /* ================= PAGE ================= */
 export default function BlogPage() {
+ 
   const [posts, setPosts] = useState([]);
   const [activeCat, setActiveCat] = useState("Tümü");
   const [loading, setLoading] = useState(true);
@@ -77,7 +79,7 @@ const categories = useMemo(() => {
   }
 
   return (
-   <main className="max-w-[1320px] mx-auto px-4 py-10 bg-slate-50 overflow-x-hidden">
+   <main className="max-w-330 mx-auto px-4 py-10 bg-slate-50 overflow-x-hidden">
 
       {/* HEADER */}
       <header className="mb-10">
@@ -187,7 +189,7 @@ const categories = useMemo(() => {
     className="group relative block overflow-hidden rounded-[28px]"
   >
     {/* IMAGE */}
- <div className="relative h-[260px] sm:h-[320px] lg:h-[620px] bg-slate-100 overflow-hidden rounded-xl">
+ <div className="relative h-65 sm:h-80 lg:h-155 bg-slate-100 overflow-hidden rounded-xl">
   <img
     src={featured.image || "/images/icon.png"}
     alt={featured.title}
@@ -198,7 +200,7 @@ const categories = useMemo(() => {
     {/* BLUR + CONTENT AREA */}
     <div className="absolute bottom-0 left-0 right-0">
       {/* gradient geçiş */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent" />
+      <div className="absolute inset-0` bg-gradient-to-t` from-black/60 via-black/25 to-transparent" />
 
       {/* blur alan */}
   <div className="relative p-4 sm:p-6 lg:p-8 backdrop-blur-xs bg-black/10">
@@ -230,7 +232,7 @@ const categories = useMemo(() => {
     En Yeni
   </span>
 
-  <span className="ml-1 text-lg text-white/80 flex-shrink-0">↗</span>
+  <span className="ml-1 text-lg text-white/80 shrink-0">↗</span>
 </div>
 
 
@@ -303,6 +305,7 @@ const categories = useMemo(() => {
 
         </section>
       </div>
+
     </main>
   );
 }

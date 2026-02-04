@@ -13,6 +13,7 @@ import AmericaVisa from "./components/home/AmericaVisa";
 import İngiltereVisa from "./components/home/İngiltereVisa";
 import SchengenVisa from "./components/home/SchengenVisa";
 import SideNav from "./components/home/SideNav";
+import HomeClient from "./components/home/HomeClient";
 
 
 export const metadata = {
@@ -25,7 +26,7 @@ export const metadata = {
 export default function Home() {
   return (
     <main className="flex flex-col w-full bg-white mt-9">
-
+      {/* <HomeClient /> */}
       {/* HERO */}
    <SideNav />
       <section className="w-full mb-15" id="giris-1" >

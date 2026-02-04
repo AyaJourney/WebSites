@@ -44,7 +44,7 @@ function FinishScreen({ onFinish }) {
           Bakalım kaderiniz nasıl yazılmış?
         </p>
 
-        <button onClick={onFinish} className="w-full mt-4 px-6 py-4 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white text-lg font-medium cursor-pointer transition-all duration-300 shadow-lg hover:shadow-xl hover:brightness-110 active:scale-[0.97]">
+        <button onClick={onFinish} className="w-full mt-4 px-6 py-4 rounded-2xl `bg-gradient-to-r` from-blue-600 via-blue-700 to-blue-800 text-white text-lg font-medium cursor-pointer transition-all duration-300 shadow-lg hover:shadow-xl hover:brightness-110 active:scale-[0.97]">
           Bitir
         </button>
 
@@ -1761,13 +1761,13 @@ const goBack = () => {
   setStep(last.step);
 };
   return (
-    <div className="fixed inset-0 z-[999] bg-black/40 backdrop-blur-sm flex justify-center px-4 pt-6 pb-10">
+    <div className="fixed inset-0 z-999 bg-black/40 backdrop-blur-sm flex justify-center px-4 pt-6 pb-10">
       <div className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl overflow-hidden">
 
         {/* HEADER */}
         <div className="flex items-center justify-between px-4 py-4 border-b">
           <div className="flex items-center justify-center w-full">
-<Image
+          <Image
           src="/images/aya_logo_svg.svg"
           alt="Logo"
           width={250}

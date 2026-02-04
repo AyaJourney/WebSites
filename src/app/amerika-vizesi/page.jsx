@@ -30,7 +30,7 @@ keywords: [
     metadataBase: new URL("https://www.ayajourney.com"),
     images: [
       {
-        url: "https://www.ayajourney.com/images/visaamericaexam.jpg",
+        url: "https://www.ayajourney.com/images/aya_logo_svg.svg",
         width: 1200,
         height: 630,
         alt: "Amerika Vizesi AYA Journey",
@@ -53,7 +53,23 @@ export default function Page() {
   dangerouslySetInnerHTML={{
     __html: JSON.stringify({
       "@context": "https://schema.org",
-      "@type": "FAQPage",
+      "@graph": [
+        {
+          "@type": "Service",
+          "name": "Amerika Vize Danışmanlığı",
+          "provider": {
+            "@type": "LocalBusiness",
+            "name": "AYA Journey",
+            "url": "https://www.ayajourney.com",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "İstanbul & Ankara",
+              "addressCountry": "TR"
+            }
+          },
+          "description": "DS-160 form hazırlığı, randevu takibi ve profesyonel Amerika vize mülakat simülasyonu."
+        },
+        {    "@type": "FAQPage",
       "mainEntity": [
         {
           "@type": "Question",
@@ -247,7 +263,9 @@ export default function Page() {
             "text": "Amerika vizesi çocuklar için de bireysel olarak alınır ve mülakata anne veya babadan biri ile birlikte girilir."
           }
         }
-      ]
+      ]}
+  
+    ]
     })
   }}
 />

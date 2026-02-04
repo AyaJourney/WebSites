@@ -22,7 +22,7 @@ export default async function BlogDetailPage({ params }) {
 return (
     <article className="bg-[#fcfcfc] min-h-screen font-sans selection:bg-blue-100 selection:text-blue-900">
       {/* Üst Kısım: Sola Yaslı Başlık ve Meta */}
-      <header className="max-w-[960px] mx-auto px-8 pt-20 pb-12">
+      <header className="max-w-240 mx-auto px-8 pt-20 pb-12">
         <div className="flex items-center gap-3 mb-6">
           <span className="bg-blue-600 text-white text-[10px] px-3 py-1 rounded-md font-bold uppercase tracking-wider shadow-sm">
             {blog.category || "Genel"}
@@ -33,14 +33,14 @@ return (
         </div>
         
         {/* Başlık: Sola yaslı ve uzunluk kontrolü yapılmış */}
-        <h1 className="text-3xl md:text-5xl lg:text-5xl font-extrabold text-slate-900 leading-tight tracking-tight max-w-[850px]">
+        <h1 className="text-3xl md:text-5xl lg:text-5xl font-extrabold text-slate-900 leading-tight tracking-tight max-w-212.5">
           {blog.title}
         </h1>
       </header>
 
       {/* Ana Görsel: Daha küçük ve odaklı */}
   {blog.image_url && (
-  <div className="max-w-[960px] mx-auto mb-16 px-8">
+  <div className="max-w-240 mx-auto mb-16 px-8">
     <div className="relative rounded-3xl overflow-hidden bg-slate-100 shadow-sm border border-slate-100">
       <img
         src={blog.image_url}
@@ -49,14 +49,14 @@ return (
            max-h-[600px]: Resim çok uzunsa (dikeyse) ekranı kaplamasın diye sınır koyarız.
            object-contain: Resmin tamamını çerçeveye sığdırır.
         */
-        className="w-full h-auto max-h-[600px] object-contain block mx-auto transition-transform duration-700 hover:scale-[1.02]"
+        className="w-full h-auto max-h-150 object-cover block mx-auto transition-transform duration-700 hover:scale-[1.02]"
       />
     </div>
   </div>
 )}
 
       {/* İçerik Alanı */}
-      <div className="max-w-[960px] mx-auto px-8 pb-32">
+      <div className="max-w-240 mx-auto px-8 pb-32">
         <div
           className="
             /* Ana Yazı Karakterleri */
