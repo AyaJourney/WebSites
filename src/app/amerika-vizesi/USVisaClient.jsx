@@ -10,8 +10,7 @@ import {
   FaPlaneDeparture,
 } from "react-icons/fa";
 import { GoDotFill } from "react-icons/go";
-import AmericaVisaTestModal from "./modal/AmericaVisaTestModal";
-import TestModal from "../f1/TestModal";
+
 
 
 const highlights = [
@@ -173,12 +172,15 @@ const [openF1, setOpenF1] = useState(false);
                   Randevu Al
                 </button>
               </Link>
-              <button
-  onClick={() => setOpen(true)}
+              <Link href="/vize-alma-ihtimalinizi-olcun">
+                            <button
+
   className="bg-emerald-500 text-white px-6 py-3 rounded-2xl font-semibold hover:bg-emerald-600 transition flex-none"
 >
 Vize alma ihtimalinizi ölçün!
 </button>
+              </Link>
+
               {/* <button
   onClick={() => setOpenF1(true)}
   className="bg-emerald-500 text-white px-6 py-3 rounded-2xl font-semibold hover:bg-emerald-600 transition flex-none"
@@ -553,8 +555,8 @@ F1 Vize alma ihtimalinizi ölçün!
 
      
       </section>
-  <AmericaVisaTestModal open={open} setOpen={setOpen} />
-  <TestModal openF1={openF1} setOpenF1={setOpenF1}/>
+  {/* <AmericaVisaTestModal open={open} setOpen={setOpen} /> */}
+  {/* <TestModal openF1={openF1} setOpenF1={setOpenF1}/> */}
 
     </main>
   );

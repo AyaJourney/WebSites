@@ -12,6 +12,8 @@ import {
   MdTrendingUp,
   MdStar,
 } from 'react-icons/md';
+import AmericaVisaTestModal from '../components/visaTest/b1b2/AmericaVisaTestModal';
+import TestModal from '../components/visaTest/f1/TestModal';
 
 function cn(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -19,17 +21,17 @@ function cn(...classes) {
 
 // Örnek data — API'den çekmek istersen bunu fetch ile doldurursun
 const TESTS = [
-  {
-    id: 'schengen-quick',
-    title: 'Schengen Vize Hızlı Değerlendirme',
-    desc: '1 dakikada temel profil analizi ve yönlendirme.',
-    minutes: 1,
-    free: true,
-    category: 'Schengen',
-    href: '/vize-test/schengen-hizli',
-    tags: ['Hızlı', 'Popüler'],
-    gradient: 'from-blue-500 to-cyan-500',
-  },
+  // {
+  //   id: 'schengen-quick',
+  //   title: 'Schengen Vize Hızlı Değerlendirme',
+  //   desc: '1 dakikada temel profil analizi ve yönlendirme.',
+  //   minutes: 1,
+  //   free: true,
+  //   category: 'Schengen',
+  //   href: '/vize-test/schengen-hizli',
+  //   tags: ['Hızlı', 'Popüler'],
+  //   gradient: 'from-blue-500 to-cyan-500',
+  // },
   {
     id: 'usa-b1b2',
     title: 'ABD B1/B2 Vize Uygunluk Testi',
@@ -42,41 +44,41 @@ const TESTS = [
     gradient: 'from-purple-500 to-pink-500',
   },
   {
-    id: 'uk-visitor',
-    title: 'İngiltere Visitor Vize Değerlendirmesi',
+    id: 'usa-f1',
+    title: 'ABD F1 Vize Değerlendirmesi',
     desc: 'Güncel kriterlerle uyumlu adım adım analiz.',
     minutes: 4,
     free: true,
-    category: 'İngiltere',
-    href: '/vize-test/ingiltere-visitor',
+    category: 'ABD',
+    href: '/vize-test/abd-f1',
     tags: ['Güncel'],
     gradient: 'from-orange-500 to-red-500',
   },
-  {
-    id: 'canada-visitor',
-    title: 'Kanada Visitor Vize Kontrol Listesi + Test',
-    desc: 'Evrak ve profil uyumunu hızlıca ölç.',
-    minutes: 5,
-    free: false,
-    category: 'Kanada',
-    href: '/vize-test/kanada-visitor',
-    tags: ['Kontrol Listesi'],
-    gradient: 'from-green-500 to-emerald-500',
-  },
-  {
-    id: 'work-study',
-    title: 'Eğitim / Çalışma Vizesi Ön Değerlendirme',
-    desc: 'Program, bütçe ve geri dönüş planı üzerinden puanlama.',
-    minutes: 6,
-    free: true,
-    category: 'Eğitim/Çalışma',
-    href: '/vize-test/egitim-calisma',
-    tags: ['Puanlama'],
-    gradient: 'from-indigo-500 to-purple-500',
-  },
+  // {
+  //   id: 'canada-visitor',
+  //   title: 'Kanada Visitor Vize Kontrol Listesi + Test',
+  //   desc: 'Evrak ve profil uyumunu hızlıca ölç.',
+  //   minutes: 5,
+  //   free: false,
+  //   category: 'Kanada',
+  //   href: '/vize-test/kanada-visitor',
+  //   tags: ['Kontrol Listesi'],
+  //   gradient: 'from-green-500 to-emerald-500',
+  // },
+  // {
+  //   id: 'work-study',
+  //   title: 'Eğitim / Çalışma Vizesi Ön Değerlendirme',
+  //   desc: 'Program, bütçe ve geri dönüş planı üzerinden puanlama.',
+  //   minutes: 6,
+  //   free: true,
+  //   category: 'Eğitim/Çalışma',
+  //   href: '/vize-test/egitim-calisma',
+  //   tags: ['Puanlama'],
+  //   gradient: 'from-indigo-500 to-purple-500',
+  // },
 ];
 
-const CATEGORIES = ['Tümü', 'Schengen', 'ABD', 'İngiltere', 'Kanada', 'Eğitim/Çalışma'];
+const CATEGORIES = ['Tümü',"ABD","Schengen","Kanada","Eğitim/Çalışma"];
 
 function Badge({ children, tone = 'slate' }) {
   const tones = {
@@ -94,10 +96,10 @@ function Badge({ children, tone = 'slate' }) {
   );
 }
 
-function TestCard({ t }) {
+function TestCard({ t,setOpen,setOpenF1 }) {
   return (
-    <Link
-      href={t.href}
+    <div
+     
       className="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white border border-gray-200 shadow-sm transition-all duration-500 hover:shadow-2xl hover:scale-[1.02]"
     >
       {/* Gradient üst çizgi */}
@@ -167,18 +169,28 @@ function TestCard({ t }) {
         )}
 
         {/* CTA Button - Always at bottom */}
-        <div className="mt-auto">
+        <div className="mt-auto"  onClick={()=>{
+              if(t.id === "usa-b1b2"){
+                setOpen(true);
+              } else if(t.id === "usa-f1"){
+                setOpenF1(true);
+              }
+            }}>
           <div className={`flex items-center justify-between rounded-2xl bg-gradient-to-r ${t.gradient} px-5 py-3.5 text-white shadow-md group-hover:shadow-xl transition-all duration-300`}>
-            <span className="text-sm font-bold">Teste Başla</span>
+            <span className="text-sm font-bold" >Teste Başla</span>
             <MdArrowForward className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
           </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
 
 export default function VizeTestleriPage() {
+  const [open, setOpen] = useState(false);
+  const [openF1, setOpenF1] = useState(false);
+
+  
   const [q, setQ] = useState('');
   const [cat, setCat] = useState('Tümü');
   const [onlyFree, setOnlyFree] = useState(false);
@@ -203,9 +215,9 @@ export default function VizeTestleriPage() {
         {/* HERO */}
         <section className="relative overflow-hidden rounded-3xl bg-white border border-gray-200 shadow-xl mb-12">
           {/* Animated gradient background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 opacity-60" />
+          {/* <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 opacity-60" />
           <div className="pointer-events-none absolute -top-20 -right-20 h-64 w-64 rounded-full bg-gradient-to-br from-blue-400 to-purple-400 opacity-20 blur-3xl animate-pulse" />
-          <div className="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 opacity-20 blur-3xl animate-pulse" style={{animationDelay: '1s'}} />
+          <div className="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 opacity-20 blur-3xl animate-pulse" style={{animationDelay: '1s'}} /> */}
 
           <div className="relative p-8 sm:p-12">
             <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8">
@@ -266,7 +278,7 @@ export default function VizeTestleriPage() {
                     <input
                       value={q}
                       onChange={(e) => setQ(e.target.value)}
-                      placeholder="Test ara (örn: Schengen, ABD, eğitim...)"
+                      placeholder="Test ara (örn:ABD)"
                       className="w-full bg-transparent text-sm outline-none text-gray-900 placeholder:text-gray-400 font-medium"
                     />
                   </div>
@@ -344,7 +356,7 @@ export default function VizeTestleriPage() {
           ) : (
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {filtered.map((t) => (
-                <TestCard key={t.id} t={t} />
+                <TestCard key={t.id} t={t} setOpen={setOpen} setOpenF1={setOpenF1} />
               ))}
             </div>
           )}
@@ -388,6 +400,9 @@ export default function VizeTestleriPage() {
           </div>
         </section>
       </div>
+        <AmericaVisaTestModal open={open} setOpen={setOpen} />
+  <TestModal openF1={openF1} setOpenF1={setOpenF1}/>
+      
     </main>
   );
 }

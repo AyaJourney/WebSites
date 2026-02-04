@@ -61,7 +61,7 @@ const dateStr = now
 ========================= */
 export async function POST(req) {
   try {
-const { name, email, phoneNumber, score,answers } = await req.json();
+const { name, email, phoneNumber, score,answers,key } = await req.json();
 
 const dirPath = path.join(
   process.cwd(),
@@ -82,7 +82,7 @@ const filePath = path.join(
 fs.writeFileSync(
   filePath,
   JSON.stringify(
-    {
+    {key,
       name,
       email,
       phoneNumber,
@@ -213,7 +213,7 @@ const highScoreText = `
   />
 
   <h2 style="margin:0 0 8px 0;">
-    Amerika Vize Analiz Sonucunuz
+    Vize Analiz Sonucunuz
   </h2>
 
   <p style="color:#64748b;margin:0;">
@@ -325,10 +325,30 @@ const highScoreText = `
     await transporter.sendMail({
       from: `Aya Journey <${process.env.GOOGLE_MAIL_ADDRESS}>`,
       to: email,
-      subject: "Amerika Vize Analiz Sonucunuz",
+      subject: "Vize Analiz Sonucunuz",
       html,
     });
-
+    try {
+  await fetch(`${process.env.NEXT_PUBLIC_CRM_PUBLIC_URL}/api/visa-test/submit`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-web-secret": process.env.WEB_TO_CRM_SECRET,
+    },
+    body: JSON.stringify({
+      testKey:keyboardShortcut,
+      name,
+      email,
+      phoneNumber,
+      score,
+      answers,
+      createdAt: new Date().toISOString(),
+    }),
+  });
+} catch (crmErr) {
+  // CRM çökerse site / mail etkilenmesin
+  console.error("CRM API PUSH ERROR:", crmErr);
+}
     return new Response(JSON.stringify({ success: true }), { status: 200 });
 
   } catch (err) {

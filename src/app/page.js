@@ -26,7 +26,7 @@ export const metadata = {
 export default function Home() {
   return (
     <main className="flex flex-col w-full bg-white mt-9">
-      {/* <HomeClient /> */}
+      <HomeClient />
       {/* HERO */}
    <SideNav />
       <section className="w-full mb-15" id="giris-1" >

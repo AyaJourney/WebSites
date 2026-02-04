@@ -306,9 +306,9 @@ useEffect(() => {
     if (!emailRegex.test(user.email)) {
       e.email = "Geçerli bir e-posta giriniz";
     }
-    if (!phoneRegex.test(user.phoneNumber)) {
-      e.phoneNumber = "Geçerli bir telefon numarası giriniz";
-    }
+    // if (!phoneRegex.test(user.phoneNumber)) {
+    //   e.phoneNumber = "Geçerli bir telefon numarası giriniz";
+    // }
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -402,6 +402,7 @@ finalScore = Math.min(Math.max(finalScore, 15), maxScore);
         phoneNumber:user.phoneNumber,
         score: finalScore,
         answers:answers,
+        key:"F1-Amerika-Vize-Testi"
       }),
     });
   } catch (err) {
@@ -452,62 +453,174 @@ const goBack = () => {
         <div className="p-6 space-y-6 max-h-[80vh] overflow-y-auto">
 
           {/* STEP 0 */}
-          {step === 0 && (
-            <div className="space-y-4 text-center">
-              <h2 className="text-3xl font-extrabold">
-            Amerika Vize Analizi
-              </h2>
-              <p className="text-slate-600">
-                2 dakikada Amerika vize hazırlık skorunuzu öğrenin.
-              </p>
+    {step === 0 && (
+  <div className="space-y-6">
+    {/* Header */}
+    <div className="text-center space-y-3">
+     
+      
+      <h2 className="text-3xl sm:text-4xl font-black text-gray-900 leading-tight">
+        Amerika F1 Vize Analizi
+      </h2>
+      
+      <p className="text-lg text-gray-600 max-w-md mx-auto">
+        2 dakikada Amerika vize hazırlık skorunuzu öğrenin.
+      </p>
+      
+      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-200">
+        <div className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
+        <span className="text-sm font-semibold text-blue-700">Ücretsiz Değerlendirme</span>
+      </div>
+    </div>
 
-              <input
-                placeholder="Ad Soyad"
-                className="w-full p-4 border rounded-xl"
-                value={user.name}
-                onChange={(e) =>
-                  setUser({ ...user, name: e.target.value })
-                }
-              />
-              {errors.name && (
-                <p className="text-red-500 text-sm">
-                  {errors.name}
-                </p>
+    {/* Form */}
+    <div className="space-y-4 mt-8">
+      {/* Ad Soyad */}
+      <div className="group">
+        <label className="block text-sm font-bold text-gray-700 mb-2 ml-1">
+          Ad Soyad
+        </label>
+        <div className="relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl opacity-0 group-hover:opacity-100 blur transition-opacity duration-300" />
+          <div className="relative">
+            <input
+              placeholder="Adınızı ve soyadınızı girin"
+              className={`w-full px-5 py-4 border-2 rounded-2xl bg-white text-gray-900 placeholder:text-gray-400 font-medium outline-none transition-all duration-300 ${
+                errors.name
+                  ? 'border-red-300 focus:border-red-500 bg-red-50/50'
+                  : 'border-gray-200 focus:border-transparent focus:ring-2 focus:ring-blue-500'
+              }`}
+              value={user.name}
+              onChange={(e) => setUser({ ...user, name: e.target.value })}
+            />
+            <div className="absolute right-4 top-1/2 -translate-y-1/2">
+              {user.name && !errors.name && (
+                <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
               )}
-
-              <input
-                placeholder="E-posta"
-  className="w-full p-4 border rounded-xl"
-  value={user.email}
-  onChange={(e) => setUser({ ...user, email: e.target.value })}
-
-              />
-              {errors.email && (
-                <p className="text-red-500 text-sm">
-                  {errors.email}
-                </p>
-              )}
-
-              <input
-                placeholder="Telefon Numarası"
-  className="w-full p-4 border rounded-xl"
-  value={user.phoneNumber}
-  onChange={(e) => setUser({ ...user, phoneNumber: e.target.value })}
-
-              />
-               {errors.phoneNumber && (
-                <p className="text-red-500 text-sm">
-                  {errors.phoneNumber}
-                </p>
-              )}
-              <button
-                onClick={() => validateStart() && setStep(1)}
-                className="w-full bg-black text-white py-4 rounded-xl font-bold"
-              >
-                Analize Başla
-              </button>
             </div>
-          )}
+          </div>
+        </div>
+        {errors.name && (
+          <div className="flex items-center gap-2 mt-2 ml-1">
+            <svg className="w-4 h-4 text-red-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+            </svg>
+            <p className="text-red-600 text-sm font-medium">{errors.name}</p>
+          </div>
+        )}
+      </div>
+
+      {/* E-posta */}
+      <div className="group">
+        <label className="block text-sm font-bold text-gray-700 mb-2 ml-1">
+          E-posta Adresi
+        </label>
+        <div className="relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl opacity-0 group-hover:opacity-100 blur transition-opacity duration-300" />
+          <div className="relative">
+            <input
+              type="email"
+              placeholder="ornek@email.com"
+              className={`w-full px-5 py-4 border-2 rounded-2xl bg-white text-gray-900 placeholder:text-gray-400 font-medium outline-none transition-all duration-300 ${
+                errors.email
+                  ? 'border-red-300 focus:border-red-500 bg-red-50/50'
+                  : 'border-gray-200 focus:border-transparent focus:ring-2 focus:ring-blue-500'
+              }`}
+              value={user.email}
+              onChange={(e) => setUser({ ...user, email: e.target.value })}
+            />
+            <div className="absolute right-4 top-1/2 -translate-y-1/2">
+              {user.email && !errors.email && (
+                <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+              )}
+            </div>
+          </div>
+        </div>
+        {errors.email && (
+          <div className="flex items-center gap-2 mt-2 ml-1">
+            <svg className="w-4 h-4 text-red-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+            </svg>
+            <p className="text-red-600 text-sm font-medium">{errors.email}</p>
+          </div>
+        )}
+      </div>
+
+      {/* Telefon */}
+      {/* <div className="group">
+        <label className="block text-sm font-bold text-gray-700 mb-2 ml-1">
+          Telefon Numarası
+        </label>
+        <div className="relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl opacity-0 group-hover:opacity-100 blur transition-opacity duration-300" />
+          <div className="relative">
+            <input
+              type="tel"
+              placeholder="+90 5XX XXX XX XX"
+              className={`w-full px-5 py-4 border-2 rounded-2xl bg-white text-gray-900 placeholder:text-gray-400 font-medium outline-none transition-all duration-300 ${
+                errors.phoneNumber
+                  ? 'border-red-300 focus:border-red-500 bg-red-50/50'
+                  : 'border-gray-200 focus:border-transparent focus:ring-2 focus:ring-blue-500'
+              }`}
+              value={user.phoneNumber}
+              onChange={(e) => setUser({ ...user, phoneNumber: e.target.value })}
+            />
+            <div className="absolute right-4 top-1/2 -translate-y-1/2">
+              {user.phoneNumber && !errors.phoneNumber && (
+                <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+              )}
+            </div>
+          </div>
+        </div>
+        {errors.phoneNumber && (
+          <div className="flex items-center gap-2 mt-2 ml-1">
+            <svg className="w-4 h-4 text-red-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+            </svg>
+            <p className="text-red-600 text-sm font-medium">{errors.phoneNumber}</p>
+          </div>
+        )}
+      </div> */}
+    </div>
+
+    {/* Submit Button */}
+    <button
+       onClick={() => validateStart() && setStep(1)}
+      className="group relative w-full overflow-hidden rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-5 text-white font-bold text-lg shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] mt-8"
+    >
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <span className="relative flex items-center justify-center gap-2">
+        Analize Başla
+        <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
+      </span>
+    </button>
+
+    {/* Trust badges */}
+    <div className="flex items-center justify-center gap-6 pt-6 border-t border-gray-200">
+      <div className="flex items-center gap-2">
+        <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+          <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+        </svg>
+        <span className="text-sm text-gray-600 font-medium">Güvenli & Gizli</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <svg className="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+          <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
+        </svg>
+        <span className="text-sm text-gray-600 font-medium">Ücretsiz Analiz</span>
+      </div>
+    </div>
+  </div>
+)}
 
           {/* QUESTIONS */}
   {steps[step] && (

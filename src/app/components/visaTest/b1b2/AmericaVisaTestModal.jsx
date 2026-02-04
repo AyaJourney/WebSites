@@ -1742,6 +1742,7 @@ finalScore = Math.min(Math.max(finalScore, 15), maxScore);
         phoneNumber:user.phoneNumber,
         score: finalScore,
         answers:answers,
+        key:"B1/B2-Amerika-Vize-Testi"
       }),
     });
   } catch (err) {
@@ -1855,11 +1856,11 @@ const goBack = () => {
      
       
       <h2 className="text-3xl sm:text-4xl font-black text-gray-900 leading-tight">
-        Amerika Vize Analizi
+        Amerika B1/B2 Vize Analizi
       </h2>
       
       <p className="text-lg text-gray-600 max-w-md mx-auto">
-        2 dakikada Amerika vize hazırlık skorunuzu öğrenin.
+        4 dakikada Amerika vize hazırlık skorunuzu öğrenin.
       </p>
       
       <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-200">
