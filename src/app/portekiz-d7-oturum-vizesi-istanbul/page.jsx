@@ -178,7 +178,7 @@ const Page = () => {
       </section>
 
       {/* 6. FINAL CTA: EYLEM ÇAĞRISI */}
-      <section className="`bg-gradient-to-r` from-teal-800 to-teal-950 rounded-3xl p-12 text-center text-teal-900 shadow-2xl">
+      <section className="bg-gradient-to-r from-teal-800 to-teal-950 rounded-3xl p-12 text-center text-teal-900 shadow-2xl">
         <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
           Avrupa Kapılarını D7 Vizesi İle Açın
         </h2>

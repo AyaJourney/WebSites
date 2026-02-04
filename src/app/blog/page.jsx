@@ -200,7 +200,7 @@ const categories = useMemo(() => {
     {/* BLUR + CONTENT AREA */}
     <div className="absolute bottom-0 left-0 right-0">
       {/* gradient geçiş */}
-      <div className="absolute inset-0` bg-gradient-to-t` from-black/60 via-black/25 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent" />
 
       {/* blur alan */}
   <div className="relative p-4 sm:p-6 lg:p-8 backdrop-blur-xs bg-black/10">

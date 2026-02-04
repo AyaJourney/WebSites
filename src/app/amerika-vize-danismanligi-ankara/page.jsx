@@ -200,7 +200,7 @@ const Page = () => {
       </section>
 
       {/* 6. FINAL CTA */}
-      <section className="`bg-gradient-to-br` from-blue-950 via-slate-900 to-black rounded-3xl p-12 text-center text-blue-900 shadow-2xl relative overflow-hidden">
+      <section className="bg-gradient-to-br from-blue-950 via-slate-900 to-black rounded-3xl p-12 text-center text-blue-900 shadow-2xl relative overflow-hidden">
         <div className="relative z-10">
           <h2 className="text-3xl md:text-4xl font-extrabold mb-6">
             ABD Vize Başvurunuzda Riskleri Sıfırlayın

@@ -189,7 +189,7 @@ const Page = () => {
       </section>
 
       {/* 7. FINAL CTA */}
-      <section className="`bg-gradient-to-r` from-blue-900 to-black rounded-3xl p-12 text-center text-blue-900 shadow-2xl">
+      <section className="bg-gradient-to-r from-blue-900 to-black rounded-3xl p-12 text-center text-blue-900 shadow-2xl">
         <h2 className="text-3xl md:text-4xl font-bold mb-6">
           Vize Reddi Riski Almayın, Uzmanına Danışın!
         </h2>

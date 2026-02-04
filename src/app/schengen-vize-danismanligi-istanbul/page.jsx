@@ -202,7 +202,7 @@ const Page = () => {
       </section>
 
       {/* 6. FINAL CTA: CONVERSION FOCUS */}
-      <section className="`bg-gradient-to-br` from-sky-800 to-indigo-900 rounded-[3rem] p-12 text-center text-sky-900 shadow-2xl">
+      <section className="bg-gradient-to-br from-sky-800 to-indigo-900 rounded-[3rem] p-12 text-center text-sky-900 shadow-2xl">
         <h2 className="text-3xl md:text-5xl font-extrabold mb-6 leading-tight">
           Schengen Vizeniz Pasaportunuza <br className="hidden md:block"/> Gelmeden Önce Bizimle Konuşun!
         </h2>

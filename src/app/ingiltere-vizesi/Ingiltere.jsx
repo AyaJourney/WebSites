@@ -536,7 +536,7 @@ const UKVisaPage = () => {
   }}
 />
 
-           <main className="`bg-gradient-to-b` from-white via-slate-50 to-white text-slate-900 font-sans min-h-screen">
+           <main className="bg-gradient-to-b from-white via-slate-50 to-white text-slate-900 font-sans min-h-screen">
 
       {/* HERO ----------------------------------------------------- */}
       <section
@@ -632,7 +632,7 @@ const UKVisaPage = () => {
             className="ukvisa-scale-init flex-1"
           >
             <div className="relative">
-              <div className="absolute -inset-4 `bg-gradient-to-br` from-blue-500/15 via-purple-500/10 to-fuchsia-500/10 blur-2xl" />
+              <div className="absolute -inset-4 bg-gradient-to-br from-blue-500/15 via-purple-500/10 to-fuchsia-500/10 blur-2xl" />
               <div className="relative rounded-3xl overflow-hidden border border-slate-200 shadow-xl">
                 <Image
                   src="/images/ukdetail.jpg"
