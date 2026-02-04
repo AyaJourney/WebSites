@@ -33,6 +33,8 @@ const page = () => {
         "name": "AYA Journey",
         "url": "https://www.ayajourney.com",
         "logo": "https://www.ayajourney.com/logo.png",
+        "priceRange": "$$", // Orta segment hizmet anlamında kullanılır
+            "image": "https://www.ayajourney.com/logo.png", // İşletme logosu
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "Kızılırmak Mahallesi (Ankara) / Maslak (İstanbul)",
