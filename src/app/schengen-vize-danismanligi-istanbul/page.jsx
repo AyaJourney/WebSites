@@ -1,8 +1,83 @@
 import React from "react";
-
+export const metadata = {
+  title: "Schengen Vize Danışmanlığı İstanbul | Maslak Ofisi & Hızlı Randevu",
+  description: "İstanbul Schengen vizesi başvurularında uzman desteği. Maslak ofisimizde iData, VFS Global ve AS Travel süreçleri, profesyonel niyet mektubu ve %98 onay başarısı.",
+  keywords: [
+    "Schengen vizesi İstanbul",
+    "İstanbul vize danışmanlık firmaları",
+    "iData İstanbul randevu alma",
+    "VFS Global İstanbul Schengen",
+    "Almanya vizesi İstanbul",
+    "Fransa vize randevusu İstanbul",
+    "Mecidiyeköy vize danışmanlık",
+    "Schengen vize sigortası İstanbul"
+  ],
+  alternates: {
+    canonical: "https://www.ayajourney.com/istanbul-schengen-vizesi", 
+  }
+};
 const Page = () => {
   return (
-    <main className="max-w-300 mx-auto px-4 py-12 text-gray-900 leading-relaxed">
+    <>
+    <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "LocalBusiness",
+          "name": "AYA Journey İstanbul - Schengen Vize Uzmanı",
+          "image": "https://www.ayajourney.com/images/istanbul-schengen-visa.jpg",
+          "@id": "https://www.ayajourney.com/istanbul-schengen-vizesi",
+          "url": "https://www.ayajourney.com/istanbul-schengen-vizesi",
+          "telephone": "+905304853115",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Maslak Bilim Sokak No:5",
+            "addressLocality": "Sarıyer",
+            "addressRegion": "İstanbul",
+            "postalCode": "34398",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 41.1128,
+            "longitude": 29.0213
+          }
+        },
+        {
+          "@type": "Service",
+          "serviceType": "İstanbul Schengen Vize Danışmanlığı",
+          "provider": { "@id": "https://www.ayajourney.com/istanbul-schengen-vizesi" },
+          "description": "İstanbul'dan yapılacak tüm Schengen başvuruları için randevu takibi, profesyonel dosya hazırlığı ve seyahat sigortası hizmeti."
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "İstanbul'da Schengen randevusu ne zaman açılır?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "İstanbul randevuları iData ve VFS Global sistemlerinde periyodik olarak açılır. AYA Journey olarak sistemleri 7/24 takip ederek en hızlı randevuyu alıyoruz."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "İstanbul Schengen vize danışmanlık ücretleri nedir?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Ücretler gidilecek ülke ve vize türüne göre değişmektedir. Ücretsiz ön değerlendirme için Maslak ofisimizle iletişime geçebilirsiniz."
+              }
+            }
+          ]
+        }
+      ]
+    })
+  }}
+/>
+      <main className="max-w-300 mx-auto px-4 py-12 text-gray-900 leading-relaxed">
       
       {/* 1. HERO: İstanbul Hızı ve Profesyonellik */}
       <section className="mb-16">
@@ -145,7 +220,9 @@ const Page = () => {
         </div>
       </section>
 
-    </main>
+    </main> 
+    </>
+ 
   );
 };
 

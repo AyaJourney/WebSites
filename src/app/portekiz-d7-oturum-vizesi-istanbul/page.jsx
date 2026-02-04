@@ -1,7 +1,86 @@
 import React from "react";
-
+export const metadata = {
+  title: "Portekiz D7 Vizesi Danışmanlığı İstanbul | Levent Oturum İzni",
+  description: "İstanbul Portekiz D7 vizesi uzmanı. Levent ofisimizde pasif gelir analizi, uzaktan NIF ve banka hesabı açılışı ile Portekiz'de oturum izni sürecinizi yönetiyoruz.",
+  keywords: [
+    "Portekiz D7 vizesi İstanbul",
+    "İstanbul Portekiz oturum izni",
+    "Levent vize danışmanlık",
+    "Portekiz NIF numarası İstanbul",
+    "VFS Global Portekiz randevu İstanbul",
+    "Portekiz pasif gelir vizesi başvurusu",
+    "İstanbul göçmenlik danışmanlığı Portekiz",
+    "Portekiz banka hesabı açma Türkiye"
+  ],
+  alternates: {
+    canonical: "https://www.ayajourney.com/istanbul-portekiz-d7-vizesi", 
+  }
+};
 const Page = () => {
   return (
+    <>
+    <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "LocalBusiness",
+          "name": "AYA Journey İstanbul - Portekiz D7 Merkezi",
+          "image": "https://www.ayajourney.com/images/istanbul-portugal-d7.jpg",
+          "@id": "https://www.ayajourney.com/istanbul-portekiz-d7-vizesi",
+          "url": "https://www.ayajourney.com/istanbul-portekiz-d7-vizesi",
+          "telephone": "+905304853115",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Maslak Bilim Sokak No:5",
+            "addressLocality": "Sarıyer",
+            "addressRegion": "İstanbul",
+            "postalCode": "34398",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 41.1128,
+            "longitude": 29.0213
+          }
+        },
+        {
+          "@type": "Service",
+          "serviceType": "Portekiz D7 Vizesi Danışmanlığı",
+          "provider": { "@id": "https://www.ayajourney.com/istanbul-portekiz-d7-vizesi" },
+          "description": "İstanbul ofisimizde Portekiz D7 vizesi için NIF alımı, pasif gelir dosyası hazırlığı ve VFS Global randevu takibi hizmetleri sunulmaktadır.",
+          "areaServed": {
+            "@type": "City",
+            "name": "İstanbul"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "İstanbul'da Portekiz D7 başvurusu nereye yapılır?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "İstanbul'daki başvurular resmi aracı kurum olan VFS Global'in Beyoğlu veya Altunizade merkezlerinden yapılır. AYA Journey olarak dosyanızı bu sürece hazırlıyoruz."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "D7 vizesi için Portekiz'e gitmek şart mı?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Hayır. İstanbul ofisimizden vereceğiniz vekalet ile NIF numaranızı alabiliyor ve banka hesabınızı Portekiz'e gitmeden açabiliyoruz."
+              }
+            }
+          ]
+        }
+      ]
+    })
+  }}
+/>
     <main className="max-w-300 mx-auto px-4 py-12 text-gray-900 leading-relaxed">
       
       {/* 1. HERO: Yaşam Tarzı ve Uzmanlık Vurgusu */}
@@ -118,6 +197,8 @@ const Page = () => {
       </section>
 
     </main>
+    </>
+
   );
 };
 

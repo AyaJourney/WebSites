@@ -1,8 +1,87 @@
 import React from "react";
-
+export const metadata = {
+  title: "Schengen Vize Danışmanlığı Ankara | Hızlı Randevu & Onay",
+  description: "Ankara Schengen vizesi başvurularında uzman desteği. Çukurambar ofisimizde Almanya, Fransa, İtalya vize randevusu, dosya hazırlığı ve sigorta işlemleri.",
+  keywords: [
+    "Schengen vizesi Ankara",
+    "Ankara vize danışmanlık",
+    "Almanya vize randevusu Ankara",
+    "Fransa vizesi Ankara VFS",
+    "İtalya vize başvurusu iData Ankara",
+    "Schengen vize reddi itiraz Ankara",
+    "Çukurambar vize merkezi",
+    "Ankara Hollanda vize randevusu"
+  ],
+  alternates: {
+    canonical: "https://www.ayajourney.com/ankara-schengen-vizesi", 
+  }
+};
 const Page = () => {
   return (
-    <main className="max-w-300 mx-auto px-4 py-12 text-gray-900 leading-relaxed">
+    <>
+    <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "LocalBusiness",
+          "name": "AYA Journey Ankara - Schengen Vize Merkezi",
+          "image": "https://www.ayajourney.com/images/ankara-schengen-visa.jpg",
+          "@id": "https://www.ayajourney.com/ankara-schengen-vizesi",
+          "url": "https://www.ayajourney.com/ankara-schengen-vizesi",
+          "telephone": "+90XXXXXXXXXX", // Telefon numaranızı güncelleyin
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Kızılırmak Mahallesi Ufuk Ünv. Caddesi No:3 Paragon Tower",
+            "addressLocality": "Çankaya",
+            "addressRegion": "Ankara",
+            "postalCode": "06530",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 39.9048,
+            "longitude": 32.8092
+          }
+        },
+        {
+          "@type": "Service",
+          "serviceType": "Schengen Vize Danışmanlığı",
+          "provider": { "@id": "https://www.ayajourney.com/ankara-schengen-vizesi" },
+          "areaServed": {
+            "@type": "City",
+            "name": "Ankara"
+          },
+          "description": "Almanya, İtalya, Fransa ve Hollanda başta olmak üzere tüm Schengen ülkeleri için randevu alımı ve dosya hazırlığı."
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Ankara'da Schengen vize randevusu nasıl bulunur?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Ankara'daki yoğunluk nedeniyle randevular hızla dolmaktadır. AYA Journey olarak iData, VFS Global ve AS Travel sistemlerini 7/24 takip ederek uygun randevuyu yakalıyoruz."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Schengen vizesi için seyahat sigortası zorunlu mu?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Evet, tüm Schengen ülkeleri için 30.000 Euro teminatlı seyahat sağlık sigortası zorunludur. Ankara ofisimizde bu işlemi anında gerçekleştiriyoruz."
+              }
+            }
+          ]
+        }
+      ]
+    })
+  }}
+/>
+  <main className="max-w-300 mx-auto px-4 py-12 text-gray-900 leading-relaxed">
       
       {/* 1. HERO: Problem Çözme Odaklı Giriş */}
       <section className="mb-16">
@@ -143,6 +222,8 @@ const Page = () => {
       </section>
 
     </main>
+    </>
+  
   );
 };
 

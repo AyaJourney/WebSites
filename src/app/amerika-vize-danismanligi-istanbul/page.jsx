@@ -1,8 +1,94 @@
 import React from "react";
-
+export const metadata = {
+  title: "Amerika Vize Danışmanlığı İstanbul | Maslak DS-160 & Randevu",
+  description: "İstanbul Amerika vize başvurularında uzman desteği. Maslak ofisimizde DS-160 formu doldurma, İstinye Başkonsolosluğu mülakat provası ve hızlı randevu takibi.",
+  keywords: [
+    "Amerika vizesi İstanbul",
+    "İstanbul vize danışmanlık Amerika",
+    "Maslak vize danışmanlık",
+    "İstinye Amerika Başkonsolosluğu randevu",
+    "Amerika vize mülakatı hazırlık İstanbul",
+    "Beşiktaş vize danışmanlık",
+    "Şişli Amerika vizesi",
+    "İstanbul DS-160 formu yardım"
+  ],
+  alternates: {
+    canonical: "https://www.ayajourney.com/istanbul-amerika-vizesi", // Sayfa linkinizi buraya ekleyin
+  }
+};
 const Page = () => {
   return (
-    <main className="max-w-300 mx-auto px-4 py-12 text-gray-900 leading-relaxed">
+    <>
+    <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "LocalBusiness",
+          "name": "AYA Journey İstanbul",
+          "image": "https://www.ayajourney.com/images/logo.png",
+          "@id": "https://www.ayajourney.com/istanbul-amerika-vizesi",
+          "url": "https://www.ayajourney.com/istanbul-amerika-vizesi",
+          "telephone": "+905304853115",
+          "priceRange": "$$",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Maslak Bilim Sokak No:5",
+            "addressLocality": "Sarıyer",
+            "addressRegion": "İstanbul",
+            "postalCode": "34398", // Maslak posta kodu örneği
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 41.1128, // Maslak koordinatları
+            "longitude": 29.0213
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "09:00",
+            "closes": "18:00"
+          }
+        },
+        {
+          "@type": "Service",
+          "serviceType": "Amerika Vize Danışmanlığı İstanbul",
+          "provider": { "@id": "https://www.ayajourney.com/istanbul-amerika-vizesi" },
+          "areaServed": {
+            "@type": "City",
+            "name": "İstanbul"
+          },
+          "description": "İstanbul Amerika vizesi için DS-160 form girişi, İstinye mülakat simülasyonu ve acil randevu takibi."
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Amerika vize randevusu İstanbul'da ne kadar sürer?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "İstanbul'daki mülakat yoğunluğu vize türüne göre değişir. AYA Journey olarak boşalan randevuları 7/24 takip ederek süreci en hızlı şekilde yönetiyoruz."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "İstanbul mülakatları nerede yapılıyor?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "İstanbul'daki Amerika vize mülakatları İstinye'de bulunan ABD Başkonsolosluğu'nda gerçekleştirilmektedir. Ofisimiz bu bölgeye yakın konumdadır."
+              }
+            }
+          ]
+        }
+      ]
+    })
+  }}
+/>
+      <main className="max-w-300 mx-auto px-4 py-12 text-gray-900 leading-relaxed">
       
       {/* 1. HERO: Güçlü Başlık ve Güven Sinyalleri */}
       <section className="mb-16">
@@ -149,6 +235,8 @@ const Page = () => {
       </section>
 
     </main>
+    </>
+  
   );
 };
 

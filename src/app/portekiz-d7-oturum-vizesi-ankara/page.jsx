@@ -1,7 +1,86 @@
 import React from "react";
-
+export const metadata = {
+  title: "Portekiz D7 Vizesi Danışmanlığı Ankara | Oturum İzni & NIF",
+  description: "Ankara'da Portekiz D7 (Pasif Gelir) vizesi uzmanı. NIF alımı, banka hesabı açılışı ve Portekiz Ankara Büyükelçiliği dosya hazırlığı ile Avrupa'da oturum izni alın.",
+  keywords: [
+    "Portekiz D7 vizesi Ankara",
+    "Portekiz oturum izni danışmanlık",
+    "Portekiz pasif gelir vizesi",
+    "Portekiz NIF numarası alma Ankara",
+    "Portekiz banka hesabı açılışı",
+    "Portekiz Ankara Büyükelçiliği D7 başvurusu",
+    "Çukurambar vize danışmanlık Portekiz",
+    "Portekiz vatandaşlığı vize süreci"
+  ],
+  alternates: {
+    canonical: "https://www.ayajourney.com/portekiz-d7-vizesi-ankara", 
+  }
+};
 const Page = () => {
   return (
+    <>
+    <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "LocalBusiness",
+          "name": "AYA Journey Ankara - Portekiz D7 Uzmanı",
+          "image": "https://www.ayajourney.com/images/portugal-d7-ankara.jpg",
+          "@id": "https://www.ayajourney.com/portekiz-d7-vizesi-ankara",
+          "url": "https://www.ayajourney.com/portekiz-d7-vizesi-ankara",
+          "telephone": "+903128701584",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Kızılırmak Mahallesi Ufuk Üniversitesi Caddesi No:3 Paragon Tower",
+            "addressLocality": "Çankaya",
+            "addressRegion": "Ankara",
+            "postalCode": "06530",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 39.9048,
+            "longitude": 32.8092
+          }
+        },
+        {
+          "@type": "Service",
+          "serviceType": "Portekiz D7 Oturum Vizesi Danışmanlığı",
+          "provider": { "@id": "https://www.ayajourney.com/portekiz-d7-vizesi-ankara" },
+          "description": "NIF alımı, Portekiz banka hesabı açılışı ve finansal yeterlilik dosyası hazırlığı dahil tam kapsamlı D7 vizesi süreci.",
+          "areaServed": {
+            "@type": "Country",
+            "name": "Türkiye"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Portekiz D7 vizesi için ne kadar pasif gelir gerekir?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Portekiz asgari ücretine bağlı olarak ana başvuru sahibi için aylık yaklaşık 820€ (2025 yılı için) düzenli pasif gelir belgelenmelidir."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "D7 vizesi ile Portekiz vatandaşlığı alınabilir mi?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Evet, D7 vizesi ile alınan oturum izni sayesinde Portekiz'de 5 yıl ikamet ettikten sonra Portekiz vatandaşlığına başvuru hakkı kazanılır."
+              }
+            }
+          ]
+        }
+      ]
+    })
+  }}
+/>
     <main className="max-w-300 mx-auto px-4 py-12 text-gray-900 leading-relaxed">
       
       {/* 1. HERO: Otorite ve Uzmanlık Girişi */}
@@ -125,6 +204,8 @@ const Page = () => {
       </section>
 
     </main>
+    </>
+
   );
 };
 

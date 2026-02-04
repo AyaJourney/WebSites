@@ -1,8 +1,88 @@
 import React from "react";
-
+export const metadata = {
+  title: "İngiltere Vize Danışmanlığı Ankara | Çukurambar Başvuru Merkezi",
+  description: "Ankara İngiltere vizesi başvurularında %98 onay başarısı. Çukurambar ofisimizde profesyonel dosya hazırlığı, TLS Contact randevu takibi ve öğrenci vizeleri.",
+  keywords: [
+    "İngiltere vizesi Ankara",
+    "İngiltere vize danışmanlık Ankara",
+    "Ankara İngiltere vize başvuru merkezi",
+    "TLS Contact Ankara randevu",
+    "İngiltere turist vizesi Ankara",
+    "Ankara İngiltere öğrenci vizesi",
+    "Çukurambar İngiltere vizesi",
+    "İngiltere vize ücreti 2026"
+  ],
+  alternates: {
+    canonical: "https://www.ayajourney.com/ankara-ingiltere-vizesi", 
+  }
+};
 const Page = () => {
   return (
-    <main className="max-w-300 mx-auto px-4 py-12 mt-5 text-gray-900 leading-relaxed">
+    <>
+    <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "LocalBusiness",
+          "name": "AYA Journey Ankara - İngiltere Vize Merkezi",
+          "image": "https://www.ayajourney.com/images/ankara-uk-visa.jpg",
+          "@id": "https://www.ayajourney.com/ankara-ingiltere-vizesi",
+          "url": "https://www.ayajourney.com/ankara-ingiltere-vizesi",
+          "telephone": "+903128701584",
+          "priceRange": "$$",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Kızılırmak Mahallesi Ufuk Ünv. Caddesi No:3/49 Paragon Tower",
+            "addressLocality": "Çankaya",
+            "addressRegion": "Ankara",
+            "postalCode": "06530",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 39.9048,
+            "longitude": 32.8092
+          }
+        },
+        {
+          "@type": "Service",
+          "serviceType": "İngiltere Vize Danışmanlığı",
+          "provider": { "@id": "https://www.ayajourney.com/ankara-ingiltere-vizesi" },
+          "description": "Ankara İngiltere Büyükelçiliği ve TLS Contact süreçlerine tam uyumlu dosya hazırlığı ve niyet mektubu danışmanlığı.",
+          "areaServed": {
+            "@type": "City",
+            "name": "Ankara"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Ankara'da İngiltere vize başvurusu nereye yapılır?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Ankara'daki parmak izi ve biyometrik işlemler Söğütözü'nde bulunan TLS Contact merkezinde gerçekleştirilir. AYA Journey olarak dosyanızı bu randevuya tam uyumlu hale getiriyoruz."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "İngiltere vizesi Ankara'da kaç günde çıkar?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Standart başvurular genellikle 15 iş günü içinde sonuçlanır. Ekspres servisler (Priority) ile bu süre 5 iş gününe kadar düşebilir."
+              }
+            }
+          ]
+        }
+      ]
+    })
+  }}
+/>
+       <main className="max-w-300 mx-auto px-4 py-12 mt-5 text-gray-900 leading-relaxed">
       
       {/* 1. HERO & H1: Ankara Anahtar Kelime Stratejisi */}
       <section className="mb-16">
@@ -116,6 +196,8 @@ const Page = () => {
       </section>
 
     </main>
+    </>
+ 
   );
 };
 

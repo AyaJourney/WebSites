@@ -1,8 +1,88 @@
 import React from "react";
-
+export const metadata = {
+  title: "İngiltere Vize Danışmanlığı İstanbul | Maslak Ofisi & TLS Randevu",
+  description: "İstanbul İngiltere vizesi başvurularında uzman desteği. Maslak ofisimizde kişiye özel evrak listesi, TLS Contact randevu yönetimi ve öğrenci/turist vizesi danışmanlığı.",
+  keywords: [
+    "İngiltere vizesi İstanbul",
+    "İstanbul İngiltere vize danışmanlık",
+    "Maslak vize merkezi",
+    "Mecidiyeköy TLS Contact randevu",
+    "Altunizade İngiltere vizesi",
+    "İngiltere öğrenci vizesi İstanbul",
+    "Sarıyer vize danışmanlığı",
+    "İngiltere vize reddi itiraz İstanbul"
+  ],
+  alternates: {
+    canonical: "https://www.ayajourney.com/istanbul-ingiltere-vizesi", 
+  }
+};
 const Page = () => {
   return (
-    <main className="max-w-300 mx-auto px-4 py-12 text-gray-900 mt-5 leading-relaxed">
+    <>
+    <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "LocalBusiness",
+          "name": "AYA Journey İstanbul - İngiltere Vize Danışmanlık",
+          "image": "https://www.ayajourney.com/images/istanbul-uk-visa.jpg",
+          "@id": "https://www.ayajourney.com/istanbul-ingiltere-vizesi",
+          "url": "https://www.ayajourney.com/istanbul-ingiltere-vizesi",
+          "telephone": "+905304853115",
+          "priceRange": "$$",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Maslak Bilim Sokak No:5",
+            "addressLocality": "Sarıyer",
+            "addressRegion": "İstanbul",
+            "postalCode": "34398",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 41.1128,
+            "longitude": 29.0213
+          }
+        },
+        {
+          "@type": "Service",
+          "serviceType": "İngiltere Vize Başvuru Danışmanlığı",
+          "provider": { "@id": "https://www.ayajourney.com/istanbul-ingiltere-vizesi" },
+          "areaServed": {
+            "@type": "City",
+            "name": "İstanbul"
+          },
+          "description": "İstanbul İngiltere vizesi başvuruları için profesyonel evrak hazırlığı, TLS Contact randevu yönetimi ve niyet mektubu desteği."
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "İngiltere vizesi İstanbul'da kaç günde çıkar?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Standart başvurular 15 iş gününde sonuçlanır. Priority (Öncelikli) servis ile 5 iş gününde sonuç almak mümkündür."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "İstanbul'da İngiltere parmak izi verme işlemi nerede yapılır?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "İstanbul'daki biyometrik işlemler Mecidiyeköy (Profilo AVM) veya Altunizade'deki resmi TLS Contact merkezlerinde yapılır."
+              }
+            }
+          ]
+        }
+      ]
+    })
+  }}
+/>
+      <main className="max-w-300 mx-auto px-4 py-12 text-gray-900 mt-5 leading-relaxed">
       
       {/* 1. HERO & H1: Anahtar Kelime Odaklı Giriş */}
       <section className="mb-16">
@@ -124,6 +204,8 @@ const Page = () => {
       </section>
 
     </main>
+    </>
+  
   );
 };
 
