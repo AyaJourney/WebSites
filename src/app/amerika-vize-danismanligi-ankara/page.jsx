@@ -1,8 +1,94 @@
 import React from "react";
-
+export const metadata = {
+  title: "Amerika Vize Danışmanlığı Ankara | Çukurambar DS-160 & Mülakat",
+  description: "Ankara Amerika vize başvurularında DS-160 formu, mülakat simülasyonu ve randevu takibi. ABD Ankara Büyükelçiliği'ne yakın Çukurambar ofisimizde profesyonel destek.",
+  keywords: [
+    "Amerika vizesi Ankara",
+    "Ankara vize danışmanlık Amerika",
+    "DS-160 formu doldurma Ankara",
+    "Amerika vize mülakat hazırlığı",
+    "ABD Ankara Büyükelçiliği randevu",
+    "Çukurambar vize danışmanlık",
+    "Ankara Amerika turist vizesi",
+    "Amerika vize reddi çözümü Ankara"
+  ],
+  alternates: {
+    canonical: "https://www.ayajourney.com/ankara-amerika-vizesi", // Sayfa URL'niz
+  }
+};
 const Page = () => {
   return (
-    <main className="max-w-300 mx-auto px-4 py-12 text-gray-900 leading-relaxed">
+    <>
+    <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "LocalBusiness",
+          "name": "AYA Journey Ankara",
+          "image": "https://www.ayajourney.com/images/logo.png",
+          "@id": "https://www.ayajourney.com/ankara-amerika-vizesi",
+          "url": "https://www.ayajourney.com/ankara-amerika-vizesi",
+          "telephone": "+903128701584",
+          "priceRange": "$$",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Kızılırmak Mahallesi Ufuk Ünv. Caddesi No:3/49 Paragon Tower",
+            "addressLocality": "Çankaya",
+            "addressRegion": "Ankara",
+            "postalCode": "06530",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 39.9048, // Ofisinizin tam koordinatları (isteğe bağlı)
+            "longitude": 32.8092
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "09:00",
+            "closes": "18:00"
+          }
+        },
+        {
+          "@type": "Service",
+          "serviceType": "Amerika Vize Danışmanlığı",
+          "provider": { "@id": "https://www.ayajourney.com/ankara-amerika-vizesi" },
+          "areaServed": {
+            "@type": "City",
+            "name": "Ankara"
+          },
+          "description": "DS-160 form hazırlığı, Ankara Büyükelçiliği mülakat provası ve randevu takip hizmeti."
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Ankara'daki mülakatlar ne kadar sürüyor?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Mülakatın kendisi genellikle 2-5 dakika sürer ancak hazırladığınız belgelerin ve DS-160 formunun bu süre zarfında tutarlı olması hayati önem taşır."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Amerika vizesi için en erken randevu tarihi nedir?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "ABD Ankara Büyükelçiliği'nde randevu yoğunluğu dönemsel olarak değişir. AYA Journey Ankara ofisimiz, erken randevu yakalamak için sistem takibi sağlamaktadır."
+              }
+            }
+          ]
+        }
+      ]
+    })
+  }}
+/>
+      <main className="max-w-300 mx-auto px-4 py-12 text-gray-900 leading-relaxed">
       
       {/* 1. HERO: Mülakat ve DS-160 Vurgusu */}
       <section className="mb-16">
@@ -134,6 +220,8 @@ const Page = () => {
       </section>
 
     </main>
+    </>
+  
   );
 };
 
