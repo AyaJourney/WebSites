@@ -111,7 +111,7 @@ return (
                 Yapay zeka destekli analiz ile
                 <strong> başvuru skorunuzu</strong> 2 dakikada görün.
               </p>
-              <Link href="/amerika-vizesi?test=1">
+              <Link href="/vize-alma-ihtimalinizi-olcun">
                 <button className="mt-3 rounded-xl bg-emerald-600 px-6 py-2.5 text-sm font-bold text-white hover:bg-emerald-700 transition">
                   Analizi Başlat →
                 </button>

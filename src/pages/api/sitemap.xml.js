@@ -34,6 +34,19 @@ export default async function handler(req, res) {
     "/form/birlesik-krallik-bilgi-fisi",
     "/form/kanada-basvuru-formu",
     "/sikca-sorulan-sorular",
+    "yesil-pasaport-vize-rehberi",
+    "vize-alma-ihtimalinizi-olcun",
+    "schengen-vize-adimlari",
+    "vize-danismanlik-istanbul",
+    "vize-danismanlik-ankara",
+    "schengen-vize-danismanligi-istanbul",
+    "schengen-vize-danismanligi-ankara",
+    "amerika-vize-danismanligi-istanbul",
+    "amerika-vize-danismanligi-ankara",
+    "ingiltere-vize-danismanligi-istanbul",
+    "ingiltere-vize-danismanligi-ankara",
+    "vize-nedir",
+    
   ];
 
   const urls = [

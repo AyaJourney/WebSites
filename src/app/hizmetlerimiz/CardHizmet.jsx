@@ -59,7 +59,7 @@ const FlipCard = ({ item }) => {
       onClick={() => setIsHovered((prev) => !prev)}
     >
       <div
-        className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${
+        className={`relative rounded-2xl w-full h-full transition-transform duration-700 transform-style-preserve-3d ${
           isHovered
             ? "rotate-y-180 scale-105 shadow-2xl"
             : "shadow-md"
