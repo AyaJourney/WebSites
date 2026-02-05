@@ -249,20 +249,21 @@ export default function VizeTestleriPage() {
 
               {/* Right stats */}
               <div className="grid grid-cols-2 gap-4 sm:w-[380px]">
+          
                 <div className="relative overflow-hidden rounded-2xl bg-white border border-gray-200 p-6 shadow-lg">
+                  <div className="absolute top-0 right-0 h-20 w-20 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full -mr-10 -mt-10 opacity-50" />
+                  <div className="relative">
+                    <div className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Kapsam</div>
+                    <div className="text-3xl font-black bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">2+</div>
+                    <div className="text-xs text-gray-600 mt-1">Test türü</div>
+                  </div>
+                </div>
+                      <div className="relative overflow-hidden rounded-2xl bg-white border border-gray-200 p-6 shadow-lg">
                   <div className="absolute top-0 right-0 h-20 w-20 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full -mr-10 -mt-10 opacity-50" />
                   <div className="relative">
                     <div className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Ortalama süre</div>
                     <div className="text-3xl font-black bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">3 dk</div>
                     <div className="text-xs text-gray-600 mt-1">Hızlı sonuç</div>
-                  </div>
-                </div>
-                <div className="relative overflow-hidden rounded-2xl bg-white border border-gray-200 p-6 shadow-lg">
-                  <div className="absolute top-0 right-0 h-20 w-20 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full -mr-10 -mt-10 opacity-50" />
-                  <div className="relative">
-                    <div className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Kapsam</div>
-                    <div className="text-3xl font-black bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">5+</div>
-                    <div className="text-xs text-gray-600 mt-1">Test türü</div>
                   </div>
                 </div>
               </div>
