@@ -46,6 +46,29 @@ export default async function handler(req, res) {
     "ingiltere-vize-danismanligi-istanbul",
     "ingiltere-vize-danismanligi-ankara",
     "vize-nedir",
+    "amerika-vize-reddi-nedenleri",
+    "schengen-vize-reddi-nedenleri",
+    "ingiltere-vize-reddi-nedenleri",
+    "kanada-vize-reddi-nedenleri",
+    "vize-reddi-itiraz-rehberi",
+    "ilk-kez-vize-alacaklar",
+    "en-kolay-vize-veren-ulkeler",
+    "vize-alirken-yapilan-hatalar",
+    "vize-reddi-gercek-nedenler",
+    "vize-reddi-sonrasi-kontrol-listesi",
+    "abd-vize-randevusu-nasil-alinir",
+    "bls-international-ispanya-vize-randevusu",
+    "idata-vize-randevusu-nasil-alinir",
+    "ingiltere-vize-randevusu-nasil-alinir",
+    "kanada-vize-randevusu-nasil-alinir",
+    "vfs-global-vize-randevusu-nasil-alinir",
+    "abd-vize-danismanligi",
+    "amerika-vizesi-en-iyi-danismanlik-sirketi",
+    "abd-vize-istanbul",
+    "abd-vize-ankara",
+    
+
+
     
   ];
 
