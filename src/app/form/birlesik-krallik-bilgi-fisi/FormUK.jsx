@@ -96,6 +96,11 @@ monthly_money:"",
 savings:"",
 sideline:"",
 monthly_expenditure_amount:"",
+savings_type:"",
+savings_type_other:"",
+hasDependents:"",
+dependentCount: 0,
+  dependents: []
 
 },
     5: {
@@ -112,6 +117,8 @@ monthly_expenditure_amount:"",
     cover_expenses_phone:"",
 cover_expenses_email:"",
 cover_expenses_reason:"",
+cover_expenses_address:"",
+
     when_refused:"",
     refused_about:"",
     travel_reason_other:"",
@@ -183,7 +190,7 @@ other_visited_countries:"",
       durationDays: ""
     }
   ],
-
+end_info:"",
     },
     
    
@@ -465,7 +472,7 @@ const updateField = (step, field, value) => {
     if (step === 1) {
       const s = updatedSteps[1];
 
-      const mahalle = normalizeWithSuffix(s.home_neighborhood, "MAHALLESİ");
+      const mahalle = normalizeWithSuffix(s.home_neighborhood, "MAHALLESI");
       const cadde = normalizeWithSuffix(s.home_street, "CADDE");
       const sokak = normalizeWithSuffix(s.home_avenue, "SOKAK");
 
@@ -474,7 +481,7 @@ const updateField = (step, field, value) => {
         : "";
 
       const daireNo = s.home_apartment_no
-        ? `DAİRE NO: ${normalizeAddressPart(s.home_apartment_no)}`
+        ? `DAIRE NO: ${normalizeAddressPart(s.home_apartment_no)}`
         : "";
 
       const ilce = s.home_district
@@ -836,6 +843,15 @@ function extractMonthsFromDuration(value) {
 }
 
 
+const updateDependent = (stepIndex, personIndex, field, value) => {
+  const updated = [...form.steps[stepIndex].dependents];
+  updated[personIndex] = {
+    ...updated[personIndex],
+    [field]: value,
+  };
+
+  updateField(stepIndex, "dependents", updated);
+};
 
 
 
@@ -2736,7 +2752,75 @@ onBlur={(e) => {
             <p className="text-red-500 text-xs mt-1">{errors.boolean_work}</p>
           )}
       </div>
+   {form.steps[4].boolean_work === "OGRENCI" && (
+        <>
+          <div>
+            <label className="text-sm font-medium">Okul Adı</label>
+            <input
+              name="school_name"
+              className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+              value={form.steps[4].school_name || ""}
+                                onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(4, "school_name", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(4, "school_name", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(4, "school_name", normalizedValue);
+                }
+            }}
+              placeholder="Örn: Boğaziçi Üniversitesi"
+            />
+          </div>
 
+          <div>
+            <label className="text-sm font-medium">Bölüm</label>
+            <input
+              name="school_department"
+              className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+              value={form.steps[4].school_department || ""}
+                                       onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(4, "school_department", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(4, "school_department", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(4, "school_department", normalizedValue);
+                }
+            }}
+              placeholder="Örn: Bilgisayar Mühendisliği"
+            />
+          </div>
+
+          <div>
+            <label className="text-sm font-medium">Kaç yıldır okuyor?</label>
+            <input
+              type="text"
+              min="0"
+              name="school_year"
+              className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+              value={form.steps[4].school_year || ""}
+              onChange={(e) => updateField(4, "school_year", normalizeInput(e.target.value))}
+            />
+          </div>
+        </>
+      )}
       {/* Çalışan veya emekli veya çalışmıyor ise iş yeri bilgileri */}
       {(form.steps[4].boolean_work === "CALISIYOR" ||
         form.steps[4].boolean_work === "EMEKLI" ||
@@ -2902,6 +2986,55 @@ onBlur={(e) => {
           )}
     </div>
 
+   <div>
+        <label className="text-sm font-medium">Düzenli bir birikime sahip misiniz?</label>
+        <select
+          name="savings_type"
+          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+          value={form.steps[4].savings_type || ""}
+          onChange={(e) => updateField(4, "savings_type", e.target.value)}
+        >
+          <option value="">Seçiniz</option>
+          <option value="HAYIR">Hayır</option>
+          <option value="AILE DESTEGI">Aile Desteği</option>
+          <option value="EMEKLI MAASI">Emekli Maaşı</option>
+          <option value="YATIRIM">Yatırım</option>
+
+          <option value="DIGER">Diğer</option>
+
+        </select>
+      </div>
+
+{form.steps[4].savings_type === "DIGER" && (
+  <div className="mt-2">
+    <label className="text-sm font-medium">Lütfen diğer birikiminizi detaylandırınız</label>
+    <input
+      name="savings_type_other"
+      className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+      value={form.steps[4].savings_type_other || ""}
+      onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(4, "savings_type_other", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(4, "savings_type_other", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(4, "savings_type_other", normalizedValue);
+                }
+            }}
+      placeholder="Detaylandırınız"
+    />
+  </div>
+)}
+
+
     <div>
       <label className="text-sm font-medium">Bu gelir dışında birikiminiz var mı?</label>
       <input
@@ -2986,80 +3119,149 @@ onBlur={(e) => {
             <p className="text-red-500 text-xs mt-1">{errors.monthly_expenditure_amount}</p>
           )}
     </div>
+
+
+<div>
+  <label className="text-sm font-medium">
+    Bakmakla yükümlü olduğunuz biri(leri) var mı?
+  </label>
+
+  <select
+    name="hasDependents"
+    className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+    value={form.steps[4].hasDependents || ""}
+    onChange={(e) => {
+      updateField(4, "hasDependents", e.target.value);
+
+      if (e.target.value === "HAYIR") {
+        updateField(4, "dependentCount", 0);
+        updateField(4, "dependents", []);
+      }
+    }}
+  >
+    <option value="">Seçiniz</option>
+    <option value="EVET">EVET</option>
+    <option value="HAYIR">HAYIR</option>
+  </select>
+</div>
+{form.steps[4].hasDependents === "EVET" && (
+  <div className="mt-4">
+    <label className="text-sm font-medium">
+      Kaç kişi bakmakla yükümlüsünüz?
+    </label>
+
+    <input
+      type="number"
+      min={1}
+      max={10}
+      placeholder="Örn: 2"
+      className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+      value={form.steps[4].dependentCount || ""}
+      onChange={(e) => {
+        let count = Number(e.target.value);
+
+        // güvenlik
+        if (count < 1) count = 1;
+        if (count > 10) count = 10;
+
+        updateField(4, "dependentCount", count);
+        updateField(
+          4,
+          "dependents",
+          Array.from({ length: count }, () => ({
+            fullName: "",
+            relationship: "",
+            birthDate: "",
+            livesWithYou: "",
+            travelsWithYou: "",
+          }))
+        );
+      }}
+    />
+  </div>
+)}
+
+{form.steps[4].dependents?.map((person, index) => (
+  <div
+    key={index}
+    className="mt-6 rounded-2xl border border-gray-200 p-4 shadow-sm"
+  >
+    <h4 className="font-semibold text-gray-800 mb-4">
+      Kişi {index + 1}
+    </h4>
+
+    {/* Ad Soyad */}
+    <input
+      type="text"
+      placeholder="Ad Soyad"
+      className="w-full mb-3 p-3 border rounded-xl border-gray-300"
+      value={person.fullName}
+      onChange={(e) =>
+        updateDependent(4, index, "fullName", e.target.value)
+      }
+    />
+
+    {/* İlişki */}
+    <select
+      className="w-full mb-3 p-3 border rounded-xl border-gray-300"
+      value={person.relationship}
+      onChange={(e) =>
+        updateDependent(4, index, "relationship", e.target.value)
+      }
+    >
+      <option value="">İlişki</option>
+      <option value="ES">Eş</option>
+      <option value="COCUK">Çocuk</option>
+      <option value="ANNE">Anne</option>
+      <option value="BABA">Baba</option>
+      <option value="DIGER">Diğer</option>
+    </select>
+
+    {/* Doğum Tarihi */}
+    <input
+      type="date"
+      className="w-full mb-3 p-3 border rounded-xl border-gray-300"
+      value={person.birthDate}
+      onChange={(e) =>
+        updateDependent(4, index, "birthDate", e.target.value)
+      }
+    />
+
+    {/* Sizinle mi yaşıyor */}
+    <select
+      className="w-full mb-3 p-3 border rounded-xl border-gray-300"
+      value={person.livesWithYou}
+      onChange={(e) =>
+        updateDependent(4, index, "livesWithYou", e.target.value)
+      }
+    >
+      <option value="">Sizinle mi yaşıyor?</option>
+      <option value="EVET">EVET</option>
+      <option value="HAYIR">HAYIR</option>
+    </select>
+
+    {/* Sizinle mi seyahat edecek */}
+    <select
+      className="w-full p-3 border rounded-xl border-gray-300"
+      value={person.travelsWithYou}
+      onChange={(e) =>
+        updateDependent(4, index, "travelsWithYou", e.target.value)
+      }
+    >
+      <option value="">Sizinle mi seyahat edecek?</option>
+      <option value="EVET">EVET</option>
+      <option value="HAYIR">HAYIR</option>
+    </select>
+  </div>
+))}
+
+    
   </>
 )}
 
 
       {/* Öğrenci ise okul bilgileri */}
-      {form.steps[4].boolean_work === "OGRENCI" && (
-        <>
-          <div>
-            <label className="text-sm font-medium">Okul Adı</label>
-            <input
-              name="school_name"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
-              value={form.steps[4].school_name || ""}
-                                onChange={(e) => {
-                if (isMobile) {
-                    // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(4, "school_name", e.target.value);
-                } else {
-                    // Desktop/Diğer: Normalizasyon YAP
-                    updateField(4, "school_name", normalizeInput(e.target.value));
-                }
-            }}
-            
-            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
-            onBlur={(e) => {
-                if (isMobile) {
-                    const normalizedValue = normalizeInput(e.target.value);
-                    updateField(4, "school_name", normalizedValue);
-                }
-            }}
-              placeholder="Örn: Boğaziçi Üniversitesi"
-            />
-          </div>
-
-          <div>
-            <label className="text-sm font-medium">Bölüm</label>
-            <input
-              name="school_department"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
-              value={form.steps[4].school_department || ""}
-                                       onChange={(e) => {
-                if (isMobile) {
-                    // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(4, "school_department", e.target.value);
-                } else {
-                    // Desktop/Diğer: Normalizasyon YAP
-                    updateField(4, "school_department", normalizeInput(e.target.value));
-                }
-            }}
-            
-            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
-            onBlur={(e) => {
-                if (isMobile) {
-                    const normalizedValue = normalizeInput(e.target.value);
-                    updateField(4, "school_department", normalizedValue);
-                }
-            }}
-              placeholder="Örn: Bilgisayar Mühendisliği"
-            />
-          </div>
-
-          <div>
-            <label className="text-sm font-medium">Kaç yıldır okuyor?</label>
-            <input
-              type="text"
-              min="0"
-              name="school_year"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
-              value={form.steps[4].school_year || ""}
-              onChange={(e) => updateField(4, "school_year", normalizeInput(e.target.value))}
-            />
-          </div>
-        </>
-      )}
+   
     </div>
   </section>
 )}
@@ -3322,6 +3524,7 @@ onBlur={(e) => {
       />
     </div>
 
+
     {/* Katkı Tutarı */}
     <div>
       <label className="text-sm font-medium">
@@ -3370,6 +3573,31 @@ onBlur={(e) => {
           }
         }}
       ></textarea>
+    </div>
+
+       <div>
+      <label className="text-sm font-medium">
+        Masrafları Karşılayacak Kişinin Adresi
+      </label>
+      <textarea
+        name="cover_expenses_address"
+        className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300 resize-none"
+        rows={3}
+        value={form.steps[5].cover_expenses_address || ""}
+        onChange={(e) => {
+          if (isMobile) {
+            updateField(5, "cover_expenses_address", e.target.value);
+          } else {
+            updateField(5, "cover_expenses_address", normalizeInput(e.target.value));
+          }
+        }}
+        onBlur={(e) => {
+          if (isMobile) {
+            const normalizedValue = normalizeInput(e.target.value);
+            updateField(5, "cover_expenses_address", normalizedValue);
+          }
+        }}
+      />
     </div>
   </>
 )}
@@ -4676,7 +4904,43 @@ Avustralya, Kanada, Yeni Zelanda, Amerika, İsviçre, Schengen Ülkelerini Son 1
   />
   </div>
 
+
+
+
 )}
+
+
+
+
+
+
+  <div>
+<label className="text-sm font-medium mt-6 block">Belirtmek istediğiniz bir açıklama varsa yazınız</label>
+  <textarea
+    className="w-full mt-3 p-3 border rounded-xl resize-none"
+    rows={3}
+    placeholder="Belirtmek istediğiniz bir açıklama varsa yazınız"
+    value={form.steps[5].end_info || ""}
+    onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(5, "end_info", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(5, "end_info", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(5, "end_info", normalizedValue);
+                }
+            }}
+  />
+  </div>
+
 
 
   </section>
