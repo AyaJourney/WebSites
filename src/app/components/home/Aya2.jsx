@@ -72,7 +72,7 @@ const Aya2 = () => {
             className="relative w-full rounded-2xl overflow-hidden aya2-image-init h-[300px] md:h-auto  md:max-h-[550px]"
           >
             <Image
-              src="/images/aya2.jpg"
+              src="/images/aya2.webp"
               alt="Aya Journey Visual"
               fill
           priority

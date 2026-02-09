@@ -6,7 +6,7 @@ const Giris = () => {
   const linesMobile = ["Hadi,", "topla", "bavulları!"];
   const lineDesktop = "Hadi, topla bavulları!";
 
-  // tüm karakter sayısı (mobil için)
+
   const totalCharsMobile = linesMobile.join("").length;
   const totalCharsDesktop = lineDesktop.length;
 

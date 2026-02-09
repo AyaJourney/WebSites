@@ -91,7 +91,7 @@ const EnglandVisaHero = () => {
         <div className="relative flex justify-center lg:justify-end">
           <div className="relative w-full max-w-md rounded-3xl overflow-hidden border border-slate-200 bg-white shadow-xl">
             <Image
-              src="/images/ukdetail.jpg"
+              src="/images/ukdetail.webp"
               alt="İngiltere Vize Başvuru Süreci"
               width={520}
               height={420}

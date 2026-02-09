@@ -51,7 +51,7 @@ const posterImages = [
     return () => observer.disconnect();
   }, []);
 
-  const imageSrc = isMobile ? "/images/chefsVertical.jpg" : "/images/chefs.jpg";
+  const imageSrc = isMobile ? "/images/chefsVertical.webp" : "/images/chefs.webp";
 
   return (
    <section className="relative w-full min-h-[100svh] md:h-screen overflow-hidden">
