@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-
+import "./all.css"
 const items = [
   { icon: "/images/terzi.webp", title: "Kişiye özel başvuru" },
   { icon: "/images/whyaya.webp", title: "Binlerce başvurudan elde ettiğimiz deneyimi size sunmaya hazırız" },
@@ -125,7 +125,7 @@ function HoverCard({ item, idx, shown, desktopRefs, mobileRefs }) {
           shown
             ? {
                 opacity: 1,
-                y: [40, -22, 12, -5, 0],   // ✔ SCROLL SEKME ANİMASYONU
+                y: [40, -22, 12, -5, 0],  
                 scale: [0.9, 1.05, 1],
               }
             : {}
@@ -177,7 +177,7 @@ function HoverCard({ item, idx, shown, desktopRefs, mobileRefs }) {
             ease: "easeOut",
             delay: isHovered ? 0.5 : 0,   // ✔ YAZI 0.7’DE GELİR
           }}
-          className="text-lg font-semibold text-gray-800 text-center absolute bottom-6 w-full px-4 py-3"
+          className="text-lg font-semibold text-gray-800 text-center absolute bottom-10 w-full px-4 py-3"
         >
           {item.title}
         </motion.h3>

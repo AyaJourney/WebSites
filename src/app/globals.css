@@ -109,19 +109,7 @@ body {
 .animate-toast-slide {
   animation: toast-slide 0.25s ease-out;
 }
-/* Sol taraf animasyonu */
-/* .fade-up-init {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-}
 
-.fade-up-init.show {
-  opacity: 1;
-  transform: translateY(0);
-} */
-
-/* Sağ kart animasyonları */
 .step-init {
   opacity: 0;
   transform: translateX(50px);
@@ -154,17 +142,7 @@ body {
   opacity: 1;
   transform: translateX(0);
 }
-/* .card-rise-init {
-  opacity: 0;
-  transform: translateY(60px);
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-}
 
-.card-rise-init.show {
-  opacity: 1;
-  transform: translateY(0);
-} */
-/* Başlık giriş animasyonu — yumuşak büyüyüp geri küçülür */
 .title-animate-init {
   opacity: 0;
   transform: scale(0.95);
@@ -226,275 +204,16 @@ body {
   }
 }
 /* MOBİL – soldan gelen kart */
-.slide-left-init-why {
-  opacity: 0;
-  transform: translateX(-40px);
-}
-.slide-left-init-why.show-why {
-  opacity: 1;
-  transform: translateX(0);
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-}
+
 
 /* MOBİL – sağdan gelen kart */
-.slide-right-init-why {
-  opacity: 0;
-  transform: translateX(40px);
-}
-.slide-right-init-why.show-why {
-  opacity: 1;
-  transform: translateX(0);
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-}
-
-/* DESKTOP – daire modunda premium glow */
-.why-circle-card {
-  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.25);
-  background:
-    radial-gradient(circle at top, rgba(59, 130, 246, 0.17), transparent 60%),
-    #ffffff;
-  border: 1px solid rgba(148, 163, 184, 0.35);
-  transition:
-    background 0.3s ease,
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
-}
-.why-circle-card:hover {
-  background:
-    radial-gradient(circle at top, rgba(59, 130, 246, 0.25), transparent 70%),
-    rgba(255, 255, 255, 0.9);
-  border-color: rgba(59, 130, 246, 0.5);
-  box-shadow: 0 22px 55px rgba(15, 23, 42, 0.45);
-}
 
 
-
-/* ================================
-   HAKKIMIZDA ANİMASYON SETİ
-   ================================ */
-
-/* Genel fade-up */
-.hakkimizda-fade-init {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-}
-
-.hakkimizda-fade-show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Scaled entrance (quote kutusu + logo) */
-.hakkimizda-scale-init {
-  opacity: 0;
-  transform: scale(0.96);
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-}
-
-.hakkimizda-scale-show {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* Başlık için hafif yukarıdan giriş */
-.hakkimizda-title-init {
-  opacity: 0;
-  transform: translateY(-20px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.hakkimizda-title-show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Liste maddeleri için soldan giriş */
-.hakkimizda-left-init {
-  opacity: 0;
-  transform: translateX(-25px);
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-}
-
-.hakkimizda-left-show {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-/* =======================================
-   HAKKIMIZDA — Hover Filling + Shine Effect
-======================================= */
-
-/* =======================================
-   HAKKIMIZDA — DOĞAL BLOOM FILL + SHINE
-======================================= */
-
-/* Başlangıç */
-.hakkimizda-hover-fill {
-  position: relative;
-  overflow: hidden;
-}
-
-/* Doğal oval bloom fill efekti */
-.hakkimizda-hover-fill::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-
-  /* oval & soft fill */
-  background: radial-gradient(
-    circle at top left, 
-    rgba(191, 219, 254, 0.65) 0%,
-    rgba(147, 197, 253, 0.45) 40%,
-    rgba(191, 219, 254, 0) 70%
-  );
-
-  opacity: 0;
-  transform: scale(1.2) translate(-20%, -20%);
-  transition: opacity 0.4s ease, transform 0.5s ease-out;
-  z-index: 1;
-}
-
-/* Hover sırasında bloom görünür */
-.hakkimizda-hover-fill:hover::before {
-  opacity: 1;
-  transform: scale(1.45) translate(-10%, -10%);
-}
-
-/* Shine (parlama çizgisi) */
-.hakkimizda-hover-fill::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  width: 35%;
-  background: linear-gradient(
-    120deg,
-    rgba(255, 255, 255, 0.15) 0%,
-    rgba(255, 255, 255, 0.4) 50%,
-    rgba(255, 255, 255, 0.1) 100%
-  );
-  filter: blur(12px);
-
-  transform: translateX(-150%);
-  transition: transform 0.7s ease-out;
-  z-index: 2;
-}
-
-.hakkimizda-hover-fill:hover::after {
-  transform: translateX(160%);
-}
-
-/* İçerik daima üstte */
-.hakkimizda-content {
-  position: relative;
-  z-index: 5;
-}
-
-
-
-
-
-
-
-/* ===============================
-   GLOBAL CAREER – ANIMATIONS
-   (Sayfa adına özel: gc-*)
-================================ */
-
-.gc-fade {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.75s ease, transform 0.75s ease;
-}
-
-.gc-fade.gc-show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.gc-fade-up {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.85s ease, transform 0.85s ease;
-}
-
-.gc-fade-up.gc-show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.gc-scale {
-  opacity: 0;
-  transform: scale(0.97);
-  transition: opacity 0.65s ease, transform 0.65s ease;
-}
-
-.gc-scale.gc-show {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* optional hover lift */
-.gc-card {
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
-}
-.gc-card:hover {
-  transform: translateY(-6px);
-}
-
-/* === VISA PAGE ANIMATIONS === */
-.visa-fade-up {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-
-.visa-fade-up.visa-show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.visa-stagger > * {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.visa-stagger.visa-show > * {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.visa-stagger.visa-show > *:nth-child(1) { transition-delay: 0ms; }
-.visa-stagger.visa-show > *:nth-child(2) { transition-delay: 80ms; }
-.visa-stagger.visa-show > *:nth-child(3) { transition-delay: 160ms; }
-.visa-stagger.visa-show > *:nth-child(4) { transition-delay: 240ms; }
-
-
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
 
 .animate-fade-in {
   animation: fade-in 0.25s ease-out;
 }
 
-@keyframes slideDown {
-  from {
-    transform: translateY(-100%);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
 
 .animate-slideDown {
   animation: slideDown 0.3s ease-out;
