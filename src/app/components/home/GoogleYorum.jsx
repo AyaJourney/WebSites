@@ -135,7 +135,7 @@ const GoogleYorum = () => {
     width={48}
     height={48}
     className="rounded-full border-2 border-gray-100 object-cover"
-    loading="lazy"
+
     priority
   />
 </div>
