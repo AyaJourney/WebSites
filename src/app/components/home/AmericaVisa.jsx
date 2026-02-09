@@ -44,9 +44,9 @@ return (
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/70" />
 
         <div className="relative z-10 h-full p-6 flex flex-col justify-end text-white">
-          <h3 className="text-2xl font-extrabold">
+          <h2 className="text-2xl font-extrabold">
             Amerika Vizesi Süreci
-          </h3>
+          </h2>
 
           <div className="mt-4 space-y-3">
             {[
@@ -136,9 +136,9 @@ return (
 
         <div className="relative z-10 h-full p-10 flex flex-col justify-between text-white">
           <div>
-            <h3 className="text-4xl font-extrabold">
+            <h2 className="text-4xl font-extrabold">
               Amerika Vizesi Süreci
-            </h3>
+            </h2>
 
             <div className="mt-6 space-y-4">
               {[
