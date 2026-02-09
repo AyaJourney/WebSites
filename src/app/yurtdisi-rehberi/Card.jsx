@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import SmartImage from "../components/SmartImage";
 import { abroad } from "../../helper/help";
 import Link from "next/link";
-
+import "./yurtdisi.css"
 const Card = () => {
   useEffect(() => {
   const cards = document.querySelectorAll("[data-card-anim]");

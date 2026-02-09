@@ -1,0 +1,39 @@
+.portekiz-fade-up-init {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity .7s ease-out, transform .7s ease-out;
+}
+.portekiz-fade-up-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.portekiz-fade-down-init {
+  opacity: 0;
+  transform: translateY(-25px);
+  transition: opacity .7s ease-out, transform .7s ease-out;
+}
+.portekiz-fade-down-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.portekiz-scale-init {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity .7s ease-out, transform .7s ease-out;
+}
+.portekiz-scale-show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.portekiz-slide-init {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity .7s ease-out, transform .7s ease-out;
+}
+.portekiz-slide-show {
+  opacity: 1;
+  transform: translateY(0);
+}

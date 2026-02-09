@@ -11,6 +11,7 @@ import {
   FaUserTie,
   FaEuroSign,
 } from "react-icons/fa";
+import "./schengen.css";
 
 // Mevcut veri yapısı korunmuştur.
 const basicInfo = {

@@ -1,5 +1,6 @@
 import React from 'react'
 import YurtDisiRehberi from './Yurtdisi'
+import "./yurtdisi.css"
 export const metadata = {
   title: "Yurtdışı Rehberi: Vize, Eğitim ve Kariyer Hakkında Her Şey | AYA Journey",
   description: "Yurtdışına gitmek isteyenler için eksiksiz rehber. Amerika stajından İngiltere vizesine, Erasmus süreçlerinden Portekiz oturum iznine kadar tüm güncel bilgiler.",

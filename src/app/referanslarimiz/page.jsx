@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 import NextImage from 'next/image';
+import "./referans.css"
 const references = [
   { name: "Speaker Agency", logo: "/referans/speaker_agency_home_url.webp" },
   { name: "Bahçeşehir Koleji", logo: "/referans/bahcesehir.png" },

@@ -1,0 +1,55 @@
+.schengen-fade-up-init {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.schengen-fade-up-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.schengen-fade-down-init {
+  opacity: 0;
+  transform: translateY(-25px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.schengen-fade-down-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.schengen-scale-init {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.schengen-scale-show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.schengen-slide-init {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.schengen-slide-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* İstersen grup bazlı stagger da ekleyebilirsin */
+.schengen-stagger > * {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.schengen-stagger.schengen-stagger-show > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+.schengen-stagger.schengen-stagger-show > *:nth-child(1) { transition-delay: 0.1s; }
+.schengen-stagger.schengen-stagger-show > *:nth-child(2) { transition-delay: 0.2s; }
+.schengen-stagger.schengen-stagger-show > *:nth-child(3) { transition-delay: 0.3s; }
+.schengen-stagger.schengen-stagger-show > *:nth-child(4) { transition-delay: 0.4s; }
+.schengen-stagger.schengen-stagger-show > *:nth-child(5) { transition-delay: 0.5s; }

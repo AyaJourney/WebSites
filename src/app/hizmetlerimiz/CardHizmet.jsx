@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { hizmetlerimiz } from "../../helper/help";
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
-
+import "./hizmet.css"
 
 const CardHizmet = () => {
   const containerRef = useRef(null);

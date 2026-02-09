@@ -3,7 +3,7 @@
 import Image from "next/image";
 import React, { useEffect, useRef } from "react";
 import { FaCheckCircle } from "react-icons/fa";
-
+import "./all.css"
 const steps = [
   {
     title: "Analiz",

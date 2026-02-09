@@ -1,0 +1,32 @@
+.title-animate-init {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.8s ease-out;
+}
+
+.title-animate-init.show {
+  opacity: 1;
+  animation: gentle-pop 0.9s ease-out forwards;
+}
+
+.referanslar-title-init {
+  opacity: 0;
+  transform: translateY(-25px) scale(0.96);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.referanslar-title-init.referanslar-show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Kartlar */
+.referanslar-card-init {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.referanslar-card-init.referanslar-show {
+  opacity: 1;
+  transform: translateY(0);
+}

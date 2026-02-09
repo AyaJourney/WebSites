@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import data from "@/helper/educationPrograms.json";
 import PosterModal from "./modal/PosterModal";
-
+import "./egitim.css"
 export default function EducationPage() {
 const [isModalOpen, setIsModalOpen] = useState(false);
 const [slide, setSlide] = useState(0);

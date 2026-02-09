@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import "../globals.css";
 import PosterModal from "./modal/PosterModal";
-
+import "./egitim.css"
 const isMobileOrAndroid = () => {
   if (typeof window === "undefined") return false;
   const ua = navigator.userAgent;

@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./yurtdisi.css"
 const Giris = () => {
   return (
     <div className="w-full font-sans bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.14),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(16,185,129,0.14),transparent_30%)]">

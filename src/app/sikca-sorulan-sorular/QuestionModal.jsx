@@ -1,6 +1,6 @@
 import React from 'react'
 import Contact from '../iletisim/Contact';
-
+import "./question.css"
 const QuestionModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 

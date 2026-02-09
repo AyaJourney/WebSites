@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { questionsAndAnswers } from "@/helper/help";
-
+import "./question.css"
 const QuestionCard = () => {
   const [openId, setOpenId] = useState(null);
   const [selectedType, setSelectedType] = useState("Vize 101");

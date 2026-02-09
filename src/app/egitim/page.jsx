@@ -1,5 +1,5 @@
 import EgitimCards from "./EgitimCards";
-
+import "./egitim.css"
 
 export const metadata = {
   title: "Yurtdışı Eğitim & Kariyer Programları | AYA Journey",

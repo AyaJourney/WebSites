@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -10,8 +10,7 @@ import {
   FaPlaneDeparture,
 } from "react-icons/fa";
 import { GoDotFill } from "react-icons/go";
-
-
+import "./america.css"
 
 const highlights = [
   {
@@ -101,8 +100,7 @@ const processSteps = [
 ];
 
 export default function USVisaClient() {
-const [open, setOpen] = useState(false);
-const [openF1, setOpenF1] = useState(false);
+
 
 
   const refs = useRef([]);

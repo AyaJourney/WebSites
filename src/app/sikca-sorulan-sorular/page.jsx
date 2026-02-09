@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import QuestionCard from "./QuestionCard";
 import QuestionModal from "./QuestionModal";
-
+import "./question.css"
 const Page = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const refs = useRef([]);

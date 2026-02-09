@@ -1,0 +1,52 @@
+.ukvisa-fade-down-init {
+  opacity: 0;
+  transform: translateY(-25px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+
+.ukvisa-stagger > * {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.ukvisa-stagger.ukvisa-stagger-show > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ukvisa-stagger.ukvisa-stagger-show > *:nth-child(1) { transition-delay: .1s; }
+.ukvisa-stagger.ukvisa-stagger-show > *:nth-child(2) { transition-delay: .2s; }
+.ukvisa-stagger.ukvisa-stagger-show > *:nth-child(3) { transition-delay: .3s; }
+.ukvisa-stagger.ukvisa-stagger-show > *:nth-child(4) { transition-delay: .4s; }
+.ukvisa-stagger.ukvisa-stagger-show > *:nth-child(5) { transition-delay: .5s; }
+.ukvisa-fade-down-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.ukvisa-scale-init {
+  opacity: 0;
+  transform: scale(.92);
+  transition: opacity .8s ease, transform .8s ease;
+}
+.ukvisa-scale-show {
+  opacity: 1;
+  transform: scale(1);
+}
+.ukvisa-slide-init {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity .8s ease, transform .8s ease;
+}
+.ukvisa-slide-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.ukvisa-fade-up-init {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.ukvisa-fade-up-show {
+  opacity: 1;
+  transform: translateY(0);
+}

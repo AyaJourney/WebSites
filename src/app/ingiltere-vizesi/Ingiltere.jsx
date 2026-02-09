@@ -12,6 +12,7 @@ import { MdOutlineSchool } from "react-icons/md";
 import Link from "next/link";
 import Image from "next/image";
 import { GoDotFill } from "react-icons/go";
+import "./ingiltere.css";
 // export const metadata = {
 //   title: "İngiltere Vizesi - Detaylı Rehber",
 //   description: "İngiltere vizesi için adım adım rehber, gerekli belgeler ve başvuru süreci.",
@@ -78,7 +79,7 @@ const infoCards = [
   {
     icon: <FaFileInvoiceDollar />,
     title: "Ekonomik Gereklilikler",
-    desc: "Gidiş-dönüş uçak bileti, konaklama ve banka dökümü sunumu yapılabilir.(Zorunlu değil)"
+    desc: "Banka dökümünüzde seyahat masraflarınızı karşılayacak ve dönüşünüzü gösterecek yeterli bakiye bulunmalıdır."
   },
 ];
 

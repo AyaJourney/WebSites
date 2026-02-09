@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import React from 'react'
 import Giris from './Giris';
 import Card from './Card';
-
+import "./yurtdisi.css"
 
 const YurtDisiRehberi = () => {
   useEffect(() => {

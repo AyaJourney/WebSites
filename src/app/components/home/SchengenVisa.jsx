@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FaCheckCircle } from "react-icons/fa";
-
+import "./all.css"
 const SchengenIntro = () => {
   const sectionRef = useRef(null);
 

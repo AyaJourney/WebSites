@@ -1,0 +1,51 @@
+.faq-fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.faq-fade-up.faq-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Scale In */
+.faq-scale-in {
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.faq-scale-in.faq-show {
+  opacity: 1;
+  transform: scale(1);
+}
+/* =========================
+   FAQ ACCORDION ANIMATION
+   ========================= */
+
+.faq-accordion {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    max-height 0.45s ease,
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+
+.faq-accordion.open {
+  max-height: 400px; /* cevaplar için yeterli */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ok ikon animasyonu */
+.faq-chevron {
+  transition: transform 0.3s ease;
+}
+
+.faq-chevron.open {
+  transform: rotate(180deg);
+}

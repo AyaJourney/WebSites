@@ -10,7 +10,7 @@ import {
 import { MdOutlineSchool } from "react-icons/md";
 import Link from "next/link";
 import { CgDanger } from "react-icons/cg";
-
+import "./portekiz.css";
 
 const belgeler = [
   { icon: <CgDanger />, title: "2 adet biyometrik fotoğraf" },
