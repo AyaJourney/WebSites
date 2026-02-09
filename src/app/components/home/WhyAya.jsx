@@ -160,7 +160,7 @@ function HoverCard({ item, idx, shown, desktopRefs, mobileRefs }) {
             alt={item.title}
             width={90}
             height={90}
-            className="rounded-2xl"
+            className="rounded-4xl"
           priority
 
           />
