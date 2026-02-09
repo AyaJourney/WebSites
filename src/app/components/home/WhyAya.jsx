@@ -161,6 +161,8 @@ function HoverCard({ item, idx, shown, desktopRefs, mobileRefs }) {
             width={90}
             height={90}
             className="rounded-2xl"
+          priority
+
           />
         </motion.div>
 
@@ -192,6 +194,8 @@ function HoverCard({ item, idx, shown, desktopRefs, mobileRefs }) {
     width={90}
     height={90}
     className="rounded-xl mb-3"
+          priority
+
   />
   <h3 className="text-lg font-semibold text-gray-800">{item.title}</h3>
 </div>

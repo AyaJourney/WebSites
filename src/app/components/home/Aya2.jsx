@@ -75,6 +75,8 @@ const Aya2 = () => {
               src="/images/aya2.jpg"
               alt="Aya Journey Visual"
               fill
+          priority
+
               className="object-cover rounded-2xl shadow-lg"
             />
           </div>

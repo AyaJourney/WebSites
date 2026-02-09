@@ -74,6 +74,7 @@ return (
           src="/images/basrol.jpg"
           alt="Hadi topla bavulları"
           fill
+          priority
           className="object-cover"
         />
 
