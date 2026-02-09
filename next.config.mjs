@@ -29,9 +29,8 @@ const nextConfig = {
     ],
   },
 
-  experimental: {
-    // turbo: false,
-    // optimizeCss: true,
+experimental: {
+    optimizeCss: true, // Bu ayar 'media=print' mantığını senin yerine otomatik yapar
   },
 
   output: "standalone",
