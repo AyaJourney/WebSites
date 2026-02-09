@@ -5,7 +5,7 @@ import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube, FaMapMarkerAlt } fro
 import { FaXTwitter } from "react-icons/fa6";
 import { FiPhone } from "react-icons/fi";
 import { HiOutlineMail } from "react-icons/hi";
-
+import NextImage from 'next/image';
 export default function Footer() {
     const [location, setLocation] = useState("ankara");
     const mapUrls = {
@@ -53,9 +53,16 @@ export default function Footer() {
           <div className="flex flex-col flex-1 rounded-lg p-4 bg-white/10 gap-6">
             
             {/* Logo */}
-            <div className="flex justify-center w-full px-1">
-              <img src="/images/logo_beyaz.svg" alt="aya journey logo" className="h-16" />
-            </div>
+        <div className="flex justify-center w-full px-1">
+  <NextImage 
+    src="/images/logo_beyaz.svg" 
+    alt="Aya Journey Logo" 
+    width={200} // Logonuzun orijinal genişlik oranına göre ayarlayın
+    height={64}  // h-16 = 64px
+    className="h-16 w-auto object-contain"
+    // Footer altta olduğu için priority eklemiyoruz, varsayılan lazy loading yeterli
+  />
+</div>
 
             {/* Adres ve İletişim */}
             <div className="w-full text-white flex flex-col gap-4">
