@@ -28,18 +28,21 @@ export default function Footer() {
           </p>
         </div>
 
-        <div className="w-full sm:w-1/4 mt-3 flex flex-col sm:flex-row gap-3">
-      <Link href="/randevu">
-  <button className="cursor-pointer w-full sm:w-auto px-4 py-2 `bg-gradient-to-r` from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-lg text-white font-medium transition-all shadow-lg">
+   <div className="flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto">
+  <Link 
+    href="/randevu" 
+    className="inline-flex items-center justify-center w-full sm:w-auto min-h-[52px] px-8 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-lg text-white font-semibold transition-all shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 touch-manipulation"
+  >
     Randevu Al
-  </button>
-</Link>
-  <Link href="/iletisim">  <button className="cursor-pointer w-full sm:w-auto px-4 py-2 `bg-gradient-to-r` from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 rounded-lg text-white font-medium transition-all shadow-lg">
-            Bize Ulaşın
-          </button>
   </Link>
-        
-        </div>
+
+  <Link 
+    href="/iletisim" 
+    className="inline-flex items-center justify-center w-full sm:w-auto min-h-[52px] px-8 py-3 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 rounded-lg text-white font-semibold transition-all shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 touch-manipulation"
+  >
+    Bize Ulaşın
+  </Link>
+</div>
       </div>
 
       {/* Alt Ana Bölüm */}

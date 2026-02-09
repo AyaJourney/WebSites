@@ -71,7 +71,7 @@ return (
         className="fade-up-init relative w-full xl:w-1/2 rounded-xl overflow-hidden min-h-[300px] sm:min-h-[350px] md:min-h-[420px]"
       >
         <Image
-          src="/images/basrol.jpg"
+          src="/images/basrol.webp"
           alt="Hadi topla bavulları"
           fill
           priority
