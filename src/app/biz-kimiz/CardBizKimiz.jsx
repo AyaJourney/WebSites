@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaCheckCircle } from "react-icons/fa";
 
-
+import "./biz.css"
 const stats = [
   { label: "Onay oranı", value: "Yüksek" },
   { label: "Deneyim", value: "15+ yıl" },

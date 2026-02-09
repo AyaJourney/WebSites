@@ -3,7 +3,7 @@ import React from "react";
 import Image from "next/image";
 import { titleCase } from "@/helper/help";
 import { useEffect, useRef } from "react";
-
+import "./biz.css"
 const features = [
   {
     title: "Mülakat Odaklı Yaklaşım",

@@ -86,13 +86,7 @@ export default function ReviewsList() {
       "_blank"
     )
   }
-  className="
-    bg-white text-gray-700 cursor-pointer mt-5 
-    border border-blue-300 px-5 py-2.5 
-    rounded-3xl transition duration-300 
-    hover:text-blue-500 hover:bg-gray-100 
-    flex items-center justify-center gap-2
-  "
+  className="bg-white text-gray-700 cursor-pointer mt-5  border border-blue-300 px-5 py-2.5  rounded-3xl transition duration-300  hover:text-blue-500 hover:bg-gray-100  flex items-center justify-center gap-2"
 >
   <span className="text-xl flex items-center">
     <MdOutlineReviews />
@@ -125,10 +119,7 @@ export default function ReviewsList() {
               <div
                 key={index}
                 ref={isLastCard ? lastCardRef : null}
-                className={`relative bg-gray-50 rounded-lg shadow-md p-4 flex flex-col w-full sm:w-[220px] md:w-[250px] min-h-[140px] 
-                  transition-all duration-700 transform 
-                  ${loaded ? "opacity-100 translate-y-0 scale-100" : "opacity-0 -translate-y-8 scale-95"} 
-                  hover:scale-105 hover:shadow-xl`}
+                className={`relative bg-gray-50 rounded-lg shadow-md p-4 flex flex-col w-full sm:w-[220px] md:w-[250px] min-h-[140px]  transition-all duration-700 transform  ${loaded ? "opacity-100 translate-y-0 scale-100" : "opacity-0 -translate-y-8 scale-95"} hover:scale-105 hover:shadow-xl`}
               >
                 {!loaded && (
                   <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-lg z-10" />
