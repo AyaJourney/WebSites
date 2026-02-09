@@ -88,9 +88,10 @@ const FlipCard = ({ item }) => {
         {/* Arka yüz */}
         <div
           className="absolute w-full h-full backface-hidden rounded-2xl shadow-md p-5 flex flex-col justify-center text-white rotate-y-180"
-          style={{
-            background:
-              "linear-gradient(135deg, rgba(34,197,94,0.85), rgba(16,185,129,0.85))",
+       style={{
+            backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${backgroundImage})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
         >
           <h2 className="text-xl font-semibold mb-2">{item.title}</h2>

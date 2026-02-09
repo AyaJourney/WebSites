@@ -55,17 +55,17 @@ export default async function handler(req, res) {
     "en-kolay-vize-veren-ulkeler",
     "vize-alirken-yapilan-hatalar",
     "vize-reddi-gercek-nedenler",
-    "vize-reddi-sonrasi-kontrol-listesi",
-    "abd-vize-randevusu-nasil-alinir",
-    "bls-international-ispanya-vize-randevusu",
-    "idata-vize-randevusu-nasil-alinir",
-    "ingiltere-vize-randevusu-nasil-alinir",
-    "kanada-vize-randevusu-nasil-alinir",
-    "vfs-global-vize-randevusu-nasil-alinir",
-    "abd-vize-danismanligi",
-    "amerika-vizesi-en-iyi-danismanlik-sirketi",
-    "abd-vize-istanbul",
-    "abd-vize-ankara",
+    "vize-reddi-sonrasi-kontrol-listesi",  //burası tamam
+    "abd-vize-randevusu-nasil-alinir", //burası tamam
+    "bls-international-ispanya-vize-randevusu", //burası tamam
+    "idata-vize-randevusu-nasil-alinir", //burası tamam
+    "ingiltere-vize-randevusu-nasil-alinir",  //burası tamam
+    "kanada-vize-randevusu-nasil-alinir", //burası tamam
+    "vfs-global-vize-randevusu-nasil-alinir", //burası tamam
+    "abd-vize-danismanligi", //burası tamam
+    "amerika-vizesi-en-iyi-danismanlik-sirketi", //burası tamam
+    "abd-vize-istanbul", //burası tamam
+    "abd-vize-ankara", //burası tamam
     
 
 

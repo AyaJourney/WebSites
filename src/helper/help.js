@@ -898,6 +898,7 @@ export const hizmetlerimiz =
     "description": "Avrupa Schengen vizesi başvurularında rehberlik.",
     "longDescription": "Schengen vizesi başvuru süreci karmaşık olabilir. Biz, tüm prosedürleri basitleştiriyor ve kişiye özel danışmanlık sunuyoruz. Belgelerin hazırlanması, randevuların takibi ve seyahat planlaması konusunda tam destek sağlıyoruz.",
     "etiketler": ["Turizm", "Ticaret"],
+    "image":"/images/ornek.webp"
    
   },
   {

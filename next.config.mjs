@@ -11,6 +11,7 @@ const nextConfig = {
 
   experimental: {
     // turbo: false,
+    optimizeCss: true,
   },
 
   output: "standalone",
