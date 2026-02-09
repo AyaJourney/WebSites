@@ -34,7 +34,7 @@ return (
       <div className="relative w-full h-[320px] rounded-2xl overflow-hidden shadow-xl lg:hidden">
 
         <Image
-          src="/images/visaamericaexam.webp"
+          src="/images/visaamericaexams.webp"
           alt="Amerika Vizesi Süreci"
           fill
           priority
