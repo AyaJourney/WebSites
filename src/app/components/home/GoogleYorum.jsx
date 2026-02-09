@@ -182,10 +182,8 @@ const GoogleYorum = () => {
   </div>
 
   {/* Tüm yorumlar sayfasına yönlendirme */}
-<Link href="/hakkimizdaki-yorumlar" className="inline-flex items-center justify-center p-2"> 
-  <button type="button" aria-label="Tüm kullanıcı yorumlarını gör" className="min-h-[52px] min-w-[220px] px-10 py-4 m-2 bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 cursor-pointer border border-blue-300/60 rounded-full font-semibold transition-all duration-300 hover:text-blue-600 hover:shadow-lg hover:scale-105 touch-manipulation">
-    Daha Fazla Yorum
-  </button>
+<Link href="/hakkimizdaki-yorumlar" aria-label="Tüm kullanıcı yorumlarını gör" className="inline-flex items-center justify-center min-h-[56px] min-w-[240px] px-10 py-4 m-4 bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 border border-blue-300/60 rounded-full font-semibold transition-all duration-300 hover:text-blue-600 hover:shadow-lg hover:scale-105 touch-manipulation">
+  Daha Fazla Yorum
 </Link>
 </div>
 

@@ -99,7 +99,7 @@ export async function POST(req) {
 
     // Sıkıştırmayı erken başlat (PDF çizimi ile paralel)
     const passportBase64Promise = compressImage(files.passportFileBase64);
-    console.log("PDF İŞLEMİ BAŞLATILDI")
+
     // --- PDF Dokümanı Oluştur ---
     const pdfDoc = await PDFDocument.create();
     
@@ -1773,7 +1773,7 @@ let pdfBuffer = null;
       ? pdfBytes
       : Buffer.from(pdfBytes, "base64");
   }
-console.log("PDF GEÇİLDİ ")
+
     // --- Text & HTML Body ---
 // formData: gönderilen form verisi
 const f = formData; // veya defaultForm yerine bu kullanılacak
