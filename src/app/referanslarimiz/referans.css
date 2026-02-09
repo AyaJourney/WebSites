@@ -1,32 +1,32 @@
+/* Başlık - Transition ve Animation ayrımı yapıldı */
 .title-animate-init {
   opacity: 0;
   transform: scale(0.95);
-  transition: opacity 0.8s ease-out;
+  will-change: transform, opacity;
 }
 
 .title-animate-init.show {
-  opacity: 1;
+  /* Transition yerine direkt animasyonla her şeyi halletmek daha güvenli */
   animation: gentle-pop 0.9s ease-out forwards;
 }
 
+/* Referanslar - Standart "show" sınıfına çekildi ve GPU dostu yapıldı */
 .referanslar-title-init {
   opacity: 0;
-  transform: translateY(-25px) scale(0.96);
+  transform: translate3d(0, -25px, 0) scale(0.96);
   transition: opacity 0.7s ease-out, transform 0.7s ease-out;
 }
-.referanslar-title-init.referanslar-show {
+.referanslar-title-init.show { /* referanslar-show yerine show yaptık */
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: translate3d(0, 0, 0) scale(1);
 }
 
-/* Kartlar */
 .referanslar-card-init {
   opacity: 0;
-  transform: translateY(35px);
+  transform: translate3d(0, 35px, 0);
   transition: opacity 0.7s ease-out, transform 0.7s ease-out;
 }
-
-.referanslar-card-init.referanslar-show {
+.referanslar-card-init.show {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
 }
