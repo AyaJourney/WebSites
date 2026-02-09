@@ -31,7 +31,7 @@ body {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
-
+ 
 .rotate-y-180 {
   transform: rotateY(180deg);
 }
@@ -121,38 +121,8 @@ body {
   transform: translateX(0);
 }
 
-/* Sağdan gelen animasyon */
-.slide-right-init {
-  opacity: 0;
-  transform: translateX(60px);
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-}
-.slide-right-init.show {
-  opacity: 1;
-  transform: translateX(0);
-}
 
-/* Soldan gelen animasyon */
-.slide-left-init {
-  opacity: 0;
-  transform: translateX(-60px);
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-}
-.slide-left-init.show {
-  opacity: 1;
-  transform: translateX(0);
-}
 
-.title-animate-init {
-  opacity: 0;
-  transform: scale(0.95);
-  transition: opacity 0.8s ease-out;
-}
-
-.title-animate-init.show {
-  opacity: 1;
-  animation: gentle-pop 0.9s ease-out forwards;
-}
 
 @keyframes gentle-pop {
   0% {
