@@ -890,7 +890,7 @@ export const hizmetlerimiz =
     "description": "Hızlı ve güvenilir ABD vizesi başvuru desteği.",
     "longDescription": "ABD vize danışmanlığı hizmetimiz, tüm başvuru süreçlerini eksiksiz ve hızlı şekilde yürütmenizi sağlar. Evrak kontrolünden randevu alınmasına, form doldurmadan mülakat hazırlığına kadar her adımda profesyonel destek sunuyoruz.",
     "etiketler": ["Eğitim", "İş", "Turizm"],
-     "image":"/images/usa.jpg"
+     "image":"/images/usa.webp"
   },
   {
     "id": 2,
@@ -915,7 +915,7 @@ export const hizmetlerimiz =
     "description": "İngiltere vizesi başvuru süreçlerinde güvenilir destek.",
     "longDescription": "İngiltere vizesi almak karmaşık bir süreç olabilir. Biz, form doldurma, randevu, belgelerin hazırlanması ve mülakat hazırlığı dahil tüm adımlarda yanınızdayız, sorunsuz bir başvuru deneyimi sunuyoruz.",
     "etiketler": ["Eğitim", "Turizm", "İş"],
-    "image":"/images/uk.jpg"
+    "image":"/images/uk.webp"
   }
 ]
 

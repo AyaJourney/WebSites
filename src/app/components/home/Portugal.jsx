@@ -7,13 +7,13 @@ import Link from "next/link";
 /* APPLE STYLE VIDEO → IMAGE */
 /* ----------------------------------------- */
 const AppleStyleMedia = () => {
-  const [showImage, setShowImage] = useState(false);
+  // const [showImage, setShowImage] = useState(false);
 
   return (
     <div className="relative w-full overflow-hidden rounded-2xl h-[260px] sm:h-[300px] md:h-[360px] lg:h-[420px] max-w-[700px]">
 
       {/* VIDEO – HER ZAMAN DOM'DA */}
-      <video
+      {/* <video
         src="/images/videomaker.mp4"
         autoPlay
         muted
@@ -21,7 +21,7 @@ const AppleStyleMedia = () => {
         onEnded={() => setShowImage(true)}
         className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
         style={{ opacity: showImage ? 0 : 1 }}
-      />
+      /> */}
 
       {/* IMAGE – HER ZAMAN DOM'DA */}
       <Image
@@ -29,8 +29,8 @@ const AppleStyleMedia = () => {
         alt="Portekiz"
         fill
         priority
-        className="object-cover transition-opacity duration-[1500ms] ease-out"
-        style={{ opacity: showImage ? 1 : 0 }}
+        className="object-cover transition-opacity ease-out"
+        // style={{ opacity: showImage ? 1 : 0 }}
       />
 
     </div>
