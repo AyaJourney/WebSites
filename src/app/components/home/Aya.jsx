@@ -70,13 +70,14 @@ return (
         ref={rootRef}
         className="fade-up-init relative w-full xl:w-1/2 rounded-xl overflow-hidden min-h-[300px] sm:min-h-[350px] md:min-h-[420px]"
       >
-        <Image
-          src="/images/basrol.webp"
-          alt="Hadi topla bavulları"
-          fill
-          priority
-          className="object-cover"
-        />
+       <Image
+  src="/images/basrol.webp"
+  alt="Hadi topla bavulları"
+  priority={true}
+  fetchPriority="high"
+  fill // Bu eklendiğinde genişlik/yükseklik hatası gider
+  className="object-cover" // fill ile beraber harika çalışır
+/>
 
         <div className="absolute inset-0 bg-black/40 flex flex-col justify-center p-6 sm:p-8 md:p-10">
           <h1 className="text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-bold mb-4 text-white leading-snug">

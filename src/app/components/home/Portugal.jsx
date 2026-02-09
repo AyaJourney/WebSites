@@ -85,8 +85,7 @@ const Portugal = () => {
           <span className="relative italic px-2 py-1 rounded-2xl overflow-hidden text-white inline-flex">
             <span
               className="absolute inset-0 bg-orange-500"
-              style={{width: `${width}%`, transition: "width 6.5s ease",
-              }}
+            style={{ transform: `scaleX(${width / 100})`, transformOrigin: "left", transition: "transform 6.5s ease", willChange: "transform" }}
             />
             <span className="relative z-10">Portekiz D7 Vizesi</span>
           </span>
