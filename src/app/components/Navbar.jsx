@@ -106,7 +106,7 @@ return (
               className="relative cursor-pointer"
             >
               <span
-                className={`text-[17px] flex items-center gap-1 transition ${
+                className={`text-[15px] xl:text-[17px] flex items-center gap-1 transition ${
                   pathname.startsWith(item.href) || openMega === item.href
                     ? "text-blue-600"
                     : "text-gray-700 hover:text-blue-600"
@@ -120,7 +120,7 @@ return (
             <Link
               key={item.href}
               href={item.href}
-              className={`text-[17px] px-3 py-2 rounded transition ${
+              className={`text-[15px] xl:text-[17px] px-3 py-2 rounded transition ${
                 item.name === "Vize alma ihtimalinizi ölçün!"
                   ? "bg-emerald-500 text-white hover:bg-emerald-700"
                   : pathname === item.href
