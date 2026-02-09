@@ -95,44 +95,45 @@ return (
       </div>
 
       {/* ================= DESKTOP MENU ================= */}
-      <div className="hidden xl:flex space-x-8 items-center justify-end">
-        {menuItems.map((item) =>
-          item.submenu ? (
-            <div
-              key={item.href}
-              onClick={() =>
-                setOpenMega(openMega === item.href ? null : item.href)
-              }
-              className="relative cursor-pointer"
-            >
-              <span
-                className={`text-[15px] xl:text-[17px] flex items-center gap-1 transition ${
-                  pathname.startsWith(item.href) || openMega === item.href
-                    ? "text-blue-600"
-                    : "text-gray-700 hover:text-blue-600"
-                }`}
-              >
-                {item.name}
-                {openMega === item.href ? <FaChevronUp /> : <FaChevronDown />}
-              </span>
-            </div>
-          ) : (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`text-[15px] xl:text-[17px] px-3 py-2 rounded transition ${
-                item.name === "Vize alma ihtimalinizi ölçün!"
-                  ? "bg-emerald-500 text-white hover:bg-emerald-700"
-                  : pathname === item.href
-                  ? "text-blue-600"
-                  : "text-gray-700 hover:text-blue-600"
-              }`}
-            >
-              {item.name}
-            </Link>
-          )
-        )}
+ <div className="hidden xl:flex space-x-4 xl:space-x-8 items-center justify-end">
+  {menuItems.map((item) =>
+    item.submenu ? (
+      <div
+        key={item.href}
+        onClick={() => setOpenMega(openMega === item.href ? null : item.href)}
+        className="relative cursor-pointer"
+      >
+        {/* whitespace-nowrap eklendi: Asla alt satıra geçmez */}
+        {/* text-[15px] varsayılan (1280px'den itibaren), 2xl'de 17px olur */}
+        <span
+          className={`text-[15px] 2xl:text-[17px] whitespace-nowrap flex items-center gap-1 transition ${
+            pathname.startsWith(item.href) || openMega === item.href
+              ? "text-blue-600"
+              : "text-gray-700 hover:text-blue-600"
+          }`}
+        >
+          {item.name}
+          {openMega === item.href ? <FaChevronUp className="w-3 h-3" /> : <FaChevronDown className="w-3 h-3" />}
+        </span>
       </div>
+    ) : (
+      <Link
+        key={item.href}
+        href={item.href}
+      
+        className={`text-[15px] 2xl:text-[17px] whitespace-nowrap px-2 xl:px-3 py-2 rounded transition ${
+          item.name === "Vize alma ihtimalinizi ölçün!"
+            ? "bg-emerald-500 text-white hover:bg-emerald-700"
+            : pathname === item.href
+            ? "text-blue-600"
+            : "text-gray-700 hover:text-blue-600"
+        }`}
+      >
+        {item.name}
+      </Link>
+    )
+  )}
+</div>
     </div>
 
     {/* ================= DESKTOP MEGA MENU ================= */}
