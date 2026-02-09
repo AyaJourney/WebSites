@@ -49,7 +49,7 @@ export default function Navbar() {
     },
     { name: "Yurt Dışı Rehberi", href: "/yurtdisi-rehberi" },
     { name: "Sıkça Sorulan Sorular", href: "/sikca-sorulan-sorular" },
-    { name: "Blog Yazıları", href: "/blog" },
+    { name: "AYA Blog", href: "/blog" },
     { name: "Vize alma ihtimalinizi ölçün!", href: "/vize-alma-ihtimalinizi-olcun" },
   ];
 const mobileMenuItems = menuItems.filter(
