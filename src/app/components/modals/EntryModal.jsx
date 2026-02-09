@@ -9,11 +9,24 @@ export default function EntryModal({ isOpen, onClose,featured  }) {
 return (
   <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 z-50 overflow-y-auto">
     <div className="bg-white shadow-2xl w-full max-w-5xl relative overflow-hidden rounded-xl sm:rounded-2xl">
-      
-      {/* Kapatma butonu */}
-      <button onClick={onClose} className="absolute top-3 right-3 sm:top-4 sm:right-4 p-2 sm:p-2.5 hover:bg-gray-100 rounded-full transition-colors z-10">
-        <IoClose className="w-6 h-6 text-gray-500" />
-      </button>
+{/* Kapatma butonu */}
+<div className="absolute top-3 right-3 sm:top-4 sm:right-4 group flex items-center justify-center">
+  
+  {/* Tooltip: Butonun hemen solunda belirir */}
+  <span className="absolute right-12 scale-0 transition-all rounded-lg bg-gray-800 px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-white group-hover:scale-100 whitespace-nowrap shadow-lg z-20">
+    Kapat
+    {/* Küçük bir ok ucu */}
+    <div className="absolute top-1/2 -right-1 -translate-y-1/2 w-2 h-2 bg-gray-800 rotate-45" />
+  </span>
+
+  <button 
+    onClick={onClose} 
+    aria-label="Kapat" // Ekran okuyucular ve Google SEO için
+    className="p-2 sm:p-2.5 hover:bg-gray-100 rounded-full transition-colors z-10"
+  >
+    <IoClose className="w-6 h-6 text-gray-500" />
+  </button>
+</div>
 
       {/* Dekoratif gradient */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>

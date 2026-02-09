@@ -2,7 +2,13 @@
 
 import { useState } from "react";
 import SearchIcon from "./SearchIcon";
-import SearchModal from "../components/modals/SearchModal";
+import dynamic from 'next/dynamic';
+
+
+const SearchModal = dynamic(() => import("../components/modals/SearchModal"), {
+  ssr: false, 
+  loading: () => null 
+});
 
 export default function Header() {
   const [open, setOpen] = useState(false);

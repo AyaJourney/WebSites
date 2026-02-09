@@ -182,11 +182,16 @@ const GoogleYorum = () => {
   </div>
 
   {/* Tüm yorumlar sayfasına yönlendirme */}
-  <Link href="/hakkimizdaki-yorumlar">
-    <button className="bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 cursor-pointer mt-4 border border-blue-300/60 px-6 py-3 rounded-3xl transition-all duration-300 hover:text-blue-600 hover:bg-gradient-to-r hover:from-blue-100 hover:to-indigo-100 hover:border-blue-400 hover:shadow-md hover:scale-105 font-medium">
-      Daha Fazla Yorum
-    </button>
-  </Link>
+<Link href="/hakkimizdaki-yorumlar" className="inline-block p-2"> 
+  {/* Link'e padding (p-2) vererek tıklanabilir alanı dışarıdan genişlettik */}
+  <button 
+    type="button"
+    aria-label="Tüm kullanıcı yorumlarını gör" // SEO ve Erişilebilirlik puanı için
+    className="bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 cursor-pointer border border-blue-300/60 px-8 py-4 rounded-3xl transition-all duration-300 hover:text-blue-600 hover:bg-gradient-to-r hover:from-blue-100 hover:to-indigo-100 hover:border-blue-400 hover:shadow-md hover:scale-105 font-medium min-w-[200px] min-h-[48px]"
+  >
+    Daha Fazla Yorum
+  </button>
+</Link>
 </div>
 
   );

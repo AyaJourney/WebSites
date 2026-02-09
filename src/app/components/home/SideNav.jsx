@@ -23,16 +23,26 @@ const HomeSideNav = () => {
     <div className="fixed right-0 top-1/2 -translate-y-1/2 z-50 hidden lg:flex items-center">
 
       {/* OK */}
-      <button
-        onClick={() => setOpen(!open)}
-        className="h-28 w-10 flex items-center justify-center bg-white/30 backdrop-blur border border-white/40 rounded-l-2xl shadow-md hover:bg-white/50 transition cursor-pointer"
-      >
-        {open ? (
-          <FaChevronRight className="text-slate-700" />
-        ) : (
-          <FaChevronLeft className="text-slate-700" />
-        )}
-      </button>
+<div className="relative group flex items-center">
+  {/* Tooltip: Butonun soluna veya sağına göre konumu ayarlanabilir */}
+  <span className="absolute right-12 scale-0 transition-all rounded-lg bg-slate-900 px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-white group-hover:scale-100 whitespace-nowrap shadow-xl z-50">
+    {open ? "Menüyü Kapat" : "Menüyü Aç"}
+    {/* Küçük bir ok ucu ekleyelim (Opsiyonel) */}
+    <div className="absolute top-1/2 -right-1 -translate-y-1/2 w-2 h-2 bg-slate-900 rotate-45" />
+  </span>
+
+  <button
+    onClick={() => setOpen(!open)}
+    aria-label={open ? "Menüyü Kapat" : "Menüyü Aç"} // SEO ve Erişilebilirlik için kritik
+    className="h-28 w-10 flex items-center justify-center bg-white/30 backdrop-blur border border-white/40 rounded-l-2xl shadow-md hover:bg-white/50 transition cursor-pointer"
+  >
+    {open ? (
+      <FaChevronRight className="text-slate-700" />
+    ) : (
+      <FaChevronLeft className="text-slate-700" />
+    )}
+  </button>
+</div>
 
       {/* PANEL */}
       <div

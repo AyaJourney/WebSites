@@ -13,7 +13,14 @@ import AmericaVisa from "./components/home/AmericaVisa";
 import İngiltereVisa from "./components/home/İngiltereVisa";
 import SchengenVisa from "./components/home/SchengenVisa";
 import SideNav from "./components/home/SideNav";
-import HomeClient from "./components/home/HomeClient";
+import dynamic from 'next/dynamic';
+
+
+const HomeClient = dynamic(() => import("./components/home/HomeClient"), {
+  
+  loading: () => <div className="min-h-screen bg-white animate-pulse" />,
+  ssr: true
+});
 
 
 export const metadata = {

@@ -1,4 +1,3 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import NavbarIletisimCard from "./components/NavbarİletisimCard";
@@ -103,10 +102,7 @@ export default function RootLayout({ children }) {
         
       >
             <ScrollToTop />
-        <meta
-  name="viewport"
-  content="width=device-width, initial-scale=1, maximum-scale=1"
-/>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <div className="hidden lg:block fixed top-0 left-0 w-full z-50">
   <NavbarIletisimCard />
 </div>

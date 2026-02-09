@@ -1,9 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import EntryModal from '../modals/EntryModal';
 import { createClient } from '@supabase/supabase-js';
+import dynamic from 'next/dynamic';
 
+
+const EntryModal = dynamic(() => import('../modals/EntryModal'), {
+  ssr: false, 
+  loading: () => null
+});
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
