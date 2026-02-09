@@ -1,4 +1,5 @@
 "use client";
+import NextImage from 'next/image';
 import Link from "next/link";
 import React, { useEffect, useState, useRef } from "react";
 import { FaGoogle, FaCheckCircle } from "react-icons/fa";
@@ -127,11 +128,16 @@ const GoogleYorum = () => {
   {/* Kullanıcı Bilgisi */}
   <div className="flex items-center gap-3 mb-3 mt-1">
     <div className="relative">
-      <img
-        src={review.avatar || `https://i.pravatar.cc/50?img=${index + 1}`}
-        alt={review.author}
-        className="w-12 h-12 rounded-full border-2 border-gray-100 shadow-sm object-cover group-hover:border-blue-200 transition-colors duration-300"
-      />
+<div className="relative w-12 h-12">
+  <NextImage
+    src={review.avatar || `https://i.pravatar.cc/50?img=${index + 1}`}
+    alt={review.author || "Kullanıcı"}
+    width={48}
+    height={48}
+    className="rounded-full border-2 border-gray-100 object-cover"
+    loading="lazy"
+  />
+</div>
       <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-white rounded-full border-2 border-white flex items-center justify-center">
         <FaGoogle className="text-red-500 text-md" />
       </div>

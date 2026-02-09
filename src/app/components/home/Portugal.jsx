@@ -25,7 +25,7 @@ const AppleStyleMedia = () => {
 
       {/* IMAGE – HER ZAMAN DOM'DA */}
       <Image
-        src="/images/sehir.jpg"
+        src="/images/sehir.webp"
         alt="Portekiz"
         fill
         priority
