@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import NavbarİletisimCard from "./NavbarİletisimCard";
-
+import NextImage from 'next/image';
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openMega, setOpenMega] = useState(null);
@@ -66,15 +66,19 @@ return (
     <div className="w-full max-w-[1520px] mx-auto px-4 flex justify-between h-24 items-center gap-4">
 
       {/* LOGO */}
-      <Link href="/">
-        <img
-          src="/images/logo.png"
-          alt="AYA Journey"
-          width={250}
-          height={100}
-          className="cursor-pointer"
-        />
-      </Link>
+ <Link href="/" className="inline-block relative">
+  <NextImage
+    src="/images/logo.webp"
+    alt="AYA Journey Logo"
+    width={250}
+    height={100}
+    priority
+    // Stil çakışmasını önlemek için sadece gerekli sınıfları bırakıyoruz
+    className="cursor-pointer object-contain" 
+    // Eğer resim hala çok büyük veya küçükse style ile zorlayabiliriz:
+    style={{ width: '250px', height: 'auto' }}
+  />
+</Link>
 
       {/* BURGER – MOBILE & TABLET */}
       <div className="xl:hidden lg:mr-10">
