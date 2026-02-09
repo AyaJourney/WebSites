@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-
+import NextImage from 'next/image';
 const references = [
   { name: "Speaker Agency", logo: "/referans/speaker_agency_home_url.webp" },
   { name: "Bahçeşehir Koleji", logo: "/referans/bahcesehir.png" },
@@ -53,11 +53,16 @@ const Referanslarimiz = () => {
             style={{ transitionDelay: `${index * 80}ms` }} // stagger
             className="referanslar-card-init flex flex-col items-center justify-center bg-white rounded-xl shadow-md p-6 backdrop-blur border border-slate-200/70 transition-all duration-500 hover:-translate-y-1 group md:shadow-[0_20px_50px_-24px_rgba(15,23,42,0.45)] hover:shadow-[0_20px_40px_-26px_rgba(37,99,235,0.45)]"
           >
-            <img
-              src={ref.logo}
-              alt={ref.name}
-              className="w-24 h-24 object-contain mb-4 transition-transform duration-300 group-hover:scale-105"
-            />
+      <div className="relative w-24 h-24 mb-4 flex items-center justify-center">
+  <NextImage
+    src={ref.logo}
+    alt={ref.name || "Referans Logo"}
+    width={96}  // w-24 = 96px
+    height={96} // h-24 = 96px
+    className="object-contain transition-transform duration-300 group-hover:scale-105"
+    loading="lazy"
+  />
+</div>
             <p className="text-center text-gray-700 font-medium">
               {ref.name}
             </p>

@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 
-const ErrorPage = ({ error, reset }) => {
+const ErrorPage = () => {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-6">
       {/* Uyarı İkonu */}
@@ -40,12 +40,7 @@ const ErrorPage = ({ error, reset }) => {
         </button>
       </Link>
 
-      {/* Opsiyonel: Hata Detayları (dev ortamında) */}
-      {/* {error && (
-        <pre className="mt-8 p-4 bg-gray-100 text-red-600 rounded-lg max-w-lg overflow-x-auto text-sm">
-          {error.message}
-        </pre>
-      )} */}
+
     </main>
   );
 };

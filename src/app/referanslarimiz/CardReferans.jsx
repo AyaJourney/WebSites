@@ -92,6 +92,7 @@ const CardReferans = () => {
                     alt={ref.name}
                     width={160}
                     height={160}
+                    priority
                     className="object-contain max-h-[120px] group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>

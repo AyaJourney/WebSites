@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { scenarios } from "@/helper/help";
 import { FaWhatsapp } from "react-icons/fa";
 

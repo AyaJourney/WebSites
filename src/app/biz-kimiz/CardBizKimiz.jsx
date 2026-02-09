@@ -4,11 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaCheckCircle } from "react-icons/fa";
 
-const bullets = [
-  // "Kişiye özel strateji ve belge hazırlığı",
-  // "Randevu, formlar ve takvim tek ekranda",
-  // "24 saat içinde ön geri dönüş garantisi",
-];
 
 const stats = [
   { label: "Onay oranı", value: "Yüksek" },
@@ -110,19 +105,7 @@ return (
         </div>
 
         {/* MADDELER */}
-        {/* <div className="space-y-3">
-          {bullets.map((item, i) => (
-            <div
-              key={i}
-              ref={addFadeRef}
-              data-anim="biz-fade"
-              className="biz-fade-init flex items-start gap-3 text-sm sm:text-base"
-            >
-              <FaCheckCircle className="text-green-500 mt-1" />
-              <span className="text-gray-800">{item}</span>
-            </div>
-          ))}
-        </div> */}
+      
       </div>
 
       {/* SAĞ KART */}

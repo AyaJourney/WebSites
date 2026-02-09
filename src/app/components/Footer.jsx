@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React,{useState} from "react";
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube, FaMapMarkerAlt } from "react-icons/fa";
+import { FaInstagram, FaLinkedinIn, FaYoutube, FaMapMarkerAlt } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { FiPhone } from "react-icons/fi";
 import { HiOutlineMail } from "react-icons/hi";

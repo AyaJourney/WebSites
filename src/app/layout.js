@@ -2,10 +2,10 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import NavbarIletisimCard from "./components/NavbarİletisimCard";
 import Footer from "./components/Footer";
-import Cookies from "./components/Cookies";
-import WhatsappButton from "./components/WhatsappButton";
 import ScrollToTop from "./components/ScrollTop";
 import { Plus_Jakarta_Sans, Dancing_Script } from "next/font/google";
+import ClientElements from "./components/ClientElement";
+
 export const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
@@ -100,14 +100,11 @@ export const viewport = {
   initialScale: 1,
 
 };
-<link
-  href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600&display=swap"
-  rel="stylesheet"
-/>
+
 export default function RootLayout({ children }) {
   return (
     <html lang="tr" className={`${plusJakartaSans.variable} ${dancingScript.variable}`}>
-      <body>
+     <body className="antialiased">
 
         <ScrollToTop />
 
@@ -121,8 +118,7 @@ export default function RootLayout({ children }) {
         </header>
         <main className="flex-1 mt-24 bg-white ">
           {children}
-          <Cookies />
-          <WhatsappButton />
+         <ClientElements/>
         </main>
         <footer>
           <Footer />

@@ -3,7 +3,7 @@
 import React, { useState, useEffect,useRef } from "react";
 import CountryList from "country-list-with-dial-code-and-flag";
 
-const Contact = ({ onClose, fullWidth = false }) => {
+const Contact = ({  fullWidth = false }) => {
      const countries = CountryList.getAll(); 
   const [selected, setSelected] = useState(countries.find(c => c.code === "TR") || countries[0]);
   const [open, setOpen] = useState(false);

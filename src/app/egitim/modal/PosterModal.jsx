@@ -6,7 +6,7 @@ export default function PosterModal({
   isOpen,
   onClose,
   images = [],
-  title = "Açık Pozisyonlar",
+
   slide,
   setSlide,
 }) {
