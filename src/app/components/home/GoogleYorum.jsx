@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useEffect, useState, useRef } from "react";
 import { FaGoogle, FaCheckCircle } from "react-icons/fa";
 import { MdOutlineReviews } from "react-icons/md";
-import "./all.css"
+import "./google.css"
 const MAX_CHAR = 120;
 
 const GoogleYorum = () => {

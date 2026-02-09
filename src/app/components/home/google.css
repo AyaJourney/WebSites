@@ -1,0 +1,72 @@
+.google-yorum-card-init {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.google-yorum-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Bloom fill efekti wrapper */
+.google-yorum-hover-fill {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Doğal oval bloom fill efekti */
+.google-yorum-hover-fill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  /* oval & soft highlight */
+  background: radial-gradient(
+    circle at top left,
+    rgba(191, 219, 254, 0.5) 0%,
+    rgba(147, 197, 253, 0.3) 40%,
+    rgba(191, 219, 254, 0) 70%
+  );
+
+  opacity: 0;
+  transform: scale(1.1) translate(-20%, -20%);
+  transition: opacity 0.45s ease, transform 0.55s ease-out;
+  z-index: 1;
+  border-radius: 0.75rem;
+}
+
+.google-yorum-hover-fill:hover::before {
+  opacity: 1;
+  transform: scale(1.35) translate(-10%, -10%);
+}
+
+/* Shine çizgisi */
+.google-yorum-hover-fill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.15) 100%
+  );
+  filter: blur(16px);
+
+  transform: translateX(-150%);
+  transition: transform 0.7s ease-out;
+  z-index: 2;
+  border-radius: 0.75rem;
+}
+
+.google-yorum-hover-fill:hover::after {
+  transform: translateX(160%);
+}
+
+/* İçerik üstte kalmalı */
+.google-yorum-content {
+  position: relative;
+  z-index: 5;
+}
