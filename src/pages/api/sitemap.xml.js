@@ -6,6 +6,8 @@ export default async function handler(req, res) {
     .select("slug, updated_at")
     .eq("published", true);
 
+  const baseUrl = "https://ayajourney.com";
+
   const staticPages = [
     "/",
     "/ingiltere-vizesi",//burası tamam
@@ -92,30 +94,35 @@ export default async function handler(req, res) {
     
   ];
 
-  const urls = [
-    ...staticPages.map(
-      (path) => `
+  const staticUrls = staticPages.map(
+    (path) => `
 <url>
-  <loc>https://ayajourney.com${path}</loc>
+  <loc>${baseUrl}${path}</loc>
+  <xhtml:link rel="alternate" hreflang="tr-TR" href="${baseUrl}${path}" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="${baseUrl}${path}" />
   <changefreq>weekly</changefreq>
   <priority>0.8</priority>
 </url>`
-    ),
+  );
 
-    ...(blogs || []).map(
-      (blog) => `
+  const blogUrls = (blogs || []).map(
+    (blog) => `
 <url>
-  <loc>https://ayajourney.com/blog/${blog.slug}</loc>
+  <loc>${baseUrl}/blog/${blog.slug}</loc>
+  <xhtml:link rel="alternate" hreflang="tr-TR" href="${baseUrl}/blog/${blog.slug}" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="${baseUrl}/blog/${blog.slug}" />
   <lastmod>${new Date(blog.updated_at).toISOString()}</lastmod>
   <changefreq>monthly</changefreq>
   <priority>0.7</priority>
 </url>`
-    ),
-  ];
+  );
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.join("")}
+<urlset 
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+>
+${[...staticUrls, ...blogUrls].join("")}
 </urlset>`;
 
   res.setHeader("Content-Type", "application/xml");
