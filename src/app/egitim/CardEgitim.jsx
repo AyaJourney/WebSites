@@ -85,9 +85,9 @@ const posterImages = [
         className="absolute z-20 bottom-32 md:bottom-30 w-full flex justify-center md:justify-start px-6 md:px-10"
       >
         <div  ref={textRef} className="slide-left-init bg-black/30 rounded-lg p-4 max-w-xl">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white drop-shadow-xl">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white drop-shadow-xl">
             Amerika'da Maaşlı Turizm ve Gastronomi Staj Programı
-          </h1>
+          </h2>
 
           <p className="mt-4 text-base sm:text-lg md:text-xl text-white drop-shadow-lg">
             Amerika'da uzun süre yaşamak, global bir tecrübe edinmek ve bunu yaparken
