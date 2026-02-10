@@ -1,6 +1,6 @@
 import React from "react";
 import Giris from "./components/home/Giris";
-import CardHizmet from "./hizmetlerimiz/CardHizmet";
+import CardHizmet from "./components/hizmetlerimiz/CardHizmet";
 import CardReferans from "./referanslarimiz/CardReferans";
 import CardBizKimiz from "./biz-kimiz/CardBizKimiz";
 import WhyAya from "./components/home/WhyAya";

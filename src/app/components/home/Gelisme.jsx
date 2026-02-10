@@ -1,5 +1,5 @@
 import React from 'react'
-import Card from '@/app/hizmetlerimiz/CardHizmet';
+import Card from '@/app/components/hizmetlerimiz/CardHizmet';
 
 const Gelisme = () => {
     return (
