@@ -66,11 +66,11 @@ const CardReferans = () => {
           Referanslarımız
         </p>
 
-        <h1 className="text-3xl md:text-4xl font-bold mt-3">
+        <h2 className="text-3xl md:text-4xl font-bold mt-3">
           <span className="bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">
             AYA Journey’e Güvenen Markalar
           </span>
-        </h1>
+        </h2>
       </div>
 
       {/* Slider */}

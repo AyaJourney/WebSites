@@ -24,7 +24,7 @@ return (
   >
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight text-slate-900 text-center ">
           Ankara ve İstanbul’da
-          <span className="block mt-3">
+          <span className="block mt-3 ml-1 mr-1">
             Profesyonel Amerika Vize Danışmanlığı
           </span>
         </h1>

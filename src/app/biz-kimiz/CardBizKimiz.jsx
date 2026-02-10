@@ -54,7 +54,7 @@ return (
           Vize süreçlerinde stresi sıfırlayın
         </span>
 
-        <h1
+        <h2
           ref={addFadeRef}
           data-anim="biz-fade"
           className="biz-fade-init text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-bold leading-tight"
@@ -62,7 +62,7 @@ return (
           Hayalinizdeki seyahate ilk adımı
           <span className="text-blue-600"> Aya Journey </span>
           ile atın.
-        </h1>
+        </h2>
 
         <p
           ref={addFadeRef}
