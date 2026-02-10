@@ -37,6 +37,10 @@ export default async function handler(req, res) {
     "/vize-alma-ihtimalinizi-olcun",
     "/yesil-pasaport-vize-rehberi",
     "/schengen-vize-adimlari",
+    "/amerika-vize-danismanligi",
+    "/amerika-vize-evraklari",
+    "/schengen-vize-evraklari",
+    "/birlesik-krallik-vize-evraklari",
     "/vize-danismanlik-istanbul",
     "/vize-danismanlik-ankara",//burası tamam
     "/schengen-vize-danismanligi-istanbul",//burası tamam
