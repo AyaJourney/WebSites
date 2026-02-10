@@ -64,7 +64,7 @@ export default function ReviewsList() {
   };
 
   return (
-    <div className="w-full max-w-9xl mx-auto p-6 bg-gray-100 dark:bg-zinc-900 rounded-lg shadow-md flex flex-col items-center gap-12">
+    <div className="w-full max-w-9xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md flex flex-col items-center gap-12 mt-30">
       <h2 className="text-4xl font-bold text-gray-800 mb-6">
         Hakkımızdaki Yorumlar
       </h2>

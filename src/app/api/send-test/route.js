@@ -201,7 +201,7 @@ const highScoreText = `
          <div style="padding:24px;text-align:center;">
 
   <img
-    src="https://ayajourney.com/images/ayalogoxl.png"
+    src="https://ayajourney.com/images/ayalogoxl.webp"
     alt="AYA Journey"
     style="
       display:block;
