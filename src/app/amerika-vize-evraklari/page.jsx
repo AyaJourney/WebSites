@@ -84,12 +84,15 @@ const jsonLd = {
 };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
-      {/* JSON-LD Schema Scripts */}
-      <script
+    <>
+       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+
+          <main className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
+      {/* JSON-LD Schema Scripts */}
+   
  
 
       {/* Hero Section */}
@@ -125,8 +128,11 @@ const jsonLd = {
               </h1>
 
               <p className="text-xl text-blue-100 leading-relaxed mb-8">
-                Eksik belge, Amerika vize reddinin en yaygın sebebidir. 
-                Mesleki durumunuza göre hazırladığımız bu güncel liste ile başvurunuzu sağlama alın.
+              Amerika vize evrakları eksik veya hatalı hazırlandığında,
+  Amerika vize reddi kaçınılmaz hale gelir.
+  Mesleki durumunuza göre hazırladığımız bu güncel evrak listesi
+  ile Amerika vize başvurunuzu güvence altına alın.
+              
               </p>
 
               {/* Quick stats */}
@@ -210,7 +216,7 @@ const jsonLd = {
                 <div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
                   <FaCamera className="w-7 h-7" />
                 </div>
-                <h2 className="text-2xl font-black">Fotoğraf Standartları</h2>
+                <h2 className="text-2xl font-black">Amerika Vize Fotoğrafı Standartları</h2>
               </div>
 
               <div className="space-y-4">
@@ -266,7 +272,7 @@ const jsonLd = {
                 <div className="w-14 h-14 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center">
                   <FaPassport className="w-7 h-7" />
                 </div>
-                <h2 className="text-2xl font-black">Pasaport Kuralları</h2>
+                <h2 className="text-2xl font-black">Amerika Vizesi İçin Pasaport Gereksinimleri</h2>
               </div>
 
               <div className="space-y-4">
@@ -321,7 +327,7 @@ const jsonLd = {
               </div>
             </div>
             <div className="flex-1">
-              <h2 className="text-3xl font-black text-gray-900 mb-4">DS-160 Formu Nedir?</h2>
+              <h2 className="text-3xl font-black text-gray-900 mb-4">  DS-160 Formu Nedir? Amerika Vizesi İçin Nasıl Doldurulur?</h2>
               <p className="text-gray-700 leading-relaxed mb-6">
                 DS-160, Amerika vizesi için doldurulması zorunlu olan online başvuru formudur. 
                 Form doldurulduktan sonra <strong>confirmation sayfası (barkodlu çıktı)</strong> alınmalı 
@@ -367,7 +373,7 @@ const jsonLd = {
                 </span>
               </div>
 
-              <h3 className="text-2xl font-black text-gray-900 mb-4">Çalışanlar</h3>
+              <h3 className="text-2xl font-black text-gray-900 mb-4">Çalışanlar İçin Amerika Vize Evrakları</h3>
               
               <ul className="space-y-3 mb-6">
                 <li className="flex items-start gap-3">
@@ -415,7 +421,7 @@ const jsonLd = {
                 </span>
               </div>
 
-              <h3 className="text-2xl font-black text-gray-900 mb-4">İşverenler</h3>
+              <h3 className="text-2xl font-black text-gray-900 mb-4">İşverenler İçin Amerika Vizesi Gerekli Evraklar</h3>
               
               <ul className="space-y-3 mb-6">
                 <li className="flex items-start gap-3">
@@ -463,7 +469,7 @@ const jsonLd = {
                 </span>
               </div>
 
-              <h3 className="text-2xl font-black text-gray-900 mb-4">Öğrenciler</h3>
+              <h3 className="text-2xl font-black text-gray-900 mb-4">Öğrenciler İçin Amerika Vize Evrak Listesi</h3>
               
               <ul className="space-y-3 mb-6">
                 <li className="flex items-start gap-3">
@@ -544,7 +550,7 @@ const jsonLd = {
       <section id="evrak-listesi" className="max-w-7xl mx-auto px-6 py-16 bg-white">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-black text-gray-900 mb-4">
-            Herkes İçin Ortak Evraklar
+           Amerika Vizesi İçin Gerekli Ortak Evraklar
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Meslek grubunuz ne olursa olsun, aşağıdaki belgeler tüm başvurular için zorunludur.
@@ -760,6 +766,8 @@ const jsonLd = {
 
 
     </main>
+    </>
+
   );
 };
 
