@@ -33,7 +33,7 @@ const Giris = () => {
       <div className="max-w-7xl w-full">
 
         {/* H1 */}
-        <h1 className="font-jakarta font-extrabold text-5xl sm:text-6xl md:text-6xl lg:text-8xl tracking-widest text-slate-900 leading-tight">
+        <h2 className="font-jakarta font-extrabold text-5xl sm:text-6xl md:text-6xl lg:text-8xl tracking-widest text-slate-900 leading-tight">
 
           {/* MOBILE */}
           <span className="block md:hidden">
@@ -76,7 +76,7 @@ const Giris = () => {
             ))}
           </span>
 
-        </h1>
+        </h2>
 
         {/* SUBTEXT */}
         <p className="mt-10 max-w-2xl text-base sm:text-lg md:text-xl text-slate-700 leading-relaxed">

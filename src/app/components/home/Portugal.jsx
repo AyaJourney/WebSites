@@ -81,7 +81,7 @@ const Portugal = () => {
         ref={textRef}
         className="slide-left-init w-full md:w-1/2 flex flex-col justify-center text-center md:text-left items-center md:items-start order-2 md:order-1"
       >
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-snug">
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-snug">
           <span className="relative italic px-2 py-1 rounded-2xl overflow-hidden text-white inline-flex">
             <span
               className="absolute inset-0 bg-orange-500"
@@ -93,7 +93,7 @@ const Portugal = () => {
           <span className="block mt-2">
             Sıcak İklim, Yüksek Yaşam Kalitesi ve Zengin Kültür
           </span>
-        </h1>
+        </h2>
 
         <p className="mt-4 text-gray-700 text-sm sm:text-base md:text-lg text-justify max-w-xl">
           Portekiz D7 Vizesi ile hayalinizdeki hayatı gerçeğe dönüştürün.

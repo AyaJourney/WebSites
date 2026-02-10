@@ -30,7 +30,7 @@ const EnglandVisaHero = () => {
 
         {/* SOL – METİN */}
         <div className="space-y-8 text-center lg:text-left">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
 <span 
 // className="bg-gradient-to-r from-[#012169] via-slate-400 to-[#C8102E] bg-clip-text text-transparent"
 >
@@ -42,7 +42,7 @@ const EnglandVisaHero = () => {
             <span className="text-slate-900">
               Turist, Eğitim ve Uzun Süreli Yaşam Rehberi
             </span>
-          </h1>
+          </h2>
 
        <p className="text-base sm:text-lg text-slate-700 max-w-xl mx-auto lg:mx-0">
   İngiltere vize süreci evrak odaklı ilerler ve dosyanın tutarlılığı en kritik noktadır.

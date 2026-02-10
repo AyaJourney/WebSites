@@ -84,9 +84,9 @@ const Aya2 = () => {
 
         {/* SAĞ — METİN VE KARTLAR */}
       <div className="flex flex-col justify-end h-full md:max-h-[550px] order-2 lg:order-none">
-         <h1 className="text-[2rem] md:text-[3rem] font-bold mb-6 leading-snug">
+         <h2 className="text-[2rem] md:text-[3rem] font-bold mb-6 leading-snug">
            Diğerlerinden farkımız
-          </h1>
+          </h2>
 
           <div className="space-y-10">
             {maddeler.map((item, i) => (

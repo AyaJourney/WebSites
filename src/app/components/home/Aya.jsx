@@ -80,9 +80,9 @@ return (
 />
 
         <div className="absolute inset-0 bg-black/40 flex flex-col justify-center p-6 sm:p-8 md:p-10">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-bold mb-4 text-white leading-snug">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-bold mb-4 text-white leading-snug">
             Şimdi Başrol Sırası Sizde
-          </h1>
+          </h2>
 
           <p className="text-sm sm:text-base md:text-lg text-gray-200 max-w-xl">
             Belgelerinizin hazırlanmasından randevu sürecine kadar tüm aşamaları
