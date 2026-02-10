@@ -2,8 +2,9 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import EntryModal from "../components/modals/EntryModal";
 
+import Image from "next/image";
+import BlogImage from "./help/BlogImage";
 /* ================= UTILS ================= */
 function cn(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -189,11 +190,14 @@ const categories = useMemo(() => {
     className="group relative block overflow-hidden rounded-[28px]"
   >
     {/* IMAGE */}
- <div className="relative h-65 sm:h-80 lg:h-155 bg-slate-100 overflow-hidden rounded-xl">
-  <img
+<div className="relative h-65 sm:h-80 lg:h-155 bg-slate-100 overflow-hidden rounded-xl">
+  <Image
     src={featured.image || "/images/icon.png"}
-    alt={featured.title}
-    className="w-full h-full object-cover object-center transition duration-700"
+    alt={featured.title || "Öne çıkan görsel"}
+    fill
+    priority={true} // Sayfa açılır açılmaz yüklenmesi için (LCP dostu)
+    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+    className="object-cover object-center transition duration-700 hover:scale-105"
   />
 </div>
 
@@ -258,12 +262,9 @@ const categories = useMemo(() => {
         href={`/blog/${p.slug}`}
         className="block overflow-hidden rounded-2xl"
       >
-        <img
-          src={p.image || "/images/icon.png"}
-          alt={p.title}
-          onError={(e) => (e.currentTarget.src = "/images/icon.png")}
-          className="h-44 sm:h-48 lg:h-56 w-full object-contain transition duration-500 group-hover:scale-105"
-        />
+        <BlogImage p={p} />
+
+
       </Link>
 
       {/* CONTENT */}
