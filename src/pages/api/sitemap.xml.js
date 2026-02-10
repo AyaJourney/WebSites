@@ -8,33 +8,34 @@ export default async function handler(req, res) {
 
   const staticPages = [
     "/",
-    "/ingiltere-vizesi",
-    "/amerika-vizesi",
-    "/schengen-vizesi",
-    "/portekiz-d7-vize",
-    "/yurtdisi-rehberi",
-    "/yurtdisi-rehberi/vize-turleri",
-    "/yurtdisi-rehberi/yurtdisi-egitim",
-    "/yurtdisi-rehberi/is-bulma-rehberi",
-    "/yurtdisi-rehberi/vize-mulakatinda-basari-icin-tuyolar",
-    "/yurtdisi-rehberi/konaklama-ve-ulasim-rehberi",
-    "/yurtdisi-rehberi/yurt-disinda-saglik-sigortasi",
-    "/yurtdisi-rehberi/kulturel-uyum-dil-egitimi",
-    "/yurtdisi-rehberi/yurt-disinda-burs",
-    "/yurtdisi-rehberi/vize-reddi-durumunda-ne-yapilmali",
-    "/blog",
-    "/iletisim",
+    "/ingiltere-vizesi",//burası tamam
+    "/amerika-vizesi",//burası tamam
+    "/schengen-vizesi",//burası tamam
+    "/portekiz-d7-vize",//burası tamam
+    "/yurtdisi-rehberi",//burası tamam
+    "/yurtdisi-rehberi/vize-turleri",//burası tamam
+    "/yurtdisi-rehberi/yurtdisi-egitim",//burası tamam
+    "/yurtdisi-rehberi/is-bulma-rehberi",//burası tamam
+    "/yurtdisi-rehberi/vize-mulakatinda-basari-icin-tuyolar",//burası tamam
+    "/yurtdisi-rehberi/konaklama-ve-ulasim-rehberi",//burası tamam
+    "/yurtdisi-rehberi/yurt-disinda-saglik-sigortasi",//burası tamam
+    "/yurtdisi-rehberi/kulturel-uyum-dil-egitimi",//burası tamam
+    "/yurtdisi-rehberi/yurt-disinda-burs",//burası tamam
+    "/yurtdisi-rehberi/vize-reddi-durumunda-ne-yapilmali",//burası tamam
+    "/blog", //burası tamam
+    "/iletisim",//burası tamam
+    "/gizlilik-politikasi",//burası tamam
     "/randevu",
-    "/biz-kimiz",
-    "/referanslarimiz",
-    "/hakkimizdaki-yorumlar",
-    "/egitim",
-    "/form/ds-160",
-    "/form/schengen",
-    "/form/birlesik-krallik-bilgi-fisi",
-    "/form/kanada-basvuru-formu",
-    "/sikca-sorulan-sorular",
-    "/vize-alma-ihtimalinizi-olcun",
+    "/biz-kimiz",//burası tamam
+    "/referanslarimiz",//burası tamam
+    "/hakkimizdaki-yorumlar", //burası tamam
+    "/egitim",//burası tamam
+    "/form/ds-160",//burası tamam
+    "/form/schengen",//burası tamam
+    "/form/birlesik-krallik-bilgi-fisi",//burası tamam
+    "/form/kanada-basvuru-formu",//burası tamam
+    "/sikca-sorulan-sorular", //burası tamam
+    "/vize-alma-ihtimalinizi-olcun", //burası tamam
     "/yesil-pasaport-vize-rehberi",
     "/schengen-vize-adimlari",
     "/amerika-vize-danismanligi",
@@ -47,6 +48,7 @@ export default async function handler(req, res) {
     "/amerika-vize-ucretleri",
     "/amerika-vize-ds-160-nasil-doldurulur",
     "/amerika-vize-checklist",
+    "/ds-160-kapanmadan-randevu-alinamiyor",
     "/vize-danismanlik-istanbul",
     "/vize-danismanlik-ankara",//burası tamam
     "/schengen-vize-danismanligi-istanbul",//burası tamam
@@ -76,6 +78,9 @@ export default async function handler(req, res) {
     "/amerika-vizesi-en-iyi-danismanlik-sirketi", //burası tamam
     "/abd-vize-istanbul", //burası tamam
     "/abd-vize-ankara", //burası tamam
+    "/portekiz-d7-oturum-vizesi-ankara", //burası tamam
+    "/portekiz-d7-oturum-vizesi-istanbul", //burası tamam
+
     
 
 
