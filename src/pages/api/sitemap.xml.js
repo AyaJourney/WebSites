@@ -41,6 +41,12 @@ export default async function handler(req, res) {
     "/amerika-vize-evraklari",
     "/schengen-vize-evraklari",
     "/birlesik-krallik-vize-evraklari",
+    "/amerika-b1-b2-vizesi",
+    "/amerika-vizesi-kac-gunde-cikar",
+    "/amerika-vize-mulakat-sorulari",
+    "/amerika-vize-ucretleri",
+    "/amerika-vize-ds-160-nasil-doldurulur",
+    "/amerika-vize-checklist",
     "/vize-danismanlik-istanbul",
     "/vize-danismanlik-ankara",//burası tamam
     "/schengen-vize-danismanligi-istanbul",//burası tamam
