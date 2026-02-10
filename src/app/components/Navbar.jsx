@@ -26,25 +26,28 @@ export default function Navbar() {
     {
       name: "Hizmetlerimiz",
       href: "/hizmetlerimiz",
-      description: "Aya Journey tarafından sunulan hizmetler.",
+      description: "Aya Journey tarafından sunulan hizmetleri keşfedin.",
       submenu: [
         { name: "Amerika Vizesi", href: "/amerika-vizesi" },
         { name: "Schengen Vizesi", href: "/schengen-vizesi" },
         { name: "İngiltere Vizesi", href: "/ingiltere-vizesi" },
         { name: "Portekiz D7 Vizesi", href: "/portekiz-d7-vize" },
         { name: "Yurt Dışı Eğitim & Kariyer Programları", href: "/egitim" },
-
-      ],
-    },
-    {
-      name: "Formlar",
-      href: "/formlar",
-      description: "Vize başvurularında kullanılan resmi formlar.",
-      submenu: [
         { name: "Amerika DS-160 Vize Başvuru Formu", href: "/form/ds-160" },
         { name: "Schengen Vize Başvuru Formu", href: "/form/schengen" },
         { name: "Birleşik Krallık Vize Başvuru Formu", href: "/form/birlesik-krallik-bilgi-fisi" },
         { name: "Kanada Vize Başvuru Formu", href: "/form/kanada-basvuru-formu" },
+      ],
+    },
+    {
+      name: "Evrak Listesi",
+      href: "/formlar",
+      description: "Vize başvurularında gerekli evrakları burada bulabilirsiniz.",
+      submenu: [
+        { name: "Amerika Vize Evrakları", href: "/amerika-vize-evraklari" },
+        { name: "Schengen Vize Evrakları", href: "/schengen-vize-evraklari" },
+        { name: "Birleşik Krallık Vize Evrakları", href: "/birlesik-krallik-vize-evraklari" },
+        // { name: "Kanada Vize Evrakları", href: "/kanada-vize-evraklari" },
       ],
     },
     { name: "Yurt Dışı Rehberi", href: "/yurtdisi-rehberi" },
@@ -73,9 +76,7 @@ return (
     width={250}
     height={100}
     priority
-    // Stil çakışmasını önlemek için sadece gerekli sınıfları bırakıyoruz
     className="cursor-pointer object-contain" 
-    // Eğer resim hala çok büyük veya küçükse style ile zorlayabiliriz:
     style={{ width: '250px', height: 'auto' }}
   />
 </Link>
@@ -103,8 +104,7 @@ return (
         onClick={() => setOpenMega(openMega === item.href ? null : item.href)}
         className="relative cursor-pointer"
       >
-        {/* whitespace-nowrap eklendi: Asla alt satıra geçmez */}
-        {/* text-[15px] varsayılan (1280px'den itibaren), 2xl'de 17px olur */}
+  
         <span
           className={`text-[15px] 2xl:text-[17px] whitespace-nowrap flex items-center gap-1 transition ${
             pathname.startsWith(item.href) || openMega === item.href

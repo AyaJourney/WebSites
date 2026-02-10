@@ -4,8 +4,6 @@ import { FaTimes,FaArrowLeft  } from "react-icons/fa";
 import ScoreGauge from "./ScoreGauge";
 import Image from "next/image";
 import { useSearchParams,useRouter } from "next/navigation";
-import { abroad } from "@/helper/help";
-// import { useRouter } from "next/router";
  function BackButton({ onClick }) {
   return (
     <button
