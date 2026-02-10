@@ -85,7 +85,7 @@ const SchengenIntro = () => {
                      Randevu Al
                    </button>
                  </Link>
-                    <Link href="/ingiltere-vizesi">
+                    <Link href="/schengen-vizesi">
                    <button className="bg-white text-gray-700 cursor-pointer border border-blue-300 px-8 py-2.5 rounded-3xl transition duration-300 hover:text-blue-500 hover:bg-gray-100">
                     Hemen İncele
                    </button>
