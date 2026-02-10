@@ -24,9 +24,9 @@ const HomeClient = dynamic(() => import("./components/home/HomeClient"), {
 
 
 export const metadata = {
-  title: "Vize Danışmanlığı & Göçmenlik Uzmanı | Amerika & Schengen – Aya Journey",
+title: "Vize Danışmanlığı | Amerika, Schengen & İngiltere – Aya Journey",
   description:
-    "Amerika, Schengen, İngiltere ve Portekiz vizesi başvurularında uzman danışmanlık. DS-160, vize mülakatı ve ret riskini azaltan profesyonel destek Aya Journey’de.",
+    "Amerika, Schengen, İngiltere ve Portekiz vize başvurularında uzman danışmanlık. DS-160, vize mülakatı ve ret riskini azaltan profesyonel destek Aya Journey’de.",
   keywords: [
     "vize danışmanlığı",
     "amerika vize danışmanlığı",
