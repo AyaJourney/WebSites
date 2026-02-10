@@ -34,38 +34,38 @@ export default async function handler(req, res) {
     "/form/birlesik-krallik-bilgi-fisi",
     "/form/kanada-basvuru-formu",
     "/sikca-sorulan-sorular",
-    "yesil-pasaport-vize-rehberi",
-    "vize-alma-ihtimalinizi-olcun",
-    "schengen-vize-adimlari",
-    "vize-danismanlik-istanbul",
-    "vize-danismanlik-ankara",
-    "schengen-vize-danismanligi-istanbul",
-    "schengen-vize-danismanligi-ankara",
-    "amerika-vize-danismanligi-istanbul",
-    "amerika-vize-danismanligi-ankara",
-    "ingiltere-vize-danismanligi-istanbul",
-    "ingiltere-vize-danismanligi-ankara",
-    "vize-nedir",
-    "amerika-vize-reddi-nedenleri",
-    "schengen-vize-reddi-nedenleri",
-    "ingiltere-vize-reddi-nedenleri",
-    "kanada-vize-reddi-nedenleri",
-    "vize-reddi-itiraz-rehberi",
-    "ilk-kez-vize-alacaklar",
-    "en-kolay-vize-veren-ulkeler",
-    "vize-alirken-yapilan-hatalar",
-    "vize-reddi-gercek-nedenler",
-    "vize-reddi-sonrasi-kontrol-listesi",  //burası tamam
-    "abd-vize-randevusu-nasil-alinir", //burası tamam
-    "bls-international-ispanya-vize-randevusu", //burası tamam
-    "idata-vize-randevusu-nasil-alinir", //burası tamam
-    "ingiltere-vize-randevusu-nasil-alinir",  //burası tamam
-    "kanada-vize-randevusu-nasil-alinir", //burası tamam
-    "vfs-global-vize-randevusu-nasil-alinir", //burası tamam
-    "abd-vize-danismanligi", //burası tamam
-    "amerika-vizesi-en-iyi-danismanlik-sirketi", //burası tamam
-    "abd-vize-istanbul", //burası tamam
-    "abd-vize-ankara", //burası tamam
+    "/vize-alma-ihtimalinizi-olcun",
+    "/yesil-pasaport-vize-rehberi",
+    "/schengen-vize-adimlari",
+    "/vize-danismanlik-istanbul",
+    "/vize-danismanlik-ankara",//burası tamam
+    "/schengen-vize-danismanligi-istanbul",//burası tamam
+    "/schengen-vize-danismanligi-ankara",//burası tamam
+    "/amerika-vize-danismanligi-istanbul",//burası tamam
+    "/amerika-vize-danismanligi-ankara",//burası tamam
+    "/ingiltere-vize-danismanligi-istanbul",//burası tamam
+    "/ingiltere-vize-danismanligi-ankara",//burası tamam
+    "/vize-nedir",//burası tamam
+    "/amerika-vize-reddi-nedenleri",//burası tamam
+    "/schengen-vize-reddi-nedenleri",//burası tamam
+    "/ingiltere-vize-reddi-nedenleri",//burası tamam
+    "/kanada-vize-reddi-nedenleri",//burası tamam
+    "/vize-reddi-itiraz-rehberi",//burası tamam
+    "/ilk-kez-vize-alacaklar",//burası tamam
+    "/en-kolay-vize-veren-ulkeler",//burası tamam
+    "/vize-alirken-yapilan-hatalar",//burası tamam
+    "/vize-reddi-gercek-nedenler",//burası tamam
+    "/vize-reddi-sonrasi-kontrol-listesi",  //burası tamam
+    "/abd-vize-randevusu-nasil-alinir", //burası tamam
+    "/bls-international-ispanya-vize-randevusu", //burası tamam
+    "/idata-vize-randevusu-nasil-alinir", //burası tamam
+    "/ingiltere-vize-randevusu-nasil-alinir",  //burası tamam
+    "/kanada-vize-randevusu-nasil-alinir", //burası tamam
+    "/vfs-global-vize-randevusu-nasil-alinir", //burası tamam
+    "/abd-vize-danismanligi", //burası tamam
+    "/amerika-vizesi-en-iyi-danismanlik-sirketi", //burası tamam
+    "/abd-vize-istanbul", //burası tamam
+    "/abd-vize-ankara", //burası tamam
     
 
 
