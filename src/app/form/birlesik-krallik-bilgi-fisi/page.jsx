@@ -1,6 +1,11 @@
 import React from 'react'
 import FormUK from './FormUK'
-
+export const metadata = {
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 const page = () => {
   return (
