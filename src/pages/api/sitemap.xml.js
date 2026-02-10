@@ -49,6 +49,11 @@ export default async function handler(req, res) {
     "/amerika-vize-ds-160-nasil-doldurulur",
     "/amerika-vize-checklist",
     "/ds-160-kapanmadan-randevu-alinamiyor",
+    "/ankara-vize-danismanligi",
+    "/ankara-amerika-vizesi",
+    "/ankara-schengen-vizesi",
+    "/vize-sirketleri-ankara",
+    "/aya-journey-yorumlari",
     "/vize-danismanlik-istanbul",
     "/vize-danismanlik-ankara",//burası tamam
     "/schengen-vize-danismanligi-istanbul",//burası tamam
