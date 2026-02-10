@@ -24,12 +24,53 @@ const HomeClient = dynamic(() => import("./components/home/HomeClient"), {
 
 
 export const metadata = {
-
-  title: "Aya Journey Vize Danışmanlık | Amerika Vizesi Danışmanlık Ankara ve İstanbul,İngiltere Vizesi Danışmanlık Ankara ve İstanbul, Portekiz Vizesi Danışmanlık Ankara ve İstanbul,  Schengen Vizesi Danışmanlık Ankara ve İstanbul ve Göçmenlik Uzmanı",
-
-
-  description: "Aya Journey ile vize reddi riskini azaltın! Portekiz, ABD, İngiltere ve Schengen vize başvurularınızda kişiye özel, hızlı ve hatasız danışmanlık hizmeti alın.",
+  title: "Vize Danışmanlığı & Göçmenlik Uzmanı | Amerika & Schengen – Aya Journey",
+  description:
+    "Amerika, Schengen, İngiltere ve Portekiz vizesi başvurularında uzman danışmanlık. DS-160, vize mülakatı ve ret riskini azaltan profesyonel destek Aya Journey’de.",
+  keywords: [
+    "vize danışmanlığı",
+    "amerika vize danışmanlığı",
+    "schengen vize danışmanlığı",
+    "ingiltere vizesi",
+    "portekiz d7 vizesi",
+    "ds-160 danışmanlık",
+    "vize mülakat hazırlığı",
+    "ankara vize danışmanlığı",
+    "istanbul vize danışmanlığı"
+  ],
+  alternates: {
+    canonical: "https://ayajourney.com",
+  },
+  openGraph: {
+    title: "Vize Danışmanlığı & Göçmenlik Uzmanı | Aya Journey",
+    description:
+      "Vize reddi riskini azaltın. Amerika ve Schengen vize başvurularında uzman danışmanlık ile sürecinizi güvenle yönetin.",
+    url: "https://ayajourney.com",
+    siteName: "Aya Journey",
+    locale: "tr_TR",
+    type: "website",
+    images: [
+      {
+        url: "https://ayajourney.com/images/logo.webp",
+        width: 1200,
+        height: 630,
+        alt: "Aya Journey Vize Danışmanlığı",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Vize Danışmanlığı & Göçmenlik Uzmanı | Aya Journey",
+    description:
+      "Amerika ve Schengen vizesi başvurularında profesyonel danışmanlık.",
+    images: ["https://ayajourney.com/images/logo.webp"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
+
 export default function Home() {
   return (
     <main className="flex flex-col w-full bg-white mt-9">

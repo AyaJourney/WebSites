@@ -26,6 +26,12 @@ export default function Footer() {
           <p className="text-sm sm:text-base">
            AYA Journey, herhangi bir ülkenin Büyükelçiliği, Başkonsolosluğu veya  devlet kurumu ile doğrudan bağlantısı olmayan, bağımsız bir danışmanlık şirketi olup, tecrübesini profesyonel yönlendirme olarak sunmayı hedeflemektedir.
           </p>
+          <p className="text-sm sm:text-base">
+  AYA Journey; Amerika vize danışmanlığı, Amerika B1/B2 vizesi, ABD vize mülakat
+  hazırlığı, DS-160 başvuru rehberi, Schengen vizesi, İngiltere vizesi,
+  Portekiz D7 vizesi ve yurtdışı eğitim danışmanlığı alanlarında
+  profesyonel danışmanlık hizmetleri sunmaktadır.
+</p>
         </div>
 
    <div className="flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto">
