@@ -76,7 +76,7 @@ return (
     width={250}
     height={100}
     priority
-    className="cursor-pointer object-contain" 
+    className="cursor-pointer object-contain mt-5" 
     style={{ width: '250px', height: 'auto' }}
   />
 </Link>
@@ -106,7 +106,7 @@ return (
       >
   
         <span
-          className={`text-[15px] 2xl:text-[17px] whitespace-nowrap flex items-center gap-1 transition ${
+          className={`text-[15px] 2xl:text-[17px] font-inter whitespace-nowrap flex items-center mt-5 font-bold gap-1 transition ${
             pathname.startsWith(item.href) || openMega === item.href
               ? "text-blue-600"
               : "text-gray-700 hover:text-blue-600"
@@ -121,7 +121,7 @@ return (
         key={item.href}
         href={item.href}
       
-        className={`text-[15px] 2xl:text-[17px] whitespace-nowrap px-2 xl:px-3 py-2 rounded transition ${
+        className={`text-[15px] 2xl:text-[17px] font-inter whitespace-nowrap px-2 xl:px-3 py-2 mt-5 font-bold rounded transition ${
           item.name === "Vize alma ihtimalinizi ölçün!"
             ? "bg-emerald-500 text-white hover:bg-emerald-700"
             : pathname === item.href

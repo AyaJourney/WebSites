@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import NavbarIletisimCard from "./components/NavbarİletisimCard";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollTop";
-import { Plus_Jakarta_Sans, Dancing_Script } from "next/font/google";
+import { Plus_Jakarta_Sans, Dancing_Script,Montserrat,Inter } from "next/font/google";
 import ClientElements from "./components/ClientElement";
 
 export const plusJakartaSans = Plus_Jakarta_Sans({
@@ -12,14 +12,22 @@ export const plusJakartaSans = Plus_Jakarta_Sans({
   display: "swap",
   variable: "--font-plus-jakarta",
 });
-
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-inter",
+});
 const dancingScript = Dancing_Script({
   subsets: ["latin"],
   weight: ["500", "600"],
   display: "swap",
   variable: "--font-dancing-script",
 });
-
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-montserrat",
+});
 export const dynamic = "force-static";
 export const revalidate = 60;
 
@@ -103,7 +111,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="tr" className={`${plusJakartaSans.variable} ${dancingScript.variable}`}>
+    <html lang="tr" className={`${plusJakartaSans.variable} ${dancingScript.variable} ${montserrat.variable} ${inter.variable}`}>
      <body className="antialiased">
 
         <ScrollToTop />

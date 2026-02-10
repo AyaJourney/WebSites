@@ -14,6 +14,9 @@ export default {
     extend: {
       fontFamily: {
         jakarta: ["var(--font-plus-jakarta)", "sans-serif"],
+        dancing: ["var(--font-dancing-script)", "cursive"],
+        montserrat: ["var(--font-montserrat)", "sans-serif"],
+         inter: ["var(--font-inter)"],
       },
 
 
