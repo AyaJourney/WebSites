@@ -30,10 +30,10 @@ export default async function handler(req, res) {
     "/referanslarimiz",//burası tamam
     "/hakkimizdaki-yorumlar", //burası tamam
     "/egitim",//burası tamam
-    "/form/ds-160",//burası tamam
-    "/form/schengen",//burası tamam
-    "/form/birlesik-krallik-bilgi-fisi",//burası tamam
-    "/form/kanada-basvuru-formu",//burası tamam
+    // "/form/ds-160",//burası tamam
+    // "/form/schengen",//burası tamam
+    // "/form/birlesik-krallik-bilgi-fisi",//burası tamam
+    // "/form/kanada-basvuru-formu",//burası tamam
     "/sikca-sorulan-sorular", //burası tamam
     "/vize-alma-ihtimalinizi-olcun", //burası tamam
     "/yesil-pasaport-vize-rehberi",

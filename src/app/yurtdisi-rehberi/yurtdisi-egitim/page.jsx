@@ -255,7 +255,7 @@ const register = (el) => {
 <div className="absolute -inset-3 bg-indigo-500/16 blur-2xl h-[300px]" />
     
     <Image
-        src="/images/oxford.jpg"
+        src="/images/oxford.webp"
         alt="İngiltere’de Eğitim"
         // width ve height prop'ları Next.js 13+ 'fill' prop'u ile ÇAKIŞTIĞI için KALDIRILDI.
         fill={true} // fill prop'u eklendi

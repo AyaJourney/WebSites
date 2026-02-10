@@ -22,7 +22,7 @@ const Referanslarimiz = () => {
       (entries) =>
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("referanslar-show");
+            entry.target.classList.add("show");
           }
         }),
       { threshold: 0.2 }
@@ -56,7 +56,7 @@ const Referanslarimiz = () => {
           >
       <div className="relative w-24 h-24 mb-4 flex items-center justify-center">
   <NextImage
-    src={ref.logo}
+    src={ref?.logo}
     alt={ref.name || "Referans Logo"}
     width={96}  // w-24 = 96px
     height={96} // h-24 = 96px
