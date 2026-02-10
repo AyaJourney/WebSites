@@ -399,10 +399,10 @@ const jsonLd = {
               </ul>
 
               <div className="pt-4 border-t border-blue-100">
-                <a href="#detay" className="inline-flex items-center gap-2 text-blue-600 font-bold text-sm hover:gap-3 transition-all">
+                {/* <a href="#detay" className="inline-flex items-center gap-2 text-blue-600 font-bold text-sm hover:gap-3 transition-all">
                   Detaylı Liste
                   <MdArrowForward className="w-4 h-4" />
-                </a>
+                </a> */}
               </div>
             </div>
           </article>
@@ -447,10 +447,10 @@ const jsonLd = {
               </ul>
 
               <div className="pt-4 border-t border-slate-200">
-                <a href="#detay" className="inline-flex items-center gap-2 text-slate-700 font-bold text-sm hover:gap-3 transition-all">
+                {/* <a href="#detay" className="inline-flex items-center gap-2 text-slate-700 font-bold text-sm hover:gap-3 transition-all">
                   Detaylı Liste
                   <MdArrowForward className="w-4 h-4" />
-                </a>
+                </a> */}
               </div>
             </div>
           </article>
@@ -495,10 +495,10 @@ const jsonLd = {
               </ul>
 
               <div className="pt-4 border-t border-orange-100">
-                <a href="#detay" className="inline-flex items-center gap-2 text-orange-600 font-bold text-sm hover:gap-3 transition-all">
+                {/* <a href="#detay" className="inline-flex items-center gap-2 text-orange-600 font-bold text-sm hover:gap-3 transition-all">
                   Detaylı Liste
                   <MdArrowForward className="w-4 h-4" />
-                </a>
+                </a> */}
               </div>
             </div>
           </article>
