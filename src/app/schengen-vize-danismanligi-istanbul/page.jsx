@@ -13,7 +13,7 @@ export const metadata = {
     "Schengen vize sigortası İstanbul"
   ],
   alternates: {
-    canonical: "https://www.ayajourney.com/istanbul-schengen-vizesi", 
+    canonical: "https://www.ayajourney.com/schengen-vize-danismanligi-istanbul", 
   }
 };
 const Page = () => {

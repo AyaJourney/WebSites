@@ -3,19 +3,44 @@ import React from "react";
 import Card from "./Card";
 
 export const metadata = {
-  title: "Hızlı ve Kolay Randevu - Vize Danışmanınız",
+  title: "Hızlı ve Kolay Randevu | Vize Danışmanınız",
   description:
-    "Alanında uzman vize danışmanlarımızdan size uygun temsilciyi seçin, tarih ve saati belirleyip randevunuzu hızlıca oluşturun.",
+    "Alanında uzman vize danışmanlarımızdan size uygun temsilciyi seçin, tarih ve saati belirleyerek randevunuzu hızlı ve kolayca oluşturun.",
+  keywords: [
+    "vize randevu",
+    "online vize randevusu",
+    "vize danışmanlığı randevu",
+    "vize danışmanı randevu al",
+    "hızlı vize randevu",
+  ],
+  alternates: {
+    canonical: "https://www.ayajourney.com/randevu",
+  },
+  openGraph: {
+    title: "Hızlı ve Kolay Randevu | Vize Danışmanınız",
+    description:
+      "Uzman vize danışmanlarıyla online randevu oluşturun. Size uygun tarih ve saatte hızlıca görüşme planlayın.",
+    url: "https://www.ayajourney.com/randevu",
+    type: "website",
+    locale: "tr_TR",
+    siteName: "Aya Journey",
+   
+  },
+ 
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 const Page = () => {
   return (
     <main className="relative flex flex-col items-center justify-start min-h-screen bg-white px-8 pt-24 font-sans">
       <div className="max-w-5xl w-full text-center md:text-left mb-10 z-10">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-3 leading-snug">
+        <h1 className="text-3xl font-bold text-gray-900  mb-3 leading-snug">
           Hızlı ve Kolay Randevu
         </h1>
-        <p className="text-base sm:text-lg md:text-lg lg:text-xl text-gray-600 dark:text-gray-300 max-w-xl">
+        <p className="text-base sm:text-lg md:text-lg lg:text-xl text-gray-600 max-w-xl">
           Alanında uzman vize danışmanlarımızdan size uygun temsilciyi seçin, tarih ve saati belirleyip randevunuzu hızlıca oluşturun.
         </p>
       </div>

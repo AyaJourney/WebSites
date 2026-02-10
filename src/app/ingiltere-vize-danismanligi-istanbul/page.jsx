@@ -13,7 +13,7 @@ export const metadata = {
     "İngiltere vize reddi itiraz İstanbul"
   ],
   alternates: {
-    canonical: "https://www.ayajourney.com/istanbul-ingiltere-vizesi", 
+    canonical: "https://www.ayajourney.com/ingiltere-vize-danismanligi-istanbul", 
   }
 };
 const Page = () => {

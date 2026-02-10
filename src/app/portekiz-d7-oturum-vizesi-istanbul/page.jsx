@@ -13,7 +13,7 @@ export const metadata = {
     "Portekiz banka hesabı açma Türkiye"
   ],
   alternates: {
-    canonical: "https://www.ayajourney.com/istanbul-portekiz-d7-vizesi", 
+    canonical: "https://www.ayajourney.com/portekiz-d7-oturum-vizesi-istanbul", 
   }
 };
 const Page = () => {

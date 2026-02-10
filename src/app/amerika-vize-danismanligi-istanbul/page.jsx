@@ -13,7 +13,7 @@ export const metadata = {
     "İstanbul DS-160 formu yardım"
   ],
   alternates: {
-    canonical: "https://www.ayajourney.com/istanbul-amerika-vizesi", // Sayfa linkinizi buraya ekleyin
+    canonical: "https://www.ayajourney.com/amerika-vize-danismanligi-istanbul", // Sayfa linkinizi buraya ekleyin
   }
 };
 const Page = () => {

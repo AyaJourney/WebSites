@@ -13,7 +13,7 @@ export const metadata = {
     "Amerika vize reddi çözümü Ankara"
   ],
   alternates: {
-    canonical: "https://www.ayajourney.com/ankara-amerika-vizesi", // Sayfa URL'niz
+    canonical: "https://www.ayajourney.com/amerika-vize-danismanligi-ankara", // Sayfa URL'niz
   }
 };
 const Page = () => {

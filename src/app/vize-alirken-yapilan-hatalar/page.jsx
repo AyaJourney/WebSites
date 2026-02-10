@@ -4,7 +4,7 @@ export const metadata = {
   title: "Vize Alırken En Sık Yapılan 15 Kritik Hata | 2026 Güncel Rehber",
   description: "2026 vize başvuru trendlerine göre hazırlanan en yaygın 15 hata. Dosya bütünlüğü, veri tutarsızlıkları ve güncel konsolosluk beklentileri.",
   keywords: ["vize başvuru hataları", "vize neden reddedilir", "2026 vize rehberi", "vize reddi almamak için ne yapmalı"],
-  alternates: { canonical: "https://www.ayajourney.com/vize-alirken-yapilan-hatalar" }
+  alternates: { canonical: "https://ayajourney.com/vize-alirken-yapilan-hatalar" }
 };
 
 const VizeHatalariSayfasi = () => {

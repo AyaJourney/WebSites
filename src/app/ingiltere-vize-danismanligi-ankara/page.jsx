@@ -13,7 +13,7 @@ export const metadata = {
     "İngiltere vize ücreti 2026"
   ],
   alternates: {
-    canonical: "https://www.ayajourney.com/ankara-ingiltere-vizesi", 
+    canonical: "https://www.ayajourney.com/ingiltere-vize-danismanligi-ankara", 
   }
 };
 const Page = () => {

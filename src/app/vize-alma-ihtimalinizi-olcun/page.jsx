@@ -17,6 +17,7 @@ export const metadata = {
     "vize başvuru değerlendirmesi",
 
   ],
+   alternates: { canonical: "https://ayajourney.com/vize-alma-ihtimalinizi-olcun" }
 };
 const page = () => {
   return (

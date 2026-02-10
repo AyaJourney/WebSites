@@ -5,7 +5,7 @@ export const metadata = {
   title: "VFS Global Vize Randevusu Nasıl Alınır? | 2026 Adım Adım Rehber",
   description: "Fransa, Hollanda, Polonya, Avusturya ve Litvanya vize randevusu VFS Global üzerinden nasıl alınır? Sistem hataları, Premium randevu ve güncel ipuçları.",
   keywords: ["vfs global randevu alma", "vfs global hata çözümü", "fransa vize randevusu", "hollanda vize randevusu vfs", "vfs global sistem hatası 2026"],
-  alternates: { canonical: "https://www.ayajourney.com/vfs-global-vize-randevusu-nasil-alinir" }
+  alternates: { canonical: "https://ayajourney.com/vfs-global-vize-randevusu-nasil-alinir" }
 };
 
 const VfsGlobalRandevu = () => {

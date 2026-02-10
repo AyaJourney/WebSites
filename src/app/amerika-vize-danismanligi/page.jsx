@@ -18,7 +18,7 @@ export const metadata = {
   "amerika öğrenci vizesi danışmanlığı"
 ],
   alternates: {
-    canonical: "https://www.ayajourney.com/abd-vize-danismanligi"
+    canonical: "https://www.ayajourney.com/amerika-vize-danismanligi"
   },
 };
 

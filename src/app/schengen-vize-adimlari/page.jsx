@@ -11,12 +11,12 @@ export const metadata = {
     "Schengen vize evrak listesi 2026"
   ],
   alternates: {
-    canonical: "https://www.ayajourney.com/vize-nedir", // Eğer bu bölüm 'vize nedir' sayfasındaysa
+    canonical: "https://www.ayajourney.com/schengen-vize-adimlari", // Eğer bu bölüm 'vize nedir' sayfasındaysa
   },
   openGraph: {
     title: "Adım Adım Schengen Vizesi Alım Rehberi",
     description: "Vize sürecini karmaşadan kurtarıyoruz. 6 basit adımda vizenizi nasıl alacağınızı öğrenin.",
-    images: [{ url: 'https://www.ayajourney.com/images/schengen-rehberi.jpg' }],
+   
   },
 };
 const SchengenSteps = () => {

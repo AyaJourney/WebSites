@@ -13,7 +13,7 @@ export const metadata = {
     "Portekiz vatandaşlığı vize süreci"
   ],
   alternates: {
-    canonical: "https://www.ayajourney.com/portekiz-d7-vizesi-ankara", 
+    canonical: "https://www.ayajourney.com/portekiz-d7-oturum-vizesi-ankara", 
   }
 };
 const Page = () => {

@@ -4,6 +4,9 @@ export const metadata = {
   title: "iDATA Vize Randevusu Nasıl Alınır? | 2026 Almanya & İtalya",
   description: "Almanya ve İtalya vize randevusu iDATA üzerinden nasıl alınır? Randevu bekleme süreleri, PNR sorgulama ve VIP randevu detayları.",
   keywords: ["idata randevu alma", "almanya vize randevusu", "italya vize randevusu idata", "idata randevu takip"],
+  alternates: {
+    canonical: "https://www.ayajourney.com/idata-vize-randevusu-nasil-alinir", // Sayfa URL'niz
+  }
 };
 
 const IdataRandevu = () => {

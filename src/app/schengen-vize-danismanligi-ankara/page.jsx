@@ -13,7 +13,7 @@ export const metadata = {
     "Ankara Hollanda vize randevusu"
   ],
   alternates: {
-    canonical: "https://www.ayajourney.com/ankara-schengen-vizesi", 
+    canonical: "https://www.ayajourney.com/schengen-vize-danismanligi-ankara", 
   }
 };
 const Page = () => {

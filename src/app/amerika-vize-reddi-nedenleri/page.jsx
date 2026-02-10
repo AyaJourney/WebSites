@@ -5,7 +5,7 @@ export const metadata = {
   title: "ABD Vize Reddi 214(b) Maddesi Nedir? | Kesin Çözüm Rehberi 2026",
   description: "Amerika vize reddi 214b maddesi nedenleri ve çözüm yolları. Red sonrası mülakat hazırlığı ve yeni başvuru stratejileri.",
   keywords: ["abd vize reddi", "214b maddesi nedir", "amerika vize reddi sonrası", "abd vize mülakat hazırlığı", "vize reddi danışmanlık"],
-  alternates: { canonical: "https://www.ayajourney.com/abd-vize-reddi-nedenleri" }
+  alternates: { canonical: "https://www.ayajourney.com/amerika-vize-reddi-nedenleri" }
 };
 
 const ABDRedSayfasi = () => {
