@@ -78,57 +78,77 @@ const ABDDanismanlikSayfasi = () => {
 />
 <main className="max-w-6xl mx-auto px-6 py-16 font-sans text-slate-900">
 
-  {/* Hero */}
+  {/* HERO */}
   <header className="text-center mb-20">
     <span className="bg-blue-100 text-blue-800 px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest mb-6 inline-block">
-      U.S. Visa Specialist Services
+      ABD Vize Danışmanlık Hizmeti
     </span>
 
-    <h1 className="text-5xl md:text-8xl font-black mb-8 leading-tight tracking-tighter">
-      Profesyonel <br />
+    <h1 className="text-4xl md:text-7xl font-black mb-8 leading-tight tracking-tight">
+      Profesyonel
+      <br />
       <span className="text-blue-600 italic">
         Amerika Vize Danışmanlığı
       </span>
     </h1>
 
-    <p className="text-xl text-slate-500 max-w-3xl mx-auto leading-relaxed font-light">
-      Amerika vizesi bir evrak savaşı değil, stratejik bir ikna sürecidir.
-      DS-160 formundan mülakat cevaplarına kadar tüm başvuruyu
-      <strong> Aya Journey Amerika vize danışmanlığı</strong> uzmanlığıyla
-      yönetiyoruz.
+    <p className="text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed">
+      <strong>Amerika vize danışmanlığı</strong>, DS-160 formunun doğru
+      doldurulmasından mülakat stratejisine kadar tüm sürecin
+      profesyonel şekilde yönetilmesidir.
+      Aya Journey olarak <strong>ABD vize danışmanlık</strong> alanında
+      uzman ekibimizle başvurunuzu stratejik biçimde hazırlıyoruz.
     </p>
   </header>
 
-  {/* H2 – Nedir */}
-  <section className="mb-24 max-w-4xl mx-auto text-center">
-    <h2 className="text-3xl md:text-4xl font-black mb-6">
+
+  {/* NEDİR */}
+  <section className="mb-24 max-w-4xl mx-auto">
+    <h2 className="text-3xl font-black mb-6 text-center">
       Amerika Vize Danışmanlığı Nedir?
     </h2>
 
-    <p className="text-slate-600 leading-relaxed text-lg">
-      Amerika vize danışmanlığı; başvuru sahibinin seyahat amacı, finansal
-      durumu ve Türkiye’ye geri dönüş bağları analiz edilerek
-      <strong>ABD konsolosluğu beklentilerine uygun</strong> bir başvuru
-      stratejisi oluşturulmasıdır.
+    <p className="text-slate-600 leading-relaxed mb-6 text-lg">
+      Amerika vizesi başvuru süreci yalnızca evrak toplamak değildir.
+      ABD Konsolosluğu başvuru sahibinin seyahat amacı, finansal durumu
+      ve Türkiye’ye geri dönüş bağlarını analiz eder.
     </p>
 
-    <p className="text-slate-600 leading-relaxed text-lg mt-6">
-      ABD vize başvurularında yapılan küçük tutarsızlıklar bile
-      <strong>214(b)</strong> maddesi kapsamında ret sebebi olabilir.
-      Bu nedenle profesyonel ABD vize danışmanlığı, onay ihtimalini
-      ciddi ölçüde artırır.
+    <p className="text-slate-600 leading-relaxed text-lg">
+      Profesyonel <strong>ABD vize danışmanlığı</strong> hizmeti,
+      başvurunuzu <strong>214(b) maddesi risklerini minimize edecek</strong>
+      şekilde yapılandırır ve mülakat sırasında tutarlı bir profil
+      oluşturmanızı sağlar.
     </p>
   </section>
 
-  {/* Neden Biz */}
+
+  {/* HİZMET KAPSAMI */}
+  <section className="mb-24 bg-slate-50 p-12 rounded-3xl">
+    <h2 className="text-3xl font-black mb-10 text-center">
+      Amerika Vize Danışmanlık Hizmetimiz Neleri Kapsar?
+    </h2>
+
+    <ul className="grid md:grid-cols-2 gap-6 text-slate-700">
+      <li>✔ DS-160 formunun stratejik hazırlanması</li>
+      <li>✔ ABD vize randevu planlaması ve takibi</li>
+      <li>✔ Mülakat simülasyonu (soru-cevap çalışması)</li>
+      <li>✔ Evrak kontrolü ve risk analizi</li>
+      <li>✔ Daha önce alınan retlerin analizi</li>
+      <li>✔ Ankara ve İstanbul mülakat stratejisi</li>
+    </ul>
+  </section>
+
+
+  {/* NEDEN BİZ */}
   <section className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
     {[
-      { t: "DS-160 Stratejisi", d: "Formunuzu ABD vize memurunun görmek istediği dilde hazırlıyoruz.", icon: "✍️" },
-      { t: "Mülakat Eğitimi", d: "Amerika vize mülakat sorularını birebir simülasyonla çalışıyoruz.", icon: "🎙️" },
-      { t: "Randevu Takibi", d: "ABD vize randevularını sistemli şekilde erkene çekiyoruz.", icon: "📅" },
-      { t: "Ret Analizi", d: "Daha önce ABD vize reddi aldıysanız nedeni tespit ediyoruz.", icon: "🔍" }
+      { t: "DS-160 Uzmanlığı", d: "Amerika vize danışmanı desteğiyle formunuzu risk analizine göre dolduruyoruz.", icon: "✍️" },
+      { t: "Mülakat Hazırlığı", d: "Amerika vize mülakat sorularına birebir hazırlık yapıyoruz.", icon: "🎙️" },
+      { t: "Randevu Öne Çekme", d: "ABD vize randevu takibini sistematik olarak yapıyoruz.", icon: "📅" },
+      { t: "Ret Sonrası Strateji", d: "Amerika vize reddi aldıysanız yeniden yapılandırma yapıyoruz.", icon: "🔍" }
     ].map((item, i) => (
-      <div key={i} className="p-8 bg-white border border-slate-100 rounded-[2.5rem] shadow-sm hover:shadow-xl transition-all">
+      <div key={i} className="p-8 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-xl transition">
         <div className="text-4xl mb-6">{item.icon}</div>
         <h3 className="font-bold text-lg mb-3">{item.t}</h3>
         <p className="text-sm text-slate-500 leading-relaxed">{item.d}</p>
@@ -136,56 +156,76 @@ const ABDDanismanlikSayfasi = () => {
     ))}
   </section>
 
-  {/* Ret Nedenleri */}
-  <section className="mb-24 bg-white border border-slate-100 rounded-[3rem] p-12">
-    <h2 className="text-3xl font-black mb-10 text-center">
-      Amerika Vizesi En Sık Neden Reddedilir?
+
+  {/* RET NEDENLERİ */}
+  <section className="mb-24 border border-slate-100 rounded-3xl p-12">
+    <h2 className="text-3xl font-black mb-8 text-center">
+      Amerika Vizesi Neden Reddedilir?
     </h2>
 
     <ul className="space-y-4 text-slate-600 leading-relaxed">
-      <li>• DS-160 formunda tutarsız bilgiler</li>
+      <li>• DS-160 formunda tutarsızlık</li>
       <li>• Türkiye’ye geri dönüş bağlarının zayıf görülmesi</li>
-      <li>• Seyahat amacının net ifade edilememesi</li>
-      <li>• Finansal belgelerin yetersiz olması</li>
-      <li>• Mülakatta kısa ve çelişkili cevaplar</li>
+      <li>• Finansal yetersizlik</li>
+      <li>• Seyahat amacının net olmaması</li>
+      <li>• Mülakatta çelişkili cevaplar</li>
     </ul>
 
-    <p className="mt-8 text-slate-700 font-medium">
-      Aya Journey olarak ABD vize başvurunuzu bu riskleri ortadan
-      kaldıracak şekilde yapılandırıyoruz.
+    <p className="mt-6 text-slate-700 font-medium">
+      Doğru yapılandırılmış bir Amerika vize danışmanlık süreci
+      bu riskleri ciddi oranda azaltır.
     </p>
   </section>
+
+
+  {/* FİYAT SORUSU (SEO İÇİN KRİTİK) */}
+  <section className="mb-24 max-w-4xl mx-auto">
+    <h2 className="text-3xl font-black mb-6 text-center">
+      Amerika Vize Danışmanlık Fiyatları
+    </h2>
+
+    <p className="text-slate-600 text-lg leading-relaxed text-center">
+      Amerika vize danışmanlık fiyatları başvuru türüne,
+      daha önce ret alınıp alınmadığına ve talep edilen
+      hizmet kapsamına göre değişir.
+      En doğru fiyat bilgisi için ücretsiz ön değerlendirme yapılması önerilir.
+    </p>
+  </section>
+
 
   {/* FAQ */}
   <section className="mb-24 max-w-4xl mx-auto">
     <h2 className="text-3xl font-black mb-12 text-center">
-      Amerika Vize Danışmanlığı Hakkında Sık Sorulan Sorular
+      Amerika Vize Danışmanlığı Hakkında Sorular
     </h2>
 
     <div className="space-y-10">
+
       <div>
         <h3 className="font-bold text-lg mb-2">
-          Amerika vize danışmanlığı zorunlu mu?
+          En iyi Amerika vize danışmanlık şirketi nasıl seçilir?
         </h3>
         <p className="text-slate-600">
-          Hayır. Ancak özellikle ilk başvurularda profesyonel danışmanlık,
-          ABD vizesi onay ihtimalini ciddi ölçüde artırır.
+          Referansları, uzmanlık alanı ve şeffaf çalışma sistemi
+          incelenmelidir. Vize garantisi veren firmalardan uzak durulmalıdır.
         </p>
       </div>
 
       <div>
         <h3 className="font-bold text-lg mb-2">
-          Amerika vize danışmanlığı garanti verir mi?
+          Amerika vize danışmanı gerekli mi?
         </h3>
         <p className="text-slate-600">
-          Hiçbir firma vize garantisi veremez. Ancak doğru stratejiyle
-          hazırlanmış dosyalar ret riskini minimize eder.
+          Zorunlu değildir. Ancak özellikle ilk başvurularda
+          profesyonel ABD vize danışmanlığı ret riskini azaltır.
         </p>
       </div>
+
     </div>
   </section>
 
 </main>
+
 
     </>
   

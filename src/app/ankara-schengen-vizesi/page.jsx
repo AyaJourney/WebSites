@@ -77,154 +77,198 @@ export default function Page() {
       />
     
 <main className="min-h-screen bg-zinc-50">
-  {/* Hero */}
-  <section className="max-w-6xl mx-auto px-4 sm:px-8 pt-14 pb-10">
-    <div className="bg-white border border-slate-200/70 rounded-2xl shadow-sm p-7 sm:p-10">
-      <p className="text-sm text-slate-500">
-        Ankara • Schengen Bölgesi
+
+  {/* HERO */}
+  <section className="max-w-6xl mx-auto px-4 sm:px-8 pt-16 pb-12">
+    <div className="bg-white border border-slate-200/70 rounded-3xl shadow-sm p-8 sm:p-12">
+
+      <p className="text-sm text-slate-500 uppercase tracking-widest">
+        Ankara • Schengen Bölgesi Vize Merkezi
       </p>
 
-      <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 mt-2">
-        Ankara Schengen Vizesi Danışmanlığı
+      <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 mt-4">
+        Ankara Schengen Vize Danışmanlığı
       </h1>
 
-      <p className="text-slate-600 mt-4 leading-relaxed max-w-2xl">
-        Ankara’dan Schengen vizesi başvurusu yapmak isteyenler için turistik ve
-        kısa süreli seyahatlerde evrak hazırlığı, randevu planlama ve başvuru
-        sürecinde profesyonel danışmanlık sunuyoruz.
+      <p className="text-slate-600 mt-6 leading-relaxed max-w-3xl text-lg">
+        <strong>Ankara Schengen vizesi</strong> başvurularında evrak hazırlığı,
+        randevu alma ve dosya kontrol süreçlerini profesyonel şekilde yönetiyoruz.
+        VFS Global, iDATA ve diğer başvuru merkezleri için stratejik danışmanlık sunuyoruz.
       </p>
 
-      {/* 🔥 ANA SEO H2 */}
-      <h2 className="text-lg sm:text-xl font-semibold text-slate-900 mt-6">
-        Ankara Schengen Vizesi Başvurusu Nasıl Yapılır?
-      </h2>
-      <p className="text-slate-600 mt-2 max-w-3xl">
-        Ankara Schengen vizesi başvurusu; vize türünün belirlenmesi, evrakların
-        eksiksiz hazırlanması, randevu alınması ve biyometri işlemleri
-        adımlarından oluşur. Başvurular Ankara’daki yetkili vize başvuru
-        merkezleri üzerinden gerçekleştirilir.
-      </p>
-
-      <div className="mt-6 flex flex-col sm:flex-row gap-3">
+      <div className="mt-8 flex flex-col sm:flex-row gap-4">
         <a
           href="/randevu"
-          className="inline-flex items-center justify-center rounded-xl px-5 py-3 font-semibold bg-slate-900 text-white hover:bg-slate-800 transition"
+          className="inline-flex items-center justify-center rounded-xl px-6 py-4 font-semibold bg-slate-900 text-white hover:bg-slate-800 transition"
         >
-          Randevu Oluştur
+          Ankara Schengen Randevusu Al
         </a>
         <a
           href="/iletisim"
-          className="inline-flex items-center justify-center rounded-xl px-5 py-3 font-semibold bg-white text-slate-900 border border-slate-300 hover:bg-slate-50 transition"
+          className="inline-flex items-center justify-center rounded-xl px-6 py-4 font-semibold bg-white text-slate-900 border border-slate-300 hover:bg-slate-50 transition"
         >
-          İletişime Geç
+          Uzmanla Görüş
         </a>
       </div>
     </div>
   </section>
 
-  {/* İçerik */}
-  <section className="max-w-6xl mx-auto px-4 sm:px-8 pb-12">
-    <div className="bg-white border border-slate-200/70 rounded-2xl shadow-sm p-7 sm:p-10 space-y-8">
 
+  {/* SEO BLOĞU */}
+  <section className="max-w-5xl mx-auto px-4 sm:px-8 pb-16">
+    <div className="bg-white border border-slate-200/70 rounded-3xl shadow-sm p-8 sm:p-12 space-y-12">
+
+      {/* NEDİR */}
       <div>
-        <h2 className="text-2xl font-bold text-slate-900">
+        <h2 className="text-3xl font-bold text-slate-900">
           Schengen Vizesi Nedir?
         </h2>
-        <p className="text-slate-600 mt-3">
-          Schengen vizesi; Schengen bölgesine dahil ülkelere turistik, ticari
-          veya kısa süreli ziyaretler için verilen vizedir. Ankara’dan yapılan
-          başvurular ilgili başvuru merkezleri aracılığıyla değerlendirilir.
+        <p className="text-slate-600 mt-4 leading-relaxed">
+          Schengen vizesi; Avrupa’daki 27 Schengen ülkesine kısa süreli
+          turistik, ticari veya aile ziyareti amacıyla giriş yapmanızı sağlar.
+          Ankara Schengen vize başvuruları ilgili ülkenin yetkilendirdiği
+          vize başvuru merkezleri üzerinden gerçekleştirilir.
         </p>
       </div>
 
+
+      {/* ANKARA ODAKLI */}
       <div>
-        <h2 className="text-2xl font-bold text-slate-900">
-          Ankara Schengen Vizesi İçin Gerekli Evraklar
+        <h2 className="text-3xl font-bold text-slate-900">
+          Ankara Schengen Vizesi Başvurusu Nasıl Yapılır?
         </h2>
-        <p className="text-slate-600 mt-3">
-          Ankara Schengen vizesi evrakları başvuru sahibinin çalışma durumu ve
-          seyahat amacına göre değişebilir. Pasaport, biyometrik fotoğraf,
-          seyahat sağlık sigortası, banka dökümü ve konaklama belgeleri temel
-          evraklar arasındadır.
+
+        <p className="text-slate-600 mt-4 leading-relaxed">
+          Ankara’da Schengen vizesi başvurusu yaparken doğru ülke seçimi,
+          eksiksiz evrak hazırlığı ve randevu planlaması kritik öneme sahiptir.
+          Başvurular genellikle Ankara’daki <strong>VFS Global</strong>,
+          <strong> iDATA</strong> veya ilgili konsolosluklar üzerinden yapılır.
         </p>
 
-        <a
-          href="/schengen-vize-evraklari"
-          className="inline-block mt-3 font-semibold text-slate-900 hover:underline"
-        >
-          Schengen vize evrakları listesini inceleyin →
-        </a>
-      </div>
-
-      <div>
-        <h2 className="text-2xl font-bold text-slate-900">
-          Ankara’dan Schengen Vizesi Başvuru Süreci
-        </h2>
-        <p className="text-slate-600 mt-3">
-          Schengen vizesi başvuruları Ankara’daki VFS Global, iDATA veya ilgili
-          başvuru merkezleri aracılığıyla yapılır. Randevu alınması, evrakların
-          eksiksiz hazırlanması ve biyometri işlemleri sürecin önemli
-          adımlarıdır.
+        <p className="text-slate-600 mt-4 leading-relaxed">
+          Hatalı başvuru, eksik evrak veya yanlış seyahat planı
+          Schengen vize reddine neden olabilir.
         </p>
 
         <a
           href="/schengen-vize-adimlari"
-          className="inline-block mt-3 font-semibold text-slate-900 hover:underline"
+          className="inline-block mt-4 font-semibold text-slate-900 hover:underline"
         >
-          Schengen vize başvuru adımlarını inceleyin →
+          Ankara Schengen başvuru adımlarını inceleyin →
         </a>
       </div>
 
+
+      {/* EVRAKLAR */}
       <div>
-        <h2 className="text-2xl font-bold text-slate-900">
-          Aya Journey ile Ankara Schengen Vizesi Danışmanlığı
+        <h2 className="text-3xl font-bold text-slate-900">
+          Ankara Schengen Vizesi İçin Gerekli Evraklar
         </h2>
-        <p className="text-slate-600 mt-3">
-          Aya Journey, Ankara Schengen vizesi danışmanlığı kapsamında evrak
-          kontrolü, başvuru planlaması ve randevu süreci yönetimi konularında
-          profesyonel destek sunar. Süreci şeffaf ve planlı şekilde yürütür.
-        </p>
+
+        <ul className="mt-6 grid md:grid-cols-2 gap-4 text-slate-600">
+          <li>• En az 6 ay geçerli pasaport</li>
+          <li>• Biyometrik fotoğraf</li>
+          <li>• Seyahat sağlık sigortası (30.000€ teminat)</li>
+          <li>• Güncel banka hesap dökümü</li>
+          <li>• Çalışma / gelir belgeleri</li>
+          <li>• Uçak ve konaklama rezervasyonu</li>
+        </ul>
 
         <a
-          href="/aya-journey-yorumlari"
-          className="inline-block mt-3 font-semibold text-slate-900 hover:underline"
+          href="/schengen-vize-evraklari"
+          className="inline-block mt-4 font-semibold text-slate-900 hover:underline"
         >
-          Schengen vizesi alan müşterilerimizin yorumlarını okuyun →
+          Detaylı Schengen evrak listesi →
         </a>
+      </div>
+
+
+      {/* RED BLOĞU */}
+      <div>
+        <h2 className="text-3xl font-bold text-slate-900">
+          Ankara Schengen Vize Reddinin En Sık Nedenleri
+        </h2>
+
+        <ul className="mt-6 space-y-3 text-slate-600">
+          <li>• Yetersiz finansal gösterim</li>
+          <li>• Seyahat planının inandırıcı olmaması</li>
+          <li>• Türkiye’ye geri dönüş bağlarının zayıf görünmesi</li>
+          <li>• Yanlış ülke üzerinden başvuru yapılması</li>
+        </ul>
+
+        <p className="mt-6 text-slate-700 font-medium">
+          Aya Journey Ankara Schengen vize danışmanlığı,
+          bu riskleri minimize edecek şekilde dosyanızı yapılandırır.
+        </p>
+      </div>
+
+
+      {/* FAQ SEO BOOST */}
+      <div>
+        <h2 className="text-3xl font-bold text-slate-900 text-center">
+          Ankara Schengen Vizesi Hakkında Sık Sorulan Sorular
+        </h2>
+
+        <div className="mt-10 space-y-8">
+
+          <div>
+            <h3 className="font-semibold text-lg">
+              Ankara Schengen randevuları ne kadar sürede verilir?
+            </h3>
+            <p className="text-slate-600 mt-2">
+              Randevu süreleri dönemsel yoğunluğa göre değişir.
+              Yaz aylarında ve bayram öncesi tarihler hızla dolmaktadır.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-lg">
+              Ankara’da en kolay Schengen veren ülke hangisi?
+            </h3>
+            <p className="text-slate-600 mt-2">
+              Başvuru sahibinin profiline göre değişir.
+              Doğru ülke seçimi vize onay ihtimalini ciddi şekilde etkiler.
+            </p>
+          </div>
+
+        </div>
       </div>
 
     </div>
   </section>
 
+
   {/* CTA */}
-  <section className="max-w-6xl mx-auto px-4 sm:px-8 pb-16">
-    <div className="bg-slate-900 rounded-2xl p-7 sm:p-10 text-white">
-      <h2 className="text-2xl font-bold">
-        Ankara’dan Schengen Vizesi İçin Danışmanlık Alın
+  <section className="max-w-6xl mx-auto px-4 sm:px-8 pb-20">
+    <div className="bg-slate-900 rounded-3xl p-10 sm:p-14 text-white text-center">
+      <h2 className="text-3xl font-extrabold">
+        Ankara Schengen Vizesi İçin Profesyonel Destek
       </h2>
-      <p className="text-slate-300 mt-3 max-w-2xl">
-        Ankara Schengen vizesi başvurunuzu doğru planlamak ve evrak sürecini
-        sorunsuz ilerletmek için uzman vize danışmanlarımızdan destek
-        alabilirsiniz.
+
+      <p className="text-slate-300 mt-6 max-w-2xl mx-auto">
+        Ankara Schengen vize başvurunuzu riske atmayın.
+        Evrak kontrolü, ülke seçimi ve randevu süreci için uzman desteği alın.
       </p>
 
-      <div className="mt-6 flex flex-col sm:flex-row gap-3">
+      <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
         <a
           href="/randevu"
-          className="inline-flex items-center justify-center rounded-xl px-5 py-3 font-semibold bg-white text-slate-900 hover:bg-slate-100 transition"
+          className="inline-flex items-center justify-center rounded-xl px-6 py-4 font-semibold bg-white text-slate-900 hover:bg-slate-100 transition"
         >
           Hemen Randevu Al
         </a>
         <a
-          href="/iletisim"
-          className="inline-flex items-center justify-center rounded-xl px-5 py-3 font-semibold border border-white/40 hover:bg-white/10 transition"
+          href="https://wa.me/905302199056"
+          className="inline-flex items-center justify-center rounded-xl px-6 py-4 font-semibold bg-green-600 hover:bg-green-700 transition"
         >
-          Sorunuzu İletin
+          WhatsApp Destek
         </a>
       </div>
     </div>
   </section>
+
 </main>
+
 
 
     </>

@@ -73,131 +73,176 @@ const AmerikaB1B2Vizesi = () => {
 />
  
     
-        <main className="max-w-6xl mx-auto px-6 py-16 text-slate-900">
+<main className="max-w-6xl mx-auto px-6 py-16 text-slate-900">
 
-      {/* HERO */}
-      <header className="text-center mb-20">
-        <span className="inline-block mb-6 rounded-full bg-blue-100 px-6 py-2 text-xs font-semibold uppercase tracking-widest text-blue-700">
-          Amerika Turistik & Ticari Vize
-        </span>
+  {/* HERO */}
+  <header className="text-center mb-20">
+    <span className="inline-block mb-6 rounded-full bg-blue-100 px-6 py-2 text-xs font-semibold uppercase tracking-widest text-blue-700">
+      Amerika Turistik & Ticari Vize Rehberi
+    </span>
 
-        <h1 className="text-4xl md:text-7xl font-black tracking-tight mb-8">
-          Amerika <span className="text-blue-600 italic">B1/B2 Vizesi</span><br />
-          Nasıl Alınır?
-        </h1>
+    <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-8">
+      Amerika B1/B2 Vizesi Nasıl Alınır?
+      <br />
+      <span className="text-blue-600 italic">
+        10 Yıllık Turistik ve Ticari Vize Rehberi
+      </span>
+    </h1>
 
-        <p className="max-w-3xl mx-auto text-lg text-slate-600 leading-relaxed">
-          Amerika B1/B2 vizesi; turistik geziler, iş toplantıları, fuar katılımları
-          ve kısa süreli ticari ziyaretler için verilen en yaygın ABD vize türüdür.
-          Doğru hazırlanmış bir başvuru dosyası ile 10 yıla kadar çok girişli
-          vize almak mümkündür.
-        </p>
-      </header>
+    <p className="max-w-3xl mx-auto text-lg text-slate-600 leading-relaxed">
+      <strong>Amerika B1/B2 vizesi</strong>, turistik ve ticari amaçlarla
+      Amerika Birleşik Devletleri’ne yapılan kısa süreli seyahatler için
+      verilen en yaygın ABD vize türüdür. Doğru hazırlanmış bir başvuru
+      ile <strong>10 yıllık çok girişli Amerika vizesi</strong> almak mümkündür.
+    </p>
+  </header>
 
-      {/* B1 B2 NEDİR */}
-      <section className="mb-24 max-w-4xl mx-auto">
-        <h2 className="text-3xl font-black mb-6">
-          Amerika B1/B2 Vizesi Nedir?
-        </h2>
 
-        <p className="text-slate-600 leading-relaxed mb-6">
-          <strong>B1 vizesi</strong>, Amerika’ya ticari amaçlarla yapılan kısa süreli
-          seyahatler için düzenlenir. İş toplantıları, konferanslar ve sözleşme
-          görüşmeleri bu kapsama girer.
-        </p>
+  {/* NEDİR */}
+  <section className="mb-24 max-w-4xl mx-auto">
+    <h2 className="text-3xl font-black mb-6">
+      Amerika B1 ve B2 Vizesi Arasındaki Fark Nedir?
+    </h2>
 
-        <p className="text-slate-600 leading-relaxed">
-          <strong>B2 vizesi</strong> ise turistik geziler, aile/arkadaş ziyareti ve
-          tıbbi tedavi gibi kişisel seyahat amaçlarını kapsar. Günümüzde ABD
-          Konsolosluğu bu iki vize türünü genellikle <strong>B1/B2 birleşik</strong>
-          olarak verir.
-        </p>
-      </section>
+    <p className="text-slate-600 leading-relaxed mb-6">
+      <strong>Amerika B1 vizesi</strong>, iş toplantıları, fuar katılımları,
+      sözleşme görüşmeleri ve ticari ziyaretler için verilir.
+    </p>
 
-      {/* KIMLER ALABILIR */}
-      <section className="mb-24 bg-slate-50 p-12 rounded-[3rem]">
-        <h2 className="text-3xl font-black mb-10 text-center">
-          Amerika B1/B2 Vizesini Kimler Alabilir?
-        </h2>
+    <p className="text-slate-600 leading-relaxed">
+      <strong>Amerika B2 vizesi</strong> ise turistik seyahatler,
+      aile/arkadaş ziyareti ve kısa süreli tedavi amaçlı ziyaretleri kapsar.
+      Günümüzde çoğu başvuru sahibi <strong>B1/B2 birleşik vize</strong>
+      almaktadır.
+    </p>
+  </section>
 
-        <ul className="grid md:grid-cols-2 gap-6 text-slate-700">
-          <li>• Turistik amaçla Amerika’ya gitmek isteyenler</li>
-          <li>• İş toplantısı veya fuara katılacak kişiler</li>
-          <li>• Şirket sahipleri ve yöneticiler</li>
-          <li>• Aile veya arkadaş ziyareti yapacak olanlar</li>
-          <li>• Kısa süreli tıbbi tedavi planlayanlar</li>
-          <li>• Daha önce ABD vizesi almamış ilk başvuru sahipleri</li>
+
+  {/* NASIL ALINIR */}
+  <section className="mb-24 bg-slate-50 p-12 rounded-3xl">
+    <h2 className="text-3xl font-black mb-8 text-center">
+      Amerika B1/B2 Vizesi Nasıl Alınır?
+    </h2>
+
+    <ol className="space-y-6 text-slate-700 max-w-3xl mx-auto">
+      <li>1️⃣ DS-160 başvuru formu doldurulur.</li>
+      <li>2️⃣ ABD vize ücreti (MRV) yatırılır.</li>
+      <li>3️⃣ Ankara veya İstanbul’dan randevu alınır.</li>
+      <li>4️⃣ Konsolosluk mülakatına girilir.</li>
+    </ol>
+
+    <p className="text-slate-600 mt-8 text-center max-w-3xl mx-auto">
+      Amerika B1/B2 vizesi başvurusunda en kritik aşama mülakattır.
+      Konsolosluk memuru başvuru sahibinin Türkiye’ye geri dönüş
+      niyetini değerlendirir.
+    </p>
+  </section>
+
+
+  {/* RED RISKI */}
+  <section className="mb-24 max-w-4xl mx-auto">
+    <h2 className="text-3xl font-black mb-6">
+      Amerika B1/B2 Vize Reddi Neden Olur?
+    </h2>
+
+    <p className="text-slate-600 leading-relaxed mb-6">
+      Amerika turistik vize reddi genellikle 214(b) maddesi kapsamında verilir.
+      Bu madde, başvuru sahibinin göçmenlik niyeti taşıdığı şüphesini ifade eder.
+    </p>
+
+    <ul className="space-y-3 text-slate-600">
+      <li>• Yetersiz finansal gösterim</li>
+      <li>• Türkiye ile zayıf bağ</li>
+      <li>• Tutarsız DS-160 bilgileri</li>
+      <li>• Mülakatta çelişkili cevaplar</li>
+    </ul>
+  </section>
+
+
+  {/* EVRAKLAR */}
+  <section className="mb-24">
+    <h2 className="text-3xl font-black mb-10 text-center">
+      Amerika B1/B2 Vizesi İçin Gerekli Evraklar
+    </h2>
+
+    <div className="grid md:grid-cols-2 gap-8">
+      <div className="p-8 border rounded-2xl">
+        <h3 className="font-bold mb-4">Zorunlu Belgeler</h3>
+        <ul className="space-y-2 text-slate-600">
+          <li>• Geçerli pasaport</li>
+          <li>• DS-160 onay sayfası</li>
+          <li>• Randevu onay belgesi</li>
+          <li>• Biyometrik fotoğraf</li>
         </ul>
-      </section>
+      </div>
 
-      {/* EVRAKLAR */}
-      <section className="mb-24">
-        <h2 className="text-3xl font-black mb-10 text-center">
-          Amerika B1/B2 Vizesi İçin Gerekli Evraklar
-        </h2>
+      <div className="p-8 border rounded-2xl">
+        <h3 className="font-bold mb-4">Destekleyici Belgeler</h3>
+        <ul className="space-y-2 text-slate-600">
+          <li>• Banka hesap dökümü</li>
+          <li>• Çalışma belgeleri</li>
+          <li>• Şirket evrakları</li>
+          <li>• Seyahat planı</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="p-8 border rounded-2xl">
-            <h3 className="font-bold mb-4">Temel Evraklar</h3>
-            <ul className="space-y-2 text-slate-600">
-              <li>• En az 6 ay geçerli pasaport</li>
-              <li>• DS-160 başvuru formu</li>
-              <li>• ABD vize randevu onayı</li>
-              <li>• Biyometrik fotoğraf</li>
-            </ul>
-          </div>
 
-          <div className="p-8 border rounded-2xl">
-            <h3 className="font-bold mb-4">Destekleyici Belgeler</h3>
-            <ul className="space-y-2 text-slate-600">
-              <li>• Çalışma ve gelir belgeleri</li>
-              <li>• Banka hesap dökümleri</li>
-              <li>• Şirket evrakları (varsa)</li>
-              <li>• Seyahat planı</li>
-            </ul>
-          </div>
-        </div>
-      </section>
+  {/* FAQ */}
+  <section className="mb-24 max-w-4xl mx-auto">
+    <h2 className="text-3xl font-black mb-8 text-center">
+      Amerika B1/B2 Vizesi Hakkında Sık Sorulan Sorular
+    </h2>
 
-      {/* MULAKAT */}
-      <section className="mb-24 max-w-4xl mx-auto">
-        <h2 className="text-3xl font-black mb-6">
-          Amerika B1/B2 Vize Mülakatı Nasıl Geçer?
-        </h2>
+    <div className="space-y-8">
 
-        <p className="text-slate-600 leading-relaxed mb-6">
-          Amerika B1/B2 vize mülakatı genellikle 2–5 dakika sürer. Konsolosluk
-          memuru, başvuru sahibinin seyahat amacını ve Türkiye’ye geri dönüş
-          niyetini net şekilde anlamak ister.
+      <div>
+        <h3 className="font-bold text-lg">
+          Amerika B1/B2 vizesi kaç yıllık verilir?
+        </h3>
+        <p className="text-slate-600 text-sm">
+          Türkiye Cumhuriyeti vatandaşlarına genellikle
+          10 yıllık çok girişli vize verilir.
         </p>
+      </div>
 
-        <p className="text-slate-600 leading-relaxed">
-          En sık sorulan sorular; <em>neden Amerika’ya gidiyorsunuz</em>,
-          <em>ne iş yapıyorsunuz</em> ve <em>seyahat masraflarınızı nasıl
-          karşılayacaksınız</em> şeklindedir.
+      <div>
+        <h3 className="font-bold text-lg">
+          Amerika turistik vize almak zor mu?
+        </h3>
+        <p className="text-slate-600 text-sm">
+          Doğru hazırlık ile Amerika turistik vize almak mümkündür.
+          En önemli kriter mülakatta güven vermektir.
         </p>
-      </section>
+      </div>
 
-      {/* CTA */}
-      <section className="bg-gradient-to-br from-blue-700 to-indigo-700 rounded-[2.5rem] p-16 text-center text-white">
-        <h2 className="text-3xl md:text-5xl font-extrabold mb-6">
-          Amerika B1/B2 Vizesi İçin<br />Profesyonel Destek Alın
-        </h2>
+    </div>
+  </section>
 
-        <p className="max-w-2xl mx-auto text-blue-100 mb-10">
-          DS-160 formundan mülakat hazırlığına kadar tüm süreci uzman
-          danışmanlarımızla birlikte yönetin ve vize onay şansınızı artırın.
-        </p>
 
-        <a
-          href="https://wa.me/905302199056"
-          className="inline-block rounded-xl bg-white px-10 py-4 text-blue-700 font-semibold hover:shadow-xl transition"
-        >
-          Ücretsiz Ön Değerlendirme
-        </a>
-      </section>
+  {/* CTA */}
+  <section className="bg-gradient-to-br from-blue-700 to-indigo-700 rounded-3xl p-16 text-center text-white">
+    <h2 className="text-3xl md:text-5xl font-extrabold mb-6">
+      Amerika B1/B2 Vizesi İçin Profesyonel Destek
+    </h2>
 
-    </main>
+    <p className="max-w-2xl mx-auto text-blue-100 mb-10">
+      Amerika turistik veya ticari vize başvurunuzu
+      uzman danışmanlarımızla hazırlayın ve
+      10 yıllık ABD vizesi alma şansınızı artırın.
+    </p>
+
+    <a
+      href="https://wa.me/905302199056"
+      className="inline-block rounded-xl bg-white px-10 py-4 text-blue-700 font-semibold hover:shadow-xl transition"
+    >
+      Ücretsiz Ön Değerlendirme
+    </a>
+  </section>
+
+</main>
+
     </>
 
   );

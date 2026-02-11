@@ -9,108 +9,163 @@ export const metadata = {
 };
 
 const ABDDanismanlikSayfasi = () => {
-  return (
-    <main className="max-w-6xl mx-auto px-6 py-16 font-sans text-slate-900">
-      
-      {/* Hero Section: Otorite ve Prestij */}
-      <header className="text-center mb-20">
-        <span className="bg-blue-100 text-blue-800 px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest mb-6 inline-block">
-          U.S. Visa Specialist Services
+return (
+  <main className="max-w-6xl mx-auto px-6 py-16 font-sans text-slate-900">
+
+    {/* HERO */}
+    <header className="text-center mb-20">
+      <span className="bg-blue-100 text-blue-800 px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest mb-6 inline-block">
+        Profesyonel ABD Vize Danışmanlığı
+      </span>
+
+      <h1 className="text-5xl md:text-7xl font-black mb-8 leading-tight tracking-tight">
+        ABD Vize Danışmanlığı <br />
+        <span className="text-blue-600">
+          Amerika Vize Danışmanlık Hizmeti
         </span>
-        <h1 className="text-5xl md:text-8xl font-black mb-8 leading-tight tracking-tighter text-slate-900">
-          Amerika Rüyası <br/>
-          <span className="text-blue-600 italic">Mülakatta Başlar.</span>
-        </h1>
-        <p className="text-xl text-slate-500 max-w-3xl mx-auto leading-relaxed font-light">
-          ABD vizesi bir evrak savaşı değil, bir ikna sürecidir. DS-160 formunuzdaki en küçük detaydan, 
-          mülakattaki vücut dilinize kadar tüm süreci <strong>AYA Journey</strong> uzmanlığıyla yönetiyoruz.
-        </p>
-      </header>
+      </h1>
 
-      {/* Neden Biz? (Value Propositions) */}
-      <section className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
-        {[
-          { t: "DS-160 Analizi", d: "Formunuzu konsolosluk memurunun görmek istediği 'stratejik' dille dolduruyoruz.", icon: "✍️" },
-          { t: "Mülakat Simülasyonu", d: "Karşınıza çıkabilecek zor soruları mülakat öncesi birlikte çalışıyoruz.", icon: "🎙️" },
-          { t: "Randevu Takibi", d: "Aylar sonrasına verilen randevuları sistem takip yazılımlarımızla öne çekiyoruz.", icon: "📅" },
-          { t: "Ret Analizi", d: "Daha önce ret aldıysanız, nedenini bulup yeni başvurunuzu hatasız kurguluyoruz.", icon: "🔍" }
-        ].map((item, i) => (
-          <div key={i} className="p-8 bg-white border border-slate-100 rounded-[2.5rem] shadow-sm hover:shadow-xl transition-all group">
-            <div className="text-4xl mb-6 group-hover:scale-110 transition-transform">{item.icon}</div>
-            <h4 className="font-bold text-lg mb-3">{item.t}</h4>
-            <p className="text-sm text-slate-500 leading-relaxed">{item.d}</p>
-          </div>
-        ))}
-      </section>
+      <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+        <strong>ABD vize danışmanlığı</strong> sürecinde DS-160 formu,
+        mülakat hazırlığı ve randevu planlamasını profesyonel şekilde
+        yönetiyoruz. Amerika vize danışmanlık hizmetimizle
+        başvurunuzu hatasız ve stratejik şekilde hazırlıyoruz.
+      </p>
+    </header>
 
-      {/* Hizmet Süreç Akışı */}
-      <section className="mb-24 bg-slate-50 p-12 rounded-[4rem] border border-slate-100">
-        <h2 className="text-3xl font-black mb-12 text-center uppercase tracking-tighter">Danışmanlık Sürecimiz Nasıl İşler?</h2>
-        <div className="space-y-12">
-          <div className="flex flex-col md:flex-row gap-10 items-center">
-            <div className="bg-blue-600 text-white w-16 h-16 rounded-3xl flex items-center justify-center font-black text-2xl flex-shrink-0 shadow-lg shadow-blue-200">1</div>
-            <div>
-              <h4 className="text-xl font-bold mb-2 uppercase italic">Profil Değerlendirmesi</h4>
-              <p className="text-slate-600 leading-relaxed">Mevcut iş, finansal durum ve seyahat geçmişinizi inceleyerek size özel bir strateji belirliyoruz. Eksik yanlarınızı başvurudan önce kapatıyoruz.</p>
-            </div>
-          </div>
-          <div className="flex flex-col md:flex-row gap-10 items-center">
-            <div className="bg-slate-900 text-white w-16 h-16 rounded-3xl flex items-center justify-center font-black text-2xl flex-shrink-0">2</div>
-            <div>
-              <h4 className="text-xl font-bold mb-2 uppercase italic">Form ve Randevu Yönetimi</h4>
-              <p className="text-slate-600 leading-relaxed">DS-160 formunuzu 214(b) maddesi risklerini minimize ederek dolduruyor, vize ücretinizi yatırıp randevu takviminizi en kısa sürede netleştiriyoruz.</p>
-            </div>
-          </div>
-          <div className="flex flex-col md:flex-row gap-10 items-center">
-            <div className="bg-blue-600 text-white w-16 h-16 rounded-3xl flex items-center justify-center font-black text-2xl flex-shrink-0 shadow-lg shadow-blue-200">3</div>
-            <div>
-              <h4 className="text-xl font-bold mb-2 uppercase italic">Birebir Mülakat Eğitimi</h4>
-              <p className="text-slate-600 leading-relaxed">Konsolosluk memurunun sorması muhtemel soruları (Nereye gideceksiniz? Neden Amerika? Türkiye'ye neden döneceksiniz?) cevaplamanız için profesyonel eğitim veriyoruz.</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* ABD Vize Türleri */}
-      <section className="mb-24 px-8">
-        <h2 className="text-3xl font-black mb-12 text-center">Hangi Amerika Vizesi Size Uygun?</h2>
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="p-10 bg-white border-2 border-slate-100 rounded-[3rem] hover:border-blue-500 transition-colors">
-            <h4 className="text-2xl font-black mb-4">B1/B2 Turistik & Ticari</h4>
-            <p className="text-slate-500 text-sm leading-relaxed">Turizm, iş toplantıları veya tıbbi tedavi amaçlı 10 yıllık vize başvuruları için tam destek.</p>
-          </div>
-          <div className="p-10 bg-white border-2 border-slate-100 rounded-[3rem] hover:border-blue-500 transition-colors">
-            <h4 className="text-2xl font-black mb-4">F1 Öğrenci Vizesi</h4>
-            <p className="text-slate-500 text-sm leading-relaxed">Dil okulu, lisans veya yüksek lisans kabulleriniz sonrası I-20 belgesiyle yapılan profesyonel başvurular.</p>
-          </div>
-        </div>
-      </section>
+    {/* ANA SEO BLOĞU */}
+    <section className="mb-24">
+      <h2 className="text-3xl font-bold mb-6">
+        Amerika Vize Danışmanlık Hizmeti Nedir?
+      </h2>
 
-      {/* STRATEJİK CTA SECTION */}
-      <section className="bg-blue-700 rounded-[3.5rem] p-16 text-center text-white relative shadow-2xl overflow-hidden border-b-8 border-blue-900">
-        <div className="relative z-10">
-          <h2 className="text-4xl md:text-6xl font-black mb-8 italic tracking-tighter uppercase">Pasaportunuzda 10 Yıllık Amerika <br/>Vizesi Olsun İster misiniz?</h2>
-          <p className="text-blue-100 text-lg mb-10 max-w-2xl mx-auto font-light leading-relaxed">
-            ABD vizesi almak sanıldığı kadar zor değil, sadece doğru bir strateji işidir. 
-            On binlerce onaylı dosyamızın arasına sizinkini de ekleyelim.
+      <p className="text-slate-600 leading-relaxed mb-6">
+        Amerika vize danışmanlık hizmeti; başvuru sahibinin profil analizinin
+        yapılması, DS-160 formunun doğru doldurulması, gerekli evrakların
+        stratejik şekilde hazırlanması ve mülakata profesyonel hazırlık
+        yapılmasını kapsar.
+      </p>
+
+      <p className="text-slate-600 leading-relaxed">
+        ABD vize danışmanlığı özellikle ilk kez başvuru yapanlar,
+        daha önce ret almış adaylar ve finansal profili karmaşık
+        olan kişiler için kritik önem taşır.
+      </p>
+    </section>
+
+
+    {/* HANGİ KELİMELERDE YAKALAMA BLOĞU */}
+    <section className="mb-24 bg-slate-50 p-12 rounded-3xl border border-slate-200">
+      <h2 className="text-3xl font-black mb-6 text-center">
+        Amerika Vizesi Nasıl Alınır?
+      </h2>
+
+      <p className="text-slate-600 max-w-3xl mx-auto text-center leading-relaxed">
+        ABD vizesi nasıl alınır sorusu en çok araştırılan konulardandır.
+        Amerika vizesi almak için DS-160 formu doldurulur,
+        vize ücreti yatırılır ve mülakata girilir.
+        Ancak asıl belirleyici olan mülakat performansıdır.
+      </p>
+    </section>
+
+
+    {/* ÜCRET VE TİCARİ INTENT BLOĞU */}
+    <section className="mb-24">
+      <h2 className="text-3xl font-bold mb-6">
+        Amerika Vize Danışmanlık Ücreti Ne Kadar?
+      </h2>
+
+      <p className="text-slate-600 leading-relaxed mb-4">
+        Amerika vize danışmanlık ücreti başvuru türüne ve dosya
+        kapsamına göre değişir. Turistik (B1/B2), öğrenci (F1)
+        ve ret sonrası başvurularda süreç farklılık gösterebilir.
+      </p>
+
+      <p className="text-slate-600 leading-relaxed">
+        Ücretsiz ön değerlendirme ile profilinizi analiz ediyor,
+        size özel danışmanlık planı oluşturuyoruz.
+      </p>
+    </section>
+
+
+    {/* GÜVEN BLOĞU */}
+    <section className="mb-24">
+      <h2 className="text-3xl font-bold mb-6">
+        Neden Profesyonel Amerika Vize Danışmanı ile Çalışmalısınız?
+      </h2>
+
+      <ul className="space-y-4 text-slate-600">
+        <li>• DS-160 form hatalarının önlenmesi</li>
+        <li>• 214(b) risk analizinin yapılması</li>
+        <li>• Mülakat simülasyonu</li>
+        <li>• Ret sonrası stratejik yeniden başvuru</li>
+        <li>• Dosya bütünlüğünün sağlanması</li>
+      </ul>
+    </section>
+
+
+    {/* FAQ - LONG TAIL YAKALAMA */}
+    <section className="mb-24 bg-blue-50 p-12 rounded-3xl border border-blue-100">
+      <h2 className="text-3xl font-black mb-8 text-center">
+        Sık Sorulan Sorular
+      </h2>
+
+      <div className="space-y-6">
+        <div>
+          <h3 className="font-bold text-lg">
+            Amerika vizesi almak zor mu?
+          </h3>
+          <p className="text-slate-600 text-sm">
+            Amerika vizesi almak zor değildir ancak mülakatta
+            ikna edici ve tutarlı bir profil sunmak gerekir.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-6">
-            <a href="https://wa.me/905302199056" className="bg-white text-blue-700 px-12 py-5 rounded-2xl font-black text-xl hover:shadow-2xl transition transform hover:scale-105">
-              Ücretsiz Ön Değerlendirme
-            </a>
-            <a href="/iletisim" className="bg-blue-900 text-white px-12 py-5 rounded-2xl font-black text-xl hover:bg-black transition shadow-lg">
-              Ofisimizden Randevu Al
-            </a>
-          </div>
         </div>
-        {/* Dekoratif Yıldız ve Şerit Efekti */}
-        <div className="absolute top-0 right-0 w-full h-full opacity-5 pointer-events-none select-none">
-          <div className="text-[30rem] absolute top-[-5rem] right-[-5rem]">🇺🇸</div>
-        </div>
-      </section>
 
-    </main>
-  );
+        <div>
+          <h3 className="font-bold text-lg">
+            Amerika vize reddi sonrası tekrar başvurabilir miyim?
+          </h3>
+          <p className="text-slate-600 text-sm">
+            Evet. Ret sonrası yeni ve güçlendirilmiş bir dosya
+            ile tekrar başvuru yapılabilir.
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+    {/* CTA */}
+    <section className="bg-blue-700 rounded-3xl p-16 text-center text-white shadow-2xl">
+      <h2 className="text-4xl md:text-5xl font-black mb-6">
+        Amerika Vize Danışmanlık Desteği Alın
+      </h2>
+
+      <p className="text-blue-100 text-lg mb-10 max-w-2xl mx-auto">
+        ABD vize danışmanlığı sürecinizi profesyonel şekilde yönetelim.
+        DS-160 formundan mülakata kadar tüm süreci birlikte planlayalım.
+      </p>
+
+      <div className="flex flex-col sm:flex-row justify-center gap-6">
+        <a
+          href="https://wa.me/905302199056"
+          className="bg-white text-blue-700 px-10 py-4 rounded-xl font-bold hover:shadow-xl transition"
+        >
+          Ücretsiz Ön Değerlendirme
+        </a>
+
+        <a
+          href="/iletisim"
+          className="bg-blue-900 text-white px-10 py-4 rounded-xl font-bold hover:bg-black transition"
+        >
+          Ofis Randevusu Al
+        </a>
+      </div>
+    </section>
+
+  </main>
+);
+
 };
 
 export default ABDDanismanlikSayfasi;

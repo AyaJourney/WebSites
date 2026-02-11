@@ -85,7 +85,10 @@ export default async function handler(req, res) {
     "/abd-vize-ankara", //burası tamam
     "/portekiz-d7-oturum-vizesi-ankara", //burası tamam
     "/portekiz-d7-oturum-vizesi-istanbul", //burası tamam
-
+    "/yunanistan-vize",
+    "/yunanistan-vize-randevusu",
+    "/yunanistan-vize-evraklari",
+    "/yunanistan-vize-reddi",
     
 
 

@@ -2,7 +2,7 @@
 import React from "react";
 
 export const metadata = {
-  title: "Ankara Amerika Vizesi | B1/B2 Vize Danışmanlığı",
+  title: "Amerika Vize Ankara | ABD Vize Danışmanlık Ankara",
   description:
     "Ankara Amerika vizesi danışmanlığı: B1/B2 turist ve ziyaret vizesi başvurularında evrak hazırlığı, randevu ve mülakat süreci için profesyonel destek.",
   keywords: [
@@ -16,7 +16,7 @@ export const metadata = {
     canonical: "/ankara-amerika-vizesi",
   },
   openGraph: {
-    title: "Ankara Amerika Vizesi | B1/B2 Vize Danışmanlığı",
+    title: "Amerika Vize Ankara | ABD Vize Danışmanlık Ankara",
     description:
       "Ankara’dan Amerika vizesi başvurusu yapmak isteyenler için evrak, randevu ve mülakat rehberi.",
     url: "/ankara-amerika-vizesi",
@@ -77,32 +77,25 @@ export default function Page() {
       />
 
 <main className="min-h-screen bg-zinc-50">
-  {/* Hero */}
+
+  {/* HERO */}
   <section className="max-w-6xl mx-auto px-4 sm:px-8 pt-14 pb-10">
     <div className="bg-white border border-slate-200/70 rounded-2xl shadow-sm p-7 sm:p-10">
+
       <p className="text-sm text-slate-500">
-        Ankara • Amerika Birleşik Devletleri
+        Ankara • ABD Büyükelçiliği • Amerika Vize Danışmanlık
       </p>
 
       <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 mt-2">
-        Ankara Amerika Vizesi Danışmanlığı
+        Amerika Vize Ankara | Amerika Vize Danışmanlık Hizmeti
       </h1>
 
-      <p className="text-slate-600 mt-4 leading-relaxed max-w-2xl">
-        Ankara’dan Amerika vizesi (B1/B2) başvurusu yapmak isteyenler için evrak
-        hazırlığı, randevu planlama ve mülakat sürecinde profesyonel danışmanlık
-        sunuyoruz.
-      </p>
-
-      {/* 🔥 ANA SEO H2 */}
-      <h2 className="text-lg sm:text-xl font-semibold text-slate-900 mt-6">
-        Ankara Amerika Vizesi Başvurusu Nasıl Yapılır?
-      </h2>
-      <p className="text-slate-600 mt-2 max-w-3xl">
-        Ankara Amerika vizesi başvurusu; DS-160 formunun doldurulması, randevu
-        alınması, evrakların hazırlanması ve Ankara ABD Büyükelçiliği’nde
-        gerçekleştirilen mülakat aşamalarından oluşur. Sürecin doğru
-        planlanması vize onay şansını artırır.
+      <p className="text-slate-600 mt-4 leading-relaxed max-w-3xl">
+        <strong>Amerika vize Ankara</strong> başvurusu yapmak isteyenler için
+        profesyonel <strong>Amerika vize danışmanlık</strong> hizmeti sunuyoruz.
+        Ankara’dan Amerika vizesi (B1/B2) başvuru sürecinde DS-160 formu,
+        randevu planlaması, evrak hazırlığı ve mülakat stratejisi konusunda
+        uzman desteği sağlıyoruz.
       </p>
 
       <div className="mt-6 flex flex-col sm:flex-row gap-3">
@@ -110,86 +103,99 @@ export default function Page() {
           href="/randevu"
           className="inline-flex items-center justify-center rounded-xl px-5 py-3 font-semibold bg-slate-900 text-white hover:bg-slate-800 transition"
         >
-          Randevu Oluştur
+          Ankara Amerika Vize Randevusu Oluştur
         </a>
         <a
           href="/iletisim"
           className="inline-flex items-center justify-center rounded-xl px-5 py-3 font-semibold bg-white text-slate-900 border border-slate-300 hover:bg-slate-50 transition"
         >
-          İletişime Geç
+          Amerika Vize Danışmanlık Bilgisi Al
         </a>
       </div>
+
     </div>
   </section>
 
-  {/* İçerik */}
+  {/* İÇERİK */}
   <section className="max-w-6xl mx-auto px-4 sm:px-8 pb-12">
-    <div className="bg-white border border-slate-200/70 rounded-2xl shadow-sm p-7 sm:p-10 space-y-8">
+    <div className="bg-white border border-slate-200/70 rounded-2xl shadow-sm p-7 sm:p-10 space-y-10">
 
+      {/* NASIL YAPILIR */}
       <div>
         <h2 className="text-2xl font-bold text-slate-900">
-          Amerika Vizesi (B1/B2) Nedir?
+          Amerika Vize Ankara Başvurusu Nasıl Yapılır?
         </h2>
+
         <p className="text-slate-600 mt-3">
-          B1/B2 Amerika vizesi; turistik, ticari, aile ziyareti ve kısa süreli
-          seyahatler için verilen, mülakatlı bir vize türüdür. Ankara’dan yapılan
-          başvurular Ankara ABD Büyükelçiliği üzerinden değerlendirilir.
+          Amerika vize Ankara başvuruları Ankara ABD Büyükelçiliği üzerinden
+          yürütülür. Süreç; DS-160 formunun doldurulması, vize ücretinin
+          yatırılması, randevu alınması ve mülakat aşamalarından oluşur.
+          Ankara’dan yapılan başvurularda doğru evrak hazırlığı ve tutarlı
+          mülakat yanıtları büyük önem taşır.
         </p>
       </div>
 
+      {/* EVRAKLAR */}
       <div>
         <h2 className="text-2xl font-bold text-slate-900">
           Ankara Amerika Vizesi İçin Gerekli Evraklar
         </h2>
+
         <p className="text-slate-600 mt-3">
-          Ankara Amerika vizesi evrakları başvuru sahibinin çalışma durumu ve
-          seyahat amacına göre değişebilir. Genel olarak pasaport, DS-160 formu,
-          banka dökümü ve destekleyici belgeler talep edilir.
+          Amerika vize danışmanlık sürecinde en sık yapılan hata eksik veya
+          tutarsız evrak sunmaktır. Ankara Amerika vizesi için genel olarak
+          pasaport, DS-160 onay sayfası, banka hesap dökümü ve destekleyici
+          belgeler gereklidir.
         </p>
 
         <a
           href="/amerika-vize-evraklari"
           className="inline-block mt-3 font-semibold text-slate-900 hover:underline"
         >
-          Amerika vize evrakları listesini inceleyin →
+          Amerika vize evrakları tam listesini inceleyin →
         </a>
       </div>
 
+      {/* MÜLAKAT */}
       <div>
         <h2 className="text-2xl font-bold text-slate-900">
-          Amerika Vizesi Mülakat Süreci (Ankara)
+          Amerika Vize Mülakatı Ankara’da Nasıl Geçer?
         </h2>
+
         <p className="text-slate-600 mt-3">
-          Amerika vizesi mülakatı Ankara ABD Büyükelçiliği’nde yapılır. Mülakatta
-          seyahat amacı, maddi durum ve Türkiye’ye geri dönüş niyeti
-          değerlendirilir. Mülakata hazırlık süreci başvurunun en kritik
-          aşamasıdır.
+          Amerika vizesi mülakatı Ankara’da yüz yüze gerçekleştirilir.
+          Konsolosluk görevlisi başvuru sahibinin seyahat amacını,
+          finansal durumunu ve Türkiye’ye geri dönüş niyetini değerlendirir.
+          Profesyonel Amerika vize danışmanlık desteği, mülakatta
+          doğru strateji belirlemenizi sağlar.
         </p>
 
         <a
           href="/amerika-vize-mulakat-sorulari"
           className="inline-block mt-3 font-semibold text-slate-900 hover:underline"
         >
-          Amerika vize mülakat sorularını inceleyin →
+          Amerika vize mülakat soruları →
         </a>
       </div>
 
+      {/* DANIŞMANLIK */}
       <div>
         <h2 className="text-2xl font-bold text-slate-900">
-          Aya Journey Ankara Amerika Vizesi Danışmanlığı
+          Amerika Vize Danışmanlık Ankara Hizmeti
         </h2>
+
         <p className="text-slate-600 mt-3">
-          Aya Journey, Ankara Amerika vizesi danışmanlığı kapsamında evrak
-          kontrolü, başvuru stratejisi, randevu planlama ve mülakat hazırlığı
-          konularında profesyonel destek sunar. Süreci şeffaf ve planlı şekilde
-          yürütür.
+          Aya Journey olarak Ankara’da Amerika vize danışmanlık hizmeti
+          sunuyoruz. Başvuru stratejisi oluşturma, evrak kontrolü,
+          DS-160 form desteği ve mülakat hazırlığı süreçlerinde
+          adım adım rehberlik sağlıyoruz.
         </p>
 
         <a
           href="/aya-journey-yorumlari"
           className="inline-block mt-3 font-semibold text-slate-900 hover:underline"
         >
-          Amerika vizesi alan müşterilerimizin yorumlarını okuyun →
+          Ankara Amerika vizesi alan müşterilerimizin yorumları →
         </a>
       </div>
 
@@ -200,12 +206,13 @@ export default function Page() {
   <section className="max-w-6xl mx-auto px-4 sm:px-8 pb-16">
     <div className="bg-slate-900 rounded-2xl p-7 sm:p-10 text-white">
       <h2 className="text-2xl font-bold">
-        Ankara’dan Amerika Vizesi İçin Destek Alın
+        Amerika Vize Ankara Sürecinizi Güvenle Yönetin
       </h2>
+
       <p className="text-slate-300 mt-3 max-w-2xl">
-        Ankara Amerika vizesi başvurunuzu doğru planlamak ve mülakat sürecine
-        hazırlıklı girmek için uzman vize danışmanlarımızdan destek
-        alabilirsiniz.
+        Ankara Amerika vizesi başvurunuzda hata riskini azaltmak için
+        profesyonel Amerika vize danışmanlık desteği alın.
+        Süreci planlı ve şeffaf şekilde birlikte yürütelim.
       </p>
 
       <div className="mt-6 flex flex-col sm:flex-row gap-3">
@@ -213,18 +220,20 @@ export default function Page() {
           href="/randevu"
           className="inline-flex items-center justify-center rounded-xl px-5 py-3 font-semibold bg-white text-slate-900 hover:bg-slate-100 transition"
         >
-          Hemen Randevu Al
+          Ankara Amerika Vize Randevusu Al
         </a>
         <a
           href="/iletisim"
           className="inline-flex items-center justify-center rounded-xl px-5 py-3 font-semibold border border-white/40 hover:bg-white/10 transition"
         >
-          Sorunuzu İletin
+          Danışmanlık Talep Et
         </a>
       </div>
     </div>
   </section>
+
 </main>
+
 
 
     </>
