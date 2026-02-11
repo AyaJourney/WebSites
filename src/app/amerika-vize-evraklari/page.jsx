@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import { 
   FaCheckCircle, 
@@ -333,10 +334,10 @@ const jsonLd = {
                 Form doldurulduktan sonra <strong>confirmation sayfası (barkodlu çıktı)</strong> alınmalı 
                 ve mülakatta mutlaka ibraz edilmelidir. Bu belge olmadan mülakat yapılamaz.
               </p>
-              <div className="inline-flex items-center gap-2 bg-purple-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-purple-700 transition-colors cursor-pointer">
+              <Link href="/amerika-vize-ds-160-nasil-doldurulur" className="inline-flex items-center gap-2 bg-purple-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-purple-700 transition-colors cursor-pointer">
                 <FaDownload className="w-4 h-4" />
                 DS-160 Doldurma Rehberi
-              </div>
+              </Link>
             </div>
           </div>
         </div>
