@@ -101,7 +101,7 @@ const Page = () => {
           <a href="/iletisim" className="inline-block bg-blue-600 text-white font-bold px-8 py-4 rounded-lg hover:bg-blue-700 transition shadow-xl transform hover:-translate-y-1">
             Ücretsiz Ön Değerlendirme Al
           </a>
-          <a href="tel:+90XXXXXXXXXX" className="inline-block bg-white border-2 border-gray-300 text-gray-800 font-bold px-8 py-4 rounded-lg hover:bg-gray-50 transition">
+          <a href="tel:+903128701584" className="inline-block bg-white border-2 border-gray-300 text-gray-800 font-bold px-8 py-4 rounded-lg hover:bg-gray-50 transition">
             Hemen Ara
           </a>
         </div>
@@ -215,7 +215,8 @@ const Page = () => {
           <a href="/iletisim" className="bg-white text-blue-900 px-10 py-4 rounded-xl font-bold text-lg hover:bg-gray-100 transition shadow-lg">
             Randevu Sorgula
           </a>
-          <a href="https://wa.me/905302199056" className="bg-green-500 text-white px-10 py-4 rounded-xl font-bold text-lg hover:bg-green-600 transition shadow-lg flex items-center justify-center gap-2">
+          <a href="https://wa.me/905302199056?text=Merhaba%2C%20vize%20ba%C5%9Fvurum%20i%C3%A7in%20profesyonel%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum.%20Uygun%20oldu%C4%9Funuzda%20s%C3%BCreci%20birlikte%20planlayabilir%20miyiz%3F"
+          className="bg-green-500 text-white px-10 py-4 rounded-xl font-bold text-lg hover:bg-green-600 transition shadow-lg flex items-center justify-center gap-2">
             WhatsApp Bilgi Hattı
           </a>
         </div>

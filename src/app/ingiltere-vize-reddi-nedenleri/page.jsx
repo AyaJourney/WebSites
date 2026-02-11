@@ -90,7 +90,8 @@ const İngiltereRedSayfasi = () => {
             yeni başvurunuzda onay şansınızı maksimize ediyoruz.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-6">
-            <a href="https://wa.me/905302199056" className="bg-red-600 text-white px-12 py-5 rounded-2xl font-black text-xl hover:bg-red-700 transition shadow-xl flex items-center justify-center gap-3">
+            <a  href="https://wa.me/905302199056?text=Merhaba%2C%20vize%20ba%C5%9Fvurum%20i%C3%A7in%20profesyonel%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum.%20Uygun%20oldu%C4%9Funuzda%20s%C3%BCreci%20birlikte%20planlayabilir%20miyiz%3F"
+             className="bg-red-600 text-white px-12 py-5 rounded-2xl font-black text-xl hover:bg-red-700 transition shadow-xl flex items-center justify-center gap-3">
                İngiltere Analizi Al
             </a>
             <a href="/randevu" className="bg-white text-slate-900 px-12 py-5 rounded-2xl font-black text-xl hover:bg-slate-100 transition">

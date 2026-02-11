@@ -157,7 +157,7 @@ const HollandaVizeReddi = () => {
           </p>
 
           <a
-            href="https://wa.me/905302199056"
+                       href="https://wa.me/905302199056?text=Merhaba%2C%20vize%20ba%C5%9Fvurum%20reddedildi.%20Ret%20mektubumu%20analiz%20edip%20yeniden%20ba%C5%9Fvuru%20stratejisi%20olu%C5%9Fturmak%20istiyorum.%20M%C3%BCsait%20oldu%C4%9Funuzda%20detayl%C4%B1%20bilgi%20alabilir%20miyim%3F"
             className="bg-white text-red-600 px-8 py-4 rounded-xl font-semibold hover:shadow-xl transition"
           >
             WhatsApp Ret Analizi

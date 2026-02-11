@@ -868,7 +868,7 @@ Portekiz D7 vizesi ile alınan ilk oturum izni 2 yıl sürelidir. İki yılın s
                   Hemen Ara
                 </a>
                 <a
-                  href="https://wa.me/905302199056"
+                 href="https://wa.me/905302199056?text=Merhaba%2C%20vize%20ba%C5%9Fvurum%20i%C3%A7in%20profesyonel%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum.%20Uygun%20oldu%C4%9Funuzda%20s%C3%BCreci%20birlikte%20planlayabilir%20miyiz%3F"
                   className="px-4 py-2.5 rounded-xl bg-emerald-500 text-white font-semibold"
                   target="_blank"
                 >

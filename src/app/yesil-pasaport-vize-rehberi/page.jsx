@@ -150,7 +150,8 @@ const YesilPasaportRehberi = () => {
           <a href="/vize-alma-ihtimalinizi-olcun" className="bg-white text-emerald-700 px-12 py-5 rounded-2xl font-black text-xl hover:shadow-xl transition transform hover:-translate-y-1">
             Vize Şansını Test Et
           </a>
-          <a href="https://wa.me/905302199056" className="bg-slate-900 text-white px-12 py-5 rounded-2xl font-black text-xl hover:bg-slate-800 transition shadow-xl">
+          <a href="https://wa.me/905302199056?text=Merhaba%2C%20vize%20ba%C5%9Fvurum%20i%C3%A7in%20profesyonel%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum.%20Uygun%20oldu%C4%9Funuzda%20s%C3%BCreci%20birlikte%20planlayabilir%20miyiz%3F"
+          className="bg-slate-900 text-white px-12 py-5 rounded-2xl font-black text-xl hover:bg-slate-800 transition shadow-xl">
             WhatsApp Bilgi Hattı
           </a>
         </div>

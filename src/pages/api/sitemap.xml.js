@@ -101,7 +101,8 @@ export default async function handler(req, res) {
     "/ispanya-vize-randevusu",
     "/ispanya-vize-evraklari",
     "/ispanya-vize-reddi",
-    "/vfs-randevu-bulamiyorum"
+    "/vfs-randevu-bulamiyorum",
+    "/vfs-no-slots-availables",
     
   ];
 

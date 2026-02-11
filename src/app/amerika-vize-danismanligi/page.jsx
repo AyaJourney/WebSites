@@ -223,7 +223,23 @@ const ABDDanismanlikSayfasi = () => {
 
     </div>
   </section>
+  <section className="bg-gradient-to-br from-blue-700 to-indigo-700 rounded-3xl p-16 text-center text-white">
+    <h2 className="text-3xl md:text-5xl font-extrabold mb-6">
+      Amerika Vize Dosyanızı Kontrol Edelim
+    </h2>
 
+    <p className="max-w-2xl mx-auto text-blue-100 mb-10">
+      Amerika vize checklist üzerinden başvurunuzu uzman gözle inceleyelim,
+      eksik veya riskli noktaları başvuru öncesi düzeltelim.
+    </p>
+
+    <a
+     href="https://wa.me/905302199056?text=Merhaba%2C%20vize%20ba%C5%9Fvurum%20i%C3%A7in%20profesyonel%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum.%20Uygun%20oldu%C4%9Funuzda%20s%C3%BCreci%20birlikte%20planlayabilir%20miyiz%3F"
+      className="inline-block rounded-xl bg-white px-10 py-4 text-blue-700 font-semibold hover:shadow-xl transition"
+    >
+      Ücretsiz Ön Değerlendirme
+    </a>
+  </section>
 </main>
 
 

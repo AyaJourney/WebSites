@@ -190,7 +190,8 @@ const Page = () => {
           <a href="/randevu" className="bg-white text-teal-900 px-10 py-4 rounded-xl font-bold text-lg hover:bg-teal-50 transition shadow-lg">
             Randevu Alın
           </a>
-          <a href="https://wa.me/905302199056" className="bg-teal-500 text-white px-10 py-4 rounded-xl font-bold text-lg hover:bg-teal-400 transition shadow-lg border border-teal-400">
+          <a href="https://wa.me/905302199056?text=Merhaba%2C%20vize%20ba%C5%9Fvurum%20i%C3%A7in%20profesyonel%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum.%20Uygun%20oldu%C4%9Funuzda%20s%C3%BCreci%20birlikte%20planlayabilir%20miyiz%3F"
+          className="bg-teal-500 text-white px-10 py-4 rounded-xl font-bold text-lg hover:bg-teal-400 transition shadow-lg border border-teal-400">
             Telefonla Bilgi Al
           </a>
         </div>

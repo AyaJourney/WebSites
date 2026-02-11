@@ -497,45 +497,7 @@ const jsonLd = {
         </div>
       </section>
 
-      {/* Kritik Uyarı Section */}
-      {/* <section className="max-w-7xl mx-auto px-6 py-16">
-        <div className="relative overflow-hidden bg-gradient-to-br from-red-50 to-orange-50 border-2 border-red-200 rounded-3xl p-8 md:p-12">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-red-200/30 rounded-full -mr-32 -mt-32 blur-3xl" />
-          
-          <div className="relative flex flex-col md:flex-row items-start gap-8">
-            <div className="flex-shrink-0">
-              <div className="w-20 h-20 bg-gradient-to-br from-red-600 to-orange-600 rounded-3xl flex items-center justify-center shadow-lg">
-                <FaExclamationTriangle className="w-10 h-10 text-white" />
-              </div>
-            </div>
-            
-            <div>
-              <h2 className="text-3xl font-black text-red-900 mb-4">
-                Mülakatta Yanılmayın!
-              </h2>
-              <div className="space-y-4 text-gray-800 leading-relaxed">
-                <p>
-                  Amerika vize memurları <strong>genellikle belgelerinize bakmaz</strong>, ancak talep ettiklerinde 
-                  hazır bulundurmamak <span className="font-bold text-red-700">doğrudan ret sebebidir</span>.
-                </p>
-                <p>
-                  Asıl önemli olan belgelerinizden çok, mülakat sırasında verdiğiniz <strong>tutarlı ve samimi cevaplardır</strong>. 
-                  Evraklarınızın tam olması size sadece mülakatta <span className="inline-flex items-center gap-1 font-bold text-red-700">
-                    <FaShieldAlt className="w-4 h-4" /> özgüven
-                  </span> kazandırır.
-                </p>
-                <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-red-200 mt-6">
-                  <p className="font-bold text-red-900 mb-2">💡 Profesyonel İpucu:</p>
-                  <p className="text-sm">
-                    Tüm belgelerinizi kronolojik sıraya göre düzenli bir dosyada tutun. 
-                    Memur talep ettiğinde hızlıca sunabilmek profesyonellik gösterir.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */}
+ 
 
       {/* Ortak Evraklar Section */}
       <section id="evrak-listesi" className="max-w-7xl mx-auto px-6 py-16 bg-white">
@@ -697,7 +659,7 @@ const jsonLd = {
                   <FaCheckCircle className="w-5 h-5 group-hover:rotate-12 transition-transform" />
                 </a>
               <a 
-                href="https://wa.me/905302199056" 
+              href="https://wa.me/905302199056?text=Merhaba%2C%20vize%20ba%C5%9Fvurum%20i%C3%A7in%20profesyonel%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum.%20Uygun%20oldu%C4%9Funuzda%20s%C3%BCreci%20birlikte%20planlayabilir%20miyiz%3F"
                 className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-10 py-5 rounded-2xl font-black text-lg shadow-lg shadow-blue-500/30 hover:shadow-xl hover:scale-105 transition-all duration-300"
               >
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">

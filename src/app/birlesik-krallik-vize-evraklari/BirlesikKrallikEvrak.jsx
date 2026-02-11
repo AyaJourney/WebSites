@@ -918,7 +918,7 @@ export default function BirlesikKrallikVizeEvraklariPage() {
                                  <FaCheckCircle className="w-5 h-5 group-hover:rotate-12 transition-transform" />
                                </a>
                              <a 
-                               href="https://wa.me/905302199056" 
+                              href="https://wa.me/905302199056?text=Merhaba%2C%20vize%20ba%C5%9Fvurum%20i%C3%A7in%20profesyonel%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum.%20Uygun%20oldu%C4%9Funuzda%20s%C3%BCreci%20birlikte%20planlayabilir%20miyiz%3F"
                                className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-10 py-5 rounded-2xl font-black text-lg shadow-lg shadow-blue-500/30 hover:shadow-xl hover:scale-105 transition-all duration-300"
                              >
                                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
