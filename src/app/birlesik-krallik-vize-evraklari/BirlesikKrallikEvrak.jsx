@@ -41,14 +41,7 @@ export default function BirlesikKrallikVizeEvraklariPage() {
               "text": "İngiltere vizesi için günlük minimum 100-150 Pound arasında bir bütçe göstermeniz önerilir. Örneğin 10 günlük seyahat için yaklaşık 1000-1500 Pound bankada olmalıdır. Önemli olan son 6 aylık düzenli gelir-gider akışının görünmesidir."
             }
           },
-          {
-            "@type": "Question",
-            "name": "UK vize fotoğrafı nasıl olmalı?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "İngiltere vize fotoğrafı 45x35 mm boyutunda, renkli, açık renkli arka planda (gri veya krem rengi tercih edilir) olmalıdır. Fotoğraf son 6 ay içinde çekilmiş ve biyometrik standartlara uygun olmalıdır. Başınız fotoğrafın %70-80'ini kaplamalıdır."
-            }
-          },
+     
           {
             "@type": "Question",
             "name": "İngiltere vizesi kaç günde çıkar?",
@@ -151,11 +144,10 @@ export default function BirlesikKrallikVizeEvraklariPage() {
         title: 'Pasaport ve Kimlik',
         icon: <FaPassport />,
         items: [
-          'Geçerli pasaport (vize bitiş tarihinden 6 ay sonraya kadar geçerli)',
-          'En az 1 boş sayfa bulunmalı',
-          'İmzalı olmalı',
-          'Eski pasaportlar (son 10 yıl içinde kullanılanlar)',
-          'Kimlik kartı fotokopisi (ön-arka)'
+         'Eski ve yeni pasaportların tüm dolu sayfaları',
+          'Kullanılan pasaportta en az 2 boş sayfa bulunmalı',
+          'Kimlik kartı fotokopisi (ön-arka)',
+          
         ],
         critical: true
       },
@@ -166,35 +158,22 @@ export default function BirlesikKrallikVizeEvraklariPage() {
           'Gov.uk üzerinden doldurulmuş başvuru formu',
           'Tüm sorular eksiksiz cevaplanmalı',
           'Doğru ve tutarlı bilgiler verilmeli',
-          'Başvuru numarası (Application Number)',
           'Appointment confirmation belgesi'
         ],
         critical: true
       },
-      {
-        title: 'Fotoğraf',
-        icon: <FaFileAlt />,
-        items: [
-          '45x35 mm boyutunda, renkli',
-          'Açık renkli fon (gri veya krem rengi)',
-          'Son 6 ay içinde çekilmiş',
-          'Biyometrik standartlara uygun',
-          'Baş fotoğrafın %70-80\'ini kaplamalı',
-          'Mat kağıda basılmış'
-        ],
-        critical: true
-      },
+
       {
         title: 'Finansal Belgeler',
         icon: <FaMoneyBillWave />,
         items: [
-          'Son 6 aylık banka hesap ekstreleri (tüm sayfalar)',
-          'Günlük minimum 100-150 Pound bütçe göstermeli',
+          'Son 3 aylık banka hesap ekstreleri (tüm sayfalar)',
+          'Günlük minimum 600 Pound bütçe göstermeli',
           'Düzenli gelir-gider akışı olmalı',
-          'Maaş bordroları (son 6 ay)',
-          'Kredi kartı ekstreleri',
+          'Maaş bordroları (son 3 ay)',
           'Sponsor varsa: Sponsor mektubu ve mali belgeleri',
-          'Yatırım hesapları, gayrimenkul değerleme raporları (varsa)'
+          'Yatırım hesapları, gayrimenkul değerleme raporları (varsa)',
+          'Çalışanlar ve emekliler için maaş hesabı dökümü'
         ],
         critical: true
       },
@@ -202,34 +181,23 @@ export default function BirlesikKrallikVizeEvraklariPage() {
         title: 'İş ve Gelir Belgeleri',
         icon: <MdWorkOutline />,
         items: [
-          'Çalışanlar: İş yazısı (İngilizce, kaşeli, imzalı)',
+          'Çalışanlar: İş yazısı (İngilizce, kaşeli, ıslak imzalı)',
           'İş yazısında: Pozisyon, maaş, işe başlama tarihi, izin onayı',
-          'Serbest meslek: Ticaret sicil gazetesi, vergi levhası',
+          'Serbest meslek: Ticaret sicil gazetesi, vergi levhası ',
           'Emekli: Emekli maaşı belgesi (SGK)',
           'Öğrenci: Öğrenci belgesi ve veli izin mektubu',
-          'İşveren bilgileri ve iletişim detayları'
+          'İşveren bilgileri ve iletişim detayları',
+          'İş ait faaliyet belgesi (son 1 ayda alınmış)'
         ],
         critical: true
       },
-      {
-        title: 'Seyahat Planı Belgeleri',
-        icon: <FaPlane />,
-        items: [
-          'Uçak bileti rezervasyonu (gidiş-dönüş)',
-          'Detaylı seyahat programı/itinerary',
-          'Otel rezervasyon belgeleri (tüm konaklama dönemi)',
-          'Tur programı (paket tur ise)',
-          'Transfer rezervasyonları (varsa)',
-          'Ziyaret edilecek yerler listesi'
-        ],
-        critical: true
-      },
+  
       {
         title: 'Konaklama Belgeleri',
         icon: <FaHotel />,
         items: [
-          'Otel rezervasyon konfirmasyonu',
-          'Veya arkadaş/akraba evinde kalacaksa: Davet mektubu',
+         
+          'Arkadaş/akraba evinde kalacaksa: Davet mektubu',
           'Ev sahibinin pasaport/kimlik fotokopisi',
           'Ev sahibinin adres belgesi (council tax bill, utility bill)',
           'Ev sahibinin BRP kartı fotokopisi (varsa)',
@@ -244,10 +212,10 @@ export default function BirlesikKrallikVizeEvraklariPage() {
           'Tapu senedi (ev sahibi iseniz)',
           'Kira kontratı (kiracı iseniz)',
           'Araç ruhsatı',
-          'Aile nüfus kayıt örneği',
-          'Evlilik cüzdanı fotokopisi (evliyseniz)',
+          'Aile nüfus kayıt örneği (tam vukuatlı)',
+          'İkametgah belgesi',
           'Çocuk varsa: Doğum belgeleri',
-          'Medeni durum belgesi'
+         
         ],
         critical: false
       },
@@ -256,11 +224,10 @@ export default function BirlesikKrallikVizeEvraklariPage() {
         icon: <FaClipboardCheck />,
         items: [
           'Seyahat amaç mektubu (Cover Letter - İngilizce)',
-          'Daha önceki UK/Schengen/ABD vizeleri (varsa)',
+         
           'Davet mektubu (iş toplantısı için)',
           'Fuar/konferans katılım belgesi (varsa)',
-          'Sabıka kaydı belgesi (gerekirse)',
-          'Seyahat sigortası (zorunlu değil ama önerilir)'
+      
         ],
         critical: false
       }
@@ -272,8 +239,6 @@ export default function BirlesikKrallikVizeEvraklariPage() {
         items: [
           'Geçerli pasaport (kurs süresi + 6 ay geçerli)',
           'Online başvuru formu (CAS numarası ile)',
-          'Biyometrik fotoğraf (45x35mm)',
-          'TB test sonucu (6 aydan uzun kurs için zorunlu)',
           'CAS (Confirmation of Acceptance for Studies)'
         ],
         critical: true
@@ -296,8 +261,8 @@ export default function BirlesikKrallikVizeEvraklariPage() {
         title: 'Finansal Belgeler',
         icon: <FaMoneyBillWave />,
         items: [
-          'Londra için: Aylık £1,334 x 9 ay = £12,006',
-          'Londra dışı: Aylık £1,023 x 9 ay = £9,207',
+          'Londra için: Aylık £1,529 x 9 aya kadar = £13,761',
+          'Londra dışı: Aylık £1,171 x 9 aya kadar = £10,539',
           'Kurs ücreti + yaşam masrafları toplamı',
           'Son 28 günlük banka hesap ekstresi',
           'Para en az 28 gün hesapta durmalı',
@@ -307,18 +272,7 @@ export default function BirlesikKrallikVizeEvraklariPage() {
         ],
         critical: true
       },
-      {
-        title: 'TB Testi ve Sağlık',
-        icon: <FaClipboardCheck />,
-        items: [
-          'TB test sertifikası (6+ ay kurs için zorunlu)',
-          'Test onaylı merkezlerden alınmalı',
-          'Sonuç 6 ay geçerlidir',
-          'IHS (Immigration Health Surcharge) ödemesi',
-          'Sağlık raporu (gerekirse)'
-        ],
-        critical: true
-      },
+
       {
         title: 'Ek Belgeler',
         icon: <FaFileAlt />,
@@ -327,7 +281,8 @@ export default function BirlesikKrallikVizeEvraklariPage() {
           'Nüfus cüzdanı fotokopisi',
           'Daha önceki eğitim belgeleri',
           'Çalışma deneyimi (varsa)',
-          'Mezuniyet sonrası planlar'
+          'Mezuniyet sonrası planlar',
+          'IHS bedeli ödeme dekontu',
         ],
         critical: false
       }
@@ -339,9 +294,8 @@ export default function BirlesikKrallikVizeEvraklariPage() {
         items: [
           'Geçerli pasaport (5 yıl + 6 ay geçerli)',
           'Online başvuru formu',
-          'Biyometrik fotoğraf (45x35mm)',
-          'TB test sonucu (zorunlu)',
-          'Certificate of Sponsorship (CoS)'
+          'Adli sicil kaydı',
+
         ],
         critical: true
       },
@@ -352,7 +306,7 @@ export default function BirlesikKrallikVizeEvraklariPage() {
           'Certificate of Sponsorship (CoS) - UK işverenden',
           'İş teklif mektubu (job offer letter)',
           'Pozisyon detayları ve iş tanımı',
-          'Maaş bilgisi (minimum £38,700/yıl veya going rate)',
+          'Maaş bilgisi',
           'Şirket sponsor lisans numarası',
           'İşverenle yapılan kontrat/sözleşme'
         ],
@@ -366,8 +320,9 @@ export default function BirlesikKrallikVizeEvraklariPage() {
           'Mesleki sertifikalar',
           'Çalışma geçmişi belgeleri (CV)',
           'Referans mektupları',
-          'Dil yeterlilik belgesi (IELTS B1 minimum)',
-          'Meslek üyelik belgeleri (varsa)'
+          'Dil yeterlilik belgesi',
+          'Meslek üyelik belgeleri (varsa)',
+          '18 yaşından büyük olup en az 12 ay farklı bir ülkede yaşadıysanız bununla ilgili belgeler'
         ],
         critical: true
       },
@@ -378,7 +333,7 @@ export default function BirlesikKrallikVizeEvraklariPage() {
           'Minimum £1,270 (28 gün hesapta durmalı)',
           'Son 28 günlük banka ekstresi',
           'Maaş bordroları (mevcut işten)',
-          'İşveren sponsorluğu yapıyorsa mali belge gerekmeyebilir'
+         
         ],
         critical: true
       },
@@ -389,7 +344,8 @@ export default function BirlesikKrallikVizeEvraklariPage() {
           'Evlilik cüzdanı (eş için)',
           'Doğum belgeleri (çocuklar için)',
           'Eş ve çocuklar için finansal belgeler',
-          'Aile üyelerinin pasaportları'
+          'Aile üyelerinin pasaportları',
+          "Aile üyelerinin adli sicil kayıtları"
         ],
         critical: false
       }
@@ -401,8 +357,8 @@ export default function BirlesikKrallikVizeEvraklariPage() {
         items: [
           'Geçerli pasaport (2 yıl + 6 ay geçerli)',
           'Online başvuru formu',
-          'Biyometrik fotoğraf (45x35mm)',
-          'TB test sonucu (6+ ay kalış için)'
+         
+          
         ],
         critical: true
       },
@@ -415,7 +371,6 @@ export default function BirlesikKrallikVizeEvraklariPage() {
           'Ortak banka hesabı (varsa)',
           'Ortak faturalar, kira kontratı (varsa)',
           'Nikah şahitlerinin beyanları',
-          'İlişki timeline belgesi',
           'Daha önceki ziyaret kayıtları'
         ],
         critical: true
@@ -435,30 +390,16 @@ export default function BirlesikKrallikVizeEvraklariPage() {
         ],
         critical: true
       },
-      {
-        title: 'Finansal Gereksinimler',
-        icon: <FaMoneyBillWave />,
-        items: [
-          'Başvuru sahibi + sponsor birleşik gelir hesaplaması',
-          'Kategori A: Maaşlı çalışan (son 6 ay bordro)',
-          'Kategori B: Serbest meslek (son 1 yıl vergi)',
-          'Kategori C: Nakit tasarruf (£16,000 + gerekli tutar)',
-          'Kategori D: Emekli maaşı',
-          'Kategori E: Çalışan + tasarruf kombinasyonu',
-          'Birleşik banka ekstreleri'
-        ],
-        critical: true
-      },
+     
       {
         title: 'Konaklama Belgeleri',
         icon: <FaHome />,
         items: [
           'Mortgage belgesi veya kira kontratı',
-          'Yerel konsey izin belgesi (HMO için)',
-          'Konut müfettiş raporu (gerekirse)',
-          'Ev planı ve oda dağılımı',
           'Konutun yeterli büyüklükte olduğu belgesi',
-          'Council tax bill'
+          'Council tax bill',
+          'Ev sahibi izin mektubu (kiracı ise)',
+          'Fatura ve hizmet belgeleri (elektrik, su, gaz)',
         ],
         critical: true
       },
@@ -470,7 +411,8 @@ export default function BirlesikKrallikVizeEvraklariPage() {
           'Veya İngilizce konuşulan ülke vatandaşı belgesi',
           'Veya İngilizce öğretim yapan üniversite diploması',
           'Test UKVI onaylı merkezden alınmalı',
-          'Sonuç 2 yıl geçerlidir'
+          'Sonuç 2 yıl geçerlidir',
+          '65 yaş üstü veya fiziksel ya da medikal engelli ise başvuran dil yeterliliğinden muaf olabilir'
         ],
         critical: true
       },
@@ -481,7 +423,6 @@ export default function BirlesikKrallikVizeEvraklariPage() {
           'Doğum belgesi (apostil onaylı)',
           'Her iki ebeveynin de onayı',
           'Velayeti kanıtlayan belgeler',
-          'Çocuğun yaşına uygun finansal kanıt',
           'Okul kayıt belgeleri (varsa)'
         ],
         critical: false
@@ -494,10 +435,7 @@ export default function BirlesikKrallikVizeEvraklariPage() {
       question: 'İngiltere vizesi için bankada ne kadar para olmalı?',
       answer: 'İngiltere vizesi için günlük minimum 100-150 Pound arasında bir bütçe göstermeniz önerilir. Örneğin 10 günlük seyahat için yaklaşık 1000-1500 Pound bankada olmalıdır. Önemli olan son 6 aylık düzenli gelir-gider akışının görünmesidir. Para hesapta en az 3-6 ay durmuş olmalı, son anda yatırılan büyük miktarlar şüphe uyandırabilir.'
     },
-    {
-      question: 'UK vize fotoğrafı nasıl olmalı?',
-      answer: 'İngiltere vize fotoğrafı 45x35 mm boyutunda, renkli, açık renkli arka planda (gri veya krem rengi tercih edilir) olmalıdır. Beyaz arka plan önerilmez. Fotoğraf son 6 ay içinde çekilmiş ve biyometrik standartlara uygun olmalıdır. Başınız fotoğrafın %70-80\'ini kaplamalı, yüzünüz net görünmeli ve gözlükler yansımasız olmalıdır. Fotoğraf mat kağıda basılmalıdır.'
-    },
+
     {
       question: 'İngiltere vizesi kaç günde çıkar?',
       answer: 'Standart İngiltere vize başvurusu 3 hafta (15 iş günü) içinde sonuçlanır. Priority hizmeti ile 5 iş günü, Super Priority hizmeti ile 24 saat içinde sonuç alınabilir. Ancak bu hizmetler ek ücrete tabidir. Yaz aylarında ve tatil dönemlerinde süreç daha uzun sürebileceği için başvurunuzu seyahat tarihinden en az 1 ay önce yapmanız önerilir.'
@@ -797,8 +735,11 @@ export default function BirlesikKrallikVizeEvraklariPage() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               {selectedPurpose === 'standard-visitor' && 'Standard Visitor Visa için gerekli tüm belgeler'}
               {selectedPurpose === 'student' && 'Student Visa için gerekli tüm belgeler'}
-              {selectedPurpose === 'work' && 'Skilled Worker Visa için gerekli tüm belgeler'}
+              {selectedPurpose === 'work' && 'Skilled Worker Visa için gerekli tüm belgeler (İngilizce çevirisi yapılmış ve yeminli tercüman onaylı)'}
               {selectedPurpose === 'family' && 'Family Visa için gerekli tüm belgeler'}
+            </p>
+            <p>
+              Her belgenin PDF formatında, 10 MB’tan küçük şekilde taranıp randevudan en geç 1 gün önce iletilmesi gerekmektedir. Belgelerin tek bir PDF’te toplanması önerilmez.
             </p>
           </div>
 

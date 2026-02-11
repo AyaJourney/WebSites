@@ -36,25 +36,25 @@ export default async function handler(req, res) {
     // "/form/kanada-basvuru-formu",//burası tamam
     "/sikca-sorulan-sorular", //burası tamam
     "/vize-alma-ihtimalinizi-olcun", //burası tamam
-    "/yesil-pasaport-vize-rehberi",
+    "/yesil-pasaport-vize-rehberi",//burası tamam
+    "/amerika-vize-evraklari",//burası tamam
+    "/schengen-vize-evraklari",//burası tamam
+    "/birlesik-krallik-vize-evraklari",//burası tamam
+    "/amerika-b1-b2-vizesi",//burası tamam
     "/schengen-vize-adimlari",
     "/amerika-vize-danismanligi",
-    "/amerika-vize-evraklari",
-    "/schengen-vize-evraklari",
-    "/birlesik-krallik-vize-evraklari",
-    "/amerika-b1-b2-vizesi",
+    "/aya-journey-yorumlari",
     "/amerika-vizesi-kac-gunde-cikar",
     "/amerika-vize-mulakat-sorulari",
     "/amerika-vize-ucretleri",
     "/amerika-vize-ds-160-nasil-doldurulur",
     "/amerika-vize-checklist",
-    "/ds-160-kapanmadan-randevu-alinamiyor",
-    "/ankara-vize-danismanligi",
-    "/ankara-amerika-vizesi",
-    "/ankara-schengen-vizesi",
-    "/vize-sirketleri-ankara",
-    "/aya-journey-yorumlari",
-    "/vize-danismanlik-istanbul",
+    "/ds-160-kapanmadan-randevu-alinamiyor",//burası tamam
+    "/ankara-vize-danismanligi",//burası tamam
+    "/ankara-amerika-vizesi",//burası tamam
+    "/ankara-schengen-vizesi",//burası tamam
+    "/vize-sirketleri-ankara",//burası tamam
+    "/vize-danismanlik-istanbul",//burası tamam
     "/vize-danismanlik-ankara",//burası tamam
     "/schengen-vize-danismanligi-istanbul",//burası tamam
     "/schengen-vize-danismanligi-ankara",//burası tamam

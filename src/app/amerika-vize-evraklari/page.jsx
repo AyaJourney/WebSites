@@ -347,13 +347,13 @@ const jsonLd = {
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-full px-5 py-2 text-sm font-bold text-blue-700 mb-4">
             <FaShieldAlt className="w-4 h-4" />
-            Mesleki Duruma Özel
+            Ziyaret Durumuna Özel
           </div>
           <h2 className="text-4xl sm:text-5xl font-black text-gray-900 mb-4">
             Kimler Hangi Evrakları Hazırlamalı?
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Amerika vize evrakları mesleki durumunuza göre değişiklik gösterir. Aşağıda size uygun listeyi inceleyin.
+            Amerika vize evrakları ziyaret durumunuza göre değişiklik gösterir. Aşağıda size uygun listeyi inceleyin.
           </p>
         </div>
 
@@ -368,41 +368,33 @@ const jsonLd = {
                 <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-2xl flex items-center justify-center shadow-lg">
                   <FaBriefcase className="w-8 h-8 text-white" />
                 </div>
-                <span className="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">
-                  SGK'lı
-                </span>
+              
               </div>
 
-              <h3 className="text-2xl font-black text-gray-900 mb-4">Çalışanlar İçin Amerika Vize Evrakları</h3>
+              <h3 className="text-2xl font-black text-gray-900 mb-4">B1-B2 Turist Vizesi İçin Gerekli Evraklar</h3>
               
               <ul className="space-y-3 mb-6">
                 <li className="flex items-start gap-3">
                   <FaCheckCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-gray-700"><strong>Maaş Bordrosu</strong> (Son 3 ay)</span>
+                  <span className="text-sm text-gray-700"><strong>DS-160 Formu</strong> </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <FaCheckCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-gray-700"><strong>SGK İşe Giriş Bildirgesi</strong></span>
+                  <span className="text-sm text-gray-700"><strong>5x5 Biometrik Fotoğraf</strong></span>
                 </li>
                 <li className="flex items-start gap-3">
                   <FaCheckCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-gray-700"><strong>Islak İmzalı İzin Yazısı</strong></span>
+                  <span className="text-sm text-gray-700"><strong>Randevu Onay Sayfası</strong></span>
                 </li>
                 <li className="flex items-start gap-3">
                   <FaCheckCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-gray-700"><strong>Şirket Vergi Levhası</strong> (Güncel)</span>
+                  <span className="text-sm text-gray-700"><strong>Geçerli Pasaport</strong> (Yeni ve eski pasaportlar)</span>
                 </li>
-                <li className="flex items-start gap-3">
-                  <FaCheckCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-gray-700"><strong>Banka Hesap Dökümü</strong> (6 ay)</span>
-                </li>
+                 
               </ul>
 
               <div className="pt-4 border-t border-blue-100">
-                {/* <a href="#detay" className="inline-flex items-center gap-2 text-blue-600 font-bold text-sm hover:gap-3 transition-all">
-                  Detaylı Liste
-                  <MdArrowForward className="w-4 h-4" />
-                </a> */}
+
               </div>
             </div>
           </article>
@@ -416,41 +408,40 @@ const jsonLd = {
                 <div className="w-16 h-16 bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl flex items-center justify-center shadow-lg">
                   <FaUserShield className="w-8 h-8 text-white" />
                 </div>
-                <span className="bg-slate-100 text-slate-700 text-xs font-bold px-3 py-1 rounded-full">
-                  Şirket Sahibi
-                </span>
+               
               </div>
 
-              <h3 className="text-2xl font-black text-gray-900 mb-4">İşverenler İçin Amerika Vizesi Gerekli Evraklar</h3>
+              <h3 className="text-2xl font-black text-gray-900 mb-4"> J1 Kültürel Değişim Vizesi Gerekli Evraklar</h3>
               
               <ul className="space-y-3 mb-6">
                 <li className="flex items-start gap-3">
                   <FaCheckCircle className="w-5 h-5 text-slate-700 flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-gray-700"><strong>Faaliyet Belgesi</strong> (Güncel)</span>
+                  <span className="text-sm text-gray-700"><strong>DS 20-19 Belgesi</strong></span>
                 </li>
                 <li className="flex items-start gap-3">
                   <FaCheckCircle className="w-5 h-5 text-slate-700 flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-gray-700"><strong>Ticaret Sicil Gazetesi</strong></span>
+                  <span className="text-sm text-gray-700"><strong>DS-160 Formu</strong></span>
                 </li>
                 <li className="flex items-start gap-3">
                   <FaCheckCircle className="w-5 h-5 text-slate-700 flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-gray-700"><strong>Şirket Banka Dökümleri</strong></span>
+                  <span className="text-sm text-gray-700"><strong>SEVIS Ödeme Dekontu</strong></span>
                 </li>
                 <li className="flex items-start gap-3">
                   <FaCheckCircle className="w-5 h-5 text-slate-700 flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-gray-700"><strong>Mal Varlığı Belgeleri</strong> (Tapu/Araç)</span>
+                  <span className="text-sm text-gray-700"><strong>5x5 Biometrik Fotoğraf</strong></span>
                 </li>
                 <li className="flex items-start gap-3">
                   <FaCheckCircle className="w-5 h-5 text-slate-700 flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-gray-700"><strong>Vergi Beyannameleri</strong> (2 yıl)</span>
+                  <span className="text-sm text-gray-700"><strong>Banka Dökümleri</strong></span>
+                </li>
+                    <li className="flex items-start gap-3">
+                  <FaCheckCircle className="w-5 h-5 text-slate-700 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-gray-700"><strong>Karşı kurumdan alınmış bilgilendirme yazısı</strong></span>
                 </li>
               </ul>
 
               <div className="pt-4 border-t border-slate-200">
-                {/* <a href="#detay" className="inline-flex items-center gap-2 text-slate-700 font-bold text-sm hover:gap-3 transition-all">
-                  Detaylı Liste
-                  <MdArrowForward className="w-4 h-4" />
-                </a> */}
+           
               </div>
             </div>
           </article>
@@ -464,12 +455,10 @@ const jsonLd = {
                 <div className="w-16 h-16 bg-gradient-to-br from-orange-600 to-amber-600 rounded-2xl flex items-center justify-center shadow-lg">
                   <FaGraduationCap className="w-8 h-8 text-white" />
                 </div>
-                <span className="bg-orange-100 text-orange-700 text-xs font-bold px-3 py-1 rounded-full">
-                  Öğrenci
-                </span>
+               
               </div>
 
-              <h3 className="text-2xl font-black text-gray-900 mb-4">Öğrenciler İçin Amerika Vize Evrak Listesi</h3>
+              <h3 className="text-2xl font-black text-gray-900 mb-4">F1 Akademik Öğrenci Vizesi Evrak Listesi</h3>
               
               <ul className="space-y-3 mb-6">
                 <li className="flex items-start gap-3">
@@ -486,19 +475,20 @@ const jsonLd = {
                 </li>
                 <li className="flex items-start gap-3">
                   <FaCheckCircle className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-gray-700"><strong>Nüfus Kaydı</strong> (Tam tekmil)</span>
+                  <span className="text-sm text-gray-700"><strong>DS-160 Formu</strong> </span>
+                </li>
+                  <li className="flex items-start gap-3">
+                  <FaCheckCircle className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-gray-700"><strong>SEVIS Ödeme Dekontu</strong> </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <FaCheckCircle className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-gray-700"><strong>Aile Banka Dökümleri</strong></span>
+                  <span className="text-sm text-gray-700"><strong>5x5 Biometrik Fotoğraf</strong></span>
                 </li>
               </ul>
 
               <div className="pt-4 border-t border-orange-100">
-                {/* <a href="#detay" className="inline-flex items-center gap-2 text-orange-600 font-bold text-sm hover:gap-3 transition-all">
-                  Detaylı Liste
-                  <MdArrowForward className="w-4 h-4" />
-                </a> */}
+         
               </div>
             </div>
           </article>
@@ -507,7 +497,7 @@ const jsonLd = {
       </section>
 
       {/* Kritik Uyarı Section */}
-      <section className="max-w-7xl mx-auto px-6 py-16">
+      {/* <section className="max-w-7xl mx-auto px-6 py-16">
         <div className="relative overflow-hidden bg-gradient-to-br from-red-50 to-orange-50 border-2 border-red-200 rounded-3xl p-8 md:p-12">
           <div className="absolute top-0 right-0 w-64 h-64 bg-red-200/30 rounded-full -mr-32 -mt-32 blur-3xl" />
           
@@ -544,7 +534,7 @@ const jsonLd = {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Ortak Evraklar Section */}
       <section id="evrak-listesi" className="max-w-7xl mx-auto px-6 py-16 bg-white">
@@ -594,17 +584,7 @@ const jsonLd = {
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-gray-50 to-slate-50 border border-gray-200 rounded-2xl p-6">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                <FaChartLine className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h3 className="font-bold text-gray-900 mb-2">Banka Hesap Dökümü</h3>
-                <p className="text-sm text-gray-600">Son 6 ay, hareketli hesap</p>
-              </div>
-            </div>
-          </div>
+      
 
           <div className="bg-gradient-to-br from-gray-50 to-slate-50 border border-gray-200 rounded-2xl p-6">
             <div className="flex items-start gap-4">
@@ -618,17 +598,7 @@ const jsonLd = {
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-gray-50 to-slate-50 border border-gray-200 rounded-2xl p-6">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                <MdVerified className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h3 className="font-bold text-gray-900 mb-2">Seyahat Planı</h3>
-                <p className="text-sm text-gray-600">Uçak rezervasyonu, konaklama bilgisi</p>
-              </div>
-            </div>
-          </div>
+         
         </div>
       </section>
       {/* FAQ Section */}
@@ -651,7 +621,7 @@ const jsonLd = {
               </svg>
             </summary>
             <div className="px-6 pb-6 text-gray-700 leading-relaxed">
-              Amerika vizesi için bankada belirli bir alt limit yoktur. Önemli olan, seyahat masraflarınızı karşılayacak tutarın hesapta olması ve bu paranın kaynağının belgelenebilir olmasıdır. Genellikle 3-6 aylık hareketli hesap dökümü istenir.
+              Amerika vizesi için bankada belirli bir alt limit yoktur. Önemli olan, seyahat masraflarınızı karşılayacak tutarın hesapta olması ve bu paranın kaynağının belgelenebilir olmasıdır. F1 ve J1 vizesinde genellikle 3-6 aylık hareketli hesap dökümü istenir.
             </div>
           </details>
 
@@ -687,7 +657,7 @@ const jsonLd = {
               </svg>
             </summary>
             <div className="px-6 pb-6 text-gray-700 leading-relaxed">
-              Evet, son 10 yıla ait tüm eski pasaportlarınızı ve bu pasaportlardaki ABD vizelerini (varsa) mülakatta yanınızda bulundurmanız gerekmektedir. Bu belgeler seyahat geçmişinizi gösterir ve başvurunuzu güçlendirir.
+              Evet,  tüm eski pasaportlarınızı ve bu pasaportlardaki ABD vizelerini (varsa) mülakatta yanınızda bulundurmanız gerekmektedir. Bu belgeler seyahat geçmişinizi gösterir ve başvurunuzu güçlendirir.
             </div>
           </details>
         </div>

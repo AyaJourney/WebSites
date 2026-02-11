@@ -132,8 +132,8 @@ export default function SchengenVizeEvraklariPage() {
         items: [
           'Son kullanma tarihi vize bitiş tarihinden en az 3 ay sonra olmalı',
           'En az 2 boş sayfa bulunmalı',
-          'İmzalı olmalı',
-          'Eski pasaportlar varsa onlar da getirilmeli'
+          'Varsa eski pasaportların ve diğer bütün vize ve damgaların bulunduğu sayfaların fotokopisi'
+
         ],
         critical: true
       },
@@ -141,9 +141,9 @@ export default function SchengenVizeEvraklariPage() {
         title: 'Vize Başvuru Formu',
         icon: <FaFileAlt />,
         items: [
-          'Online doldurulmalı ve imzalanmalı',
-          'Tüm bilgiler İngilizce veya gidilecek ülkenin dilinde yazılmalı',
-          'El yazısı ile doldurulmamalı',
+          'Başvuran tarafından ıslak imzalanmalı',
+          'Tüm bilgiler evraklar ile tutarlı olmalı',
+          'Eksiksiz doldurulmalı',
           'İmza pasaport imzası ile aynı olmalı'
         ],
         critical: true
@@ -175,7 +175,7 @@ export default function SchengenVizeEvraklariPage() {
         title: 'Uçak Bileti Rezervasyonu',
         icon: <FaPlane />,
         items: [
-          'Gidiş-dönüş rezervasyonu (bilet kesilmemiş)',
+          'Gidiş-dönüş rezervasyonu',
           'Başvuru sahibinin adına kayıtlı',
           'Seyahat tarihleri net belirtilmiş',
           'Rezervasyon kodu içermeli'
@@ -201,7 +201,7 @@ export default function SchengenVizeEvraklariPage() {
           'Günlük ortalama 50-70 Euro gösterebilmeli',
           'Düzenli gelir/gider akışı olmalı',
           'Sponsor varsa sponsor mektubu ve mali belgeleri',
-          'Kredi kartı ekstreleri'
+          
         ],
         critical: true
       },
@@ -209,11 +209,10 @@ export default function SchengenVizeEvraklariPage() {
         title: 'İş/Gelir Durumu Belgeleri',
         icon: <MdWorkOutline />,
         items: [
-          'Çalışanlar: İş yazısı (kaşeli ve imzalı)',
-          'Serbest meslek: Vergi levhası, SGK belgesi',
+          'Çalışanlar ve şirket sahipleri için: Şirkete ait, şirket faaliyet durumuna uygun belgeler ',
           'Emekli: Emekli maaşı belgesi',
           'Öğrenci: Öğrenci belgesi ve veli izin mektubu',
-          'İş adamı: Şirket evrakları, ticaret sicil gazetesi'
+         
         ],
         critical: false
       },
@@ -225,7 +224,8 @@ export default function SchengenVizeEvraklariPage() {
           'Medeni durum belgesi',
           'Evlilik cüzdanı fotokopisi',
           'Seyahat programı/gezi planı',
-          'Daha önceki Schengen vizesi varsa pasaport kopyası'
+        'Seyahat planınız ile alakalı ek belgeler (araç kiralama, şehirler arası tren bileti, seyahat programı vs.)' 
+
         ],
         critical: false
       }
