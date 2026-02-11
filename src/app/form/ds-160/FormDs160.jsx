@@ -7585,12 +7585,12 @@ onChange={(e) => {
 
 
 {form.currentStep === 9 && (
-  <section>
+  <section className="col-span-2">
     <h3 className="font-semibold mb-3 text-lg">9.Bölüm</h3>
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className=" col-span-2 gap-6">
 
       {/* Mesleğiniz */}
-  <div>
+  <div >
   <label className="text-sm font-medium">Mesleğiniz</label>
 
   <select
@@ -8594,19 +8594,18 @@ onChange={(e) => {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
 
       {/* LANGUAGES - ZORUNLU */}
-<div className="relative md:col-span-2">
+<div className="relative md:col-span-2 w-full">
   <label className="text-sm font-medium">
-    Bildiğiniz Diller 
+    Bildiğiniz Diller
   </label>
 
   {/* DROPDOWN HEADER */}
   <button
     type="button"
     onClick={() => setLangOpen(!langOpen)}
-    className={`w-full mt-1 p-3 border rounded-xl text-left flex justify-between items-center
-      ${errors.languages ? "border-red-500" : "border-gray-300"}`}
+    className={`w-full mt-1 px-4 py-3 border rounded-xl text-left  flex justify-between items-center bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all duration-200 ${errors.languages ? "border-red-500" : "border-gray-300"}`}
   >
-    <span className="text-sm text-gray-700">
+    <span className="text-sm text-gray-700 truncate">
       {selectedLangs.length
         ? selectedLangs
             .map(v => languages_option?.find(l => l.value === v)?.label)
@@ -8614,23 +8613,31 @@ onChange={(e) => {
         : "Dil seçiniz"}
     </span>
 
-    <span className="text-gray-500 text-sm">▼</span>
+    <span
+      className={`text-gray-500 text-sm transition-transform duration-200 ${
+        langOpen ? "rotate-180" : ""
+      }`}
+    >
+      ▼
+    </span>
   </button>
 
   {/* DROPDOWN LIST */}
   {langOpen && (
-    <div className="absolute z-20 w-full mt-2 max-h-64 overflow-y-auto bg-white border rounded-xl shadow-lg">
+    <div className="absolute left-0 right-0 z-50 mt-2 bg-white border rounded-xl shadow-xl max-h-60 md:max-h-64 overflow-y-auto overscroll-contain
+    ">
       {languages_option.map(lang => {
         const checked = selectedLangs.includes(lang.value) || false;
 
         return (
           <label
             key={lang.value}
-            className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 cursor-pointer"
+            className="flex items-center gap-3 px-4 py-3  hover:bg-gray-50 active:bg-gray-100  cursor-pointer"
           >
             <input
               type="checkbox"
               checked={checked}
+              className="w-4 h-4"
               onChange={() => {
                 const newValue = toggleLanguage(
                   form?.steps?.[10]?.languages || "",
@@ -8639,7 +8646,9 @@ onChange={(e) => {
                 updateField(10, "languages", newValue);
               }}
             />
-            <span className="text-sm">{lang.label}</span>
+            <span className="text-sm select-none">
+              {lang.label}
+            </span>
           </label>
         );
       })}
@@ -8647,9 +8656,12 @@ onChange={(e) => {
   )}
 
   {errors.languages && (
-    <p className="text-red-500 text-xs mt-1">{errors.languages}</p>
+    <p className="text-red-500 text-xs mt-1">
+      {errors.languages}
+    </p>
   )}
 </div>
+
 
 
 
@@ -8666,7 +8678,7 @@ onChange={(e) => {
 </div>
  
       {/* ASKERLİK DURUMU */}
-<div>
+<div className="col-span-2">
   <label className="text-sm font-medium">Askerlik Durumu</label>
 
   <select
@@ -8754,7 +8766,7 @@ onChange={(e) => {
 {/*  */}
 
       {/* EK BİLGİ */}
-      <div className="md:col-span-2">
+      <div className="col-span-2">
         <label className="text-sm font-medium">Ek Bilgiler (Varsa)</label>
         <textarea
           name="additionalInfo"

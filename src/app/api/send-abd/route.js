@@ -214,8 +214,8 @@ export async function POST(req) {
     const drawField = (label, value, isFullWidth = false, xOffset = 0) => {
       const colWidth = isFullWidth ? CONTENT_WIDTH : (CONTENT_WIDTH / 2) - 10;
       const valStr = value ? String(value) : "-";
-      const labelSize = 8;
-      const valueSize = 10;
+      const labelSize = 14;
+      const valueSize = 14;
       
       const valueLines = wrapText(valStr, colWidth, regularFont, valueSize);
       const heightNeeded = (valueLines.length * (valueSize + 4)) + 15;

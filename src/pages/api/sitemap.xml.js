@@ -89,7 +89,10 @@ export default async function handler(req, res) {
     "/yunanistan-vize-randevusu",
     "/yunanistan-vize-evraklari",
     "/yunanistan-vize-reddi",
-    
+    "/fransa-vize",
+    "/fransa-vize-randevusu",
+    "/fransa-vize-evraklari",
+    "/fransa-vize-reddi",
 
 
     
