@@ -29,7 +29,7 @@ const HollandaVizeRandevusu = () => {
           </p>
 
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900">
-            Hollanda Vize Randevusu Nasıl Alınır?
+            Hollanda Vize Randevusu Nasıl Alınır Diyenler İçin Güncel Çözüm?
           </h1>
 
           <p className="mt-6 text-lg text-slate-600 max-w-3xl leading-relaxed">

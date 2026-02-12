@@ -90,30 +90,48 @@ const AmerikaB1B2Vizesi = () => {
     </h1>
 
     <p className="max-w-3xl mx-auto text-lg text-slate-600 leading-relaxed">
-      <strong>Amerika B1/B2 vizesi</strong>, turistik ve ticari amaçlarla
-      Amerika Birleşik Devletleri’ne yapılan kısa süreli seyahatler için
-      verilen en yaygın ABD vize türüdür. Doğru hazırlanmış bir başvuru
-      ile <strong>10 yıllık çok girişli Amerika vizesi</strong> almak mümkündür.
+      <strong>Amerika B1/B2 vizesi</strong>, turistik ve ticari seyahatler için verilen
+      en yaygın ABD vize türüdür. Doğru hazırlanmış bir başvuru ile
+      <strong> 10 yıllık çok girişli Amerika vizesi</strong> almak mümkündür.
     </p>
+
+    <div className="mt-8">
+      <a
+        href="/amerika-vize-danismanligi"
+        className="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-500 transition"
+      >
+        B1/B2 Başvurumu Profesyonel Hazırla
+      </a>
+    </div>
   </header>
 
 
-  {/* NEDİR */}
+  {/* GENEL REHBER BAĞLANTI */}
+  <section className="mb-20 bg-slate-50 p-8 rounded-3xl border border-slate-200 text-center">
+    <p className="text-slate-700">
+      Genel başvuru sürecini öğrenmek için
+      <a href="/amerika-vizesi" className="text-blue-600 font-semibold underline ml-1">
+        Amerika vizesi ana rehberini
+      </a> inceleyebilirsiniz.
+    </p>
+  </section>
+
+
+  {/* FARK */}
   <section className="mb-24 max-w-4xl mx-auto">
     <h2 className="text-3xl font-black mb-6">
-      Amerika B1 ve B2 Vizesi Arasındaki Fark Nedir?
+      Amerika B1 ve B2 Vizesi Arasındaki Fark
     </h2>
 
     <p className="text-slate-600 leading-relaxed mb-6">
-      <strong>Amerika B1 vizesi</strong>, iş toplantıları, fuar katılımları,
-      sözleşme görüşmeleri ve ticari ziyaretler için verilir.
+      <strong>B1 vizesi</strong> ticari amaçlı seyahatler (fuar, toplantı, iş görüşmesi)
+      için verilir.
     </p>
 
     <p className="text-slate-600 leading-relaxed">
-      <strong>Amerika B2 vizesi</strong> ise turistik seyahatler,
-      aile/arkadaş ziyareti ve kısa süreli tedavi amaçlı ziyaretleri kapsar.
-      Günümüzde çoğu başvuru sahibi <strong>B1/B2 birleşik vize</strong>
-      almaktadır.
+      <strong>B2 vizesi</strong> turistik seyahat, aile ziyareti ve kısa süreli
+      sağlık ziyaretleri için verilir. Günümüzde çoğu başvuru
+      <strong> birleşik B1/B2</strong> olarak sonuçlanır.
     </p>
   </section>
 
@@ -125,44 +143,64 @@ const AmerikaB1B2Vizesi = () => {
     </h2>
 
     <ol className="space-y-6 text-slate-700 max-w-3xl mx-auto">
-      <li>1️⃣ DS-160 başvuru formu doldurulur.</li>
+      <li>
+        1️⃣ 
+        <a href="/amerika-vize-ds-160-nasil-doldurulur" className="text-blue-600 underline ml-1">
+          DS-160 formu
+        </a> doldurulur.
+      </li>
       <li>2️⃣ ABD vize ücreti (MRV) yatırılır.</li>
-      <li>3️⃣ Ankara veya İstanbul’dan randevu alınır.</li>
-      <li>4️⃣ Konsolosluk mülakatına girilir.</li>
+      <li>
+        3️⃣ 
+        <a href="/abd-vize-randevusu-nasil-alinir" className="text-blue-600 underline ml-1">
+          Randevu alınır.
+        </a>
+      </li>
+      <li>
+        4️⃣ 
+        <a href="/amerika-vize-mulakat-sorulari" className="text-blue-600 underline ml-1">
+          Konsolosluk mülakatına
+        </a> girilir.
+      </li>
     </ol>
-
-    <p className="text-slate-600 mt-8 text-center max-w-3xl mx-auto">
-      Amerika B1/B2 vizesi başvurusunda en kritik aşama mülakattır.
-      Konsolosluk memuru başvuru sahibinin Türkiye’ye geri dönüş
-      niyetini değerlendirir.
-    </p>
   </section>
 
 
-  {/* RED RISKI */}
+  {/* RET RİSKİ BLOĞU */}
   <section className="mb-24 max-w-4xl mx-auto">
     <h2 className="text-3xl font-black mb-6">
       Amerika B1/B2 Vize Reddi Neden Olur?
     </h2>
 
     <p className="text-slate-600 leading-relaxed mb-6">
-      Amerika turistik vize reddi genellikle 214(b) maddesi kapsamında verilir.
-      Bu madde, başvuru sahibinin göçmenlik niyeti taşıdığı şüphesini ifade eder.
+      Amerika turistik vize reddi genellikle
+      <a href="/amerika-vize-214b" className="text-blue-600 underline ml-1">
+        214(b) maddesi
+      </a> kapsamında verilir.
     </p>
 
     <ul className="space-y-3 text-slate-600">
       <li>• Yetersiz finansal gösterim</li>
       <li>• Türkiye ile zayıf bağ</li>
-      <li>• Tutarsız DS-160 bilgileri</li>
-      <li>• Mülakatta çelişkili cevaplar</li>
+      <li>• DS-160 tutarsızlığı</li>
+      <li>• Mülakatta güven eksikliği</li>
     </ul>
+
+    <div className="mt-8 bg-red-50 border border-red-200 rounded-2xl p-6">
+      <p className="text-red-700 font-semibold">
+        Daha önce ret aldıysanız,
+        <a href="/amerika-vize-reddi-dosya-analizi" className="underline ml-1">
+          dosya analizi yaptırmanız
+        </a> önerilir.
+      </p>
+    </div>
   </section>
 
 
-  {/* EVRAKLAR */}
+  {/* EVRAK */}
   <section className="mb-24">
     <h2 className="text-3xl font-black mb-10 text-center">
-      Amerika B1/B2 Vizesi İçin Gerekli Evraklar
+      Amerika B1/B2 Vizesi İçin Evraklar
     </h2>
 
     <div className="grid md:grid-cols-2 gap-8">
@@ -171,17 +209,16 @@ const AmerikaB1B2Vizesi = () => {
         <ul className="space-y-2 text-slate-600">
           <li>• Geçerli pasaport</li>
           <li>• DS-160 onay sayfası</li>
-          <li>• Randevu onay belgesi</li>
-          <li>• Biyometrik fotoğraf</li>
+          <li>• Randevu belgesi</li>
+          <li>• Fotoğraf</li>
         </ul>
       </div>
 
       <div className="p-8 border rounded-2xl">
         <h3 className="font-bold mb-4">Destekleyici Belgeler</h3>
         <ul className="space-y-2 text-slate-600">
-          <li>• Banka hesap dökümü</li>
-          <li>• Çalışma belgeleri</li>
-          <li>• Şirket evrakları</li>
+          <li>• Banka dökümü</li>
+          <li>• Çalışma / şirket belgeleri</li>
           <li>• Seyahat planı</li>
         </ul>
       </div>
@@ -189,59 +226,53 @@ const AmerikaB1B2Vizesi = () => {
   </section>
 
 
-  {/* FAQ */}
-  <section className="mb-24 max-w-4xl mx-auto">
-    <h2 className="text-3xl font-black mb-8 text-center">
-      Amerika B1/B2 Vizesi Hakkında Sık Sorulan Sorular
+  {/* LOKASYON BAĞLANTILARI */}
+  <section className="mb-24 text-center">
+    <h2 className="text-2xl font-bold mb-6">
+      Mülakat Nerede Yapılır?
     </h2>
 
-    <div className="space-y-8">
-
-      <div>
-        <h3 className="font-bold text-lg">
-          Amerika B1/B2 vizesi kaç yıllık verilir?
-        </h3>
-        <p className="text-slate-600 text-sm">
-          Türkiye Cumhuriyeti vatandaşlarına genellikle
-          10 yıllık çok girişli vize verilir.
-        </p>
-      </div>
-
-      <div>
-        <h3 className="font-bold text-lg">
-          Amerika turistik vize almak zor mu?
-        </h3>
-        <p className="text-slate-600 text-sm">
-          Doğru hazırlık ile Amerika turistik vize almak mümkündür.
-          En önemli kriter mülakatta güven vermektir.
-        </p>
-      </div>
-
+    <div className="flex flex-col sm:flex-row justify-center gap-6">
+      <a href="/abd-vize-ankara" className="text-blue-600 underline font-semibold">
+        Ankara ABD Büyükelçiliği
+      </a>
+      <a href="/abd-vize-istanbul" className="text-blue-600 underline font-semibold">
+        İstanbul ABD Başkonsolosluğu
+      </a>
     </div>
   </section>
 
 
-  {/* CTA */}
+  {/* SON CTA */}
   <section className="bg-gradient-to-br from-blue-700 to-indigo-700 rounded-3xl p-16 text-center text-white">
     <h2 className="text-3xl md:text-5xl font-extrabold mb-6">
-      Amerika B1/B2 Vizesi İçin Profesyonel Destek
+      10 Yıllık Amerika Vizesi İçin Stratejik Başvuru
     </h2>
 
     <p className="max-w-2xl mx-auto text-blue-100 mb-10">
-      Amerika turistik veya ticari vize başvurunuzu
-      uzman danışmanlarımızla hazırlayın ve
-      10 yıllık ABD vizesi alma şansınızı artırın.
+      DS-160 kontrolü, randevu planlaması ve mülakat hazırlığı ile
+      başvurunuzu profesyonel şekilde yönetin.
     </p>
 
-    <a
-    href="https://wa.me/905302199056?text=Merhaba%2C%20vize%20ba%C5%9Fvurum%20i%C3%A7in%20profesyonel%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum.%20Uygun%20oldu%C4%9Funuzda%20s%C3%BCreci%20birlikte%20planlayabilir%20miyiz%3F"
-      className="inline-block rounded-xl bg-white px-10 py-4 text-blue-700 font-semibold hover:shadow-xl transition"
-    >
-      Ücretsiz Ön Değerlendirme
-    </a>
+    <div className="flex flex-col sm:flex-row justify-center gap-6">
+      <a
+        href="https://wa.me/905302199056?text=Amerika%20B1/B2%20vizesi%20için%20danışmanlık%20almak%20istiyorum."
+        className="rounded-xl bg-white px-10 py-4 text-blue-700 font-semibold hover:shadow-xl transition"
+      >
+        Ücretsiz Ön Değerlendirme
+      </a>
+
+      <a
+        href="/amerika-vizesi-en-iyi-danismanlik-sirketi"
+        className="rounded-xl bg-blue-900 px-10 py-4 text-white font-semibold hover:bg-black transition"
+      >
+        Neden Biz?
+      </a>
+    </div>
   </section>
 
 </main>
+
 
     </>
 

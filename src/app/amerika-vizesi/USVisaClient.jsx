@@ -79,12 +79,27 @@ const processSteps = [
     description:
       "Bu süreçte kopmuyoruz. Sürekli temas halinde kalarak size özel yurt dışı seyahat önerilerinde bulunuyoruz. Vize görüşmesi için stratejimizi belirliyor, söylemlerimizi ve fikir yapımızı birlikte oluşturuyoruz.",
   },
-  {
-    step: 3,
-    title: "Görüşmenize 1–2 Hafta Kala",
-    description:
-      "Sizden aldığımız bilgiler ışığında resmi başvuru formunuzu (DS-160) dolduruyoruz. Taslak formu birlikte kontrol edip varsa hataları düzeltiyor, formu onaylayarak başvuru sürecini resmiyete döküyoruz.",
-  },
+{
+  step: 3,
+  title: "Görüşmenize 1–2 Hafta Kala",
+  description: (
+    <>
+      Sizden aldığımız bilgiler ışığında resmi başvuru formunuzu (DS-160) dolduruyoruz. 
+      Taslak formu birlikte kontrol edip varsa hataları düzeltiyor, formu onaylayarak 
+      başvuru sürecini resmiyete döküyoruz.{" "}
+      
+      Resmi başvuru formu hakkında detaylı bilgi için{" "}
+      <Link
+        href="/amerika-vize-ds-160-nasil-doldurulur"
+        className="text-blue-600 font-semibold hover:underline"
+      >
+        DS-160 nasıl doldurulur rehberine
+      </Link>{" "}
+      göz atabilirsiniz.
+    </>
+  )
+},
+
   {
     step: 4,
     title: "Görüşmenize 1–3 Gün Kala (Final Hazırlığı)",
@@ -237,6 +252,40 @@ Vize alma ihtimalinizi ölçün!
             </div>
           </div>
         </div>
+
+   <div className="relative max-w-6xl mx-auto px-6 pb-10">
+  <div
+    ref={register}
+    data-anim="ukvisa-fade-up"
+    className="ukvisa-fade-up-init rounded-2xl border border-amber-200 bg-amber-50/70 p-6 text-sm text-slate-800 text-center"
+  >
+    <p className="text-slate-700 max-w-3xl mx-auto leading-relaxed">
+      Amerika vizesi sürecini detaylı incelemek için{" "}
+      <Link
+        href="/amerika-vize-ds-160-nasil-doldurulur"
+        className="text-blue-600 font-semibold hover:underline"
+      >
+        DS-160 form rehberi
+      </Link>
+      ,{" "}
+      <Link
+        href="/amerika-vize-evraklari"
+        className="text-blue-600 font-semibold hover:underline"
+      >
+        gerekli evraklar
+      </Link>{" "}
+      ve{" "}
+      <Link
+        href="/amerika-vize-214b"
+        className="text-blue-600 font-semibold hover:underline"
+      >
+        214(b) ret analizi
+      </Link>{" "}
+      sayfalarımızı inceleyebilirsiniz.
+    </p>
+  </div>
+</div>
+
       </section>
 
       {/* INFO CARDS */}
@@ -282,6 +331,13 @@ Vize alma ihtimalinizi ölçün!
           <div>
             <p className="text-sm text-slate-500 uppercase">Check-list</p>
             <h2 className="text-3xl font-bold text-slate-900">Gerekli belgeleri tamamlayın</h2>
+            <p className="text-sm text-slate-600 mb-6 mt-2">
+  Detaylı evrak listesi için{" "}
+  <Link href="/amerika-vize-evraklari" className="text-blue-600 font-semibold hover:underline">
+    Amerika vize evrakları rehberimizi
+  </Link>{" "}
+  inceleyebilirsiniz.
+</p>
           </div>
         </div>
 
@@ -355,10 +411,39 @@ Vize alma ihtimalinizi ölçün!
         q: "Amerika vizesi mülakatı Türkçe mi yapılır?",
         a: "Amerika vizesi mülakat dili başvurulan vize türüne göre değişir. Turistik vizelerde Türkçe mülakat yapılabilirken, öğrenci ve staj vizelerinde İngilizce mülakat beklenir."
       },
-      {
-        q: "Amerika vizesi reddi neden olur?",
-        a: "Amerika vizesi reddi genellikle 214(b) maddesi kapsamında göçmenlik şüphesi nedeniyle verilir. Ekonomik durumun zayıf görülmesi, boş pasaport ve geri dönüş bağlarının yetersizliği başlıca nedenlerdir."
-      }
+  {
+  q: "Amerika vizesi reddi neden olur?",
+  a: (
+    <>
+      Amerika vizesi reddi genellikle{" "}
+      <Link
+        href="/amerika-vize-214b"
+        className="text-blue-600 font-semibold hover:underline"
+      >
+        214(b) maddesi
+      </Link>{" "}
+      kapsamında göçmenlik şüphesi nedeniyle verilir. 
+      Ekonomik durumun zayıf görülmesi, boş pasaport ve 
+      Türkiye’ye geri dönüş bağlarının yetersizliği başlıca nedenlerdir. 
+      Detaylı ret sebeplerini{" "}
+      <Link
+        href="/amerika-vize-reddi-nedenleri"
+        className="text-blue-600 font-semibold hover:underline"
+      >
+        Amerika vize reddi nedenleri
+      </Link>{" "}
+      sayfamızda inceleyebilir, dosyanızın özel analizini ise{" "}
+      <Link
+        href="/amerika-vize-reddi-dosya-analizi"
+        className="text-blue-600 font-semibold hover:underline"
+      >
+        dosya analizi rehberi
+      </Link>{" "}
+      üzerinden değerlendirebilirsiniz.
+    </>
+  )
+}
+
     ].map((item, i) => (
       <details
         key={i}
@@ -496,6 +581,13 @@ Vize alma ihtimalinizi ölçün!
   />
 
   <div className="relative p-6 md:p-8 space-y-6">
+    <div className="bg-red-50 border border-red-200 p-5 rounded-2xl text-sm text-slate-800">
+  Amerika vizesi daha önce reddedildiyse mutlaka{" "}
+  <Link href="/amerika-vize-reddi-sonrasi-ne-yapilmali" className="text-red-600 font-semibold hover:underline">
+    vize reddi sonrası rehberimizi
+  </Link>{" "}
+  incelemeden yeniden başvuru yapmayın.
+</div>
     <h2 className="text-2xl md:text-3xl font-bold text-slate-900">Neden AYA Journey?</h2>
     <p className="text-slate-700">
       Biz sadece bir form doldurma hizmeti değil, bir yol arkadaşlığı sunuyoruz. Stratejik yaklaşımımız ve şeffaf iletişimimizle, Amerika rüyanıza bir adım daha yaklaşmanız için yanınızdayız.

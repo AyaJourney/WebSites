@@ -103,6 +103,25 @@ export default async function handler(req, res) {
     "/ispanya-vize-reddi",
     "/vfs-randevu-bulamiyorum",
     "/vfs-no-slots-availables",
+    "/amerika-vize-214b",
+    "/amerika-vize-reddi-214b-itiraz",
+    "/amerika-vize-reddi-sonrasi-ne-yapilmali",
+    "/amerika-vize-reddi-ikinci-basvuru",
+    "/amerika-vize-214b-nasil-kaldirilir",
+    "/amerika-vize-reddi-psikolojik-hatalar",
+    "/amerika-vize-reddi-dosya-analizi",
+    "/amerika-vize-reddi-evrak-yetersizligi",
+    "/amerika-vize-reddi-banka-hesabi",
+    "/amerika-vize-reddi-sponsor",
+    "/amerika-vize-reddi-ogrenci",
+    "/amerika-vize-reddi-calisan",
+    "/amerika-vize-reddi-sirket-sahibi",
+    "/amerika-vize-reddi-yeni-ise-baslayan",
+    "/amerika-vize-reddi-dusuk-maas",
+    "/amerika-vize-reddi-bekar",
+    "/amerika-vize-reddi-evli"
+
+
     
   ];
 
