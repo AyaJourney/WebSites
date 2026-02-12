@@ -381,25 +381,72 @@ const requiredFields = {
   1: ["tcId","fullName", "gender", "maritalStatus", "birthDate", "birthPlace","email","phone_number","home_owner","post_code","home_address","residence_duration"],
   2: ["boolean_child", "mother_full_name", "mother_birth_date","father_full_name","father_birth_date"],
   3: ["passport_number", "Passport_start_date", "Passport_end_date","passport_issuing_authority","tc_card_end_date"],
-  4: ["boolean_work","monthly_money","monthly_expenditure_amount"],
+  4: ["boolean_work","monthly_money","monthly_expenditure_amount","savings_type","savings","sideline","monthly_expenditure_amount","hasDependents"],
   5: ["uk_address","travel_start_date","travel_end_date","spend_pound","travel_reason"],
 
   6: ["passportFile","photoFile"],
 };
 
-console.log(form, "form")
 
 const validateStep = (step, formData) => {
-  const fields = requiredFields[step] || [];
-  if (!formData.steps[step]) return { valid: false, missing: fields };
+  let fields = requiredFields[step] || [];
+
+  if (!formData.steps[step]) {
+    return { valid: false, missing: fields };
+  }
+
+ if (step === 4) {
+    const boolean_work = formData.steps[4]?.boolean_work;
+
+    if (boolean_work === "CALISIYOR" || boolean_work === "CALISMAYAN") {
+      fields = [
+        ...fields,
+        "work_year",
+        "own_work",
+        "work_name",
+        "work_address",
+        "work_phone",
+        "worker_title"
+
+
+      ];
+    }
+    if (boolean_work === "OGRENCI") {
+       fields = [
+        ...fields,
+        "school_name",
+        "school_department",
+        "school_year",
+       
+
+
+      ];
+    }
+  }
+
+
+
+  // 🔥 STEP 5 (veya reddin olduğu step hangisiyse)
+  if (step === 5) {
+    const refused = formData.steps[5]?.boolean_refused_visa;
+
+    if (refused === "EVET") {
+      fields = [
+        ...fields,
+        "when_refused",
+        "refused_about"
+      ];
+    }
+  }
 
   const missing = fields.filter(field => {
     const val = formData.steps[step][field];
     return val === undefined || val === null || String(val).trim() === "";
   });
 
-  return { valid: missing.length === 0, missing: missing || [] };
+  return { valid: missing.length === 0, missing };
 };
+
 
 const goNext = () => {
   const { valid, missing = [] } = validateStep(form.currentStep, form);
@@ -859,7 +906,7 @@ const updateDependent = (stepIndex, personIndex, field, value) => {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6 flex items-start justify-center">
-      {/* A4-like container */}
+
       <div
         className="bg-white shadow-xl w-full max-w-[794px] p-8"
         style={{
@@ -1500,7 +1547,7 @@ const updateDependent = (stepIndex, personIndex, field, value) => {
         </div>
       )}
 <div>
-  <label className="text-sm font-medium">Doğum Tarihi</label>
+  <label className="text-sm font-medium">Doğum Tarihiniz</label>
 <input
   type="date"
   name="birthDate"
@@ -1547,7 +1594,7 @@ const updateDependent = (stepIndex, personIndex, field, value) => {
 
       {/* DOĞUM YERİ */}
       <div>
-        <label className="text-sm font-medium">Doğum Yeri(Pasaportta yazan)</label>
+        <label className="text-sm font-medium">Doğum Yeriniz(Pasaportta yazan)</label>
         <input
           name="birthPlace"
         className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
@@ -2758,7 +2805,8 @@ onBlur={(e) => {
             <label className="text-sm font-medium">Okul Adı</label>
             <input
               name="school_name"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+              className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+            ${errors.school_name ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
               value={form.steps[4].school_name || ""}
                                 onChange={(e) => {
                 if (isMobile) {
@@ -2779,13 +2827,17 @@ onBlur={(e) => {
             }}
               placeholder="Örn: Boğaziçi Üniversitesi"
             />
+                       {errors.school_name && (
+            <p className="text-red-500 text-xs mt-1">{errors.school_name}</p>
+          )}
           </div>
 
           <div>
             <label className="text-sm font-medium">Bölüm</label>
             <input
               name="school_department"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+              className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+            ${errors.school_department ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
               value={form.steps[4].school_department || ""}
                                        onChange={(e) => {
                 if (isMobile) {
@@ -2806,6 +2858,9 @@ onBlur={(e) => {
             }}
               placeholder="Örn: Bilgisayar Mühendisliği"
             />
+                       {errors.school_department && (
+            <p className="text-red-500 text-xs mt-1">{errors.school_department}</p>
+          )}
           </div>
 
           <div>
@@ -2814,10 +2869,14 @@ onBlur={(e) => {
               type="text"
               min="0"
               name="school_year"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+              className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+            ${errors.school_year ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
               value={form.steps[4].school_year || ""}
               onChange={(e) => updateField(4, "school_year", normalizeInput(e.target.value))}
             />
+                       {errors.school_year && (
+            <p className="text-red-500 text-xs mt-1">{errors.school_year}</p>
+          )}
           </div>
         </>
       )}
@@ -2830,7 +2889,8 @@ onBlur={(e) => {
          {form.steps[4].boolean_work === "CALISMAYAN" ?  <label className="text-sm font-medium">Eski İş Yeri Adı (varsa)</label>  :  <label className="text-sm font-medium">İş Yeri Adı</label> }  
             <input
               name="work_name"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+              className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+            ${errors.work_name ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
               value={form.steps[4].work_name || ""}
                     onChange={(e) => {
                 if (isMobile) {
@@ -2850,13 +2910,17 @@ onBlur={(e) => {
                 }
             }}
             />
+             {errors.work_name && (
+            <p className="text-red-500 text-xs mt-1">{errors.work_name}</p>
+          )}
           </div>
 
           <div>
        {form.steps[4].boolean_work === "CALISMAYAN" ?  <label className="text-sm font-medium">Eski İş Yeri Adresi (varsa)</label>  :   <label className="text-sm font-medium">İş Yeri Adresi</label> }       
             <input
               name="work_address"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+              className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+            ${errors.work_address ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
               value={form.steps[4].work_address || ""}
                         onChange={(e) => {
                 if (isMobile) {
@@ -2876,6 +2940,9 @@ onBlur={(e) => {
                 }
             }}
             />
+             {errors.work_address && (
+            <p className="text-red-500 text-xs mt-1">{errors.work_address}</p>
+          )}
           </div>
 
           <div>
@@ -2883,10 +2950,14 @@ onBlur={(e) => {
       
             <input
               name="work_phone"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+              className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+            ${errors.work_phone ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
               value={form.steps[4].work_phone || ""}
               onChange={(e) => updateField(4, "work_phone", e.target.value)}
             />
+             {errors.work_phone && (
+            <p className="text-red-500 text-xs mt-1">{errors.work_phone}</p>
+          )}
           </div>
 
           <div>
@@ -2894,7 +2965,8 @@ onBlur={(e) => {
 
             <input
               name="worker_title"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+              className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+            ${errors.worker_title ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
               value={form.steps[4].worker_title || ""}
                            onChange={(e) => {
                 if (isMobile) {
@@ -2914,6 +2986,9 @@ onBlur={(e) => {
                 }
             }}
             />
+             {errors.worker_title && (
+            <p className="text-red-500 text-xs mt-1">{errors.worker_title}</p>
+          )}
           </div>
 
           <div>
@@ -2924,11 +2999,15 @@ onBlur={(e) => {
               type="text"
               // min="0"
               name="work_year"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+              className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+            ${errors.work_year ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
               value={form.steps[4].work_year || ""}
               onChange={(e) => updateField(4, "work_year",normalizeInput( e.target.value))}
               placeholder="Örn: 5 Yıl"
             />
+             {errors.work_year && (
+            <p className="text-red-500 text-xs mt-1">{errors.work_year}</p>
+          )}
           </div>
 
           {form.steps[4].boolean_work === "CALISIYOR" && (
@@ -2936,7 +3015,8 @@ onBlur={(e) => {
               <label className="text-sm font-medium">Bu iş yeri sizin mi?</label>
               <select
                 name="own_work"
-                className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+                className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+            ${errors.own_work ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
                 value={form.steps[4].own_work || ""}
                 onChange={(e) => updateField(4, "own_work", e.target.value)}
               >
@@ -2946,6 +3026,9 @@ onBlur={(e) => {
                 <option value="DIGER">Diğer</option>
 
               </select>
+               {errors.own_work && (
+            <p className="text-red-500 text-xs mt-1">{errors.own_work}</p>
+          )}
             </div>
           )}
         </>
@@ -2990,7 +3073,8 @@ onBlur={(e) => {
         <label className="text-sm font-medium">Düzenli bir birikime sahip misiniz?</label>
         <select
           name="savings_type"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+                   className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+          ${errors.savings_type ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
           value={form.steps[4].savings_type || ""}
           onChange={(e) => updateField(4, "savings_type", e.target.value)}
         >
@@ -3003,6 +3087,7 @@ onBlur={(e) => {
           <option value="DIGER">Diğer</option>
 
         </select>
+          {errors.savings_type && <p className="text-red-500 text-xs mt-1">{errors.savings_type}</p>}
       </div>
 
 {form.steps[4].savings_type === "DIGER" && (
@@ -3010,7 +3095,8 @@ onBlur={(e) => {
     <label className="text-sm font-medium">Lütfen diğer birikiminizi detaylandırınız</label>
     <input
       name="savings_type_other"
-      className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+      className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+            ${errors.savings_type_other ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
       value={form.steps[4].savings_type_other || ""}
       onChange={(e) => {
                 if (isMobile) {
@@ -3031,6 +3117,7 @@ onBlur={(e) => {
             }}
       placeholder="Detaylandırınız"
     />
+      {errors.savings_type_other && <p className="text-red-500 text-xs mt-1">{errors.savings_type_other}</p>}
   </div>
 )}
 
@@ -3039,7 +3126,8 @@ onBlur={(e) => {
       <label className="text-sm font-medium">Bu gelir dışında birikiminiz var mı?</label>
       <input
         name="savings"
-        className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+        className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+            ${errors.savings ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
         value={form.steps[4].savings || ""}
                          onChange={(e) => {
                 if (isMobile) {
@@ -3060,13 +3148,15 @@ onBlur={(e) => {
             }}
         placeholder="Örn: 20000 TL"
       />
+        {errors.savings && <p className="text-red-500 text-xs mt-1">{errors.savings}</p>}
     </div>
 
     <div>
       <label className="text-sm font-medium">Aylık kazancınız dışında yan gelirleriniz var mı?</label>
       <input
         name="sideline"
-        className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+        className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+            ${errors.sideline ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
         value={form.steps[4].sideline || ""}
                     onChange={(e) => {
                 if (isMobile) {
@@ -3087,6 +3177,7 @@ onBlur={(e) => {
             }}
         placeholder="Örn: 1000 TL"
       />
+        {errors.sideline && <p className="text-red-500 text-xs mt-1">{errors.sideline}</p>}
     </div>
 
     <div>
@@ -3128,7 +3219,8 @@ onBlur={(e) => {
 
   <select
     name="hasDependents"
-    className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
+            ${errors.hasDependents ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
     value={form.steps[4].hasDependents || ""}
     onChange={(e) => {
       updateField(4, "hasDependents", e.target.value);
@@ -3143,11 +3235,12 @@ onBlur={(e) => {
     <option value="EVET">EVET</option>
     <option value="HAYIR">HAYIR</option>
   </select>
+    {errors.hasDependents && <p className="text-red-500 text-xs mt-1">{errors.hasDependents}</p>}
 </div>
 {form.steps[4].hasDependents === "EVET" && (
   <div className="mt-4">
     <label className="text-sm font-medium">
-      Kaç kişi bakmakla yükümlüsünüz?
+      Kaç kişiye bakmakla yükümlüsünüz?
     </label>
 
     <input
@@ -3627,10 +3720,12 @@ onBlur={(e) => {
             <input
               type="month"
               name="when_refused"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+              className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300 ${errors.when_refused ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
               value={form.steps[5].when_refused || ""}
               onChange={(e) => updateField(5, "when_refused", e.target.value)}
+
             />
+             {errors.when_refused && <p className="text-red-500 text-xs mt-1">{errors.when_refused}</p>}
           </div>
 
           <div className="md:col-span-2">
@@ -3638,8 +3733,9 @@ onBlur={(e) => {
             <textarea
               name="refused_about"
               rows={3}
-              className="w-full resize-none mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+              className={`w-full resize-none mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300 ${errors.refused_about ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
               value={form.steps[5].refused_about || ""}
+
                onChange={(e) => {
                 if (isMobile) {
                     // Mobile: Normalizasyon YOK, sadece değeri sakla
@@ -3658,6 +3754,7 @@ onBlur={(e) => {
                 }
             }}
             ></textarea>
+              {errors.refused_about && <p className="text-red-500 text-xs mt-1">{errors.refused_about}</p>}
           </div>
         </>
       )}
@@ -4262,7 +4359,7 @@ onBlur={(e) => {
 {/* 1) Aile bireyleri dışında biriyle seyahat edecek misiniz? */}
 {/* --------------------------------------------------- */}
 
-<label className="text-sm font-medium mt-4 block">Aile bireyleri dışında biriyle seyahat edecek misiniz?</label>
+<label className="text-sm font-medium mt-4 block">Beraber seyahat edeceğiniz birisi var mı?</label>
 <select
   value={form.steps[5].travel_with_non_family || ""}
   onChange={(e) => updateField(5, "travel_with_non_family", e.target.value)}
@@ -4507,9 +4604,25 @@ Avustralya, Kanada, Yeni Zelanda, Amerika, İsviçre, Schengen Ülkelerini Son 1
   <label className="text-sm font-medium block">
     Son 10 yılda İngiltere, ABD, Kanada, Avustralya, Yeni Zelanda, İsviçre veya Schengen ülkeleri dışında başka ülkelere gittiniz mi? (Hepsini belirtiniz.)
   </label>
-  <select className="w-full mt-1 p-3 border rounded-xl" value={form.steps[5].boolean_traveled_adroad || ""} onChange={(e) => {
+  <select className="w-full mt-1 p-3 border rounded-xl" value={form.steps[5].boolean_traveled_adroad || ""}
+  
+  onChange={(e) => {
+      const value = e.target.value;
     updateField(5, "boolean_traveled_adroad", e.target.value);
-    if (e.target.value === "HAYIR") updateField(5, "abroad_country", []);
+    if (value === "EVET") {
+    const currentList = form.steps[5].abroad_country || [];
+
+    if (currentList.length === 0) {
+      updateField(5, "abroad_country", [
+        { country: "", purpose: "", start: "", end: "" }
+      ]);
+    }
+  }
+
+  if (value === "HAYIR") {
+    // istersek temizleyebiliriz
+    updateField(5, "abroad_country", []);
+  }
   }}>
     <option value="">Seçiniz</option>
     <option value="EVET">Evet</option>

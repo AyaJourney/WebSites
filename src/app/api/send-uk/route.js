@@ -87,10 +87,7 @@ function formatDateDMY(dateString) {
   return `${d}/${m}/${y}`;
 }
 
-/**
- * POST handler - Professional Corporate PDF Design
- * Font fix: Uses single custom font for all fields to prevent errors and maintain consistency.
- */
+
 export async function POST(req) {
   try {
     const formData = await req.json();
@@ -182,11 +179,7 @@ function ensureSpace(requiredHeight = 60) {
     drawHeader(currentPage);
   }
 }
-    // --- Yardımcı Fonksiyonlar ---
-// const logoPath = path.join(process.cwd(), "public", "images", "aya_logo_100x70.png");
-// const logoBytes = fs.readFileSync(logoPath);
-// const logoImage = await pdfDoc.embedPng(logoBytes);
-    // 1. Metin Sarma (Word Wrap)
+
     const wrapText = (text, maxWidth, font, size) => {
       if (!text) return [];
       const words = String(text).split(' ');
@@ -211,19 +204,27 @@ function ensureSpace(requiredHeight = 60) {
     let currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
     let currentY = PAGE_HEIGHT - MARGIN;
     let pageCount = 1;
-
+const HEADER_HEIGHT = 20; 
     // 2. Sayfa Kontrolü & Yeni Sayfa
-    const checkSpace = (heightNeeded) => {
-      if (currentY - heightNeeded < MARGIN) {
-        drawFooter(currentPage, pageCount);
-        currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
-        pageCount++;
-        currentY = PAGE_HEIGHT - MARGIN;
-        drawHeader(currentPage); 
-        return true;
-      }
-      return false;
-    };
+const checkSpace = (heightNeeded) => {
+
+  if (currentY - heightNeeded < MARGIN) {
+
+    drawFooter(currentPage, pageCount);
+
+    currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+    pageCount++;
+
+    drawHeader(currentPage);
+
+    // 🔥 HEADER ALTINA İN
+    currentY = PAGE_HEIGHT - MARGIN - HEADER_HEIGHT;
+
+    return true;
+  }
+
+  return false;
+};
 
     // 3. Header (Sayfa Üstü)
 const drawHeader = async (page) => {
@@ -306,16 +307,18 @@ const drawSection = (title) => {
 
 
     // 6. Alan Çizimi (Grid Yapısı - Label/Value)
- const drawField = (label, value, isFullWidth = false, xOffset = 0) => {
-  const colWidth = isFullWidth
-    ? CONTENT_WIDTH
-    : (CONTENT_WIDTH / 2) - 12;
+const drawField = (label, value) => {
+
+  // 🔥 Sayfanın tamamını kullan (margin hariç)
+  const colWidth = CONTENT_WIDTH;
 
   const valStr = value ? String(value) : "-";
   const labelSize = 14;
   const valueSize = 14;
+  const lineSpacing = valueSize + 5;
 
-  // Metin satırları
+  const drawX = MARGIN;
+
   const valueLines = wrapText(
     valStr,
     colWidth,
@@ -323,19 +326,12 @@ const drawSection = (title) => {
     valueSize
   );
 
-  // 🔥 GERÇEK yükseklik hesabı
-  const labelHeight = labelSize + 4;
-  const valueHeight = valueLines.length * (valueSize + 4);
-  const fieldHeight = labelHeight + valueHeight + 10;
+  const labelHeight = labelSize + 6;
 
-  // 🔥 Sayfa kontrolü (SADECE sol kolon için)
-  if (xOffset === 0) {
-    checkSpace(fieldHeight + 10);
-  }
+  // 🔥 Label için alan kontrolü
+  checkSpace(labelHeight + 10);
 
-  const drawX = MARGIN + xOffset;
-
-  // Label
+  // LABEL
   currentPage.drawText(label, {
     x: drawX,
     y: currentY,
@@ -344,30 +340,56 @@ const drawSection = (title) => {
     color: COLORS.textLabel,
   });
 
-  // Value
-  let textY = currentY - labelHeight;
-  valueLines.forEach((line) => {
+  currentY -= labelHeight;
+
+  // 🔥 Tek paragraf gibi akacak
+  valueLines.forEach((line, index) => {
+
+    // Sayfa dolduysa yeni sayfa aç
+    if (checkSpace(lineSpacing)) {
+
+      // Yeni sayfada sadece DEVAM ibaresi yaz
+      currentPage.drawText(label + " (Devam)", {
+        x: drawX,
+        y: currentY,
+        size: labelSize,
+        font: boldFont,
+        color: COLORS.textLabel,
+      });
+
+      currentY -= labelHeight;
+    }
+
     currentPage.drawText(line, {
       x: drawX,
-      y: textY,
+      y: currentY,
       size: valueSize,
       font: regularFont,
       color: COLORS.textMain,
     });
-    textY -= valueSize + 4;
+
+    currentY -= lineSpacing;
   });
 
-  return fieldHeight;
+  currentY -= 15;
+
+  return true;
 };
+
 const checkSpaceY = async (needed = 140) => {
+
   if (currentY - needed < MARGIN) {
+
     drawFooter(currentPage, pageCount);
 
     currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
     pageCount++;
-    currentY = PAGE_HEIGHT - MARGIN;
 
+    // Header'ı çiz
     await drawHeader(currentPage);
+
+    // 🔥 Header altına in
+    currentY = PAGE_HEIGHT - MARGIN - HEADER_HEIGHT;
   }
 };
 const drawLine = async (label, value) => {
@@ -380,16 +402,7 @@ const drawLine = async (label, value) => {
     // drawHeader(currentPage, true);
 
     const s = (n) => steps[String(n)] || {};
-// const hasDependents = s(4).hasDependents;
 
-// const fields = [
-//   drawField(
-//     "Bakmakla Yükümlü Olduğunuz Var mı?",
-//     hasDependents || "-",
-//     true,
-//     0
-//   ),
-// ];
 
     // --- BÖLÜM 1: Kişisel Bilgiler ---
        await drawHeader(currentPage);
@@ -399,12 +412,12 @@ const drawLine = async (label, value) => {
 drawSection("KİŞİSEL BİLGİLER");
 // EPOSTA
 let h1 = drawField("E-posta", s(1).email || "-", false, 0);
-let h2 = drawField("İkinci E-posta", s(1).email2 || "-", false, CONTENT_WIDTH / 2);
+let h2 = drawField("İkinci E-posta", s(1).email2 || "-", false, 0);
 currentY -= Math.max(h1, h2) + 10;
 
 // İletişim
 h1 = drawField("Telefon", s(1).phone_number || "-", false, 0);
-h2 = drawField("İkinci Telefon", s(1).phone_number2 || "-", false, CONTENT_WIDTH / 2);
+h2 = drawField("İkinci Telefon", s(1).phone_number2 || "-", false, 0);
 currentY -= Math.max(h1, h2) + 10;
 
 // Ad Soyad – T.C.
@@ -413,7 +426,7 @@ currentY -= Math.max(h1, h2) + 10;
 
 // CİNSİYET – MEDENİ DURUM
 h1 = drawField("Cinsiyet", s(1).gender || "-", false, 0);
-h2 = drawField("Medeni Durum", s(1).maritalStatus || "-", false, CONTENT_WIDTH / 2);
+h2 = drawField("Medeni Durum", s(1).maritalStatus || "-", false, 0);
 currentY -= Math.max(h1, h2) + 10;
 // Evlenmeden önceki soyadı
 if (s(1).gender === "KADIN" && s(1).maritalStatus === "EVLI") {
@@ -424,15 +437,15 @@ if (s(1).gender === "KADIN" && s(1).maritalStatus === "EVLI") {
 // Eş bilgileri
 if (s(1).maritalStatus === "EVLI") {
   h1 = drawField("Eşinin Adı Soyadı", s(1).partner_full_name || "-", false, 0);
-  h2 = drawField("Eşinin Doğum Tarihi", formatDateDMY(s(1).partner_birth_date), false, CONTENT_WIDTH / 2);
+  h2 = drawField("Eşinin Doğum Tarihi", formatDateDMY(s(1).partner_birth_date), false, 0);
   currentY -= Math.max(h1, h2) + 10;
 
   h1 = drawField("Eşinin Uyruğu", s(1).partner_nationality || "-", false, 0);
-  h2 = drawField("Eşiyle Yaşıyor mu", s(1).partner_lives_with_you || "-", false, CONTENT_WIDTH / 2);
+  h2 = drawField("Eşiyle Yaşıyor mu", s(1).partner_lives_with_you || "-", false, 0);
   currentY -= Math.max(h1, h2) + 10;
 
   h1 = drawField("Eşiyle Seyahat", s(1).partner_travel_with_you || "-", false, 0);
-  h2 = drawField("Eş Pasaport No", s(1).partner_passport_number || "-", false, CONTENT_WIDTH / 2);
+  h2 = drawField("Eş Pasaport No", s(1).partner_passport_number || "-", false, 0);
   currentY -= Math.max(h1, h2) + 10;
 }
 
@@ -452,7 +465,7 @@ h2 = drawField(
   "Ev Durumu",
   `${s(1).home_owner || "-"} (${s(1).residence_duration || "-"})`,
   false,
-  CONTENT_WIDTH / 2
+  0
 );
 currentY -= Math.max(h1, h2) + 10;
 
@@ -495,7 +508,7 @@ h2 = drawField(
   "Pasaportu Veren Makam",
   s(3).passport_issuing_authority || "-",
   false,
-  CONTENT_WIDTH / 2
+  0
 );
 
 currentY -= Math.max(h1, h2) + 10;
@@ -512,7 +525,7 @@ h2 = drawField(
   "Pasaport Bitiş Tarihi",
   s(3).Passport_end_date ? formatDateDMY(s(3).Passport_end_date) : "-",
   false,
-  CONTENT_WIDTH / 2
+  0
 );
 
 currentY -= Math.max(h1, h2) + 10;
@@ -534,7 +547,7 @@ h2 = drawField(
   "T.C. Kimlik Kartı Bitiş Tarihi",
   s(3).tc_card_end_date ? formatDateDMY(s(3).tc_card_end_date) : "-",
   false,
- CONTENT_WIDTH / 2
+ 0
 );
 
 currentY -= Math.max(h1, h2) + 10;
@@ -556,14 +569,14 @@ if (s(1).other_nationality === "EVET") {
     "Vatandaşlık Tarihleri",
     `${formatDateDMY(s(1).other_nationality_start_date)} / ${formatDateDMY(s(1).other_nationality_end_date)}`,
     false,
-    CONTENT_WIDTH / 2
+    0
   );
   currentY -= Math.max(h1, h2) + 10;
 }
 
 // Doğum Tarihi – Yeri
 h1 = drawField("Doğum Tarihi", formatDateDMY(s(1).birthDate), false, 0);
-h2 = drawField("Doğum Yeri", s(1).birthPlace || "-", false, CONTENT_WIDTH / 2);
+h2 = drawField("Doğum Yeri", s(1).birthPlace || "-", false, 0);
 currentY -= Math.max(h1, h2) + 10;
 
 
@@ -596,12 +609,12 @@ if (["CALISIYOR", "EMEKLI", "CALISMAYAN"].includes(s(4).boolean_work)) {
     s(4).boolean_work === "CALISMAYAN" ? "Eski İş Yeri Adresi" : "İş Yeri Adresi",
     s(4).work_address || "-",
     false,
-    CONTENT_WIDTH / 2
+    0
   );
   currentY -= Math.max(h1, h2) + 10;
 
   h1 = drawField("İş Yeri Telefonu", s(4).work_phone || "-", false, 0);
-  h2 = drawField("Görev / Ünvan", s(4).worker_title || "-", false, CONTENT_WIDTH / 2);
+  h2 = drawField("Görev / Ünvan", s(4).worker_title || "-", false, 0);
   currentY -= Math.max(h1, h2) + 10;
 
   h1 = drawField("Toplam Çalışma Süresi", s(4).work_year || "-", false, 0);
@@ -614,7 +627,7 @@ if (["CALISIYOR", "EMEKLI", "CALISMAYAN"].includes(s(4).boolean_work)) {
 }
 if (s(4).boolean_work === "OGRENCI") {
   h1 = drawField("Okul Adı", s(4).school_name || "-", false, 0);
-   h2 = drawField("Bölüm", s(4).school_department || "-", false, CONTENT_WIDTH / 2);
+   h2 = drawField("Bölüm", s(4).school_department || "-", false, 0);
   currentY -= Math.max(h1, h2) + 10;
 
   h1 = drawField("Okuma Süresi", s(4).school_year || "-", false, 0);
@@ -625,15 +638,15 @@ if (s(4).boolean_work) {
   h1 = drawField("Düzenli birikime sahip misiniz?", s(4).savings_type || "-", false, 0);
 
  if (s(4).savings_type === "DIGER") {
-  h2 = drawField("Diğer Açıklaması", s(4).savings_type_other || "-", false, CONTENT_WIDTH / 2);
+  h2 = drawField("Diğer Açıklaması", s(4).savings_type_other || "-", false, 0);
  }
    currentY -= Math.max(h1, h2) + 10;
   h1 = drawField("Aylık Gelir", s(4).monthly_money || "-", false, 0);
-  h2 = drawField("Birikim", s(4).savings || "-", false, CONTENT_WIDTH / 2);
+  h2 = drawField("Birikim", s(4).savings || "-", false, 0);
   currentY -= Math.max(h1, h2) + 10;
 
   h1 = drawField("Yan Gelir", s(4).sideline || "-", false, 0);
-  h2 = drawField("Aylık Harcama", s(4).monthly_expenditure_amount || "-", false, CONTENT_WIDTH / 2);
+  h2 = drawField("Aylık Harcama", s(4).monthly_expenditure_amount || "-", false, 0);
   currentY -= Math.max(h1, h2) + 10;
 }
 
@@ -723,7 +736,7 @@ if (s(5).boolean_cover_expenses === "HAYIR") {
     "Telefon",
     s(5).cover_expenses_phone || "-",
     false,
-    CONTENT_WIDTH / 2
+    0
   );
   currentY -= Math.max(h1, h2) + 10;
 
@@ -738,7 +751,7 @@ if (s(5).boolean_cover_expenses === "HAYIR") {
     "Katkı Tutarı (Pound)",
     s(5).money_cover_expenses || "-",
     false,
-    CONTENT_WIDTH / 2
+    0
   );
   currentY -= Math.max(h1, h2) + 10;
 
@@ -752,7 +765,7 @@ if (s(5).boolean_cover_expenses === "HAYIR") {
     "Katkı Sağlayanın Adresi",
     s(5).cover_expenses_address || "-",
     true,
-    CONTENT_WIDTH / 2
+    0
   );
   currentY -= Math.max(h1, h2) + 10;
 }
@@ -783,7 +796,7 @@ h1 = drawField(
   "Seyahat Bitiş Tarihi",
   formatDateDMY(s(5).travel_end_date) || "-",
   false,
-  CONTENT_WIDTH / 2
+  0
 );
 
 currentY -= Math.max(h1, h2) + 15;
@@ -819,7 +832,7 @@ h2 = drawField(
   "Anne Doğum Tarihi",
   formatDateDMY(s(2).mother_birth_date) || "-",
   false,
-  CONTENT_WIDTH / 2
+  0
 );
 currentY -= Math.max(h1, h2) + 10;
 
@@ -828,7 +841,7 @@ h2 = drawField(
   "Anne Sizinle Seyahat Edecek mi?",
   s(2).mother_travel_with_you || "-",
   false,
-  CONTENT_WIDTH / 2
+  0
 );
 currentY -= Math.max(h1, h2) + 10;
 
@@ -839,7 +852,7 @@ h2 = drawField(
   "Baba Doğum Tarihi",
   formatDateDMY(s(2).father_birth_date) || "-",
   false,
-  CONTENT_WIDTH / 2
+  0
 );
 currentY -= Math.max(h1, h2) + 10;
 
@@ -848,7 +861,7 @@ h2 = drawField(
   "Baba Sizinle Seyahat Edecek mi?",
   s(2).father_travel_with_you || "-",
   false,
-  CONTENT_WIDTH / 2
+  0
 );
 currentY -= Math.max(h1, h2) + 15;
 
@@ -891,7 +904,7 @@ if (String(s(2).boolean_child).toUpperCase() === "EVET") {
       "Doğum Tarihi",
       formatDateDMY(births[idx]) || "-",
       false,
-      CONTENT_WIDTH / 2
+      0
     );
     currentY -= Math.max(ch1, ch2) + 8;
 
@@ -906,7 +919,7 @@ if (String(s(2).boolean_child).toUpperCase() === "EVET") {
       "Sizinle Birlikte Yaşıyor mu?",
       lives[idx] || "-",
       false,
-      CONTENT_WIDTH / 2
+      0
     );
     currentY -= Math.max(ch1, ch2) + 8;
 
@@ -921,7 +934,7 @@ if (String(s(2).boolean_child).toUpperCase() === "EVET") {
       "Pasaport Numarası",
       passports[idx] || "-",
       false,
-      CONTENT_WIDTH / 2
+      0
     );
     currentY -= Math.max(ch1, ch2) + 12;
   });
@@ -961,7 +974,7 @@ if (s(5).has_family_in_uk === "EVET") {
     "Ad Soyad",
     s(5).uk_family_fullname || "-",
     false,
-    CONTENT_WIDTH / 2
+    0
   );
   currentY -= Math.max(h1, h2) + 10;
 
@@ -976,7 +989,7 @@ if (s(5).has_family_in_uk === "EVET") {
     "Birleşik Krallık'taki Yasal Durumu",
     s(5).uk_family_legal_status || "-",
     false,
-    CONTENT_WIDTH / 2
+    0
   );
   currentY -= Math.max(h1, h2) + 10;
 
@@ -1047,7 +1060,7 @@ drawSection("AİLE DIŞI BİRİYLE SEYAHAT");
 
 ensureSpace(100);
 h1 = drawField(
-  "Aile bireyleri dışında biriyle seyahat edecek misiniz?",
+  "Beraber seyahat edeceğiniz birisi var mı?",
   s(5).travel_with_non_family || "-",
   true,   // ✅ TAM SATIR
   0
@@ -1180,7 +1193,7 @@ if (s(5).have_invitation === "EVET") {
       "Davet Eden Email",
       s(5).inviter_email || "-",
       false,
-      CONTENT_WIDTH / 2
+      0
     );
     currentY -= Math.max(h1, h2) + 10;
 
@@ -1216,7 +1229,7 @@ if (s(5).have_invitation === "EVET") {
       "Şirket Email",
       s(5).company_email || "-",
       false,
-      CONTENT_WIDTH / 2
+      0
     );
     currentY -= Math.max(h1, h2) + 10;
 
@@ -1309,7 +1322,7 @@ if (s(5).uk_visited_last10 === "EVET") {
           ? formatDateDMY(visit.arrivalDate)
           : "-",
         true,
-        CONTENT_WIDTH / 2
+        0
       );
 
       currentY -= Math.max(v1, v2) + 20;
@@ -1649,10 +1662,6 @@ h1 = drawField(
   0
 );
 currentY -= h1 + 10;
- // --- DOSYALAR (GÖRSELLER) ---
-// --- BÖLÜM 6: DOSYALAR ---
-// --- BÖLÜM 6: DOSYALAR ---
-// --- BÖLÜM 6: DOSYALAR ---
 
  
 // 6. bölüm her zaman yeni sayfada başlasın
@@ -1692,7 +1701,7 @@ const addFileImage = async (fileBase64, title, type) => {
             imgDims = { width: embeddedImg.width * scale, height: embeddedImg.height * scale };
         } 
         // else if (type === "photo") {
-        //     const maxWidth = CONTENT_WIDTH / 2;
+        //     const maxWidth = 0;
         //     const maxHeight = PAGE_HEIGHT / 2;
         //     const scale = Math.min(maxWidth / embeddedImg.width, maxHeight / embeddedImg.height, 1);
         //     imgDims = { width: embeddedImg.width * scale, height: embeddedImg.height * scale };
@@ -1995,7 +2004,7 @@ Masrafları Karşılayan Kişi:
 
 --------------------------------------------------
 
-Aile dışı biriyle seyahat edecek misiniz:
+Beraber seyahat edeceğiniz birisi var mı?:
 ${f.steps[5].travel_with_non_family || "-"}
 
 ${

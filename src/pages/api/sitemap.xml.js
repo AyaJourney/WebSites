@@ -25,7 +25,7 @@ export default async function handler(req, res) {
     "/blog", //burası tamam
     "/iletisim",//burası tamam
     "/gizlilik-politikasi",//burası tamam
-    "/randevu",
+    "/randevu",//burası tamam
     "/biz-kimiz",//burası tamam
     "/referanslarimiz",//burası tamam
     "/hakkimizdaki-yorumlar", //burası tamam
@@ -41,14 +41,14 @@ export default async function handler(req, res) {
     "/schengen-vize-evraklari",//burası tamam
     "/birlesik-krallik-vize-evraklari",//burası tamam
     "/amerika-b1-b2-vizesi",//burası tamam
-    "/schengen-vize-adimlari",
-    "/amerika-vize-danismanligi",
-    "/aya-journey-yorumlari",
-    "/amerika-vizesi-kac-gunde-cikar",
-    "/amerika-vize-mulakat-sorulari",
-    "/amerika-vize-ucretleri",
-    "/amerika-vize-ds-160-nasil-doldurulur",
-    "/amerika-vize-checklist",
+    "/schengen-vize-adimlari",//burası tamam
+    "/amerika-vize-danismanligi",//burası tamam
+    "/aya-journey-yorumlari",//burası tamam
+    "/amerika-vizesi-kac-gunde-cikar",//burası tamam
+    "/amerika-vize-mulakat-sorulari",//burası tamam
+    "/amerika-vize-ucretleri",//burası tamam
+    "/amerika-vize-ds-160-nasil-doldurulur",//burası tamam
+    "/amerika-vize-checklist",//burası tamam
     "/ds-160-kapanmadan-randevu-alinamiyor",//burası tamam
     "/ankara-vize-danismanligi",//burası tamam
     "/ankara-amerika-vizesi",//burası tamam
@@ -85,7 +85,7 @@ export default async function handler(req, res) {
     "/abd-vize-ankara", //burası tamam
     "/portekiz-d7-oturum-vizesi-ankara", //burası tamam
     "/portekiz-d7-oturum-vizesi-istanbul", //burası tamam
-    "/yunanistan-vize",
+    "/yunanistan-vize",//burası tamam
     "/yunanistan-vize-randevusu",
     "/yunanistan-vize-evraklari",
     "/yunanistan-vize-reddi",
