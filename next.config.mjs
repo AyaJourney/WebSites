@@ -1,5 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+   async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'www.ayajourney.com',
+          },
+        ],
+        destination: 'https://ayajourney.com/:path*',
+        permanent: true,
+      },
+    ]
+  },
   reactCompiler: true,
 
   poweredByHeader: false,
