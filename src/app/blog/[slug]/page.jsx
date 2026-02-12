@@ -12,7 +12,33 @@ async function getBlog(slug) {
   if (error) return null;
   return data;
 }
+function  injectInternalLinks(content) {
+  const links = [
+    { keyword: "ABD vizesi", url: "/amerika-vizesi" },
+    { keyword: "Amerika vizesi", url: "/amerika-vizesi" },
 
+    { keyword: "Mülakatta", url: "/amerika-vize-mulakat-sorulari" },
+    { keyword: "AYA Journey", url: "/iletisim" },
+    { keyword: "AYA Journey'de", url: "/iletisim" },
+
+    { keyword: "VFS randevu", url: "/vfs-randevu-bulamiyorum" },
+    { keyword: "Schengen vizesi", url: "/schengen-vizesi" },
+  ];
+
+  let updated = content;
+
+  links.forEach(({ keyword, url }) => {
+    const regex = new RegExp(`\\b${keyword}\\b(?![^<]*>)`, "i");
+
+    updated = updated.replace(
+      regex,
+      `<a href="${url}" target="_blank" 
+  rel="noopener noreferrer"  class="text-blue-600 font-extrabold underline hover:text-blue-800 transition">${keyword}</a>`
+    );
+  });
+
+  return updated;
+}
 export default async function BlogDetailPage({ params }) {
   const { slug } = await params;
 
@@ -87,7 +113,9 @@ return (
             /* Alıntılar */
             [&_blockquote]:border-l-4 [&_blockquote]:border-blue-500 [&_blockquote]:bg-slate-50 [&_blockquote]:py-6 [&_blockquote]:px-10 [&_blockquote]:rounded-r-2xl [&_blockquote]:italic [&_blockquote]:text-xl [&_blockquote]:text-slate-600 [&_blockquote]:mb-10 [&_blockquote]:[indent-0]
           "
-          dangerouslySetInnerHTML={{ __html: blog.content }}
+         dangerouslySetInnerHTML={{
+  __html: injectInternalLinks(blog.content),
+}}
         />
       </div>
     </article>
