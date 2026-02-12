@@ -108,25 +108,82 @@ export async function POST(req) {
     const CONTENT_WIDTH = PAGE_WIDTH - (MARGIN * 2);
 
     // --- Yardımcı Fonksiyonlar ---
-    const wrapText = (text, maxWidth, font, size) => {
-      if (!text) return [];
-      const words = String(text).split(' ');
-      let lines = [];
-      let currentLine = words[0];
+   const wrapText = (text, maxWidth, font, size) => {
 
-      for (let i = 1; i < words.length; i++) {
-        const word = words[i];
-        const width = font.widthOfTextAtSize(`${currentLine} ${word}`, size);
+  if (!text) return [];
+
+  text = String(text).normalize("NFC");
+
+  const lines = [];
+  const paragraphs = text.split(/\r?\n/);
+
+  paragraphs.forEach((paragraph, pIndex) => {
+
+    if (paragraph.trim() === "") {
+      lines.push("");
+      return;
+    }
+
+    const words = paragraph.split(" ");
+    let currentLine = "";
+
+    words.forEach((word) => {
+
+      // Eğer kelime tek başına maxWidth'i aşıyorsa
+      if (font.widthOfTextAtSize(word, size) > maxWidth) {
+
+        if (currentLine) {
+          lines.push(currentLine);
+          currentLine = "";
+        }
+
+        let chunk = "";
+
+        for (let char of [...word]) {
+          const testChunk = chunk + char;
+          const width = font.widthOfTextAtSize(testChunk, size);
+
+          if (width < maxWidth) {
+            chunk = testChunk;
+          } else {
+            lines.push(chunk);
+            chunk = char;
+          }
+        }
+
+        if (chunk) {
+          currentLine = chunk;
+        }
+
+      } else {
+
+        const testLine = currentLine
+          ? currentLine + " " + word
+          : word;
+
+        const width = font.widthOfTextAtSize(testLine, size);
+
         if (width < maxWidth) {
-          currentLine += ` ${word}`;
+          currentLine = testLine;
         } else {
           lines.push(currentLine);
           currentLine = word;
         }
       }
+    });
+
+    if (currentLine) {
       lines.push(currentLine);
-      return lines;
-    };
+    }
+
+    if (pIndex !== paragraphs.length - 1) {
+      lines.push("");
+    }
+
+  });
+
+  return lines;
+};
 
     // State yönetimi
     let currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
@@ -134,17 +191,31 @@ export async function POST(req) {
     let pageCount = 1;
 
     // ✅ OPTIMIZE EDİLMİŞ checkSpace
-    const checkSpace = (heightNeeded) => {
-      if (currentY - heightNeeded < MARGIN + 50) {
-        drawFooter(currentPage, pageCount);
-        currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
-        pageCount++;
-        currentY = PAGE_HEIGHT - MARGIN;
-        drawHeader(currentPage);
-        return true;
-      }
-      return false;
-    };
+   const HEADER_HEIGHT = 15; // Header toplam yüksekliği (logon dahil)
+const SAFE_TOP_GAP = 0;   // Header ile içerik arası boşluk
+
+const checkSpace = (heightNeeded) => {
+
+  if (currentY - heightNeeded < MARGIN + 40) {
+
+    // Mevcut sayfaya footer bas
+    drawFooter(currentPage, pageCount);
+
+    // Yeni sayfa
+    currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+    pageCount++;
+
+    // Header çiz
+    drawHeader(currentPage);
+
+    // 🔥 Header alanını düş
+    currentY = PAGE_HEIGHT - MARGIN - HEADER_HEIGHT - SAFE_TOP_GAP;
+
+    return true;
+  }
+
+  return false;
+};
 
     // ✅ OPTIMIZE EDİLMİŞ drawHeader (async kaldırıldı, logo parametre)
     const drawHeader = (page) => {
@@ -210,22 +281,52 @@ export async function POST(req) {
 
       currentY -= 40;
     };
+const drawField = (label, value) => {
 
-    const drawField = (label, value, isFullWidth = false, xOffset = 0) => {
-      const colWidth = isFullWidth ? CONTENT_WIDTH : (CONTENT_WIDTH / 2) - 10;
-      const valStr = value ? String(value) : "-";
-      const labelSize = 14;
-      const valueSize = 14;
-      
-      const valueLines = wrapText(valStr, colWidth, regularFont, valueSize);
-      const heightNeeded = (valueLines.length * (valueSize + 4)) + 15;
+  // 🔥 Her zaman tam genişlik
+  const colWidth = CONTENT_WIDTH;
 
-      if (xOffset === 0) {
-        checkSpace(heightNeeded);
-      }
+  const valStr = value ? String(value) : "-";
+  const labelSize = 14;
+  const valueSize = 14;
+  const lineSpacing = valueSize + 4;
 
-      const drawX = MARGIN + xOffset;
-      
+  const drawX = MARGIN;
+
+  const valueLines = wrapText(
+    valStr,
+    colWidth,
+    regularFont,
+    valueSize
+  );
+
+  const labelHeight = labelSize + 6;
+
+  // 🔥 Önce label için yer kontrolü
+  if (checkSpace(labelHeight + 10)) {
+    currentY -= 20; // header ile çakışmaması için boşluk
+  }
+
+  // LABEL
+  currentPage.drawText(label, {
+    x: drawX,
+    y: currentY,
+    size: labelSize,
+    font: boldFont,
+    color: COLORS.textLabel
+  });
+
+  currentY -= labelHeight;
+
+  // 🔥 Satır satır yaz
+  valueLines.forEach((line) => {
+
+    // Her satırdan önce kontrol
+    if (checkSpace(lineSpacing)) {
+
+      currentY -= 20; // header altı boşluk
+
+      // Yeni sayfadaysak label tekrar yaz
       currentPage.drawText(label, {
         x: drawX,
         y: currentY,
@@ -234,20 +335,25 @@ export async function POST(req) {
         color: COLORS.textLabel
       });
 
-      let textY = currentY - 12;
-      valueLines.forEach(line => {
-        currentPage.drawText(line, {
-          x: drawX,
-          y: textY,
-          size: valueSize,
-          font: regularFont,
-          color: COLORS.textMain
-        });
-        textY -= (valueSize + 4);
-      });
-      
-      return heightNeeded;
-    };
+      currentY -= labelHeight;
+    }
+
+    currentPage.drawText(line, {
+      x: drawX,
+      y: currentY,
+      size: valueSize,
+      font: regularFont,
+      color: COLORS.textMain
+    });
+
+    currentY -= lineSpacing;
+  });
+
+  currentY -= 12;
+
+  return labelHeight + (valueLines.length * lineSpacing);
+};
+
 
     // --- Veri İşleme ve Çizim Başlangıcı ---
     const s = (n) => formData.payload?.steps?.[String(n)] || {};
@@ -261,7 +367,7 @@ export async function POST(req) {
     currentY -= h1 + 10;
 
     h1 = drawField("Doğum Tarihi", toTRDate(s(1).birthDate), false, 0);
-    let h2 = drawField("Doğum Yeri", s(1).birthPlace, false, CONTENT_WIDTH / 2);
+    let h2 = drawField("Doğum Yeri", s(1).birthPlace, false,0);
     currentY -= Math.max(h1, h2) + 10;
 
     h1 = drawField("Doğum Ülkesi", s(1).birthCountry, false, 0);
@@ -269,8 +375,8 @@ export async function POST(req) {
 
     h1 = drawField("Medeni Durum", s(1).maritalStatus, false, 0);
     h2 = s(1).maritalStatus === "EVLI"
-      ? drawField("Daha Önce Kullanılan Adı veya Soyadı", s(1).maidenName, false, CONTENT_WIDTH / 2)
-      : drawField("Cinsiyet", s(1).gender, false, CONTENT_WIDTH / 2);
+      ? drawField("Daha Önce Kullanılan Adı veya Soyadı", s(1).maidenName, false,0)
+      : drawField("Cinsiyet", s(1).gender, false,0);
     currentY -= Math.max(h1, h2) + 10;
 
     // --- BÖLÜM 2: Kimlik ve Uyruk ---
@@ -281,7 +387,7 @@ export async function POST(req) {
       "Diğer Uyruğu",
       s(2).otherNationalityExist === "EVET" && s(2).otherNationality ? s(2).otherNationality : "-",
       false,
-      CONTENT_WIDTH / 2
+     0
     );
     currentY -= Math.max(h1, h2) + 10;
 
@@ -294,7 +400,7 @@ export async function POST(req) {
     currentY -= h1 + 10;
 
     h1 = drawField("T.C. Kimlik No", s(2).tcId || "-", false, 0);
-    h2 = drawField("Amerika Sosyal Güvenlik Numarası (SSN)", s(2).ssn || "-", false, CONTENT_WIDTH / 2);
+    h2 = drawField("Amerika Sosyal Güvenlik Numarası (SSN)", s(2).ssn || "-", false,0);
     currentY -= Math.max(h1, h2) + 10;
 
     h1 = drawField("Amerika Vergi Numarası (VKN)", s(2).vkn || "-", false, 0);
@@ -305,7 +411,7 @@ export async function POST(req) {
       "Oturum Ülkesi",
       s(2).otherSessionExist === "EVET" && s(2).otherSessionExistCountry ? s(2).otherSessionExistCountry : "-",
       false,
-      CONTENT_WIDTH / 2
+     0
     );
     currentY -= Math.max(h1, h2) + 10;
 
@@ -321,29 +427,29 @@ export async function POST(req) {
     drawSection("3. BÖLÜM — SEYAHAT VE VİZE BİLGİLERİ");
 
     h1 = drawField("Vize Türü", s(3).visaType || "-", false, 0);
-    h2 = drawField("ABD'ye Kesin Gidiş Tarihi", s(3).exactArrival ? toTRDate(s(3).exactArrival) : "-", false, CONTENT_WIDTH / 2);
+    h2 = drawField("ABD'ye Kesin Gidiş Tarihi", s(3).exactArrival ? toTRDate(s(3).exactArrival) : "-", false,0);
     currentY -= Math.max(h1, h2) + 10;
 
     h1 = drawField("Tahmini Gidiş Tarihi", s(3).estimatedArrival ? toTRDate(s(3).estimatedArrival) : "-", false, 0);
-    h2 = drawField("ABD'de Kalış Süresi", s(3).stayDuration || "-", false, CONTENT_WIDTH / 2);
+    h2 = drawField("ABD'de Kalış Süresi", s(3).stayDuration || "-", false,0);
     currentY -= Math.max(h1, h2) + 10;
 
     h1 = drawField("ABD'de Kalacağı Adres", s(3).stayAddress || "-", true, 0);
-    h2 = drawField("Masrafları Kim Karşılayacak", s(3).whoPays || "-", true, CONTENT_WIDTH / 2);
+    h2 = drawField("Masrafları Kim Karşılayacak", s(3).whoPays || "-", true,0);
     currentY -= Math.max(h1, h2) + 10;
 
     if (s(3).whoPays === "DIGER") {
       h1 = drawField("Yakınlık Derecesi", s(3).relationDegree || "-", true, 0);
-      h2 = drawField("Ödeyen Kişi Adresi", s(3).payerAddress || "-", true, CONTENT_WIDTH / 2);
+      h2 = drawField("Ödeyen Kişi Adresi", s(3).payerAddress || "-", true,0);
       currentY -= Math.max(h1, h2) + 10;
 
       h1 = drawField("Telefon", s(3).payerPhone || "-", true, 0);
-      h2 = drawField("E-Posta", s(3).payerMail || "-", true, CONTENT_WIDTH / 2);
+      h2 = drawField("E-Posta", s(3).payerMail || "-", true,0);
       currentY -= Math.max(h1, h2) + 10;
     }
 
     h1 = drawField("ABD'de İrtibat Kişisi / Kurumu", s(3).usContactInfo || "-", true, 0);
-    h2 = drawField("ABD'de Yakın Akraba Bilgisi", s(3).usRelativeInfo || "-", true, CONTENT_WIDTH / 2);
+    h2 = drawField("ABD'de Yakın Akraba Bilgisi", s(3).usRelativeInfo || "-", true,0);
     currentY -= Math.max(h1, h2) + 10;
 
     drawFooter(currentPage, pageCount);
@@ -371,12 +477,12 @@ export async function POST(req) {
       if (Array.isArray(s(4).travels) && s(4).travels.length > 0) {
         s(4).travels.slice(0, 5).forEach((travel, index) => {
           let hA = drawField(`ABD Seyahati ${index + 1} - Gidiş Tarihi`, travel.date ? toTRDate(travel.date) : "-", false, 0);
-          let hB = drawField("Kalış Süresi", travel.duration || "-", false, CONTENT_WIDTH / 2);
+          let hB = drawField("Kalış Süresi", travel.duration || "-", false,0);
           currentY -= Math.max(hA, hB) + 10;
         });
       } else {
         let hA = drawField("Son Ziyaret Tarihi", s(4).lastVisitDate ? toTRDate(s(4).lastVisitDate) : "-", false, 0);
-        let hB = drawField("ABD'de Kalış Süresi", s(4).lastVisitDuration || "-", false, CONTENT_WIDTH / 2);
+        let hB = drawField("ABD'de Kalış Süresi", s(4).lastVisitDuration || "-", false,0);
         currentY -= Math.max(hA, hB) + 10;
       }
     }
@@ -386,7 +492,7 @@ export async function POST(req) {
 
     if (s(4).hadUSVisa === "EVET") {
       let hA = drawField("Vize Tarihi", s(4).visaDate ? toTRDate(s(4).visaDate) : "-", false, 0);
-      let hB = drawField("Vize Numarası", s(4).visaNumber || "-", false, CONTENT_WIDTH / 2);
+      let hB = drawField("Vize Numarası", s(4).visaNumber || "-", false,0);
       currentY -= Math.max(hA, hB) + 10;
     }
 
@@ -407,7 +513,7 @@ export async function POST(req) {
     currentY -= h1 + 10;
 
     h1 = drawField("Telefon", s(5).phone1 || "-", false, 0);
-    h2 = drawField("Alternatif Telefon", s(5).phone2 || "-", false, CONTENT_WIDTH / 2);
+    h2 = drawField("Alternatif Telefon", s(5).phone2 || "-", false,0);
     currentY -= Math.max(h1, h2) + 10;
 
     h1 = drawField("İş Telefonu", s(5).workPhone || "-", false, 0);
@@ -428,7 +534,7 @@ export async function POST(req) {
     }
 
     h1 = drawField("Pasaport Tipi", s(5).passportType || "-", false, 0);
-    h2 = drawField("Pasaport Numarası", s(5).passportNumber || "-", false, CONTENT_WIDTH / 2);
+    h2 = drawField("Pasaport Numarası", s(5).passportNumber || "-", false,0);
     currentY -= Math.max(h1, h2) + 10;
 
     h1 = drawField("Veriliş Makamı", s(5).passportAuthority || "-", false, 0);
@@ -436,7 +542,7 @@ export async function POST(req) {
       "Geçerlilik Tarihi",
       `${s(5).passportStart ? toTRDate(s(5).passportStart) : "-"} / ${s(5).passportEnd ? toTRDate(s(5).passportEnd) : "-"}`,
       false,
-      CONTENT_WIDTH / 2
+     0
     );
     currentY -= Math.max(h1, h2) + 10;
 
@@ -445,7 +551,7 @@ export async function POST(req) {
 
     if (s(5).lostPassportBoolean === "EVET") {
       h1 = drawField("Kayıp Pasaport Numarası", s(5).lostPassportNumber || "-", false, 0);
-      h2 = drawField("Kayıp Pasaport Veriliş Ülkesi", s(5).lostPassportAuthorityCountry || "-", false, CONTENT_WIDTH / 2);
+      h2 = drawField("Kayıp Pasaport Veriliş Ülkesi", s(5).lostPassportAuthorityCountry || "-", false,0);
       currentY -= Math.max(h1, h2) + 10;
 
       h1 = drawField("Kayıp Pasaport Açıklaması", s(5).lostPassportInfo || "-", true, 0);
@@ -467,21 +573,21 @@ export async function POST(req) {
 
     if (s(6).usaRelative === "EVET") {
       h1 = drawField("Akrabanın Adı Soyadı", s(6).usaRelativeFullName || "-", false, 0);
-      h2 = drawField("Yakınlık Derecesi / Açıklama", s(6).usaRelativeInfo || "-", false, CONTENT_WIDTH / 2);
+      h2 = drawField("Yakınlık Derecesi / Açıklama", s(6).usaRelativeInfo || "-", false,0);
       currentY -= Math.max(h1, h2) + 10;
 
       h1 = drawField("Adres", s(6).usaRelativeAddress || "-", true, 0);
       currentY -= h1 + 10;
 
       h1 = drawField("Şehir", s(6).usaRelativeAddressCity || "-", false, 0);
-      h2 = drawField("Eyalet", s(6).usaRelativeAddressState || "-", false, CONTENT_WIDTH / 2);
+      h2 = drawField("Eyalet", s(6).usaRelativeAddressState || "-", false,0);
       currentY -= Math.max(h1, h2) + 10;
 
       h1 = drawField("Posta Kodu", s(6).usaRelativePostCode || "-", false, 0);
       currentY -= h1 + 10;
 
       h1 = drawField("Telefon", s(6).usaRelativePhone || "-", false, 0);
-      h2 = drawField("E-Posta", s(6).usaRelativeEmail || "-", false, CONTENT_WIDTH / 2);
+      h2 = drawField("E-Posta", s(6).usaRelativeEmail || "-", false,0);
       currentY -= Math.max(h1, h2) + 10;
     }
 
@@ -496,14 +602,14 @@ export async function POST(req) {
       currentY -= h1 + 10;
 
       h1 = drawField("Şehir", s(6).organizationAddressCity || "-", false, 0);
-      h2 = drawField("Eyalet", s(6).organizationAddressState || "-", false, CONTENT_WIDTH / 2);
+      h2 = drawField("Eyalet", s(6).organizationAddressState || "-", false,0);
       currentY -= Math.max(h1, h2) + 10;
 
       h1 = drawField("Posta Kodu", s(6).organizationPostCode || "-", false, 0);
       currentY -= h1 + 10;
 
       h1 = drawField("Telefon", s(6).organizationPhone || "-", false, 0);
-      h2 = drawField("E-Posta", s(6).organizationEmail || "-", false, CONTENT_WIDTH / 2);
+      h2 = drawField("E-Posta", s(6).organizationEmail || "-", false,0);
       currentY -= Math.max(h1, h2) + 10;
     }
 
@@ -518,15 +624,15 @@ export async function POST(req) {
     drawSection("7. BÖLÜM — ANNE, BABA VE ABD'DE AKRABALAR");
 
     h1 = drawField("Anne Adı Soyadı", s(7).motherFullName || "-", false, 0);
-    h2 = drawField("Anne Doğum Tarihi", s(7).motherBirthDate ? toTRDate(s(7).motherBirthDate) : "-", false, CONTENT_WIDTH / 2);
+    h2 = drawField("Anne Doğum Tarihi", s(7).motherBirthDate ? toTRDate(s(7).motherBirthDate) : "-", false,0);
     currentY -= Math.max(h1, h2) + 10;
 
     h1 = drawField("Baba Adı Soyadı", s(7).fatherFullName || "-", false, 0);
-    h2 = drawField("Baba Doğum Tarihi", s(7).fatherBirthDate ? toTRDate(s(7).fatherBirthDate) : "-", false, CONTENT_WIDTH / 2);
+    h2 = drawField("Baba Doğum Tarihi", s(7).fatherBirthDate ? toTRDate(s(7).fatherBirthDate) : "-", false,0);
     currentY -= Math.max(h1, h2) + 10;
 
     h1 = drawField("Anne ABD'de mi?", s(7).isMotherInUSA || "-", false, 0);
-    h2 = drawField("Baba ABD'de mi?", s(7).isFatherInUSA || "-", false, CONTENT_WIDTH / 2);
+    h2 = drawField("Baba ABD'de mi?", s(7).isFatherInUSA || "-", false,0);
     currentY -= Math.max(h1, h2) + 10;
 
     if (s(7).isMotherInUSA === "EVET") {
@@ -545,7 +651,7 @@ export async function POST(req) {
     if (s(7).hasRelativeInUSA === "YES" && Array.isArray(s(7).relatives) && s(7).relatives.length > 0) {
       s(7).relatives.forEach((rel, index) => {
         let r1 = drawField(`Akraba ${index + 1} - Ad Soyad`, rel.fullName || "-", false, 0);
-        let r2 = drawField("Yakınlık Derecesi", rel.level || "-", false, CONTENT_WIDTH / 2);
+        let r2 = drawField("Yakınlık Derecesi", rel.level || "-", false,0);
         currentY -= Math.max(r1, r2) + 8;
 
         r1 = drawField("ABD Statüsü", rel.status || "-", false, 0);
@@ -567,11 +673,11 @@ export async function POST(req) {
     drawSection("8. BÖLÜM — EŞ VE EVLİLİK BİLGİLERİ");
 
     h1 = drawField("Eşin Adı Soyadı", s(8).spouseFullName || "-", false, 0);
-    h2 = drawField("Eşin Kızlık Soyadı", s(8).wifeMaidenName || "-", false, CONTENT_WIDTH / 2);
+    h2 = drawField("Eşin Kızlık Soyadı", s(8).wifeMaidenName || "-", false,0);
     currentY -= Math.max(h1, h2) + 10;
 
     h1 = drawField("Eşin Uyruğu", s(8).spouseNationality || "-", false, 0);
-    h2 = drawField("Eşin Doğum Tarihi", s(8).spouseBirthDate ? toTRDate(s(8).spouseBirthDate) : "-", false, CONTENT_WIDTH / 2);
+    h2 = drawField("Eşin Doğum Tarihi", s(8).spouseBirthDate ? toTRDate(s(8).spouseBirthDate) : "-", false,0);
     currentY -= Math.max(h1, h2) + 10;
 
     h1 = drawField(
@@ -594,7 +700,7 @@ export async function POST(req) {
       false,
       0
     );
-    h2 = drawField("Posta Kodu", s(8).otherSpouseAddressPostCode || "-", false, CONTENT_WIDTH / 2);
+    h2 = drawField("Posta Kodu", s(8).otherSpouseAddressPostCode || "-", false,0);
     currentY -= Math.max(h1, h2) + 10;
 
     h1 = drawField("Evlilik Tarihi", s(8).marriageDate ? toTRDate(s(8).marriageDate) : "-", false, 0);
@@ -604,11 +710,11 @@ export async function POST(req) {
     currentY -= h1 + 8;
 
     h1 = drawField("Önceki Evlilik Tarihi", s(8).oldMarriageDate ? toTRDate(s(8).oldMarriageDate) : "-", false, 0);
-    h2 = drawField("Bitiş Tarihi", s(8).oldMarriageEndDate ? toTRDate(s(8).oldMarriageEndDate) : "-", false, CONTENT_WIDTH / 2);
+    h2 = drawField("Bitiş Tarihi", s(8).oldMarriageEndDate ? toTRDate(s(8).oldMarriageEndDate) : "-", false,0);
     currentY -= Math.max(h1, h2) + 10;
 
     h1 = drawField("Önceki Eşin Doğum Tarihi", s(8).oldSpouseBirthDate ? toTRDate(s(8).oldSpouseBirthDate) : "-", false, 0);
-    h2 = drawField("Uyruğu", s(8).oldSpouseNationality || "-", false, CONTENT_WIDTH / 2);
+    h2 = drawField("Uyruğu", s(8).oldSpouseNationality || "-", false,0);
     currentY -= Math.max(h1, h2) + 10;
 
     h1 = drawField(
@@ -633,7 +739,7 @@ export async function POST(req) {
     drawSection("9. BÖLÜM — MESLEK, İŞ VE EĞİTİM BİLGİLERİ");
 
     h1 = drawField("Meslek", s(9).occupation || "-", false, 0);
-    h2 = drawField("İş / Okul Adı", s(9).workOrSchoolName || "-", false, CONTENT_WIDTH / 2);
+    h2 = drawField("İş / Okul Adı", s(9).workOrSchoolName || "-", false,0);
     currentY -= Math.max(h1, h2) + 10;
 
     h1 = drawField(
@@ -645,17 +751,17 @@ export async function POST(req) {
     currentY -= h1 + 10;
 
     h1 = drawField("İş Telefonu", s(9).workOrSchoolPhone || "-", false, 0);
-    h2 = drawField("Başlangıç Tarihi", s(9).workStartDate ? toTRDate(s(9).workStartDate) : "-", false, CONTENT_WIDTH / 2);
+    h2 = drawField("Başlangıç Tarihi", s(9).workStartDate ? toTRDate(s(9).workStartDate) : "-", false,0);
     currentY -= Math.max(h1, h2) + 10;
 
     h1 = drawField("Aylık Gelir", s(9).monthlyIncome || "-", false, 0);
-    h2 = drawField("İş Tanımı", s(9).jobDescription || "-", true, CONTENT_WIDTH / 2);
+    h2 = drawField("İş Tanımı", s(9).jobDescription || "-", true,0);
     currentY -= Math.max(h1, h2) + 12;
 
     if (s(9).previousJobBoolean === "EVET" && Array.isArray(s(9).previousJobs)) {
       s(9).previousJobs.forEach((job, index) => {
         let j1 = drawField(`Önceki İş ${index + 1} - Firma`, job.companyName || "-", false, 0);
-        let j2 = drawField("Pozisyon", job.position || "-", false, CONTENT_WIDTH / 2);
+        let j2 = drawField("Pozisyon", job.position || "-", false,0);
         currentY -= Math.max(j1, j2) + 8;
 
         j1 = drawField(
@@ -687,7 +793,7 @@ export async function POST(req) {
     drawSection("10. BÖLÜM — DİĞER BİLGİLER");
 
     h1 = drawField("Konuşulan Diller", s(10).languages || "-", false, 0);
-    h2 = drawField("Ziyaret Edilen Ülkeler", s(10).visitedCountries || "-", false, CONTENT_WIDTH / 2);
+    h2 = drawField("Ziyaret Edilen Ülkeler", s(10).visitedCountries || "-", false,0);
     currentY -= Math.max(h1, h2) + 10;
 
     h1 = drawField("Askerlik Durumu", s(10).militaryStatus || "-", false, 0);
@@ -695,7 +801,7 @@ export async function POST(req) {
 
     if (s(10).militaryStatus === "YAPTI") {
       h1 = drawField("Askerlik Başlangıç Tarihi", s(10).militaryStartDate ? toTRDate(s(10).militaryStartDate) : "-", false, 0);
-      h2 = drawField("Askerlik Bitiş Tarihi", s(10).militaryEndDate ? toTRDate(s(10).militaryEndDate) : "-", false, CONTENT_WIDTH / 2);
+      h2 = drawField("Askerlik Bitiş Tarihi", s(10).militaryEndDate ? toTRDate(s(10).militaryEndDate) : "-", false,0);
       currentY -= Math.max(h1, h2) + 10;
     }
 
@@ -709,9 +815,12 @@ export async function POST(req) {
       currentY -= h1 + 10;
     }
 
-    h1 = drawField("Ek Bilgiler", s(10).additionalInfo || "-", true, 0);
-    currentY -= h1 + 10;
+    h1 = drawField("Ek Bilgiler", s(10).additionalInfo || "-", false, 0);
 
+currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+    pageCount++;
+    currentY = PAGE_HEIGHT - MARGIN;
+    drawHeader(currentPage);
     drawFooter(currentPage, pageCount);
 
     // --- DOSYALAR (GÖRSELLER) ---
@@ -735,11 +844,20 @@ export async function POST(req) {
           const scale = Math.min(width / embeddedImg.width, height / embeddedImg.height);
           imgDims = { width: embeddedImg.width * scale, height: embeddedImg.height * scale };
         } else if (type === "photo") {
-          const maxWidth = CONTENT_WIDTH / 2;
-          const maxHeight = PAGE_HEIGHT / 2;
-          const scale = Math.min(maxWidth / embeddedImg.width, maxHeight / embeddedImg.height, 1);
-          imgDims = { width: embeddedImg.width * scale, height: embeddedImg.height * scale };
-        }
+  const maxWidth = CONTENT_WIDTH / 3;   // sayfanın 1/3’ü
+  const maxHeight = PAGE_HEIGHT / 3;
+
+  const scale = Math.min(
+    maxWidth / embeddedImg.width,
+    maxHeight / embeddedImg.height,
+    1
+  );
+
+  imgDims = {
+    width: embeddedImg.width * scale,
+    height: embeddedImg.height * scale
+  };
+}
 
         const xPos = MARGIN + (CONTENT_WIDTH - imgDims.width) / 2;
         const yPos = currentY - 20 - imgDims.height;
@@ -795,7 +913,7 @@ export async function POST(req) {
 
     // --- Text & HTML Body ---
 // formData: gönderilen form verisi
-const f = formData; // veya defaultForm yerine bu kullanılacak
+
 
 // --- TEXT BODY ---
 const textBody = `

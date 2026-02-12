@@ -1859,7 +1859,7 @@ const updateField = (step, field, value) => {
 if (step === 5) {
   const s = updatedSteps[5];
 
-  const mahalle = normalizeWithSuffix(s.home_neighborhood, "MAHALLESİ");
+  const mahalle = normalizeWithSuffix(s.home_neighborhood, "MAHALLESI");
   const cadde = normalizeWithSuffix(s.home_street, "CADDE");
   const sokak = normalizeWithSuffix(s.home_avenue, "SOKAK");
 
@@ -1919,7 +1919,7 @@ const normalizeWithSuffix = (value, suffix) => {
   value = normalizeAddressPart(value);
 
   // --- Mahalle için temizleme ---
-  if (suffix === "MAHALLESİ") {
+  if (suffix === "MAHALLESI") {
     value = value.replace(/\b(MAH|MAH\.|MH|MH\.|MAHALE|MAHALLE|MAHALLESI)\b/gi, "");
   }
 
