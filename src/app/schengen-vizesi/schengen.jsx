@@ -12,6 +12,7 @@ import {
   FaEuroSign,
 } from "react-icons/fa";
 import "./schengen.css";
+import SchengenVisaGrid from "./VisaCountry";
 
 // Mevcut veri yapısı korunmuştur.
 const basicInfo = {
@@ -604,33 +605,10 @@ export default function SchengenPage() {
   <h2 className="text-2xl font-bold mb-6 text-center">
     Ülkeye Göre Schengen Başvuruları
   </h2>
+<div>
+  <SchengenVisaGrid/>
+</div>
 
-  <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 text-center">
-    <Link href="/yunanistan-vize" className="p-4 rounded-xl border hover:shadow-md">
-      Yunanistan Schengen Vizesi
-    </Link>
-    <Link href="/fransa-vize" className="p-4 rounded-xl border hover:shadow-md">
-      Fransa Schengen Vizesi
-    </Link>
-    <Link href="/hollanda-vize" className="p-4 rounded-xl border hover:shadow-md">
-      Hollanda Schengen Vizesi
-    </Link>
-    <Link href="/ispanya-vize" className="p-4 rounded-xl border hover:shadow-md">
-      İspanya Schengen Vizesi
-    </Link>
-      <Link href="/macaristan-vize" className="p-4 rounded-xl border hover:shadow-md">
-     Macaristan Schengen Vizesi
-    </Link>
-        <Link href="/italya-vize" className="p-4 rounded-xl border hover:shadow-md">
-     İtalya Schengen Vizesi
-    </Link>
-            <Link href="/danimarka-vize" className="p-4 rounded-xl border hover:shadow-md">
-     Danimarka Schengen Vizesi
-    </Link>
-                <Link href="/almanya-vize" className="p-4 rounded-xl border hover:shadow-md">
-     Almanya Schengen Vizesi
-    </Link>
-  </div>
 </section>
 
       {/* BAŞVURU SÜRECİ */}
