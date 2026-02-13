@@ -127,7 +127,15 @@ export default async function handler(req, res) {
     "/italya-vize",
     "/italya-vize-evraklari",
     "/italya-vize-randevusu",
-    "/italya-vize-reddi"
+    "/italya-vize-reddi",
+    "/danimarka-vize",
+    "/danimarka-vize-evraklari",
+    "/danimarka-vize-randevusu",
+    "/danimarka-vize-reddi",
+    "/almanya-vize",
+    "/almanya-vize-evraklari",
+    "/almanya-vize-randevusu",
+    "/almanya-vize-reddi"
 
 
 
