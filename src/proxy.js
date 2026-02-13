@@ -18,7 +18,7 @@ const blockedPrefixes = [
     "/category/news/",
   ];
 
-export function middleware(request) {
+export function proxy(request) {
   const { pathname } = request.nextUrl;
 
   if (blockedPrefixes.some(prefix => pathname.startsWith(prefix))) {
