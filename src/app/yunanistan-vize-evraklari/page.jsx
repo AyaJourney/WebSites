@@ -18,464 +18,227 @@ export const metadata = {
 
 const YunanistanVizeEvraklari = () => {
   return (
-    <main className="min-h-screen bg-zinc-50 text-slate-900">
+<main className="min-h-screen bg-zinc-50 text-slate-900">
 
-      {/* HERO */}
-      <section className="max-w-6xl mx-auto px-6 pt-16 pb-10">
-        <div className="bg-white border border-slate-200/70 rounded-3xl shadow-sm p-8 md:p-12">
-          <div className="flex flex-wrap items-center gap-3 mb-6">
-            <span className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 border border-blue-100 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest">
-              2026 Güncel • Schengen C Tipi
-            </span>
-            <span className="inline-flex items-center gap-2 bg-slate-50 text-slate-700 border border-slate-200 px-4 py-2 rounded-full text-xs font-semibold">
-              VFS Global Başvuru Dosyası
-            </span>
+  {/* HERO */}
+  <section className="max-w-6xl mx-auto px-6 pt-16 pb-10">
+    <div className="bg-white border border-slate-200/70 rounded-3xl shadow-sm p-8 md:p-12">
+
+      <div className="flex flex-wrap items-center gap-3 mb-6">
+        <span className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 border border-blue-100 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest">
+          2026 Güncel • Schengen C Tipi
+        </span>
+        <span className="inline-flex items-center gap-2 bg-slate-50 text-slate-700 border border-slate-200 px-4 py-2 rounded-full text-xs font-semibold">
+          VFS Global Başvuru Dosyası
+        </span>
+      </div>
+
+      <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
+        Yunanistan Vize Evrakları (Güncel Liste)
+      </h1>
+
+      <p className="mt-6 text-lg text-slate-600 leading-relaxed max-w-4xl">
+        <strong>Yunanistan vize evrakları</strong>, başvuru türüne ve mesleki duruma göre değişir.
+        Genel başvuru süreci hakkında bilgi almak için 
+        <a href="/yunanistan-vize" className="text-blue-600 font-semibold underline ml-1">
+          Yunanistan Schengen vize rehberine
+        </a> göz atabilirsiniz.
+      </p>
+
+      <div className="mt-8 flex flex-wrap gap-3">
+        <a
+          href="/yunanistan-vize-randevusu"
+          className="inline-flex items-center justify-center rounded-xl px-6 py-3 font-semibold bg-slate-900 text-white hover:bg-slate-800 transition"
+        >
+          Randevu Süreci
+        </a>
+        <a
+          href="/yunanistan-vize-reddi"
+          className="inline-flex items-center justify-center rounded-xl px-6 py-3 font-semibold bg-white text-slate-900 border border-slate-300 hover:bg-slate-50 transition"
+        >
+          Ret Risklerini İncele
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+
+  {/* ORTAK EVRAKLAR */}
+  <section id="ortak-evraklar" className="max-w-6xl mx-auto px-6 py-12">
+    <div className="bg-white border border-slate-200/70 rounded-3xl p-8 md:p-12 shadow-sm">
+
+      <h2 className="text-3xl font-extrabold mb-6">
+        Yunanistan Schengen Vizesi İçin Ortak Evraklar
+      </h2>
+
+      <div className="grid md:grid-cols-2 gap-6">
+        {[
+          "Pasaport (en az 2 boş sayfa)",
+          "Schengen başvuru formu",
+          "Biyometrik fotoğraf (35x45mm)",
+          "Seyahat sağlık sigortası (30.000€)",
+          "Uçuş rezervasyonu",
+          "Konaklama belgesi",
+          "Kimlik ve nüfus kayıt örneği",
+          "VFS randevu çıktısı"
+        ].map((item) => (
+          <div key={item} className="bg-slate-50 border border-slate-200 rounded-2xl p-6 text-sm">
+            • {item}
           </div>
+        ))}
+      </div>
 
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
-            Yunanistan Vize Evrakları (Güncel Liste)
-          </h1>
+      <p className="mt-10 text-slate-700">
+        Belgelerinizi tamamladıktan sonra 
+        <a href="/yunanistan-vize-randevusu" className="text-blue-600 font-semibold underline ml-1">
+          Yunanistan vize randevusu oluşturmanız
+        </a> gerekir.
+      </p>
 
-          <p className="mt-6 text-lg text-slate-600 leading-relaxed max-w-4xl">
-            <strong>Yunanistan vize evrakları</strong>, başvuru türüne (turistik / ticari / aile ziyareti)
-            ve başvuru sahibinin mesleki durumuna göre değişir. Bu sayfada,
-            <strong> Yunanistan Schengen vizesi için gerekli belgeleri</strong> eksiksiz ve pratik şekilde
-            topladık. Eksik veya tutarsız belge, ret riskini artırır.
+    </div>
+  </section>
+
+
+  {/* BANKA & FİNANS */}
+  <section className="max-w-6xl mx-auto px-6 pb-12">
+    <div className="bg-white border border-slate-200/70 rounded-3xl p-8 md:p-12 shadow-sm">
+
+      <h2 className="text-3xl font-extrabold mb-6">
+        Banka Dökümü ve Finansal Belgeler
+      </h2>
+
+      <ul className="space-y-3 text-slate-600">
+        <li>• Son 3–6 aylık hareketli hesap dökümü</li>
+        <li>• Düzenli gelir ile uyumlu bakiye</li>
+        <li>• Büyük para girişleri için açıklayıcı belge</li>
+        <li>• Sponsor varsa sponsor belgeleri</li>
+      </ul>
+
+      <div className="mt-8 bg-red-50 border border-red-200 rounded-2xl p-6">
+        <p className="font-semibold text-red-900 mb-2">Kritik Uyarı</p>
+        <p className="text-sm text-red-900/80">
+          Finansal tutarsızlıklar,
+          <a href="/yunanistan-vize-reddi" className="text-blue-700 font-semibold underline ml-1">
+            Yunanistan vize reddi
+          </a> sebeplerinden biridir.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  {/* MESLEKİ BELGELER */}
+  <section className="max-w-6xl mx-auto px-6 pb-12">
+    <div className="bg-white border border-slate-200/70 rounded-3xl p-8 md:p-12 shadow-sm">
+
+      <h2 className="text-3xl font-extrabold mb-8">
+        Mesleğe Göre Ek Evraklar
+      </h2>
+
+      <div className="grid md:grid-cols-3 gap-6 text-sm text-slate-600">
+        <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
+          <strong>Çalışan</strong>
+          <ul className="mt-2 space-y-1">
+            <li>• İş yeri izin yazısı</li>
+            <li>• Maaş bordrosu</li>
+            <li>• SGK hizmet dökümü</li>
+          </ul>
+        </div>
+
+        <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
+          <strong>Şirket Sahibi</strong>
+          <ul className="mt-2 space-y-1">
+            <li>• Vergi levhası</li>
+            <li>• Ticaret sicil gazetesi</li>
+            <li>• Faaliyet belgesi</li>
+          </ul>
+        </div>
+
+        <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
+          <strong>Öğrenci</strong>
+          <ul className="mt-2 space-y-1">
+            <li>• Öğrenci belgesi</li>
+            <li>• Sponsor dilekçesi</li>
+            <li>• Sponsor banka dökümü</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  {/* SSS */}
+  <section className="max-w-6xl mx-auto px-6 pb-16">
+    <div className="bg-white border border-slate-200/70 rounded-3xl p-8 md:p-12 shadow-sm">
+
+      <h2 className="text-3xl font-extrabold mb-8 text-center">
+        Yunanistan Vize Evrakları – Sık Sorular
+      </h2>
+
+      <div className="space-y-6 text-slate-600 max-w-3xl mx-auto">
+
+        <div>
+          <h3 className="font-semibold text-lg">
+            Randevu almadan evrak hazırlayabilir miyim?
+          </h3>
+          <p className="mt-2">
+            Evet. Ancak randevu oluşturmadan önce belgelerinizi hazır tutmanız süreci hızlandırır.
+            Detaylı bilgi için 
+            <a href="/yunanistan-vize-randevusu" className="text-blue-600 font-semibold underline ml-1">
+              randevu rehberini
+            </a> inceleyebilirsiniz.
           </p>
-
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a
-              href="/randevu"
-              className="inline-flex items-center justify-center rounded-xl px-6 py-3 font-semibold bg-slate-900 text-white hover:bg-slate-800 transition"
-            >
-              Evrak Kontrolü & Randevu
-            </a>
-            <a
-              href="/yunanistan-vize"
-              className="inline-flex items-center justify-center rounded-xl px-6 py-3 font-semibold bg-white text-slate-900 border border-slate-300 hover:bg-slate-50 transition"
-            >
-              Yunanistan Vize Rehberi
-            </a>
-          </div>
-
-          {/* quick trust */}
-          <div className="mt-10 grid sm:grid-cols-3 gap-4">
-            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5">
-              <div className="text-2xl font-extrabold">20+</div>
-              <div className="text-xs text-slate-600">Temel + destekleyici belge</div>
-            </div>
-            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5">
-              <div className="text-2xl font-extrabold">3</div>
-              <div className="text-xs text-slate-600">Turistik / Ticari / Ziyaret</div>
-            </div>
-            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5">
-              <div className="text-2xl font-extrabold">0</div>
-              <div className="text-xs text-slate-600">Eksik evrakla başvuru</div>
-            </div>
-          </div>
         </div>
-      </section>
 
-      {/* ANCHOR NAV */}
-      <section className="max-w-6xl mx-auto px-6 pb-6">
-        <div className="bg-white border border-slate-200/70 rounded-2xl p-5 flex flex-wrap gap-3">
-          {[
-            { href: "#ortak-evraklar", label: "Ortak Evraklar" },
-            { href: "#foto-standartlari", label: "Fotoğraf" },
-            { href: "#banka-ve-finans", label: "Banka & Finans" },
-            { href: "#turistik", label: "Turistik" },
-            { href: "#ticari", label: "Ticari" },
-            { href: "#aile-ziyareti", label: "Aile Ziyareti" },
-            { href: "#mesleki", label: "Mesleğe Göre" },
-            { href: "#sss", label: "SSS" }
-          ].map((a) => (
-            <a
-              key={a.href}
-              href={a.href}
-              className="text-sm font-semibold text-slate-700 hover:text-blue-700 bg-slate-50 border border-slate-200 px-4 py-2 rounded-full transition"
-            >
-              {a.label}
-            </a>
-          ))}
-        </div>
-      </section>
-
-      {/* ORTAK EVRAKLAR */}
-      <section id="ortak-evraklar" className="max-w-6xl mx-auto px-6 py-12">
-        <div className="bg-white border border-slate-200/70 rounded-3xl p-8 md:p-12 shadow-sm">
-          <h2 className="text-3xl font-extrabold mb-4">
-            Yunanistan Schengen Vizesi İçin Ortak Evraklar
-          </h2>
-          <p className="text-slate-600 leading-relaxed max-w-4xl mb-10">
-            Mesleğiniz ne olursa olsun, <strong>Yunanistan vizesi için gerekli belgeler</strong> içinde aşağıdakiler
-            standarttır. Evrakların güncel ve birbiriyle tutarlı olması önemlidir.
+        <div>
+          <h3 className="font-semibold text-lg">
+            Eksik evrakla başvuru yapılır mı?
+          </h3>
+          <p className="mt-2">
+            Eksik evrakla başvuru ret riskini artırır.
+            Olası sonuçlar için 
+            <a href="/yunanistan-vize-reddi" className="text-blue-600 font-semibold underline ml-1">
+              ret nedenleri sayfasını
+            </a> inceleyin.
           </p>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {[
-              {
-                t: "Pasaport",
-                d: "En az 2 boş sayfa, mümkünse seyahat bitişinden sonra en az 3 ay daha geçerli."
-              },
-              {
-                t: "Schengen Başvuru Formu",
-                d: "Eksiksiz doldurulmuş ve imzalanmış başvuru formu."
-              },
-              {
-                t: "Biyometrik Fotoğraf",
-                d: "Schengen standartlarında (detaylar aşağıda)."
-              },
-              {
-                t: "Seyahat Sağlık Sigortası",
-                d: "Schengen bölgesinde geçerli, minimum 30.000€ teminat."
-              },
-              {
-                t: "Ulaşım Belgesi",
-                d: "Gidiş-dönüş uçuş rezervasyonu (satın alma zorunlu değil; tutarlı olmalı)."
-              },
-              {
-                t: "Konaklama Belgesi",
-                d: "Otel rezervasyonu veya davet mektubu + adres bilgileri."
-              },
-              {
-                t: "Kimlik & Nüfus Kaydı",
-                d: "Kimlik fotokopisi ve (gerekiyorsa) tam tekmil nüfus kayıt örneği."
-              },
-              {
-                t: "VFS Randevu / Başvuru Belgeleri",
-                d: "Randevu çıktısı, hizmet bedeli/başvuru merkezi süreç dokümanları."
-              }
-            ].map((x) => (
-              <div key={x.t} className="border border-slate-200 rounded-2xl p-6 bg-slate-50">
-                <h3 className="font-bold text-slate-900 mb-2">{x.t}</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">{x.d}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-10 rounded-2xl border border-amber-200 bg-amber-50 p-6">
-            <p className="font-semibold text-amber-900 mb-1">Kritik Not</p>
-            <p className="text-sm text-amber-900/80 leading-relaxed">
-              Belgelerinizin “çok olması” değil, <strong>doğru ve tutarlı olması</strong> önemlidir.
-              Örneğin banka dökümü, iş yazısı ve seyahat planı birbirini desteklemelidir.
-            </p>
-          </div>
         </div>
-      </section>
 
-      {/* FOTO */}
-      <section id="foto-standartlari" className="max-w-6xl mx-auto px-6 pb-12">
-        <div className="bg-white border border-slate-200/70 rounded-3xl p-8 md:p-12 shadow-sm">
-          <h2 className="text-3xl font-extrabold mb-4">Yunanistan Vize Fotoğraf Ölçüsü ve Standartları</h2>
-          <p className="text-slate-600 leading-relaxed max-w-4xl mb-8">
-            Schengen vizesi fotoğrafında en çok hata yapılan konu ölçü ve arka plan uyumsuzluğudur.
-            Fotoğrafınızı bu standartlara göre hazırlayın.
-          </p>
+      </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { t: "Ölçü", d: "35x45 mm (Schengen standardı)." },
-              { t: "Arka Plan", d: "Açık renk / beyaz, gölgesiz." },
-              { t: "Güncellik", d: "Son 6 ay içinde çekilmiş." },
-              { t: "Yüz Oranı", d: "Yüz kadrajın %70–80’i." },
-              { t: "Gözlük", d: "Tercihen gözlüksüz; yansıma olmamalı." },
-              { t: "Aksesuar", d: "Şapka/aksesuar yok; dini zorunluluk hariç." }
-            ].map((x) => (
-              <div key={x.t} className="border border-slate-200 rounded-2xl p-6 bg-slate-50">
-                <h3 className="font-bold mb-2">{x.t}</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">{x.d}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+    </div>
+  </section>
 
-      {/* BANKA */}
-      <section id="banka-ve-finans" className="max-w-6xl mx-auto px-6 pb-12">
-        <div className="bg-white border border-slate-200/70 rounded-3xl p-8 md:p-12 shadow-sm">
-          <h2 className="text-3xl font-extrabold mb-4">Yunanistan Vize Banka Dökümü ve Finansal Belgeler</h2>
-          <p className="text-slate-600 leading-relaxed max-w-4xl mb-8">
-            Konsolosluk, seyahatinizi karşılayabilecek finansal gücü ve bu paranın kaynağını görmek ister.
-            Bu nedenle hareketli ve açıklanabilir hesaplar önemlidir.
-          </p>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
-              <h3 className="font-bold mb-2">Genel Beklenti</h3>
-              <ul className="text-sm text-slate-600 space-y-2">
-                <li>• Son 3–6 ay <strong>hesap hareketli</strong> banka dökümü</li>
-                <li>• Kaşeli / imzalı veya bankadan alınmış doğrulanabilir çıktı</li>
-                <li>• Düzenli gelir (maaş/iş/ciro) ile uyumlu bakiye</li>
-                <li>• Büyük para girişleri varsa açıklayıcı evrak (satış, prim, vb.)</li>
-              </ul>
-            </div>
+  {/* CTA */}
+  <section className="max-w-6xl mx-auto px-6 pb-20">
+    <div className="bg-gradient-to-br from-blue-700 to-indigo-700 rounded-3xl p-12 text-white text-center">
 
-            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
-              <h3 className="font-bold mb-2">Sponsor Durumu</h3>
-              <ul className="text-sm text-slate-600 space-y-2">
-                <li>• Sponsor dilekçesi</li>
-                <li>• Sponsorun gelir belgeleri ve banka dökümü</li>
-                <li>• Yakınlık bağını gösteren belge (nüfus kaydı vb.)</li>
-                <li>• Seyahat masraflarını sponsorun karşılayacağı net yazılmalı</li>
-              </ul>
-            </div>
-          </div>
+      <h2 className="text-3xl font-extrabold">
+        Dosyanızı Güçlendirelim
+      </h2>
 
-          <div className="mt-8 rounded-2xl border border-red-200 bg-red-50 p-6">
-            <p className="font-semibold text-red-900 mb-1">Sık Yapılan Hata</p>
-            <p className="text-sm text-red-900/80 leading-relaxed">
-              Başvuru öncesi son günlerde tek seferde yüksek para yatırmak,
-              “kaynağı belirsiz” algısı yaratabilir. Bu tür hareketler mutlaka belgeyle açıklanmalıdır.
-            </p>
-          </div>
-        </div>
-      </section>
+      <p className="mt-6 text-blue-100 max-w-2xl mx-auto">
+        Evrak uyumunu kontrol edelim, ret risklerini azaltalım.
+        Başvuru sürecini birlikte planlayalım.
+      </p>
 
-      {/* TURISTIK */}
-      <section id="turistik" className="max-w-6xl mx-auto px-6 pb-12">
-        <div className="bg-white border border-slate-200/70 rounded-3xl p-8 md:p-12 shadow-sm">
-          <h2 className="text-3xl font-extrabold mb-4">Turistik Yunanistan Vizesi Evrakları</h2>
-          <p className="text-slate-600 leading-relaxed max-w-4xl mb-8">
-            Turistik başvuruda amaç: seyahatin netliği, finansal uygunluk ve Türkiye’ye dönüş bağlarının güçlü görünmesidir.
-          </p>
+      <div className="mt-8 flex justify-center gap-4">
+        <a
+          href="/randevu"
+          className="bg-white text-blue-800 px-8 py-4 rounded-xl font-semibold hover:bg-slate-100 transition"
+        >
+          Ücretsiz Ön Değerlendirme
+        </a>
+      </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            {[
-              { t: "Seyahat Planı", d: "Şehir/konaklama/ulaşım planı, tarihlerle uyumlu olmalı." },
-              { t: "Konaklama", d: "Otel rezervasyonları veya Airbnb belgeleri (isim/tarih uyumlu)." },
-              { t: "Uçuş Rezervasyonu", d: "Gidiş-dönüş; randevu tarihine göre gerçekçi." },
-              { t: "Dilekçe", d: "Seyahat amacı, masraf karşılanması, dönüş planı açık anlatılmalı." }
-            ].map((x) => (
-              <div key={x.t} className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
-                <h3 className="font-bold mb-2">{x.t}</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">{x.d}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+    </div>
+  </section>
 
-      {/* TICARI */}
-      <section id="ticari" className="max-w-6xl mx-auto px-6 pb-12">
-        <div className="bg-white border border-slate-200/70 rounded-3xl p-8 md:p-12 shadow-sm">
-          <h2 className="text-3xl font-extrabold mb-4">Ticari Yunanistan Vizesi Evrakları</h2>
-          <p className="text-slate-600 leading-relaxed max-w-4xl mb-8">
-            Ticari başvuruda en kritik belge: <strong>davet mektubu</strong> ve iş ilişkisini ispatlayan dökümanlardır.
-          </p>
+</main>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            {[
-              { t: "Davet Mektubu", d: "Yunanistan’daki firma tarafından; antetli, imzalı/kaşeli." },
-              { t: "Şirket Yazısı", d: "Görev, pozisyon, izin tarihleri ve masraflar belirtilmeli." },
-              { t: "Ticari Bağlar", d: "Fatura/kontrat/email yazışmaları/meeting/fuar kayıtları." },
-              { t: "Şirket Evrakları", d: "Vergi levhası, sicil, imza sirküleri vb. (duruma göre)." }
-            ].map((x) => (
-              <div key={x.t} className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
-                <h3 className="font-bold mb-2">{x.t}</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">{x.d}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 rounded-2xl border border-blue-200 bg-blue-50 p-6">
-            <p className="font-semibold text-blue-900 mb-1">İpucu</p>
-            <p className="text-sm text-blue-900/80 leading-relaxed">
-              Davet mektubu tarihleri ile uçuş/otel tarihleri uyuşmalı; “iş amaçlı” seyahatte turistik plan da varsa,
-              programı net bir akışta göstermek ret riskini azaltır.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* AILE ZIYARETI */}
-      <section id="aile-ziyareti" className="max-w-6xl mx-auto px-6 pb-12">
-        <div className="bg-white border border-slate-200/70 rounded-3xl p-8 md:p-12 shadow-sm">
-          <h2 className="text-3xl font-extrabold mb-4">Aile / Arkadaş Ziyareti Evrakları</h2>
-          <p className="text-slate-600 leading-relaxed max-w-4xl mb-8">
-            Ziyaret vizesinde davet eden kişinin statüsü ve konaklama/masraf planı çok önemlidir.
-          </p>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {[
-              { t: "Davet Mektubu", d: "Konaklama adresi, davet süresi, ilişki açıklaması." },
-              { t: "Davet Edenin Oturum/kimlik", d: "Yunanistan kimliği/oturum kartı/pasaport kopyası." },
-              { t: "Adres Kanıtı", d: "Kira kontratı, fatura veya resmi adres belgesi." },
-              { t: "Masraf Planı", d: "Masrafları kim karşılıyor? Sponsor ise sponsor evrakları." }
-            ].map((x) => (
-              <div key={x.t} className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
-                <h3 className="font-bold mb-2">{x.t}</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">{x.d}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* MESLEKI */}
-      <section id="mesleki" className="max-w-6xl mx-auto px-6 pb-12">
-        <div className="bg-white border border-slate-200/70 rounded-3xl p-8 md:p-12 shadow-sm">
-          <h2 className="text-3xl font-extrabold mb-4">Mesleğe Göre Ek Evraklar</h2>
-          <p className="text-slate-600 leading-relaxed max-w-4xl mb-10">
-            Yunanistan vize dosyanızın “gücü”, Türkiye’ye geri dönüş bağları ve gelir düzeninin netliği ile artar.
-            Aşağıdaki ek belgeler mesleğinize göre istenebilir.
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                t: "Çalışan",
-                items: [
-                  "• İş yeri izin yazısı",
-                  "• Maaş bordrosu (son 3 ay)",
-                  "• SGK hizmet dökümü / işe giriş",
-                  "• Şirket evrakları (varsa)"
-                ]
-              },
-              {
-                t: "İşveren / Şirket Sahibi",
-                items: [
-                  "• Faaliyet belgesi",
-                  "• Vergi levhası",
-                  "• Ticaret sicil / imza sirküleri",
-                  "• Şirket hesap dökümleri (duruma göre)"
-                ]
-              },
-              {
-                t: "Öğrenci",
-                items: [
-                  "• Öğrenci belgesi",
-                  "• Sponsor dilekçesi",
-                  "• Sponsor gelir/banka dökümü",
-                  "• Aile bağları (nüfus kaydı vb.)"
-                ]
-              },
-              {
-                t: "Emekli",
-                items: [
-                  "• Emeklilik belgesi",
-                  "• Emekli maaş dökümü",
-                  "• Ek gelir belgeleri (varsa)",
-                  "• Tapu/araç gibi varlık belgeleri (varsa)"
-                ]
-              },
-              {
-                t: "Freelance / Serbest Meslek",
-                items: [
-                  "• Vergi kaydı / levha",
-                  "• Fatura/iş sözleşmeleri",
-                  "• Gelir dökümleri",
-                  "• Banka hareketleri (düzenli)"
-                ]
-              },
-              {
-                t: "Sponsorlu Başvuru",
-                items: [
-                  "• Sponsor dilekçesi",
-                  "• Sponsor gelir/banka",
-                  "• Yakınlık kanıtı",
-                  "• Masraf planı açıklaması"
-                ]
-              }
-            ].map((c) => (
-              <div key={c.t} className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
-                <h3 className="font-bold mb-3">{c.t}</h3>
-                <ul className="text-sm text-slate-600 space-y-2">
-                  {c.items.map((it) => (
-                    <li key={it}>{it}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* SSS */}
-      <section id="sss" className="max-w-6xl mx-auto px-6 pb-16">
-        <div className="bg-white border border-slate-200/70 rounded-3xl p-8 md:p-12 shadow-sm">
-          <h2 className="text-3xl font-extrabold mb-10 text-center">
-            Yunanistan Vize Evrakları Hakkında Sık Sorulan Sorular
-          </h2>
-
-          <div className="max-w-4xl mx-auto space-y-4">
-            <details className="group bg-slate-50 border border-slate-200 rounded-2xl p-6">
-              <summary className="cursor-pointer font-bold text-slate-900 flex items-center justify-between">
-                Yunanistan vizesi için bankada ne kadar para olmalı?
-                <span className="text-slate-400 group-open:rotate-180 transition">▼</span>
-              </summary>
-              <p className="mt-4 text-slate-600 leading-relaxed">
-                Kesin bir alt limit yoktur. Önemli olan seyahat masraflarını karşılayabilecek tutar ve bu tutarın
-                <strong> kaynağının açıklanabilir</strong> olmasıdır. Düzenli gelir + hareketli hesap dökümü dosyayı güçlendirir.
-              </p>
-            </details>
-
-            <details className="group bg-slate-50 border border-slate-200 rounded-2xl p-6">
-              <summary className="cursor-pointer font-bold text-slate-900 flex items-center justify-between">
-                Evraklar İngilizce mi olmalı?
-                <span className="text-slate-400 group-open:rotate-180 transition">▼</span>
-              </summary>
-              <p className="mt-4 text-slate-600 leading-relaxed">
-                Belgelerin dili konusunda başvuru merkezinin ve konsolosluğun güncel uygulaması önemlidir.
-                Genel pratikte; resmi belgeler çoğunlukla Türkçe kabul edilse de, şirket yazısı/dilekçe gibi belgelerin
-                İngilizce hazırlanması dosyayı daha “okunabilir” hale getirir.
-              </p>
-            </details>
-
-            <details className="group bg-slate-50 border border-slate-200 rounded-2xl p-6">
-              <summary className="cursor-pointer font-bold text-slate-900 flex items-center justify-between">
-                Yunanistan vizesi için randevu şart mı?
-                <span className="text-slate-400 group-open:rotate-180 transition">▼</span>
-              </summary>
-              <p className="mt-4 text-slate-600 leading-relaxed">
-                Evet. Başvurular biyometri işlemi gerektirdiği için randevu zorunludur. Randevu günü,
-                dosyanızın düzenli ve tutarlı olması işlem sürecini hızlandırır.
-              </p>
-            </details>
-          </div>
-
-          <div className="mt-10 text-center">
-            <a
-              href="/randevu"
-              className="inline-flex items-center justify-center rounded-xl px-8 py-4 font-semibold bg-slate-900 text-white hover:bg-slate-800 transition"
-            >
-              Dosyanızı Kontrol Edelim (Ücretsiz Ön Değerlendirme)
-            </a>
-            <p className="text-xs text-slate-500 mt-3">
-              Evraklarınızı göndermeden önce kontrol ettirmek, ret riskini düşürür.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* FINAL CTA */}
-      <section className="max-w-6xl mx-auto px-6 pb-20">
-        <div className="bg-gradient-to-br from-blue-700 to-indigo-700 rounded-3xl p-12 md:p-16 text-white text-center shadow-2xl">
-          <h2 className="text-3xl md:text-5xl font-extrabold">
-            Yunanistan Schengen Vizesi Dosyanızı Güçlendirelim
-          </h2>
-          <p className="mt-6 text-blue-100 max-w-2xl mx-auto leading-relaxed">
-            Evraklarınızın birbiriyle uyumunu kontrol edelim, eksikleri başvuru öncesi tamamlayalım.
-            Randevu, evrak düzeni ve dilekçe stratejisiyle başvurunuzu sağlamlaştıralım.
-          </p>
-
-          <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
-            <a
-             href="https://wa.me/905302199056?text=Merhaba%2C%20vize%20ba%C5%9Fvurum%20i%C3%A7in%20profesyonel%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum.%20Uygun%20oldu%C4%9Funuzda%20s%C3%BCreci%20birlikte%20planlayabilir%20miyiz%3F"
-              className="inline-flex items-center justify-center rounded-xl px-8 py-4 font-semibold bg-white text-blue-800 hover:bg-slate-100 transition"
-            >
-              WhatsApp’tan Evrak Sor
-            </a>
-            <a
-              href="/iletisim"
-              className="inline-flex items-center justify-center rounded-xl px-8 py-4 font-semibold border border-white/40 hover:bg-white/10 transition"
-            >
-              İletişim & Ofis Randevusu
-            </a>
-          </div>
-        </div>
-      </section>
-
-    </main>
   );
 };
 

@@ -86,17 +86,17 @@ export default async function handler(req, res) {
     "/portekiz-d7-oturum-vizesi-ankara", //burası tamam
     "/portekiz-d7-oturum-vizesi-istanbul", //burası tamam
     "/yunanistan-vize",//burası tamam
-    "/yunanistan-vize-randevusu",
-    "/yunanistan-vize-evraklari",
-    "/yunanistan-vize-reddi",
-    "/fransa-vize",
-    "/fransa-vize-randevusu",
-    "/fransa-vize-evraklari",
-    "/fransa-vize-reddi",
-   "/hollanda-vize",
-    "/hollanda-vize-randevusu",
-    "/hollanda-vize-evraklari",
-    "/hollanda-vize-reddi",
+    "/yunanistan-vize-randevusu",//burası tamam
+    "/yunanistan-vize-evraklari",//burası tamam
+    "/yunanistan-vize-reddi",//burası tamam
+    "/fransa-vize",//burası tamam
+    "/fransa-vize-randevusu", //burası tamam
+    "/fransa-vize-evraklari",//burası tamam
+    "/fransa-vize-reddi",//burasıt tamam
+   "/hollanda-vize",//burası tamam
+    "/hollanda-vize-randevusu",//burası tamam
+    "/hollanda-vize-evraklari",//burası tamam
+    "/hollanda-vize-reddi",//burası tamam
      "/ispanya-vize",
     "/ispanya-vize-randevusu",
     "/ispanya-vize-evraklari",
@@ -119,7 +119,14 @@ export default async function handler(req, res) {
     "/amerika-vize-reddi-yeni-ise-baslayan",
     "/amerika-vize-reddi-dusuk-maas",
     "/amerika-vize-reddi-bekar",
-    "/amerika-vize-reddi-evli"
+    "/amerika-vize-reddi-evli",
+    "/macaristan-vize",
+    "/macaristan-vize-evraklari",
+    "/macaristan-vize-randevusu",
+    "/macaristan-vize-reddi",
+    
+
+
 
 
     

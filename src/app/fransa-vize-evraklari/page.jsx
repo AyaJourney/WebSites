@@ -19,188 +19,213 @@ export const metadata = {
 
 const FransaVizeEvraklari = () => {
   return (
-    <main className="min-h-screen bg-zinc-50">
+<main className="min-h-screen bg-zinc-50">
 
-      {/* HERO */}
-      <section className="max-w-6xl mx-auto px-6 pt-16 pb-12">
-        <div className="bg-white border border-slate-200 rounded-2xl p-10 shadow-sm">
+  {/* HERO */}
+  <section className="max-w-6xl mx-auto px-6 pt-16 pb-12">
+    <div className="bg-white border border-slate-200 rounded-2xl p-10 shadow-sm">
 
-          <p className="text-sm text-slate-500 mb-2">
-            Fransa Cumhuriyeti • Schengen Bölgesi • Ankara
-          </p>
+      <p className="text-sm text-slate-500 mb-2">
+        Fransa Cumhuriyeti • Schengen Bölgesi • Ankara
+      </p>
 
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900">
-            Fransa Vize Evrakları 2026
-          </h1>
+      <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900">
+        Fransa Vize Evrakları 2026 (Güncel Liste)
+      </h1>
 
-          <p className="mt-6 text-lg text-slate-600 max-w-3xl leading-relaxed">
-            Fransa Schengen vizesi başvurularında en sık ret sebebi eksik veya
-            hatalı evraktır. Fransa vize evrakları başvuru türüne ve kişinin
-            çalışma durumuna göre değişiklik gösterir.
-          </p>
+      <p className="mt-6 text-lg text-slate-600 max-w-3xl leading-relaxed">
+        Fransa Schengen vizesi başvurularında en sık ret sebebi eksik veya
+        hatalı evraktır. Fransa vize evrakları başvuru türüne ve kişinin
+        çalışma durumuna göre değişiklik gösterir.
+        Başvuru sürecinin genel akışını görmek için{" "}
+        <a href="/fransa-vize" className="font-semibold underline">
+          Fransa vize rehberini
+        </a>{" "}
+        inceleyebilirsiniz.
+      </p>
 
-          <div className="mt-8 flex flex-wrap gap-4">
-            <a
-              href="/randevu"
-              className="bg-slate-900 text-white px-6 py-3 rounded-xl font-semibold hover:bg-slate-800 transition"
-            >
-              Evrak Kontrol Randevusu Al
-            </a>
-            <a
-              href="/fransa-vize"
-              className="border border-slate-300 px-6 py-3 rounded-xl font-semibold hover:bg-slate-50 transition"
-            >
-              Fransa Vize Rehberi →
-            </a>
-          </div>
+      <div className="mt-8 flex flex-wrap gap-4">
+        <a
+          href="/randevu"
+          className="bg-slate-900 text-white px-6 py-3 rounded-xl font-semibold hover:bg-slate-800 transition"
+        >
+          Evrak Kontrol Randevusu Al
+        </a>
+        <a
+          href="/fransa-vize-randevusu"
+          className="border border-slate-300 px-6 py-3 rounded-xl font-semibold hover:bg-slate-50 transition"
+        >
+          Fransa Vize Randevusu →
+        </a>
+      </div>
 
-        </div>
-      </section>
+      <div className="mt-6 flex flex-wrap gap-4 text-sm">
+        <a href="/fransa-vize-reddi" className="underline hover:text-slate-900">
+          Fransa vize reddi →
+        </a>
+      </div>
 
-      {/* TEMEL EVRAKLAR */}
-      <section className="max-w-6xl mx-auto px-6 pb-16">
-        <div className="bg-white p-10 rounded-2xl border border-slate-200">
+    </div>
+  </section>
 
-          <h2 className="text-3xl font-bold mb-8">
-            Fransa Schengen Vize Evrakları (Temel Liste)
-          </h2>
 
-          <ul className="grid md:grid-cols-2 gap-6 text-slate-700">
-            <li>• En az 3 ay geçerli pasaport</li>
-            <li>• 2 adet biyometrik fotoğraf</li>
-            <li>• Schengen başvuru formu</li>
-            <li>• Seyahat sağlık sigortası (min. 30.000€ teminat)</li>
-            <li>• Uçak rezervasyonu</li>
-            <li>• Otel rezervasyonu veya davetiye</li>
-            <li>• Banka hesap dökümü (son 3 ay)</li>
-            <li>• Kimlik fotokopisi</li>
-          </ul>
+  {/* TEMEL EVRAKLAR */}
+  <section className="max-w-6xl mx-auto px-6 pb-16">
+    <div className="bg-white p-10 rounded-2xl border border-slate-200">
 
-        </div>
-      </section>
+      <h2 className="text-3xl font-bold mb-8">
+        Fransa Schengen Vize Evrakları (Temel Liste)
+      </h2>
 
-      {/* TURİST VİZESİ */}
-      <section className="max-w-6xl mx-auto px-6 pb-16">
-        <div className="grid md:grid-cols-2 gap-8">
+      <ul className="grid md:grid-cols-2 gap-6 text-slate-700">
+        <li>• En az 3 ay geçerli pasaport</li>
+        <li>• 2 adet biyometrik fotoğraf</li>
+        <li>• Schengen başvuru formu</li>
+        <li>• Seyahat sağlık sigortası (min. 30.000€ teminat)</li>
+        <li>• Uçak rezervasyonu</li>
+        <li>• Otel rezervasyonu veya davetiye</li>
+        <li>• Banka hesap dökümü (son 3 ay)</li>
+        <li>• Kimlik fotokopisi</li>
+      </ul>
 
-          <div className="bg-white p-8 rounded-2xl border border-slate-200">
-            <h3 className="text-xl font-bold mb-4">
-              Fransa Turist Vizesi Evrakları
-            </h3>
-            <ul className="space-y-3 text-slate-600">
-              <li>• Çalışanlar için maaş bordrosu</li>
-              <li>• SGK hizmet dökümü</li>
-              <li>• İşveren izin yazısı</li>
-              <li>• Şirket sahipleri için vergi levhası</li>
-              <li>• Öğrenciler için öğrenci belgesi</li>
-            </ul>
-          </div>
+      <p className="mt-8 text-slate-600">
+        Randevu günü tüm belgelerin eksiksiz olması gerekir. Evrak teslim sürecini
+        görmek için{" "}
+        <a href="/fransa-vize-randevusu" className="font-semibold underline">
+          Fransa vize randevu sürecini
+        </a>{" "}
+        inceleyebilirsiniz.
+      </p>
 
-          <div className="bg-white p-8 rounded-2xl border border-slate-200">
-            <h3 className="text-xl font-bold mb-4">
-              Fransa Ticari Vize Evrakları
-            </h3>
-            <ul className="space-y-3 text-slate-600">
-              <li>• Fransa’daki firmadan davetiye</li>
-              <li>• Şirket faaliyet belgesi</li>
-              <li>• Ticaret sicil gazetesi</li>
-              <li>• İmza sirküleri</li>
-              <li>• Vergi levhası</li>
-            </ul>
-          </div>
+    </div>
+  </section>
 
-        </div>
-      </section>
 
-      {/* BANKA ŞARTI */}
-      <section className="max-w-5xl mx-auto px-6 pb-16">
-        <div className="bg-slate-50 p-10 rounded-2xl border border-slate-200">
+  {/* TURİST & TİCARİ */}
+  <section className="max-w-6xl mx-auto px-6 pb-16">
+    <div className="grid md:grid-cols-2 gap-8">
 
-          <h2 className="text-3xl font-bold mb-6">
-            Fransa Vizesi İçin Bankada Ne Kadar Para Olmalı?
-          </h2>
+      <div className="bg-white p-8 rounded-2xl border border-slate-200">
+        <h3 className="text-xl font-bold mb-4">
+          Fransa Turist Vizesi Evrakları
+        </h3>
+        <ul className="space-y-3 text-slate-600">
+          <li>• Çalışanlar için maaş bordrosu</li>
+          <li>• SGK hizmet dökümü</li>
+          <li>• İşveren izin yazısı</li>
+          <li>• Şirket sahipleri için vergi levhası</li>
+          <li>• Öğrenciler için öğrenci belgesi</li>
+        </ul>
+      </div>
 
-          <p className="text-slate-600 leading-relaxed">
-            Fransa Schengen vizesi için resmi bir alt limit açıklanmaz.
-            Ancak günlük en az 65-120 Euro arası masrafı karşılayabilecek
-            bakiye gösterilmesi önerilir. Hesabın hareketli ve tutarlı
-            olması önemlidir.
-          </p>
+      <div className="bg-white p-8 rounded-2xl border border-slate-200">
+        <h3 className="text-xl font-bold mb-4">
+          Fransa Ticari Vize Evrakları
+        </h3>
+        <ul className="space-y-3 text-slate-600">
+          <li>• Fransa’daki firmadan davetiye</li>
+          <li>• Şirket faaliyet belgesi</li>
+          <li>• Ticaret sicil gazetesi</li>
+          <li>• İmza sirküleri</li>
+          <li>• Vergi levhası</li>
+        </ul>
+      </div>
 
-        </div>
-      </section>
+    </div>
+  </section>
 
-      {/* ANKARA VFS */}
-      <section className="max-w-5xl mx-auto px-6 pb-16">
-        <div className="bg-white p-10 rounded-2xl border border-slate-200">
 
-          <h2 className="text-3xl font-bold mb-6">
-            VFS Fransa Ankara Evrak Teslim Süreci
-          </h2>
+  {/* BANKA ŞARTI */}
+  <section className="max-w-5xl mx-auto px-6 pb-16">
+    <div className="bg-slate-50 p-10 rounded-2xl border border-slate-200">
 
-          <p className="text-slate-600 leading-relaxed mb-4">
-            Fransa vize başvuruları Ankara’da VFS Global üzerinden yapılır.
-            Randevu günü tüm evrakların eksiksiz ve doğru sıralanmış şekilde
-            teslim edilmesi gerekir.
-          </p>
+      <h2 className="text-3xl font-bold mb-6">
+        Fransa Vizesi İçin Bankada Ne Kadar Para Olmalı?
+      </h2>
 
-          <a
-            href="/fransa-vize-randevusu"
-            className="font-semibold hover:underline"
-          >
-            Fransa vize randevusu nasıl alınır? →
-          </a>
+      <p className="text-slate-600 leading-relaxed">
+        Fransa Schengen vizesi için resmi bir alt limit açıklanmaz.
+        Ancak günlük ortalama 65-120 Euro arası masrafı karşılayabilecek
+        bakiye gösterilmesi önerilir. Hesabın hareketli, düzenli gelirle
+        uyumlu ve ani para girişleri içermemesi önemlidir.
+      </p>
 
-        </div>
-      </section>
+    </div>
+  </section>
 
-      {/* RET RİSKİ */}
-      <section className="max-w-5xl mx-auto px-6 pb-20">
-        <div className="bg-white p-10 rounded-2xl border border-slate-200">
 
-          <h2 className="text-3xl font-bold mb-6">
-            Eksik Evrak Fransa Vize Reddine Neden Olur mu?
-          </h2>
+  {/* ANKARA VFS */}
+  <section className="max-w-5xl mx-auto px-6 pb-16">
+    <div className="bg-white p-10 rounded-2xl border border-slate-200">
 
-          <p className="text-slate-600 leading-relaxed mb-6">
-            Evet. Özellikle banka dökümü, sigorta veya seyahat planındaki
-            tutarsızlıklar Fransa Schengen vize reddi ile sonuçlanabilir.
-          </p>
+      <h2 className="text-3xl font-bold mb-6">
+        VFS Fransa Ankara Evrak Teslim Süreci
+      </h2>
 
-          <a
-            href="/fransa-vize-reddi"
-            className="font-semibold hover:underline"
-          >
-            Fransa vize reddi nedenleri →
-          </a>
+      <p className="text-slate-600 leading-relaxed mb-4">
+        Fransa vize başvuruları Ankara’da VFS Global üzerinden yapılır.
+        Randevu günü tüm evrakların eksiksiz ve doğru sıralanmış şekilde
+        teslim edilmesi gerekir.
+      </p>
 
-        </div>
-      </section>
+      <a
+        href="/fransa-vize-randevusu"
+        className="font-semibold underline"
+      >
+        Fransa vize randevusu nasıl alınır? →
+      </a>
 
-      {/* CTA */}
-      <section className="max-w-6xl mx-auto px-6 pb-24">
-        <div className="bg-slate-900 text-white rounded-2xl p-12 text-center">
+    </div>
+  </section>
 
-          <h2 className="text-3xl font-bold mb-6">
-            Fransa Vize Evraklarınızı Uzmanlar Kontrol Etsin
-          </h2>
 
-          <p className="text-slate-300 max-w-2xl mx-auto mb-8">
-            Evraklarınızı başvuru öncesi inceleyelim, Fransa vize reddi
-            riskinizi minimize edelim.
-          </p>
+  {/* RET RİSKİ */}
+  <section className="max-w-5xl mx-auto px-6 pb-20">
+    <div className="bg-white p-10 rounded-2xl border border-slate-200">
 
-          <a
-           href="https://wa.me/905302199056?text=Merhaba%2C%20vize%20ba%C5%9Fvurum%20i%C3%A7in%20profesyonel%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum.%20Uygun%20oldu%C4%9Funuzda%20s%C3%BCreci%20birlikte%20planlayabilir%20miyiz%3F"
-            className="bg-white text-slate-900 px-8 py-4 rounded-xl font-semibold hover:shadow-xl transition"
-          >
-            WhatsApp ile Evrak Kontrolü
-          </a>
+      <h2 className="text-3xl font-bold mb-6">
+        Eksik Evrak Fransa Vize Reddine Neden Olur mu?
+      </h2>
 
-        </div>
-      </section>
+      <p className="text-slate-600 leading-relaxed mb-6">
+        Evet. Özellikle banka dökümü, sigorta veya seyahat planındaki
+        tutarsızlıklar Fransa Schengen vize reddi ile sonuçlanabilir.
+        Ret sonrası süreci öğrenmek için{" "}
+        <a href="/fransa-vize-reddi" className="font-semibold underline">
+          Fransa vize reddi rehberini
+        </a>{" "}
+        inceleyebilirsiniz.
+      </p>
 
-    </main>
+    </div>
+  </section>
+
+
+  {/* CTA */}
+  <section className="max-w-6xl mx-auto px-6 pb-24">
+    <div className="bg-slate-900 text-white rounded-2xl p-12 text-center">
+
+      <h2 className="text-3xl font-bold mb-6">
+        Fransa Vize Evraklarınızı Uzmanlar Kontrol Etsin
+      </h2>
+
+      <p className="text-slate-300 max-w-2xl mx-auto mb-8">
+        Evraklarınızı başvuru öncesi inceleyelim, Fransa vize reddi
+        riskinizi minimize edelim.
+      </p>
+
+      <a
+        href="https://wa.me/905302199056?text=Merhaba%2C%20Fransa%20vize%20evraklar%C4%B1m%C4%B1%20kontrol%20ettirmek%20istiyorum.%20Yard%C4%B1mc%C4%B1%20olabilir%20misiniz%3F"
+        className="bg-white text-slate-900 px-8 py-4 rounded-xl font-semibold hover:shadow-xl transition"
+      >
+        WhatsApp ile Evrak Kontrolü
+      </a>
+
+    </div>
+  </section>
+
+</main>
+
   );
 };
 

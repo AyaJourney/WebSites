@@ -599,6 +599,30 @@ export default function SchengenPage() {
           </div>
         </div>
       </section>
+{/* SCHENGEN ÜLKE BAŞVURU LİNKLERİ */}
+<section className="max-w-7xl mx-auto px-6 py-10">
+  <h2 className="text-2xl font-bold mb-6 text-center">
+    Ülkeye Göre Schengen Başvuruları
+  </h2>
+
+  <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 text-center">
+    <Link href="/yunanistan-vize" className="p-4 rounded-xl border hover:shadow-md">
+      Yunanistan Schengen Vizesi
+    </Link>
+    <Link href="/fransa-vize" className="p-4 rounded-xl border hover:shadow-md">
+      Fransa Schengen Vizesi
+    </Link>
+    <Link href="/hollanda-vize" className="p-4 rounded-xl border hover:shadow-md">
+      Hollanda Schengen Vizesi
+    </Link>
+    <Link href="/ispanya-vize" className="p-4 rounded-xl border hover:shadow-md">
+      İspanya Schengen Vizesi
+    </Link>
+      <Link href="/macaristan-vize" className="p-4 rounded-xl border hover:shadow-md">
+     Macaristan Schengen Vizesi
+    </Link>
+  </div>
+</section>
 
       {/* BAŞVURU SÜRECİ */}
       <section className="max-w-7xl mx-auto px-6 py-20">
@@ -641,6 +665,13 @@ export default function SchengenPage() {
             durumunuz, yaşınız ve seyahat geçmişiniz en uygun Schengen ülkesini ve
             başvuru taktiğini belirlemek için titizlikle değerlendirilir.
           </p>
+          <p className="mt-4 text-blue-700">
+  İlk başvurunuzsa, 
+  <Link href="/en-kolay-vize-veren-ulkeler" className="underline ml-1 mr-1">
+    en kolay Schengen vizesi veren ülkeler
+  </Link>
+  rehberimizi incelemenizi öneririz.
+</p>
         </div>
       </section>
 
@@ -676,7 +707,16 @@ export default function SchengenPage() {
               );
             })}
           </div>
+
         </div>
+        <div className="mt-10 text-center">
+  <p className="text-gray-700">
+    Detaylı ve güncel belge listesi için 
+    <Link href="/schengen-vize-evraklari" className="text-blue-600 font-semibold ml-1">
+      Schengen vize evrakları rehberini
+    </Link> inceleyebilirsiniz.
+  </p>
+</div>
       </section>
 
       {/* PROFİLE GÖRE EK BELGELER */}
@@ -758,6 +798,19 @@ export default function SchengenPage() {
                 Almanya randevu süreci aracı kurum üzerinden farklı işlemektedir; onay e-postası ve ücret
                 sonrası rezervasyon tamamlanır.
               </span>
+
+            </li>
+            <li>
+                            <p className="mt-4 text-center">
+  Randevu alma süreci hakkında detaylı bilgi için 
+  <Link href="/vfs-global-vize-randevusu-nasil-alinir" className="text-blue-600 font-semibold ml-1 mr-1">
+    VFS randevu rehberini
+  </Link> 
+  ve 
+  <Link href="/idata-vize-randevusu-nasil-alinir" className="text-blue-600 font-semibold ml-1 mr-1">
+    iDATA randevu rehberini
+  </Link> inceleyebilirsiniz.
+</p>
             </li>
           </ul>
         </div>
@@ -906,7 +959,18 @@ export default function SchengenPage() {
     İlk başvuruda da Schengen vizesi alınabilir. Ancak başvurunun sonucu tamamen konsolosluğun değerlendirmesine bağlıdır.</p>
 
     <p><strong>Schengen vizesi reddi neden olur?</strong><br />
-    Yetersiz finansal durum, eksik veya hatalı evrak, tutarsız seyahat planı ve geri dönüş bağlarının zayıf görülmesi başlıca ret nedenleridir.</p>
+    Yetersiz finansal durum, eksik veya hatalı evrak, tutarsız seyahat planı ve geri dönüş bağlarının zayıf görülmesi başlıca ret nedenleridir.
+  
+  Detaylı ret analizleri için 
+  <Link href="/schengen-vize-reddi-nedenleri" className="text-blue-600 font-semibold ml-1">
+    Schengen vize reddi nedenleri
+  </Link> sayfamıza göz atabilirsiniz.
+  Ret sonrası yapılması gerekenler için 
+  <Link href="/vize-reddi-sonrasi-kontrol-listesi" className="text-blue-600 font-semibold ml-1">
+    kontrol listemizi
+  </Link> inceleyin.
+    
+    </p>
 
     <p><strong>Schengen vizesi reddinden sonra tekrar başvuru yapılabilir mi?</strong><br />
     Evet, ret sonrası tekrar başvuru yapılabilir. Ancak önceki ret gerekçeleri yeni başvuruda güçlü belgelerle giderilmelidir.</p>
@@ -974,7 +1038,18 @@ export default function SchengenPage() {
         data-anim="ukvisa-fade-up"
         className="ukvisa-fade-up-init max-w-6xl mx-auto px-6 pb-20"
       >
-        
+        <div className="max-w-4xl mx-auto text-center mb-12">
+  <p className="text-lg text-gray-700">
+    Schengen dışında başvuru yapmayı düşünüyorsanız 
+    <Link href="/amerika-vizesi" className="text-blue-600 font-semibold ml-1 mr-1">
+      Amerika vizesi
+    </Link> 
+    veya 
+    <Link href="/ingiltere-vizesi" className="text-blue-600 font-semibold ml-1 mr-1">
+      İngiltere vizesi
+    </Link> sayfalarımızı da inceleyebilirsiniz.
+  </p>
+</div>
         <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white/95 backdrop-blur shadow-xl">
           <div
   className="absolute inset-0 rounded-3xl"

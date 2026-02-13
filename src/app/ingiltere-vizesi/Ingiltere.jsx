@@ -623,7 +623,17 @@ const UKVisaPage = () => {
     
   ))}
 </div>
-
+        <div className="flex flex-wrap gap-4 pt-4 text-sm">
+  <Link href="/ingiltere-vize-evraklari" className="text-blue-600 hover:underline">
+    İngiltere vize evrakları →
+  </Link>
+  <Link href="/ingiltere-vize-randevusu" className="text-blue-600 hover:underline">
+    İngiltere vize randevusu →
+  </Link>
+  <Link href="/ingiltere-vize-reddi" className="text-blue-600 hover:underline">
+    İngiltere vize reddi →
+  </Link>
+</div>
           </div>
 
           {/* Sağ görsel */}
@@ -653,7 +663,9 @@ const UKVisaPage = () => {
               </div>
             </div>
           </div>
+          
         </div>
+
       </section>
 
       {/* BİLGİ KARTLARI -------------------------------------------------- */}
@@ -688,6 +700,12 @@ const UKVisaPage = () => {
           <div>
             <p className="text-sm text-slate-500 uppercase">Check-list</p>
             <h2 className="text-3xl font-bold text-slate-900">Gerekli belgeleri tamamlayın</h2>
+            <p className="text-slate-600 mb-6">
+  Detaylı evrak listesi için 
+  <Link href="/ingiltere-vize-evraklari" className="text-blue-600 font-semibold hover:underline ml-1 mr-1">
+    İngiltere vize evrakları rehberini
+  </Link> inceleyin.
+</p>
           </div>
         </div>
 
@@ -712,6 +730,12 @@ const UKVisaPage = () => {
           <div>
             <p className="text-sm text-slate-500 uppercase">Süreç</p>
             <h2 className="text-3xl font-bold text-slate-900">Başvuruyu 5 adımda tamamlayın</h2>
+            <p className="text-slate-600 mb-6">
+  Randevu aşaması hakkında detaylı bilgi için 
+  <Link href="/ingiltere-vize-randevusu" className="text-blue-600 font-semibold hover:underline ml-1 mr-1">
+    İngiltere vize randevusu sayfasına
+  </Link> göz atın.
+</p>
           </div>
         </div>
 
@@ -816,7 +840,11 @@ const UKVisaPage = () => {
     Teknik olarak mümkündür ancak ücret iade süreci genellikle uzun sürer.</p>
 
     <p><strong>İngiltere vize reddi aldım, itiraz hakkım var mı?</strong><br />
-    Hayır. Standart ziyaretçi vizelerinde itiraz hakkı bulunmaz. Yeniden başvuru yapılması gerekir.</p>
+  Standart ziyaretçi vizelerinde itiraz hakkı bulunmaz. 
+  Detaylı analiz için 
+  <Link href="/ingiltere-vize-reddi" className="text-blue-600 font-semibold hover:underline ml-1 mr-1">
+    İngiltere vize reddi rehberini
+  </Link> inceleyebilirsiniz.</p>
 
     <p><strong>Seyahatimi ne kadar sonrasına planlamalıyım?</strong><br />
     Başvuru tarihinden itibaren en fazla 6 ay ileri tarihli seyahat planlaması yapılabilir.</p>
@@ -940,7 +968,18 @@ const UKVisaPage = () => {
         data-anim="ukvisa-fade-up"
         className="ukvisa-fade-up-init max-w-6xl mx-auto px-6 pb-20 "
       >
-
+<div className="text-center mb-10">
+  <p className="text-slate-700">
+    Başvuru öncesi 
+    <Link href="/ingiltere-vize-evraklari" className="text-blue-600 font-semibold hover:underline ml-1 mr-1">
+      evrak listenizi kontrol edin
+    </Link> 
+    ve ardından 
+    <Link href="/ingiltere-vize-randevusu" className="text-blue-600 font-semibold hover:underline ml-1 mr-1">
+      randevunuzu oluşturun.
+    </Link>
+  </p>
+</div>
  <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white/95 backdrop-blur shadow-xl">
  
    <div

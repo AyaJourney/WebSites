@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 // 1. Metadata: VFS Global aramalarında "hata çözümü" ve "randevu alma" odaklı
@@ -10,7 +11,7 @@ export const metadata = {
 
 const VfsGlobalRandevu = () => {
   return (
-  <main className="max-w-6xl mx-auto px-6 py-16 font-sans text-slate-900">
+<main className="max-w-6xl mx-auto px-6 py-16 font-sans text-slate-900">
 
   {/* HERO */}
   <header className="text-center mb-20">
@@ -82,20 +83,26 @@ const VfsGlobalRandevu = () => {
         <h4 className="font-bold text-orange-400 mb-2">
           VFS “No Slots Available” Ne Demek?
         </h4>
-        <p className="text-sm text-slate-400 leading-relaxed">
+        <p className="text-sm text-slate-400 leading-relaxed mb-4">
           Sistem tamamen dolu demektir. Yeni slotlar genellikle hafta içi sabah
           saatlerinde açılır.
         </p>
+        <Link href="/vfs-no-slots-availables" className="text-sm font-semibold text-orange-300 hover:underline">
+          Detaylı No Slots rehberi →
+        </Link>
       </div>
 
       <div className="p-8 bg-white/5 rounded-3xl border border-white/10">
         <h4 className="font-bold text-orange-400 mb-2">
           VFS Access Denied Hatası
         </h4>
-        <p className="text-sm text-slate-400 leading-relaxed">
+        <p className="text-sm text-slate-400 leading-relaxed mb-4">
           Çok sık yenileme yaptığınızda IP engeli oluşur. VPN veya modem reseti
           çözüm olabilir.
         </p>
+        <Link href="/vfs-randevu-bulamiyorum" className="text-sm font-semibold text-orange-300 hover:underline">
+          Randevu bulamıyorum çözümü →
+        </Link>
       </div>
 
       <div className="p-8 bg-white/5 rounded-3xl border border-white/10">
@@ -112,9 +119,12 @@ const VfsGlobalRandevu = () => {
         <h4 className="font-bold text-orange-400 mb-2">
           VFS Randevu Ne Zaman Açılır?
         </h4>
-        <p className="text-sm text-slate-400 leading-relaxed">
+        <p className="text-sm text-slate-400 leading-relaxed mb-4">
           Slotlar düzensiz açılır. Özellikle 08:30 – 10:00 arası yoğun kontrol edilir.
         </p>
+        <Link href="/vfs-randevu-bulamiyorum" className="text-sm font-semibold text-orange-300 hover:underline">
+          Slot taktikleri →
+        </Link>
       </div>
 
     </div>
@@ -138,8 +148,25 @@ const VfsGlobalRandevu = () => {
     </div>
   </section>
 
+  {/* VFS SİLO NAV */}
+  <nav className="mt-20 border-t border-slate-200 pt-10">
+    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">
+      VFS Rehber Navigasyonu
+    </p>
+
+    <div className="flex flex-wrap gap-4 text-sm font-semibold">
+      <Link href="/vfs-randevu-bulamiyorum" className="hover:underline">
+        VFS randevu bulamıyorum →
+      </Link>
+
+      <Link href="/vfs-no-slots-availables" className="hover:underline">
+        No Slots Available hatası →
+      </Link>
+    </div>
+  </nav>
+
   {/* CTA */}
-  <section className="bg-orange-600 rounded-[3rem] p-12 text-center text-white shadow-2xl">
+  <section className="bg-orange-600 rounded-[3rem] p-12 text-center text-white shadow-2xl mt-20">
     <h2 className="text-3xl md:text-5xl font-black mb-6 uppercase">
       VFS Randevu Bulamıyor musunuz?
     </h2>
@@ -151,7 +178,7 @@ const VfsGlobalRandevu = () => {
 
     <div className="flex flex-col sm:flex-row justify-center gap-6">
       <a
-       href="https://wa.me/905302199056?text=Merhaba%2C%20vize%20ba%C5%9Fvurum%20i%C3%A7in%20profesyonel%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum.%20Uygun%20oldu%C4%9Funuzda%20s%C3%BCreci%20birlikte%20planlayabilir%20miyiz%3F"
+        href="https://wa.me/905302199056?text=Merhaba%2C%20vize%20ba%C5%9Fvurum%20i%C3%A7in%20profesyonel%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum.%20Uygun%20oldu%C4%9Funuzda%20s%C3%BCreci%20birlikte%20planlayabilir%20miyiz%3F"
         className="bg-white text-orange-700 px-12 py-5 rounded-2xl font-black text-xl hover:shadow-2xl transition"
       >
         Randevumu Takip Et
@@ -166,6 +193,7 @@ const VfsGlobalRandevu = () => {
   </section>
 
 </main>
+
 
   );
 };
