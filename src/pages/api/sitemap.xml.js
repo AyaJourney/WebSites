@@ -124,7 +124,12 @@ export default async function handler(req, res) {
     "/macaristan-vize-evraklari",
     "/macaristan-vize-randevusu",
     "/macaristan-vize-reddi",
-    
+    "/italya-vize",
+    "/italya-vize-evraklari",
+    "/italya-vize-randevusu",
+    "/italya-vize-reddi"
+
+
 
 
 

@@ -621,6 +621,9 @@ export default function SchengenPage() {
       <Link href="/macaristan-vize" className="p-4 rounded-xl border hover:shadow-md">
      Macaristan Schengen Vizesi
     </Link>
+        <Link href="/italya-vize" className="p-4 rounded-xl border hover:shadow-md">
+     İtalya Schengen Vizesi
+    </Link>
   </div>
 </section>
 
