@@ -117,10 +117,7 @@ export default function Amerika214bPage() {
 
     {
       "@type": "Review",
-      "itemReviewed": {
-        "@type": "Service",
-        "name": "Amerika Vize Reddi"
-      },
+   
       "author": {
         "@type": "Person",
         "name": "Danışan"
