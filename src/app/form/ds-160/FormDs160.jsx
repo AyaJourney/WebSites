@@ -1541,7 +1541,7 @@ useEffect(() => {
   setCrmForm(buildCrmForm(form, crmMap));
 }, [form]);
 
-console.log(crmForm, "default crm form")
+
 function base64ToBlob(base64, mimeType = "image/jpeg") {
   const byteString = atob(base64?.split(",")[1] || base64);
   const ab = new ArrayBuffer(byteString.length);
@@ -1815,7 +1815,7 @@ const validateStep = (step, formData) => {
 const goNext = () => {
      const { valid, missing = [] } = validateStep(form.currentStep, form);
   let newErrors = { ...errors };
- console.log(newErrors)
+
     if (!valid) {
     missing.forEach(field => {
       newErrors[field] = "Bu alan zorunludur";
@@ -2214,6 +2214,8 @@ const fillOrganizationFallback = () => {
 useEffect(() => {
   fillOrganizationFallback();
 }, [form.steps[6].usaRelative, form.steps[6].organizationBoolean]);
+
+console.log(form,"form")
   return (
     <div className="min-h-screen bg-gray-100 p-6 flex items-start justify-center">
       {/* A4-like container */}

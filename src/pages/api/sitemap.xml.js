@@ -103,11 +103,11 @@ export default async function handler(req, res) {
     "/ispanya-vize-reddi", // burası tamam
     "/vfs-randevu-bulamiyorum",//burası tamam
     "/vfs-no-slots-available",//burası tamam
-    "/amerika-vize-214b",
-    "/amerika-vize-reddi-214b-itiraz",
-    "/amerika-vize-reddi-sonrasi-ne-yapilmali",
-    "/amerika-vize-reddi-ikinci-basvuru",
-    "/amerika-vize-214b-nasil-kaldirilir",
+    "/amerika-vize-214b",// burası tamam
+    "/amerika-vize-reddi-214b-itiraz",// burası tamam
+    "/amerika-vize-reddi-sonrasi-ne-yapilmali",// burası tamam
+    "/amerika-vize-reddi-ikinci-basvuru", // burası tamam
+    "/amerika-vize-214b-nasil-kaldirilir", //burası tamam
     "/amerika-vize-reddi-psikolojik-hatalar",
     "/amerika-vize-reddi-dosya-analizi",
     "/amerika-vize-reddi-evrak-yetersizligi",
