@@ -115,20 +115,7 @@ export default function Amerika214bPage() {
       }
     },
 
-    {
-      "@type": "Review",
-   
-      "author": {
-        "@type": "Person",
-        "name": "Danışan"
-      },
-      "reviewRating": {
-        "@type": "Rating",
-        "ratingValue": "5",
-        "bestRating": "5"
-      },
-      "reviewBody": "214(b) reddi sonrası dosyam analiz edildi ve ikinci başvuruda onay aldım."
-    }
+  
 
   ]
     })
