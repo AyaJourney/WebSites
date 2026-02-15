@@ -97,12 +97,12 @@ export default async function handler(req, res) {
     "/hollanda-vize-randevusu",//burası tamam
     "/hollanda-vize-evraklari",//burası tamam
     "/hollanda-vize-reddi",//burası tamam
-     "/ispanya-vize",
-    "/ispanya-vize-randevusu",
-    "/ispanya-vize-evraklari",
-    "/ispanya-vize-reddi",
-    "/vfs-randevu-bulamiyorum",
-    "/vfs-no-slots-availables",
+     "/ispanya-vize",//burası tamam
+    "/ispanya-vize-randevusu",// burası tamam
+    "/ispanya-vize-evraklari",// burası tamam
+    "/ispanya-vize-reddi", // burası tamam
+    "/vfs-randevu-bulamiyorum",//burası tamam
+    "/vfs-no-slots-available",//burası tamam
     "/amerika-vize-214b",
     "/amerika-vize-reddi-214b-itiraz",
     "/amerika-vize-reddi-sonrasi-ne-yapilmali",

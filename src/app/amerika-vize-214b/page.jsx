@@ -29,7 +29,7 @@ export default function Amerika214bPage() {
 
     {
       "@type": "Article",
-      "@id": "https://siteadi.com/amerika-vize-214b",
+      "@id": "https://ayajourney.com/amerika-vize-214b",
       "headline": "Amerika Vize 214(b) Reddi Nedir?",
       "description": "Amerika turist vizesi 214(b) reddi neden olur, nasıl aşılır ve ikinci başvuru nasıl yapılır? Stratejik rehber.",
       "author": {
@@ -41,15 +41,15 @@ export default function Amerika214bPage() {
         "name": "Site Adı",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://siteadi.com/logo.png"
+          "url": "https://ayajourney.com/logo.png"
         }
       },
-      "mainEntityOfPage": "https://siteadi.com/amerika-vize-214b"
+      "mainEntityOfPage": "https://ayajourney.com/amerika-vize-214b"
     },
 
     {
       "@type": "FAQPage",
-      "@id": "https://siteadi.com/amerika-vize-214b#faq",
+      "@id": "https://ayajourney.com/amerika-vize-214b#faq",
       "mainEntity": [
         {
           "@type": "Question",
@@ -85,29 +85,29 @@ export default function Amerika214bPage() {
           "@type": "ListItem",
           "position": 1,
           "name": "Ana Sayfa",
-          "item": "https://siteadi.com/"
+          "item": "https://ayajourney.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Amerika Vize Reddi",
-          "item": "https://siteadi.com/amerika-vize-reddi"
+          "item": "https://ayajourney.com/amerika-vize-reddi"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "214(b) Maddesi",
-          "item": "https://siteadi.com/amerika-vize-214b"
+          "item": "https://ayajourney.com/amerika-vize-214b"
         }
       ]
     },
 
     {
       "@type": "LocalBusiness",
-      "@id": "https://siteadi.com/#business",
+      "@id": "https://ayajourney.com/#business",
       "name": "Amerika Vize Danışmanlığı",
-      "image": "https://siteadi.com/logo.png",
-      "url": "https://siteadi.com",
+      "image": "https://ayajourney.com/logo.png",
+      "url": "https://ayajourney.com",
       "telephone": "+905302199056",
       "address": {
         "@type": "PostalAddress",
@@ -119,7 +119,7 @@ export default function Amerika214bPage() {
       "@type": "Review",
       "itemReviewed": {
         "@type": "Service",
-        "name": "Amerika Vize Reddi Analizi"
+        "name": "Amerika Vize Reddi"
       },
       "author": {
         "@type": "Person",
