@@ -52,6 +52,16 @@ const defaultForm = {
   your_title: "",
   boolean_work:"",
   work_start_date:"",
+  freelanceInfo:"",
+  school_name:"",
+  school_address:"",
+  school_class_number:"",
+  who_pay:"",
+  pay_fullname:"",
+pay_phone_number:"",
+pay_email:"",
+pay_boolean_work:"",
+pay_companyname:"",
 },
     4: {
       boolean_invitation: "",
@@ -402,7 +412,7 @@ const updateField = (step, field, value) => {
 if (step === 1) {
   const s = updatedSteps[1];
 
-  const mahalle = normalizeWithSuffix(s.home_neighborhood, "MAHALLESİ");
+  const mahalle = normalizeWithSuffix(s.home_neighborhood, "MAHALLESI");
   const cadde = normalizeWithSuffix(s.home_street, "CADDE");
   const sokak = normalizeWithSuffix(s.home_avenue, "SOKAK");
 
@@ -411,7 +421,7 @@ if (step === 1) {
     : "";
 
   const daireNo = s.home_apartment_no
-    ? `DAİRE NO: ${normalizeAddressPart(s.home_apartment_no)}`
+    ? `DAIRE NO: ${normalizeAddressPart(s.home_apartment_no)}`
     : "";
 
   const ilce = s.home_district
@@ -627,7 +637,7 @@ const normalizeWithSuffix = (value, suffix) => {
   value = normalizeAddressPart(value);
 
   // --- Mahalle için temizleme ---
-  if (suffix === "MAHALLESİ") {
+  if (suffix === "MAHALLESI") {
     value = value.replace(/\b(MAH|MAH\.|MH|MH\.|MAHALE|MAHALLE|MAHALLESI)\b/gi, "");
   }
 
@@ -647,7 +657,7 @@ const normalizeWithSuffix = (value, suffix) => {
 };
 
 
-
+console.log(form)
 
 
   return (
@@ -1352,16 +1362,7 @@ const normalizeWithSuffix = (value, suffix) => {
     startDate.setHours(0, 0, 0, 0);
     endDate.setHours(0, 0, 0, 0);
 
-    // ❌ Bitiş < veriliş
-    // if (endDate < startDate) {
-    //   return (
-    //     <p className="text-red-500 text-xs mt-1">
-    //       Pasaport bitiş tarihi veriliş tarihinden önce olamaz.
-    //     </p>
-    //   );
-    // }
-
-    // 🔵 3 ay uyarısı
+   
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -1443,16 +1444,19 @@ const normalizeWithSuffix = (value, suffix) => {
         >
           <option value="">Seçiniz</option>
           {form.steps[1].gender === "KADIN" && (
-            <option value="EV_HANIMI">Ev Hanımı</option>
+            <option value="EV HANIMI">Ev Hanımı</option>
           )}
           <option value="OGRENCI">Öğrenci</option>
+          <option value="FREELANCE CALISMA">Freelance Çalışma</option>
           <option value="CALISIYOR">Çalışıyor</option>
           <option value="EMEKLI">Emekli</option>
           <option value="CALISMAYAN">Çalışmıyor</option>
         </select>
       </div>
       {/* Sektör */}
-    {form.steps[3].boolean_work==="CALISIYOR"&& ( <div>
+    {form.steps[3].boolean_work==="CALISIYOR"&& (
+      <>
+       <div>
         <label className="text-sm font-medium">Çalıştığınız Sektör</label>
         <select
           name="sector"
@@ -1480,9 +1484,8 @@ const normalizeWithSuffix = (value, suffix) => {
           <option value="KAMU">Kamu</option>
           <option value="OZEL">Özel Sektör</option>
         </select>
-      </div>)} 
-  {form.steps[3].boolean_work==="CALISIYOR"&& (
-     <div>
+      </div>
+        <div>
         <label className="text-sm font-medium">İşe Giriş Tarihi</label>
           <input
           type="date"
@@ -1509,9 +1512,8 @@ const normalizeWithSuffix = (value, suffix) => {
             }}
       
         />
-      </div>)} 
-      {/* Şirket Türü – sadece özel sektör seçildiyse */}
-      {form.steps[3].sector === "OZEL" && (
+      </div>
+            {form.steps[3].sector === "OZEL" && (
         <div>
           <label className="text-sm font-medium">Şirket Türü</label>
           <select
@@ -1533,8 +1535,10 @@ const normalizeWithSuffix = (value, suffix) => {
         </div>
       )}
 
-      {/* Şirket Adı */}
-       {form.steps[3].sector === "OZEL" && (       <div className={form.steps[3].sector === "OZEL" ? "" : "md:col-span-2"}>
+
+     {/* Şirket Adı */}
+          
+       <div className={form.steps[3].sector === "OZEL" ? "" : "md:col-span-2"}>
         <label className="text-sm font-medium">{form.steps[3].sector === "OZEL" ? "Şirket Adı" :"Kurum Adı"} </label>
         <input
           name="company_name"
@@ -1559,7 +1563,7 @@ const normalizeWithSuffix = (value, suffix) => {
             }}
           placeholder="Örn: ABC TEKNOLOJİ A.Ş."
         />
-      </div>)} 
+      </div>
  
 
       {/* Şirket Statüsü */}
@@ -1592,8 +1596,8 @@ const normalizeWithSuffix = (value, suffix) => {
    
 
       {/* Şirket Adresi */}
-      {form.steps[3].sector === "OZEL" && (     <div className="md:col-span-2">
-        <label className="text-sm font-medium">Şirket Adresi</label>
+ <div className={form.steps[3].sector === "OZEL" ? "" : "md:col-span-2"}>
+        <label className="text-sm font-medium">{form.steps[3].sector === "OZEL" ? "Şirket Adresi" :"Kurum Adresi"} </label>
         <textarea
           name="company_address"
           className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
@@ -1618,12 +1622,12 @@ const normalizeWithSuffix = (value, suffix) => {
           placeholder="Adres / cadde / posta kodu / şehir"
           rows={3}
         />
-      </div>)}  
+      </div>
   
 
       {/* Şirket Telefonu */}
-        {form.steps[3].sector === "OZEL" && (       <div>
-        <label className="text-sm font-medium">Şirket Telefon Numarası</label>
+     <div className={form.steps[3].sector === "OZEL" ? "" : "md:col-span-2"}>
+        <label className="text-sm font-medium">{form.steps[3].sector === "OZEL" ? "Şirket Telefon Numarası" :"Kurum Telefon Numarası"} </label>
         <input
           name="company_phone_number"
           className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
@@ -1631,12 +1635,12 @@ const normalizeWithSuffix = (value, suffix) => {
           onChange={(e) => updateField(3, "company_phone_number", e.target.value)}
           placeholder="0312 123 45 67"
         />
-      </div>)}
+      </div>
   
 
       {/* Göreviniz */}
-        {form.steps[3].sector === "OZEL" && (      <div>
-        <label className="text-sm font-medium">Göreviniz / Ünvanınız</label>
+ <div className={form.steps[3].sector === "OZEL" ? "" : "md:col-span-2"}>
+        <label className="text-sm font-medium">{form.steps[3].sector === "OZEL" ? "Şirketteki Göreviniz" :"Kurumdaki Göreviniz"} </label>
         <input
           name="your_title"
           className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
@@ -1660,8 +1664,268 @@ const normalizeWithSuffix = (value, suffix) => {
             }}
           placeholder="Örn: YAZILIM GELİŞTİRİCİ"
         />
-      </div>)}
+      </div>
+
+
+      </>
+      
+     )} 
+
+   {form.steps[3].boolean_work==="FREELANCE CALISMA"&& (
+      <div className={"md:col-span-2"}>
+        <label className="text-sm font-medium">Açıklayınız </label>
+        <input
+          name="freelanceInfo"
+          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+          value={form.steps[3].freelanceInfo || ""}
+                onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "freelanceInfo", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "freelanceInfo", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(3, "freelanceInfo", normalizedValue);
+                }
+            }}
+          placeholder="Freelance işinizi açıklayınız"
+        />
+      </div>
+   )}
+
+     {form.steps[3].boolean_work==="OGRENCI"&& (
+      <>
+
+
+
+
+
+     {/* Şirket Adı */}
+          
+       <div className={ "md:col-span-2"}>
+        <label className="text-sm font-medium">Okulunuzun Adı </label>
+        <input
+          name="school_name"
+          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+          value={form.steps[3].school_name || ""}
+                onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "school_name", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "school_name", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(3, "school_name", normalizedValue);
+                }
+            }}
+          placeholder="Okulunuzun Adını Giriniz"
+        />
+      </div>
+ 
+
    
+   
+
+      {/* Şirket Adresi */}
+ <div className={ "md:col-span-2"}>
+        <label className="text-sm font-medium">Okulunuzun Adresi </label>
+        <textarea
+          name="school_address"
+          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+          value={form.steps[3].school_address || ""}
+                           onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "school_address", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "school_address", normalizeAddressInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeAddressInput(e.target.value);
+                    updateField(3, "school_address", normalizedValue);
+                }
+            }}
+          placeholder="Mahalle-Cadde-Sokak-Bina No-İlçe-İl"
+          rows={3}
+        />
+      </div>
+  
+
+
+  
+
+      {/* Göreviniz */}
+ <div className={"md:col-span-2"}>
+        <label className="text-sm font-medium">Kaçıncı Sınıfa Gidiyorsunuz?</label>
+        <input
+          name="school_class_number"
+          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+          value={form.steps[3].school_class_number || ""}
+                                    onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "school_class_number", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "school_class_number", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(3, "school_class_number", normalizedValue);
+                }
+            }}
+          placeholder="Kaçıncı sınıfta olduğunuzu yazınız"
+        />
+      </div>
+
+
+      </>
+      
+     )} 
+   
+  <div className={ "md:col-span-2"}>
+        <label className="text-sm font-medium">Seyahat Masraflarını Kim Karşılayacak?</label>
+        <select
+          name="who_pay"
+          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+          value={form.steps[3].who_pay || ""}
+          onChange={(e) => updateField(3, "who_pay", e.target.value)}
+        >
+          <option value="">Seçiniz</option>
+
+          <option value="KENDISI">Kendisi</option>
+          <option value="DIGER">Diğer</option>
+
+        </select>
+      </div>
+  {form.steps[3].who_pay==="DIGER"&& (
+      <>
+          
+       <div className={ "md:col-span-2"}>
+        <label className="text-sm font-medium">Masrafı Karşılayanın Adı Soyadı </label>
+        <input
+          name="pay_fullname"
+          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+          value={form.steps[3].pay_fullname || ""}
+                onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "pay_fullname", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "pay_fullname", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(3, "pay_fullname", normalizedValue);
+                }
+            }}
+          placeholder="Masrafı Karşılayacak Kişinin Adını Soyadını Giriniz"
+        />
+      </div>
+ 
+
+   
+      <div className={"md:col-span-2"}>
+        <label className="text-sm font-medium">Masrafı Karşılayacak Kişinin Telefon Numarası </label>
+        <input
+          name="pay_phone_number"
+          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+          value={form.steps[3].pay_phone_number || ""}
+          onChange={(e) => updateField(3, "pay_phone_number", e.target.value)}
+          placeholder="Masrafı Karşılayacak Kişinin Telefon Numarasını Giriniz"
+        />
+      </div>
+
+      <div className={"md:col-span-2"}>
+        <label className="text-sm font-medium">Masrafı Karşılayacak Kişinin E-Posta Adresi </label>
+        <input
+          name="pay_email"
+          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+          value={form.steps[3].pay_email || ""}
+          onChange={(e) => updateField(3, "pay_email", e.target.value)}
+          placeholder="Masrafı Karşılayacak Kişinin E-Posta Adresini Giriniz"
+        />
+      </div>
+  
+
+  <div className={ "md:col-span-2"}>
+        <label className="text-sm font-medium">Masrafı Karşılayan Kişinin Çalışma Durumu</label>
+        <select
+          name="pay_boolean_work"
+          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+          value={form.steps[3].pay_boolean_work || ""}
+          onChange={(e) => updateField(3, "pay_boolean_work", e.target.value)}
+        >
+          <option value="">Seçiniz</option>
+         
+      
+         
+          <option value="CALISIYOR">Çalışıyor</option>
+          <option value="EMEKLI">Emekli</option>
+       
+        </select>
+      </div>
+ 
+ {form.steps[3].pay_boolean_work==="CALISIYOR"&& (
+       <div className={ "md:col-span-2"}>
+        <label className="text-sm font-medium">Masrafı Karşılayanın İş Yeri Adı </label>
+        <input
+          name="pay_companyname"
+          className="w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300"
+          value={form.steps[3].pay_companyname || ""}
+                onChange={(e) => {
+                if (isMobile) {
+                    // Mobile: Normalizasyon YOK, sadece değeri sakla
+                    updateField(3, "pay_companyname", e.target.value);
+                } else {
+                    // Desktop/Diğer: Normalizasyon YAP
+                    updateField(3, "pay_companyname", normalizeInput(e.target.value));
+                }
+            }}
+            
+            // Eğer **Mobilse** onBlur'da normalizasyonu uygula
+            onBlur={(e) => {
+                if (isMobile) {
+                    const normalizedValue = normalizeInput(e.target.value);
+                    updateField(3, "pay_companyname", normalizedValue);
+                }
+            }}
+          placeholder="Masrafı Karşılayanın İş Yeri Adı Giriniz"
+        />
+      </div>
+ )}
+
+      </>
+      
+     )}
 
     </div>
   </section>
@@ -1783,7 +2047,7 @@ const normalizeWithSuffix = (value, suffix) => {
                     updateField(4, "invitation_sender_tc_id", normalizedValue);
                 }
             }}
-              placeholder="Örn: PASSPORT NO / ID NO"
+              placeholder="Kimlik / Ülke ID Numarası Giriniz"
             />
           </div>
 
@@ -2458,48 +2722,55 @@ if (endDate && endDate > today) {
 </div>
   
 <div className="flex justify-center mt-6">
- { !resMessage ? ( <button
-    type="button"
-    onClick={handleSubmit}
-    disabled={!kvkkConsent || isSubmitting}
-    className={`
-      relative flex items-center justify-center px-8 py-3 rounded-xl font-semibold text-white transition-all duration-300 cursor-pointer
-      ${kvkkConsent && !isSubmitting 
-        ? "`bg-gradient-to-r` from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-lg hover:shadow-xl" 
+ { !resMessage ? (
+<button
+  type="button"
+  onClick={handleSubmit}
+  disabled={!kvkkConsent || isSubmitting}
+  className={`relative flex items-center justify-center px-8 py-3 rounded-xl font-semibold text-white transition-all duration-300 max-w-xs w-full sm:w-auto
+    ${
+      kvkkConsent && !isSubmitting
+        ? "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-lg hover:shadow-xl active:scale-95"
         : "bg-gray-400 cursor-not-allowed"
-      }
-      max-w-xs w-full sm:w-auto
-    `}
-  >
-    {    (isSubmitting ) ? (
-      <span className="flex items-center gap-3">
-        <svg
-          className="animate-spin h-5 w-5 text-white"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <circle
-            className="opacity-25"
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            strokeWidth="4"
-          ></circle>
-          <path
-            className="opacity-75"
-            fill="currentColor"
-            d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 018 8h-4l3 3-3 3h4a8 8 0 01-8 8v-4l-3 3 3 3v-4a8 8 0 01-8-8z"
-          ></path>
-        </svg>
-       Form Gönderiliyor...
-       <h2>Lütfen sayfayı kapatmayınız.</h2>
+    }
+  `}
+>
+  {isSubmitting ? (
+    <span className="flex flex-col items-center gap-2">
+      <svg
+        className="animate-spin h-5 w-5 text-white"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          className="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          strokeWidth="4"
+        />
+        <path
+          className="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8v4"
+        />
+      </svg>
+
+      <span className="text-sm font-medium">
+        Form Gönderiliyor...
       </span>
-    ) : (
-      "Formu Gönder"
-    )}
-  </button>) : (
+
+      <span className="text-xs opacity-80">
+        Lütfen sayfayı kapatmayınız.
+      </span>
+    </span>
+  ) : (
+    "Formu Gönder"
+  )}
+</button>
+) : (
  
   <div className="bg-white  p-5 max-w-md text-center">
     <h2 className="text-2xl font-bold text-gray-800 mb-6">

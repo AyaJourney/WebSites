@@ -4222,7 +4222,7 @@ onChange={(e) => {
       {( (form.steps[3].whoPays === "OTHER")) && (
         <>
          <div>
-            <label className="text-sm font-medium">Karşılayan Adı Soyadı</label>
+            <label className="text-sm font-medium">Sponsorun Adı Soyadı</label>
             <input
               name="relationfullName"
               className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
@@ -4250,7 +4250,7 @@ onChange={(e) => {
 
           </div>
       <div>
-  <label className="text-sm font-medium">Karşılayan Yakınlık Derecesi</label>
+  <label className="text-sm font-medium">Sponsorun Yakınlık Derecesi</label>
 
   <select
     name="relationDegree"
@@ -4293,7 +4293,7 @@ onChange={(e) => {
 </div>
 {/* Buradan */}
                          <div>
-        <label className="text-sm font-medium">Karşılayan Kişinin Adresi</label>
+        <label className="text-sm font-medium">Sponsorun Adresi</label>
         <input
           name="payerRelationAddress"
           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
@@ -4322,7 +4322,7 @@ onChange={(e) => {
 
       </div>
               <div>
-        <label className="text-sm font-medium">Karşılayan Kişi Şehir</label>
+        <label className="text-sm font-medium">Sponsorun Yaşadığı Şehir</label>
         <input
           name="payerRelationCity"
           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
@@ -4352,7 +4352,7 @@ onChange={(e) => {
       </div>
 
       <div>
-  <label className="text-sm font-medium">Karşılayan Kişi Ülke</label>
+  <label className="text-sm font-medium">Sponsorun Yaşadığı Ülke</label>
 
   <select
     name="payerRelationCountry"
@@ -4389,7 +4389,7 @@ onChange={(e) => {
   )}
 </div>
              <div>
-        <label className="text-sm font-medium">Karşılayan Kişi Posta Kodu</label>
+        <label className="text-sm font-medium">Sponsorun Posta Kodu</label>
         <input
           name="payerRelationPostCode"
           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
@@ -4418,7 +4418,7 @@ onChange={(e) => {
 
       </div>
           <div>
-            <label className="text-sm font-medium">Karşılayan Telefon</label>
+            <label className="text-sm font-medium">Sponsorun Telefonu</label>
             <input
               name="payerPhone"
               className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
@@ -4427,7 +4427,7 @@ onChange={(e) => {
             />
           </div>
            <div>
-            <label className="text-sm font-medium">Karşılayan E-Posta</label>
+            <label className="text-sm font-medium">Sponsorun E-Postası</label>
             <input
               name="payerMail"
               className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
@@ -4440,7 +4440,7 @@ onChange={(e) => {
     {( (form.steps[3].whoPays === "COMPANY")) && (
         <>
          <div>
-            <label className="text-sm font-medium">Karşılayan Şirket/Organizasyon Adı</label>
+            <label className="text-sm font-medium">Sponsor Şirket/Organizasyon Adı</label>
             <input
               name="relationCompanyfullName"
               className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
@@ -4470,7 +4470,7 @@ onChange={(e) => {
 
        
           <div>
-            <label className="text-sm font-medium">Karşılayan Şirket/Organizasyon Telefon</label>
+            <label className="text-sm font-medium">Sponsor Şirket/Organizasyon Telefon</label>
             <input
               name="payerCompanyPhone"
               className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
@@ -4479,7 +4479,7 @@ onChange={(e) => {
             />
           </div>
            <div>
-            <label className="text-sm font-medium">Karşılayanın Sizinle Olan İlişkisi</label>
+            <label className="text-sm font-medium">Sponsorun Sizinle Olan İlişkisi</label>
             <input
               name="payerRelation"
               className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
@@ -4489,7 +4489,7 @@ onChange={(e) => {
           </div>
 
                      <div>
-        <label className="text-sm font-medium">Karşılayan Şirket/Organisazyon Adres</label>
+        <label className="text-sm font-medium">Sponsor Şirket/Organisazyon Adresi</label>
         <input
           name="payerCompanyAddress"
           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
@@ -4518,7 +4518,7 @@ onChange={(e) => {
 
       </div>
               <div>
-        <label className="text-sm font-medium">Karşılayan Şirket/Organisazyon  Şehir</label>
+        <label className="text-sm font-medium">Sponsor Şirket/Organisazyonun Bulunduğu Şehir</label>
         <input
           name="payerCity"
           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
@@ -4548,7 +4548,7 @@ onChange={(e) => {
       </div>
 
               <div>
-        <label className="text-sm font-medium">Karşılayan Şirket/Organisazyon  Eyalet</label>
+        <label className="text-sm font-medium">Sponsor Şirket/Organisazyonun Bulunduğu  Eyalet</label>
         <input
           name="payerState"
           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
@@ -4577,7 +4577,7 @@ onChange={(e) => {
 
       </div>
              <div>
-        <label className="text-sm font-medium">Karşılayan Şirket/Organisazyon  Posta Kodu</label>
+        <label className="text-sm font-medium">Sponsor Şirket/Organisazyonun Bulunduğu Posta Kodu</label>
         <input
           name="payerPostCode"
           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
@@ -4606,7 +4606,7 @@ onChange={(e) => {
 
       </div>
             <div>
-  <label className="text-sm font-medium">Karşılayan Şirket/Organisazyon Ülkesi</label>
+  <label className="text-sm font-medium">Sponsor Şirket/Organisazyonun Bulunduğu Ülke</label>
 
   <select
     name="payerCountry"

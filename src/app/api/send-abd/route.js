@@ -363,11 +363,11 @@ const drawField = (label, value) => {
 
     drawSection("1. KİŞİSEL BİLGİLER");
 
-    let h1 = drawField("Ad-Soyad (Pasaportta yazan)", s(1).fullName, false, 0);
+    let h1 = drawField("Adınız Soyadınız", s(1).fullName, false, 0);
     currentY -= h1 + 10;
 
     h1 = drawField("Doğum Tarihi", toTRDate(s(1).birthDate), false, 0);
-    let h2 = drawField("Doğum Yeri (Pasaportta yazan)", s(1).birthPlace, false,0);
+    let h2 = drawField("Pasaportta Belirtilen Doğum Yeri", s(1).birthPlace, false,0);
     currentY -= Math.max(h1, h2) + 10;
 
     h1 = drawField("Doğum Yeri Ülke", s(1).birthCountry, false, 0);
@@ -375,7 +375,7 @@ const drawField = (label, value) => {
 
     h1 = drawField("Medeni Durumu", s(1).maritalStatus, false, 0);
     h2 = s(1).maritalStatus === "MARRIED"
-      ? drawField("Daha Önce Kullanılan Adı veya Soyadı (Varsa)", s(1).maidenName, false,0)
+      ? drawField("Daha Önce Kullanılan Ad ve Soyad", s(1).maidenName, false,0)
       : drawField("Cinsiyet", s(1).gender, false,0);
     currentY -= Math.max(h1, h2) + 10;
 
@@ -448,40 +448,40 @@ const drawField = (label, value) => {
     currentY -= Math.max(h1, h2) + 10;
 
     if (s(3).whoPays === "OTHER") {
-      h1 = drawField("Karşılayan Adı Soyadı", s(3).relationfullName || "-", true, 0);
-      h2 = drawField("Karşılayan Yakınlık Derecesi", s(3).relationDegree || "-", true,0);
+      h1 = drawField("Sponsor Adı Soyadı ", s(3).relationfullName || "-", true, 0);
+      h2 = drawField("Sponsor Yakınlık Derecesi", s(3).relationDegree || "-", true,0);
       currentY -= Math.max(h1, h2) + 10;
 
-      h1 = drawField("Karşılayan Kişinin Yaşadığı Şehir", s(3).payerRelationCity || "-", true, 0);
-      h2 = drawField("Karşılayan Kişinin Yaşadığı Ülke", s(3).payerRelationCountry || "-", true,0);
+      h1 = drawField("Sponsorun Yaşadığı Şehir", s(3).payerRelationCity || "-", true, 0);
+      h2 = drawField("Sponsorun Yaşadığı Ülke", s(3).payerRelationCountry || "-", true,0);
       currentY -= Math.max(h1, h2) + 10;
 
-      h1 = drawField("Karşılayan Kişinin Adresi", s(3).payerRelationAddress || "-", true, 0);
-      h2 = drawField("Karşılayan Kişinin Posta Kodu", s(3).payerRelationPostCode || "-", true,0);
+      h1 = drawField("Sponsorun Adresi", s(3).payerRelationAddress || "-", true, 0);
+      h2 = drawField("Sponsorun Posta Kodu", s(3).payerRelationPostCode || "-", true,0);
       currentY -= Math.max(h1, h2) + 10;
 
-      h1 = drawField("Karşılayan Kişinin Telefon Numarası", s(3).payerPhone || "-", true, 0);
-      h2 = drawField("Karşılayan Kişinin E-Postası", s(3).payerMail || "-", true,0);
+      h1 = drawField("Sponsorun Telefon Numarası", s(3).payerPhone || "-", true, 0);
+      h2 = drawField("Sponsorun E-Postası", s(3).payerMail || "-", true,0);
       currentY -= Math.max(h1, h2) + 10;
     }
 
 if (s(3).whoPays === "COMPANY") {
-      h1 = drawField("Karşılayan Şirket/Organizasyon Adı", s(3).relationCompanyfullName || "-", true, 0);
-      h2 = drawField("Karşılayan Şirket/Organizasyon Telefonu", s(3).payerCompanyPhone || "-", true,0);
+      h1 = drawField("Sponsor Şirket/Organizasyon Adı", s(3).relationCompanyfullName || "-", true, 0);
+      h2 = drawField("Sponsor Şirket/Organizasyon Telefonu", s(3).payerCompanyPhone || "-", true,0);
       currentY -= Math.max(h1, h2) + 10;
 
-      h1 = drawField("Karşılayanın Sizinle Olan İlişkisi", s(3).payerRelation || "-", true, 0);
-      h2 = drawField("Karşılayan Kişinin Yaşadığı Ülke", s(3).payerRelationCountry || "-", true,0);
+      h1 = drawField("Sponsorun Sizinle Olan İlişkisi", s(3).payerRelation || "-", true, 0);
+
       currentY -= Math.max(h1, h2) + 10;
 
-      h1 = drawField("Karşılayan Şirket/Organizasyon Adresi", s(3).payerCompanyAddress || "-", true, 0);
-      h2 = drawField("Karşılayan Şirket/Organizasyon Şehri", s(3).payerCity || "-", true,0);
+      h1 = drawField("Sponsor Şirket/Organisazyonun Bulunduğu Adresi", s(3).payerCompanyAddress || "-", true, 0);
+      h2 = drawField("Sponsor Şirket/Organisazyonun Bulunduğu Şehri", s(3).payerCity || "-", true,0);
       currentY -= Math.max(h1, h2) + 10;
-       h1 = drawField("Karşılayan Şirket/Organizasyon Eyaleti", s(3).payerState || "-", true, 0);
-      h2 = drawField("Karşılayan Şirket/Organizasyon Posta Kodu", s(3).payerPostCode || "-", true,0);
+       h1 = drawField("Sponsor Şirket/Organisazyonun Bulunduğu Eyaleti", s(3).payerState || "-", true, 0);
+      h2 = drawField("Sponsor Şirket/Organisazyonun Bulunduğu Posta Kodu", s(3).payerPostCode || "-", true,0);
       currentY -= Math.max(h1, h2) + 10;
 
-      h1 = drawField("Karşılayan Şirket/Organizasyon Ülkesi", s(3).payerCountry || "-", true, 0);
+      h1 = drawField("Sponsor Şirket/Organisazyonun Bulunduğu Ülke", s(3).payerCountry || "-", true, 0);
      
       currentY -= Math.max(h1, h2) + 10;
      
@@ -1331,13 +1331,13 @@ const htmlBody = `
     <div class="section">
       <div class="section-title"><span class="badge">01</span> KİŞİSEL BİLGİLER</div>
       <table>
-        <tr><th>Ad Soyad (Pasaportta yazan)</th><td>${s(1).fullName || "-"}</td></tr>
+        <tr><th>Adınız Soyadınız</th><td>${s(1).fullName || "-"}</td></tr>
         <tr><th>Doğum Tarihi</th><td>${s(1).birthDate ? toTRDate(s(1).birthDate) : "-"}</td></tr>
-        <tr><th>Doğum Yeri (Pasaportta yazan)</th><td>${s(1).birthPlace || "-"}</td></tr>
-        <tr><th>Doğum Yeri Ülke</th><td>${s(1).birthCountry || "-"}</td></tr>
+        <tr><th>Pasaportta Belirtilen Doğum Yeri</th><td>${s(1).birthPlace || "-"}</td></tr>
+        <tr><th>Pasaportta Belirtilen Doğum Yeri Ülke</th><td>${s(1).birthCountry || "-"}</td></tr>
         <tr><th>Medeni Durumu</th><td>${s(1).maritalStatus || "-"}</td></tr>
         ${s(1).maritalStatus === "MARRIED"
-          ? `<tr><th>Daha Önce Kullanılan Adı veya Soyadı (Varsa)</th><td>${s(1).maidenName || "-"}</td></tr>`
+          ? `<tr><th>Daha Önce Kullanılan Ad ve Soyad</th><td>${s(1).maidenName || "-"}</td></tr>`
           : `<tr><th>Cinsiyet</th><td>${s(1).gender || "-"}</td></tr>`
         }
       </table>
@@ -1380,25 +1380,24 @@ const htmlBody = `
         <tr><th>ABD'de Konaklayacağınız Adres</th><td>${s(3).stayAddress || "-"}</td></tr>
         <tr><th>Masrafları Kim Karşılayacak</th><td>${s(3).whoPays || "-"}</td></tr>
         ${s(3).whoPays === "OTHER" ? `
-        <tr><th>Karşılayan Adı Soyadı</th><td>${s(3).relationfullName || "-"}</td></tr>
-        <tr><th>Karşılayan Yakınlık Derecesi</th><td>${s(3).relationDegree || "-"}</td></tr>
-        <tr><th>Karşılayan Kişinin Yaşadığı Şehir</th><td>${s(3).payerRelationCity || "-"}</td></tr>
-        <tr><th>Karşılayan Kişinin Yaşadığı Ülke</th><td>${s(3).payerRelationCountry || "-"}</td></tr>
-        <tr><th>Karşılayan Kişinin Adresi</th><td>${s(3).payerRelationAddress || "-"}</td></tr>
-        <tr><th>Karşılayan Kişinin Posta Kodu</th><td>${s(3).payerRelationPostCode || "-"}</td></tr>
-        <tr><th>Karşılayan Kişinin Telefon Numarası</th><td>${s(3).payerPhone || "-"}</td></tr>
-        <tr><th>Karşılayan Kişinin E-Postası</th><td>${s(3).payerMail || "-"}</td></tr>
+        <tr><th>Sponsorun Adı Soyadı</th><td>${s(3).relationfullName || "-"}</td></tr>
+        <tr><th>Sponsorun Yakınlık Derecesi</th><td>${s(3).relationDegree || "-"}</td></tr>
+        <tr><th>Sponsorun Yaşadığı Şehir</th><td>${s(3).payerRelationCity || "-"}</td></tr>
+        <tr><th>Sponsorun Yaşadığı Ülke</th><td>${s(3).payerRelationCountry || "-"}</td></tr>
+        <tr><th>Sponsorun Adresi</th><td>${s(3).payerRelationAddress || "-"}</td></tr>
+        <tr><th>Sponsorun Posta Kodu</th><td>${s(3).payerRelationPostCode || "-"}</td></tr>
+        <tr><th>Sponsorun Telefon Numarası</th><td>${s(3).payerPhone || "-"}</td></tr>
+        <tr><th>Sponsorun E-Postası</th><td>${s(3).payerMail || "-"}</td></tr>
         ` : ""}
         ${s(3).whoPays === "COMPANY" ? `
-        <tr><th>Karşılayan Şirket/Organizasyon Adı</th><td>${s(3).relationCompanyfullName || "-"}</td></tr>
-        <tr><th>Karşılayan Şirket/Organizasyon Telefonu</th><td>${s(3).payerCompanyPhone || "-"}</td></tr>
-        <tr><th>Karşılayanın Sizinle Olan İlişkisi</th><td>${s(3).payerRelation || "-"}</td></tr>
-        <tr><th>Karşılayan Kişinin Yaşadığı Ülke</th><td>${s(3).payerRelationCountry || "-"}</td></tr>
-        <tr><th>Karşılayan Şirket/Organizasyon Adresi</th><td>${s(3).payerCompanyAddress || "-"}</td></tr>
-        <tr><th>Karşılayan Şirket/Organizasyon Şehri</th><td>${s(3).payerCity || "-"}</td></tr>
-        <tr><th>Karşılayan Şirket/Organizasyon Eyaleti</th><td>${s(3).payerState || "-"}</td></tr>
-        <tr><th>Karşılayan Şirket/Organizasyon Posta Kodu</th><td>${s(3).payerPostCode || "-"}</td></tr>
-        <tr><th>Karşılayan Şirket/Organizasyon Ülkesi</th><td>${s(3).payerCountry || "-"}</td></tr>
+        <tr><th>Sponsor Şirket/Organizasyon Adı</th><td>${s(3).relationCompanyfullName || "-"}</td></tr>
+        <tr><th>Sponsor Şirket/Organizasyon Telefonu</th><td>${s(3).payerCompanyPhone || "-"}</td></tr>
+        <tr><th>Sponsorun Sizinle Olan İlişkisi</th><td>${s(3).payerRelation || "-"}</td></tr>
+        <tr><th>Sponsor Şirket/Organizasyonun Adresi</th><td>${s(3).payerCompanyAddress || "-"}</td></tr>
+        <tr><th>Sponsor Şirket/Organisazyonun Bulunduğu Şehri</th><td>${s(3).payerCity || "-"}</td></tr>
+        <tr><th>Sponsor Şirket/Organisazyonun Bulunduğu Eyaleti</th><td>${s(3).payerState || "-"}</td></tr>
+        <tr><th>Sponsor Şirket/Organisazyonun Bulunduğu Posta Kodu</th><td>${s(3).payerPostCode || "-"}</td></tr>
+        <tr><th>Sponsor Şirket/Organisazyonun Bulunduğu Ülke</th><td>${s(3).payerCountry || "-"}</td></tr>
         ` : ""}
       </table>
     </div>

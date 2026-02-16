@@ -2,7 +2,7 @@
 import AydinlatmaFormu from "@/app/components/modals/AydinlatmaFormu";
 import Link from "next/link";
 import React, { useEffect, useState, useMemo } from "react";
-import { FaTrashAlt } from "react-icons/fa";
+import { FaTrashAlt } from "react-icons/fa"; 
 
 const isMobileOrAndroid = () => {
   // ... UA kontrol kodunuz
@@ -500,7 +500,7 @@ fpDateDetail.setHours(0,0,0,0);
       if (step === 1) {
         const s = updatedSteps[1];
 
-        const mahalle = normalizeWithSuffix(s.home_neighborhood, "MAHALLESİ");
+        const mahalle = normalizeWithSuffix(s.home_neighborhood, "MAHALLESI");
         const cadde = normalizeWithSuffix(s.home_street, "CADDE");
         const sokak = normalizeWithSuffix(s.home_avenue, "SOKAK");
 
@@ -509,7 +509,7 @@ fpDateDetail.setHours(0,0,0,0);
           : "";
 
         const daireNo = s.home_apartment_no
-          ? `DAİRE NO: ${normalizeAddressPart(s.home_apartment_no)}`
+          ? `DAIRE NO: ${normalizeAddressPart(s.home_apartment_no)}`
           : "";
 
         const ilce = s.home_district
@@ -559,21 +559,21 @@ fpDateDetail.setHours(0,0,0,0);
     value = normalizeAddressPart(value);
 
     // --- Mahalle için temizleme ---
-    if (suffix === "MAHALLESİ") {
-      value = value.replace(/\b(MAH|MAH\.|MH|MH\.|MAHALE|MAHALLE|MAHALLESI)\b/gi, "");
+    if (suffix === "MAHALLESI") {
+      value = value?.replace(/\b(MAH|MAH\.|MH|MH\.|MAHALE|MAHALLE|MAHALLESI)\b/gi, "");
     }
 
     // --- Cadde için temizleme ---
     if (suffix === "CADDE") {
-      value = value.replace(/\b(CD|CAD|CAD\.|CADDE|CADDES|CADDESII|CADDESI)\b/gi, "");
+      value = value?.replace(/\b(CD|CAD|CAD\.|CADDE|CADDES|CADDESII|CADDESI)\b/gi, "");
     }
 
     // --- Sokak için temizleme ---
     if (suffix === "SOKAK") {
-      value = value.replace(/\b(SK|SOK|SOK\.|SOKA|SOKAK|SOKAGI)\b/gi, "");
+      value = value?.replace(/\b(SK|SOK|SOK\.|SOKA|SOKAK|SOKAGI)\b/gi, "");
     }
 
-    value = value.trim();
+    value = value?.trim();
 
     return `${value} ${suffix}`.trim();
   };
@@ -698,7 +698,7 @@ const markCompleted = (step) => {
       'ü': 'u', 'Ü': 'U',
     };
 
-    let text = value.replace(/[çÇğĞıİöÖşŞüÜ]/g, (match) => map[match]);
+    let text = value?.replace(/[çÇğĞıİöÖşŞüÜ]/g, (match) => map[match]);
 
     // / işaretini - yap
     text = text.replace(/\//g, "-");
@@ -714,24 +714,29 @@ const markCompleted = (step) => {
     return text.toUpperCase();
   };
 
-  const normalizeInput = (value) => {
-    if (!value) return "";
+const normalizeInput = (value) => {
+  if (value === null || value === undefined) return "";
 
-    const map = {
-      'ç': 'c', 'Ç': 'C',
-      'ğ': 'g', 'Ğ': 'G',
-      'ı': 'I', 'İ': 'I',
-      'ö': 'o', 'Ö': 'O',
-      'ş': 's', 'Ş': 'S',
-      'ü': 'u', 'Ü': 'U',
-    };
+  // Her şeyi string'e çevir (kritik nokta)
+  const stringValue = String(value);
 
-    // Türkçe karakterleri İngilizceye çevir
-    const replaced = value.replace(/[çÇğĞıİöÖşŞüÜ]/g, (match) => map[match]);
-
-    // Büyük harfe çevir
-    return replaced.toUpperCase();
+  const map = {
+    ç: "c", Ç: "C",
+    ğ: "g", Ğ: "G",
+    ı: "I", İ: "I",
+    ö: "o", Ö: "O",
+    ş: "s", Ş: "S",
+    ü: "u", Ü: "U",
   };
+
+  const replaced = stringValue.replace(
+    /[çÇğĞıİöÖşŞüÜ]/g,
+    (match) => map[match]
+  );
+
+  return replaced.toUpperCase();
+};
+
 
 
   const passportPreview = useMemo(() => {
@@ -805,7 +810,7 @@ const removeMarriage = (index) => {
 
  
  
- 
+ console.log(form)
  
  
   return (
@@ -1412,7 +1417,7 @@ const removeMarriage = (index) => {
           </div>
 
           <div>
-            <label className="text-sm font-medium">Eş Adı Soyadı</label>
+            <label className="text-sm font-medium">Eşinin Adı Soyadı</label>
             <input
               className="w-full mt-1 p-3 border rounded-xl"
               value={form.steps[2].spouseFullName}
@@ -1431,7 +1436,7 @@ const removeMarriage = (index) => {
           </div>
 
           <div>
-            <label className="text-sm font-medium">Eş Doğum Tarihi</label>
+            <label className="text-sm font-medium">Eşinin Doğum Tarihi</label>
             <input
               type="date"
               min={new Date().toISOString().split("T")[0]}
@@ -1444,7 +1449,7 @@ const removeMarriage = (index) => {
           </div>
 {/* EŞ DOĞUM YERİ */}
 <div>
-  <label className="text-sm font-medium">Eş Doğum Yeri</label>
+  <label className="text-sm font-medium">Eşinin Doğum Yeri</label>
   <input
     className="w-full mt-1 p-3 border rounded-xl"
     value={form.steps[2].spouseBirthPlace || ""}
@@ -1464,7 +1469,7 @@ const removeMarriage = (index) => {
 
 {/* EŞ MESLEĞİ */}
 <div>
-  <label className="text-sm font-medium">Eş Mesleği</label>
+  <label className="text-sm font-medium">Eşinin Mesleği</label>
   <input
     className="w-full mt-1 p-3 border rounded-xl"
     value={form.steps[2].spouseOccupation || ""}
@@ -1484,7 +1489,7 @@ const removeMarriage = (index) => {
 
 {/* EŞ İKAMET ADRESİ */}
 <div className="md:col-span-2">
-  <label className="text-sm font-medium">Eş İkamet Adresi</label>
+  <label className="text-sm font-medium">Eşinin İkamet Adresi</label>
   <textarea
     rows={2}
     className="w-full mt-1 p-3 border rounded-xl"
@@ -1575,7 +1580,7 @@ const removeMarriage = (index) => {
 
     {/* ESKİ EŞ ADI */}
     <div>
-      <label className="text-sm font-medium">Eski Eş Adı Soyadı</label>
+      <label className="text-sm font-medium">Eski Eşinizin Adı Soyadı</label>
       <input
         placeholder="ADI SOYADI"
         className="w-full mt-1 p-3 border rounded-xl"
@@ -1597,7 +1602,7 @@ const removeMarriage = (index) => {
 
     {/* DOĞUM TARİHİ */}
     <div>
-      <label className="text-sm font-medium">Eski Eş Doğum Tarihi</label>
+      <label className="text-sm font-medium">Eski Eşinizin Doğum Tarihi</label>
       <input
         type="date"
         max={new Date().toISOString().split("T")[0]}
@@ -1712,12 +1717,23 @@ const removeMarriage = (index) => {
         className="w-full mt-1 p-3 border rounded-xl"
         value={form.steps[2].children[idx]?.fullName || ""}
         onChange={(e) =>
-          updateChildField(
-            idx,
-            "fullName",
-            isMobile ? e.target.value : normalizeInput(e.target.value)
-          )
-        }
+    updateChildField(
+      idx,
+      "fullName",
+      isMobile
+        ? e.target.value
+        : normalizeInput(e.target.value)
+    )
+  }
+  onBlur={(e) => {
+    if (isMobile) {
+      updateChildField(
+        idx,
+        "fullName",
+        normalizeInput(e.target.value)
+      );
+    }
+  }}
       />
     </div>
 
@@ -1746,12 +1762,23 @@ const removeMarriage = (index) => {
         className="w-full mt-1 p-3 border rounded-xl"
         value={form.steps[2].children[idx]?.birthPlace || ""}
         onChange={(e) =>
-          updateChildField(
-            idx,
-            "birthPlace",
-            isMobile ? e.target.value : normalizeInput(e.target.value)
-          )
-        }
+    updateChildField(
+      idx,
+      "birthPlace",
+      isMobile
+        ? e.target.value
+        : normalizeInput(e.target.value)
+    )
+  }
+  onBlur={(e) => {
+    if (isMobile) {
+      updateChildField(
+        idx,
+        "birthPlace",
+        normalizeInput(e.target.value)
+      );
+    }
+  }}
       />
     </div>
 
@@ -1776,12 +1803,23 @@ const removeMarriage = (index) => {
         className="w-full mt-1 p-3 border rounded-xl"
         value={form.steps[2].children[idx]?.address || ""}
         onChange={(e) =>
-          updateChildField(
-            idx,
-            "address",
-            isMobile ? e.target.value : normalizeInput(e.target.value)
-          )
-        }
+    updateChildField(
+      idx,
+      "address",
+      isMobile
+        ? e.target.value
+        : normalizeInput(e.target.value)
+    )
+  }
+  onBlur={(e) => {
+    if (isMobile) {
+      updateChildField(
+        idx,
+        "address",
+        normalizeInput(e.target.value)
+      );
+    }
+  }}
       />
     </div>
 
@@ -1792,12 +1830,23 @@ const removeMarriage = (index) => {
         className="w-full mt-1 p-3 border rounded-xl"
         value={form.steps[2].children[idx]?.occupation || ""}
         onChange={(e) =>
-          updateChildField(
-            idx,
-            "occupation",
-            isMobile ? e.target.value : normalizeInput(e.target.value)
-          )
-        }
+    updateChildField(
+      idx,
+      "occupation",
+      isMobile
+        ? e.target.value
+        : normalizeInput(e.target.value)
+    )
+  }
+  onBlur={(e) => {
+    if (isMobile) {
+      updateChildField(
+        idx,
+        "occupation",
+        normalizeInput(e.target.value)
+      );
+    }
+  }}
       />
     </div>
   </div>
@@ -2449,19 +2498,31 @@ const removeMarriage = (index) => {
                   {form.steps[4].exams.map((exam, index) => (
                     <div key={index} className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 p-4 border rounded-xl">
 
-                      <div>
-                        <label className="text-sm font-medium">Sınav Adı</label>
-                        <input
-                          className="w-full mt-1 p-3 border rounded-xl"
-                          value={exam.examName}
-                          onChange={(e) => {
-                            const newExams = [...form.steps[4].exams];
-                            newExams[index].examName = (e.target.value);
-                            updateField(4, "exams", newExams);
-                          }}
-                          placeholder="Örn: TOEFL, IELTS"
-                        />
-                      </div>
+                 <div>
+  <label className="text-sm font-medium">Sınav Adı</label>
+  <input
+    className="w-full mt-1 p-3 border rounded-xl"
+    value={exam.examName}
+    onChange={(e) => {
+      const value = e.target.value;
+      const newExams = [...form.steps[4].exams];
+
+      newExams[index].examName = isMobile
+        ? value
+        : normalizeInput(value);
+
+      updateField(4, "exams", newExams);
+    }}
+    onBlur={(e) => {
+      if (isMobile) {
+        const newExams = [...form.steps[4].exams];
+        newExams[index].examName = normalizeInput(e.target.value);
+        updateField(4, "exams", newExams);
+      }
+    }}
+    placeholder="Örn: TOEFL, IELTS"
+  />
+</div>
 
                       <div>
                         <label className="text-sm font-medium">Sınav Tarihi</label>
@@ -2664,7 +2725,7 @@ const removeMarriage = (index) => {
                   <option value="">Seçiniz</option>
                   <option value="YAPTI">Yaptı</option>
                   <option value="YAPMADI">Yapmadı</option>
-                  <option value="MUAF">Muaf</option>
+            
 
                 </select>
               </div>
@@ -2672,7 +2733,7 @@ const removeMarriage = (index) => {
               {form.steps[4].boolean_military === "YAPTI" && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                   <div>
-                    <label className="text-sm font-medium">Askerlik Şehri</label>
+                    <label className="text-sm font-medium">Askerlik Yaptığınız Şehir</label>
                     <input
                       className="w-full mt-1 p-3 border rounded-xl"
                       value={form.steps[4].military_city}
@@ -2697,7 +2758,7 @@ const removeMarriage = (index) => {
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium">Başlangıç Tarihi</label>
+                    <label className="text-sm font-medium">Askerlik Başlangıç Tarihi</label>
                     <input
                       type="date"
                       className="w-full mt-1 p-3 border rounded-xl"
@@ -2707,7 +2768,7 @@ const removeMarriage = (index) => {
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium">Bitiş Tarihi</label>
+                    <label className="text-sm font-medium">Askerlik Bitiş Tarihi</label>
                     <input
                       type="date"
                       className="w-full mt-1 p-3 border rounded-xl"
@@ -2764,7 +2825,7 @@ const removeMarriage = (index) => {
     {form.steps[5].employmentStatus === "ÇALIŞIYOR" && (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="text-sm font-medium">Şu an Çalıştığınız Şirket</label>
+          <label className="text-sm font-medium">Şu an Çalıştığınız Şirket Adı</label>
           <input
             className="w-full mt-1 p-3 border rounded-xl"
             value={form.steps[5].currentCompanyName || ""}
@@ -2775,7 +2836,7 @@ const removeMarriage = (index) => {
         </div>
 
         <div>
-          <label className="text-sm font-medium">Pozisyon</label>
+          <label className="text-sm font-medium">Göreviniz</label>
           <input
             className="w-full mt-1 p-3 border rounded-xl"
             value={form.steps[5].currentPosition}
@@ -2886,7 +2947,7 @@ const removeMarriage = (index) => {
         </div>
 
         <div>
-          <label className="text-sm font-medium">Pozisyon</label>
+          <label className="text-sm font-medium">Göreviniz</label>
           <input
             className="w-full mt-1 p-3 border rounded-xl"
             value={form.steps[5].currentPosition}
@@ -2958,7 +3019,7 @@ const removeMarriage = (index) => {
 
               <input
                 className="p-3 border rounded-xl"
-                placeholder="Pozisyon"
+                placeholder="Göreviniz"
                 value={exp.position}
                 onChange={(e) =>
                   updateArrayField(5, "last10YearsWorkExperience", index, "position", normalizeInput(e.target.value))
@@ -3270,7 +3331,7 @@ const removeMarriage = (index) => {
               <div className="mt-10">
                 <h4 className="font-semibold text-md mb-3">Son 5 Yılda Yaptığınız Seyahatler</h4>
 
-                {form.steps[6].last5YearsTravel.map((item, index) => (
+                {form.steps[6].last5YearsTravel?.map((item, index) => (
                   <div key={index} className="border p-4 rounded-xl bg-gray-50 mb-4">
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -3278,30 +3339,34 @@ const removeMarriage = (index) => {
                       {/* Ülke */}
                       <div>
                         <label className="text-sm font-medium">Ülke *</label>
-                        <input
-                          className="w-full mt-1 p-3 border rounded-xl"
-                          value={item.country}
-                          placeholder="Örn: Almanya"
+                       <input
+  className="w-full mt-1 p-3 border rounded-xl"
+  value={item.country || ""}
+  placeholder="Örn: Almanya"
+  onChange={(e) => {
+    const value = e.target.value;
 
-                          onChange={(e) => {
-                            if (isMobile) {
-                              // Mobile: Normalizasyon YOK, sadece değeri sakla
-                              updateArrayField(6, "last5YearsTravel", index, "country",);
-                            } else {
-                              // Desktop/Diğer: Normalizasyon YAP
-                              updateArrayField(6, "last5YearsTravel", index, "country", normalizeInput(e.target.value));
-                            }
-                          }}
+    updateArrayField(
+      6,
+      "last5YearsTravel",
+      index,
+      "country",
+      isMobile ? value : normalizeInput(value)
+    );
+  }}
+  onBlur={(e) => {
+    if (isMobile) {
+      updateArrayField(
+        6,
+        "last5YearsTravel",
+        index,
+        "country",
+        normalizeInput(e.target.value)
+      );
+    }
+  }}
+/>
 
-                          // Eğer **Mobilse** onBlur'da normalizasyonu uygula
-                          onBlur={(e) => {
-                            if (isMobile) {
-                              const normalizedValue = normalizeInput(e.target.value);
-                              updateArrayField(6, "last5YearsTravel", index, "country", normalizedValue);
-                            }
-                          }}
-
-                        />
                       </div>
 
                       {/* Gidiş */}
@@ -3310,7 +3375,7 @@ const removeMarriage = (index) => {
                         <input
                           type="date"
                           className="w-full mt-1 p-3 border rounded-xl"
-                          value={item.travelStartDate}
+                          value={item.travelStartDate || ""}
                           onChange={(e) =>
                             updateArrayField(6, "last5YearsTravel", index, "travelStartDate", e.target.value)
                           }
@@ -3323,7 +3388,7 @@ const removeMarriage = (index) => {
                         <input
                           type="date"
                           className="w-full mt-1 p-3 border rounded-xl"
-                          value={item.travelEndDate}
+                          value={item.travelEndDate || ""}
                           onChange={(e) =>
                             updateArrayField(6, "last5YearsTravel", index, "travelEndDate", e.target.value)
                           }
@@ -3333,29 +3398,34 @@ const removeMarriage = (index) => {
                       {/* Amaç */}
                       <div>
                         <label className="text-sm font-medium">Seyahat Amacı *</label>
-                        <input
-                          className="w-full mt-1 p-3 border rounded-xl"
-                          placeholder="Örn: Turistik, İş, Aile ziyareti..."
-                          value={item.travelPurpose}
+                       <input
+  className="w-full mt-1 p-3 border rounded-xl"
+  placeholder="Örn: Turistik, İş, Aile ziyareti..."
+  value={item.travelPurpose || ""}
+  onChange={(e) => {
+    const value = e.target.value;
 
-                          onChange={(e) => {
-                            if (isMobile) {
-                              // Mobile: Normalizasyon YOK, sadece değeri sakla
-                              updateArrayField(6, "last5YearsTravel", index, "travelPurpose",);
-                            } else {
-                              // Desktop/Diğer: Normalizasyon YAP
-                              updateArrayField(6, "last5YearsTravel", index, "travelPurpose", normalizeInput(e.target.value));
-                            }
-                          }}
+    updateArrayField(
+      6,
+      "last5YearsTravel",
+      index,
+      "travelPurpose",
+      isMobile ? value : normalizeInput(value)
+    );
+  }}
+  onBlur={(e) => {
+    if (isMobile) {
+      updateArrayField(
+        6,
+        "last5YearsTravel",
+        index,
+        "travelPurpose",
+        normalizeInput(e.target.value)
+      );
+    }
+  }}
+/>
 
-                          // Eğer **Mobilse** onBlur'da normalizasyonu uygula
-                          onBlur={(e) => {
-                            if (isMobile) {
-                              const normalizedValue = normalizeInput(e.target.value);
-                              updateArrayField(6, "last5YearsTravel", index, "travelPurpose", normalizedValue);
-                            }
-                          }}
-                        />
                       </div>
 
                     </div>

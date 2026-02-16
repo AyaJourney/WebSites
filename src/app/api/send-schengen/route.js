@@ -9,7 +9,7 @@ const FONT_PATH = path.join(
   process.cwd(),
   "public",
   "fonts",
-  "OpenSans_Condensed-Regular.ttf"
+  "OpenSans_Condensed-Regular.ttf" 
 );
 const LOGO_PATH = path.join(process.cwd(), "public", "images", "ayalogoxl.png");
 
@@ -192,18 +192,26 @@ export async function POST(req) {
     let pageCount = 1;
 
     // 2. Sayfa Kontrolü & Yeni Sayfa
-    const checkSpace = (heightNeeded) => {
-      if (currentY - heightNeeded < MARGIN) {
-        drawFooter(currentPage, pageCount);
-        currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
-        pageCount++;
-        currentY = PAGE_HEIGHT - MARGIN;
-        drawHeader(currentPage); 
-        return true;
-      }
-      return false;
-    };
+const checkSpace = (heightNeeded) => {
 
+  if (currentY - heightNeeded < MARGIN) {
+
+    drawFooter(currentPage, pageCount);
+
+    currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+    pageCount++;
+
+    drawHeader(currentPage);
+
+    // 🔥 HEADER ALTINA İN
+    currentY = PAGE_HEIGHT - MARGIN - HEADER_HEIGHT;
+
+    return true;
+  }
+
+  return false;
+};
+const HEADER_HEIGHT = 25; 
     // 3. Header (Sayfa Üstü)
 const drawHeader = async (page) => {
   // --- PNG Logo ---
@@ -280,49 +288,74 @@ const drawHeader = async (page) => {
     };
 
     // 6. Alan Çizimi (Grid Yapısı - Label/Value)
-    const drawField = (label, value, isFullWidth = false, xOffset = 0) => {
-      const colWidth = isFullWidth ? CONTENT_WIDTH : (CONTENT_WIDTH / 2) - 10;
-      const valStr = value ? String(value) : "-";
-      const labelSize = 8;
-      const valueSize = 10;
-      
-      // Value kaç satır tutuyor?
-      const valueLines = wrapText(valStr, colWidth, regularFont, valueSize);
-      const heightNeeded = (valueLines.length * (valueSize + 4)) + 15; 
+const drawField = (label, value) => {
 
-      // Sayfa sonu kontrolü
-      if (xOffset === 0) {
-         if (checkSpace(heightNeeded)) {
-             // Sayfa değiştiyse Y sıfırlandı
-         }
-      }
+ 
+  const colWidth = CONTENT_WIDTH;
 
-      const drawX = MARGIN + xOffset;
-      
-      // Label
-      currentPage.drawText(label, {
+  const valStr = value ? String(value) : "-";
+  const labelSize = 14;
+  const valueSize = 14;
+  const lineSpacing = valueSize + 5;
+
+  const drawX = MARGIN;
+
+  const valueLines = wrapText(
+    valStr,
+    colWidth,
+    regularFont,
+    valueSize
+  );
+
+  const labelHeight = labelSize + 6;
+
+  // 🔥 Label için alan kontrolü
+  checkSpace(labelHeight + 10);
+
+  // LABEL
+  currentPage.drawText(label, {
+    x: drawX,
+    y: currentY,
+    size: labelSize,
+    font: boldFont,
+    color: COLORS.textLabel,
+  });
+
+  currentY -= labelHeight;
+
+  // 🔥 Tek paragraf gibi akacak
+  valueLines.forEach((line, index) => {
+
+    // Sayfa dolduysa yeni sayfa aç
+    if (checkSpace(lineSpacing)) {
+
+      // Yeni sayfada sadece DEVAM ibaresi yaz
+      currentPage.drawText(label + " (Devam)", {
         x: drawX,
         y: currentY,
         size: labelSize,
-        font: boldFont, // Senin fontun (Bold olmadığı için regular görünecek ama stilimiz aynı kalacak)
-        color: COLORS.textLabel
+        font: boldFont,
+        color: COLORS.textLabel,
       });
 
-      // Value (Wrapped)
-      let textY = currentY - 12;
-      valueLines.forEach(line => {
-        currentPage.drawText(line, {
-            x: drawX,
-            y: textY,
-            size: valueSize,
-            font: regularFont,
-            color: COLORS.textMain
-        });
-        textY -= (valueSize + 4);
-      });
-      
-      return heightNeeded; 
-    };
+      currentY -= labelHeight;
+    }
+
+    currentPage.drawText(line, {
+      x: drawX,
+      y: currentY,
+      size: valueSize,
+      font: regularFont,
+      color: COLORS.textMain,
+    });
+
+    currentY -= lineSpacing;
+  });
+
+  currentY -= 15;
+
+  return true;
+};
 
     // --- Veri İşleme ve Çizim Başlangıcı ---
     
@@ -338,67 +371,97 @@ const drawHeader = async (page) => {
 drawSection("1. KİŞİSEL BİLGİLER");
 
 // Ad Soyad & Cinsiyet
-let h1 = drawField("Ad Soyad", s(1).fullName || "-", false, 0);
-let h2 = drawField("Cinsiyet", s(1).gender || "-", false, CONTENT_WIDTH/2);
+let h1 = drawField("Adı Soyadı (Pasaport ile aynı)", s(1).fullName || "-", false, 0);
+let h2 = drawField("T.C. Kimlik Numarası", s(1).tcId || "-", false,0);
 currentY -= Math.max(h1, h2) + 10;
-
+ h1 = drawField("Cinsiyeti", s(1).gender || "-", false,0);
+ h2 = drawField("Medeni Durumu", s(1).maritalStatus || "-", false, 0);
+currentY -= Math.max(h1, h2) + 10;
 // Medeni Durum & Kızlık Soyadı
-h1 = drawField("Medeni Durum", s(1).maritalStatus || "-", false, 0);
-
-if (s(1).maritalStatus === "EVLİ" && s(1).maidenName) {
-  h2 = drawField("Kızlık Soyadı", s(1).maidenName || "-", false, CONTENT_WIDTH/2);
-} else {
-  h2 = drawField("Kızlık Soyadı", "-", false, CONTENT_WIDTH/2);
+if (s(1).maritalStatus === "EVLİ" && s(1).maidenName && s(1).gender === "KADIN") {
+  h2 = drawField("Kızlık Soyadı", s(1).maidenName || "-", false,0);
 }
-
 currentY -= Math.max(h1, h2) + 10;
 
 // Doğum Tarihi & Doğum Yeri
 h1 = drawField("Doğum Tarihi", toTRDate(s(1).birthDate) || "-", false, 0);
-h2 = drawField("Doğum Yeri", s(1).birthPlace || "-", false, CONTENT_WIDTH/2);
+h2 = drawField("Doğum Yeri", s(1).birthPlace || "-", false,0);
 currentY -= Math.max(h1, h2) + 10;
+
+h1 = drawField("Telefon Numarası", s(1).phone_number || "-", false, 0);
+h2 = drawField("E-Posta Adresi", s(1).email || "-", false,0);
+currentY -= Math.max(h1, h2) + 10;
+
+h1 = drawField("Adresi", s(1).home_address || "-", false, 0);
+h2 = drawField("Posta Kodu", s(1).post_code || "-", false,0);
+currentY -= Math.max(h1, h2) + 10;
+
+currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+pageCount++;
+currentY = PAGE_HEIGHT - MARGIN;
+await drawHeader(currentPage);
 
     // --- Step 2: Aile ---
   // 2. PASAPORT BİLGİLERİ
 drawSection("2. PASAPORT BİLGİLERİ");
 
 // İlk satır: Pasaport No + Veriliş Tarihi
-h1 = drawField("Pasaport No", s(2).passport_number || "", false, 0);
-h2 = drawField("Veriliş Tarihi",toTRDate( s(2).Passport_start_date) || "", false, CONTENT_WIDTH / 2);
+h1 = drawField("Pasaport Numarası", s(2).passport_number || "", false, 0);
+h2 = drawField("Pasaport Veriliş Tarihi",toTRDate( s(2).Passport_start_date) || "", false, 0);
 currentY -= Math.max(h1, h2) + 10;
 
 // İkinci satır: Bitiş Tarihi + Veren Makam
-h1 = drawField("Bitiş Tarihi", toTRDate(s(2).Passport_end_date) || "", false, 0);
-h2 = drawField("Veren Makam", s(2).passport_issuing_authority || "", false, CONTENT_WIDTH / 2);
+h1 = drawField("Pasaport Geçerliliği Bitiş Tarihi", toTRDate(s(2).Passport_end_date) || "", false, 0);
+h2 = drawField("Pasaportu Veren Makam", s(2).passport_issuing_authority || "", false, 0);
 currentY -= Math.max(h1, h2) + 10;
-
+currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+pageCount++;
+currentY = PAGE_HEIGHT - MARGIN;
+await drawHeader(currentPage);
 
     // --- Step 3: Pasaport ---
    // 3. ŞİRKET BİLGİLERİ
-drawSection("3. ŞİRKET BİLGİLERİ");
+drawSection("3. ÇALIŞMA BİLGİLERİ");
 
 // 1. satır → Sektör + Şirket Türü
 h1 = drawField("Çalışma Durumu", s(3).boolean_work || "", false, 0);
-h2 = drawField("İşe Giriş Tarihi", toTRDate(s(3).work_start_date) || "", false, CONTENT_WIDTH / 2);
-currentY -= Math.max(h1, h2) + 10;
+if(s(3).boolean_work == "CALISIYOR"){
 h1 = drawField("Sektör", s(3).sector || "", false, 0);
-h2 = drawField("Şirket Türü", s(3).company_type || "", false, CONTENT_WIDTH / 2);
-currentY -= Math.max(h1, h2) + 10;
+if(s(3).sector === "OZEL"){
+  h2 = drawField("Şirket Türü", s(3).company_type || "", false, 0);
+  h1 = drawField("Şirket Adı", s(3).company_name || "", false, 0);
+h2 = drawField("Şirketteki Statüsü", s(3).company_statu || "", false, 0);
+ h2 = drawField("İşe Giriş Tarihi", toTRDate(s(3).work_start_date) || "", false, 0); 
+ h1 = drawField("Şirket Adresi", s(3).company_address || "", true, 0);
+ h1 = drawField("Şirket Telefon Numarası", s(3).company_phone_number || "", false, 0);
+h2 = drawField("Şirketteki Unvanınız", s(3).your_title || "", false, 0);
+}
+if(s(3).sector === "KAMU"){
+   h1 = drawField("Kamu Kurumu Adı", s(3).company_name || "", false, 0);
 
-// 2. satır → Şirket Adı + Statü
-h1 = drawField("Şirket Adı", s(3).company_name || "", false, 0);
-h2 = drawField("Statüsü", s(3).company_statu || "", false, CONTENT_WIDTH / 2);
-currentY -= Math.max(h1, h2) + 10;
+ h2 = drawField("İşe Giriş Tarihi", toTRDate(s(3).work_start_date) || "", false, 0); 
+ h1 = drawField("Kamu Kurumu Adresi", s(3).company_address || "", true, 0);
+ h1 = drawField("Kamu Kurumu Telefon Numarası", s(3).company_phone_number || "", false, 0);
+h2 = drawField("Kamu Kurumundaki Unvanınız", s(3).your_title || "", false, 0);
+}
+}
+if(s(3).boolean_work == "OGRENCI"){
+ h1 = drawField("Okulunuzun Adı", s(3).school_name || "", false, 0);
+h2 = drawField("Okulunuzun Adresi", s(3).school_address || "", false, 0);
+ h2 = drawField("Kaçıncı Sınıfa Gidiyorsunuz?",s(3).school_class_number  || "", false, 0); 
+}
+ h1 = drawField("Seyahat Masraflarını Kim Karşılayacak?", s(3).who_pay || "", false, 0);
+if(s(3).who_pay === "DIGER"){
+ h1 = drawField("Masrafı Karşılayanın Adı Soyadı", s(3).pay_fullname || "", false, 0);
+h2 = drawField("Masrafı Karşılayacak Kişinin Telefon Numarası", s(3).pay_phone_number || "", false, 0);
+ h2 = drawField("Masrafı Karşılayacak Kişinin E-Posta Adresi",s(3).pay_email  || "", false, 0); 
+h2 = drawField("Masrafı Karşılayan Kişinin Çalışma Durumu",s(3).pay_boolean_work  || "", false, 0); 
+if(s(3).pay_boolean_work ==="CALISIYOR"){
+  h2 = drawField("Masrafı Karşılayanın İş Yeri Adı",s(3).pay_companyname  || "", false, 0); 
+}
 
-// 3. satır → Şirket Adresi (tek kolon, uzun olabilir)
-h1 = drawField("Şirket Adresi", s(3).company_address || "", true, 0);
-currentY -= h1 + 10;
 
-// 4. satır → Telefon + Unvanınız
-h1 = drawField("Telefon", s(3).company_phone_number || "", false, 0);
-h2 = drawField("Unvanınız", s(3).your_title || "", false, CONTENT_WIDTH / 2);
-currentY -= Math.max(h1, h2) + 10;
-
+}
 // Sayfa footer
 drawFooter(currentPage, pageCount);
 
@@ -412,45 +475,50 @@ await drawHeader(currentPage);
 drawSection("4. DAVET BİLGİLERİ");
 
 // Davet Var mı? (Evet / Hayır)
-h1 = drawField("Davet Durumu", s(4).boolean_invitation || "", true, 0);
-h2 = drawField("Davetiye Türü", s(4).invitation_type || "", false, CONTENT_WIDTH / 2);
- currentY -= Math.max(h1, h2) + 10;
+h1 = drawField("Davetiyeniz Var mı?", s(4).boolean_invitation || "", true, 0);
 
-// Eğer Davet varsa alanlar gösterilsin
+if(s(4).boolean_invitation === "EVET"){
+h2 = drawField("Davetiye Türü", s(4).invitation_type || "", false, 0);
 if ((String(s(4).boolean_invitation).toUpperCase() === "EVET")&& (String(s(4).invitation_type).toUpperCase() === "BIREYSEL") ) {
 
     // 1. Satır: Davet Eden Kişi Adı + Doğum Tarihi
-    h1 = drawField("Davet Eden Kişi", s(4).invitation_sender_fullname || "", false, 0);
-    h2 = drawField("Doğum Tarihi", toTRDate(s(4).invitation_sender_birthdate) || "", false, CONTENT_WIDTH / 2);
+    h1 = drawField("Davet Eden Kişinin Adı Soyadı", s(4).invitation_sender_fullname || "", false, 0);
+    h2 = drawField("Davet Eden Kişinin Doğum Tarihi", toTRDate(s(4).invitation_sender_birthdate) || "", false, 0);
     currentY -= Math.max(h1, h2) + 10;
 
     // 2. Satır: Telefon + E-posta
-    h1 = drawField("Telefon", s(4).invitation_sender_phone_number || "", false, 0);
-    h2 = drawField("E-posta", s(4).invitation_sender_email || "", false, CONTENT_WIDTH / 2);
+    h1 = drawField("Davet Eden Kişinin Telefon Numarası", s(4).invitation_sender_phone_number || "", false, 0);
+    h2 = drawField("Davet Eden Kişinin E-posta Adresi", s(4).invitation_sender_email || "", false, 0);
     currentY -= Math.max(h1, h2) + 10;
 
     // 3. Satır: T.C. Kimlik No (tek satır)
-    h1 = drawField("T.C. Kimlik No", s(4).invitation_sender_tc_id || "", false, 0);
+    h1 = drawField("Davet Eden Kişinin Kimlik / Ülke ID Numarası", s(4).invitation_sender_tc_id || "", false, 0);
     currentY -= h1 + 10;
 
     // 4. Satır: Adres (çok satırlı)
-    h1 = drawField("Adres", s(4).invitation_sender_home_address || "", true, 0);
+    h1 = drawField("Davet Eden Kişinin Adresi", s(4).invitation_sender_home_address || "", true, 0);
     currentY -= h1 + 20;
 }
 if ((String(s(4).boolean_invitation).toUpperCase() === "EVET")&& (String(s(4).invitation_type).toUpperCase() === "SIRKET") ) {
 
     // 1. Satır: Davet Eden Kişi Adı + Doğum Tarihi
     h1 = drawField("Davet Eden Şirket Adı", s(4).invitation_company_fullname || "", false, 0);
-    h2 = drawField("Şirket Adresi", s(4).invitation_company_address || "", false, CONTENT_WIDTH / 2);
+    h2 = drawField("Şirket Adresi", s(4).invitation_company_address || "", false, 0);
     currentY -= Math.max(h1, h2) + 10;
 
     // 2. Satır: Telefon + E-posta
     h1 = drawField("Şirket Telefon", s(4).invitation_company_phone_number || "", false, 0);
-    h2 = drawField("Şirket E-posta", s(4).invitation_company_email || "", false, CONTENT_WIDTH / 2);
+    h2 = drawField("Şirket E-posta", s(4).invitation_company_email || "", false, 0);
     currentY -= Math.max(h1, h2) + 10;
 
 
 }
+}
+
+
+
+// Eğer Davet varsa alanlar gösterilsin
+
 // Footer
 drawFooter(currentPage, pageCount);
 
@@ -461,23 +529,23 @@ drawFooter(currentPage, pageCount);
 drawSection("5. SCHENGEN & PARMAK İZİ BİLGİLERİ");
 
 // 1. Satır: Gidiş – Dönüş
-h1 = drawField("Gidiş Tarihi",toTRDate( s(5).travel_start_date )|| "", false, 0);
-h2 = drawField("Dönüş Tarihi",toTRDate( s(5).travel_end_date )|| "", false, CONTENT_WIDTH / 2);
+h1 = drawField("Seyahat Başlangıç Tarihi ",toTRDate( s(5).travel_start_date )|| "", false, 0);
+h2 = drawField("Seyahat Bitiş Tarihi",toTRDate( s(5).travel_end_date )|| "", false, 0);
 currentY -= Math.max(h1, h2) + 10;
 
 // 2. Satır: Schengen Vizesi Var mı?
-h1 = drawField("Schengen Vizesi", s(5).boolean_schengen_visa || "", true, 0);
+h1 = drawField("Daha Önce Schengen Vizesi Aldınız mı?", s(5).boolean_schengen_visa || "", true, 0);
 currentY -= h1 + 10;
 
 // Eğer Schengen vizesi varsa ek bilgiler
 if (String(s(5).boolean_schengen_visa).toUpperCase() === "EVET") {
     
     // Vize Etiket Numarası
-    h1 = drawField("Etiket Numarası", s(5).schengen_visa_label_number || "", false, 0);
+    h1 = drawField("Son Schengen vizenizin etiket numarası", s(5).schengen_visa_label_number || "", false, 0);
    
 
     // Parmak izi alındı mı?
-    h2 = drawField("Parmak İzi Alındı mı?", s(5).fingerprint_taken || "", false , CONTENT_WIDTH/2);
+    h2 = drawField("Parmak İzi Alındı mı?", s(5).fingerprint_taken || "", false ,0);
    currentY -= Math.max(h1, h2) + 10;
 
     // Parmak izi tarihi
@@ -485,17 +553,17 @@ if (String(s(5).boolean_schengen_visa).toUpperCase() === "EVET") {
         h1 = drawField("Parmak İzi Tarihi",toTRDate( s(5).fingerprint_taken_date) || "", false, 0);
       
     }
-    h1 = drawField("Yurt Dışına Çıktı  mı?", s(5).boolean_abroad_country || "", false, CONTENT_WIDTH/2);
-currentY -= Math.max(h1, h2) + 10;
+    h1 = drawField("Daha önce yurtdışına çıktınız mı?", s(5).boolean_abroad_country || "", false,0);
+      currentY -= Math.max(h1, h2) + 10;
      if(s(5).abroad_country && s(5).abroad_country.length>0) {
       checkSpace(50);
       currentY -=10;
-      currentPage.drawText("Seyahat Geçmişi",{x:MARGIN,y:currentY,size:10,font:boldFont,color:COLORS.primary});
+      currentPage.drawText("Gidilen Ülke - Gidiş Tarihi - Dönüş Tarihi",{x:MARGIN,y:currentY,size:14,font:boldFont,color:COLORS.primary});
       currentY -=15;
       s(5).abroad_country.forEach(item=>{
-        const text = `• ${item.country || '-'} (${item.start || '-'} / ${item.end || '-'})`;
+        const text = `• ${item.country || '-'} (${toTRDate(item.start) || '-'} / ${toTRDate(item.end) || '-'})`;
         checkSpace(20);
-        currentPage.drawText(text,{x:MARGIN+10,y:currentY,size:9,font:regularFont,color:COLORS.textMain});
+        currentPage.drawText(text,{x:MARGIN+10,y:currentY,size:14,font:regularFont,color:COLORS.textMain});
         currentY -=14;
       });
       currentY -=10;
@@ -546,7 +614,7 @@ const addFileImage = async (fileBase64, title, type) => {
             const scale = Math.min(width / embeddedImg.width, height / embeddedImg.height);
             imgDims = { width: embeddedImg.width * scale, height: embeddedImg.height * scale };
         } else if (type === "photo") {
-            const maxWidth = CONTENT_WIDTH / 2;
+            const maxWidth = 0;
             const maxHeight = PAGE_HEIGHT / 2;
             const scale = Math.min(maxWidth / embeddedImg.width, maxHeight / embeddedImg.height, 1);
             imgDims = { width: embeddedImg.width * scale, height: embeddedImg.height * scale };
@@ -650,146 +718,375 @@ let pdfBuffer = null;
 // formData: gönderilen form verisi
 const f = formData; // veya defaultForm yerine bu kullanılacak
 
-const textBody = `
-SCHENGEN VİZE BAŞVURU
+// const textBody = `
+// SCHENGEN VİZE BAŞVURU
 
--- Kişisel Bilgiler --
-Ad Soyad: ${f.steps[1].fullName || "-"}
-TC: ${f.steps[1].tcId || "-"}
-Cinsiyet: ${f.steps[1].gender || "-"}
-Medeni Durum: ${f.steps[1].maritalStatus || "-"}
-Doğum Tarihi: ${toTRDate(f.steps[1].birthDate) || "-"}
-Doğum Yeri: ${f.steps[1].birthPlace || "-"}
-Telefon: ${f.steps[1].phone_number || "-"}
-Email: ${f.steps[1].email || "-"}
-Adres: ${f.steps[1].home_address || "-"}
-Posta Kodu: ${f.steps[1].post_code || "-"}
+// -- Kişisel Bilgiler --
+// Ad Soyad: ${f.steps[1].fullName || "-"}
+// TC: ${f.steps[1].tcId || "-"}
+// Cinsiyet: ${f.steps[1].gender || "-"}
+// Medeni Durum: ${f.steps[1].maritalStatus || "-"}
+// Doğum Tarihi: ${toTRDate(f.steps[1].birthDate) || "-"}
+// Doğum Yeri: ${f.steps[1].birthPlace || "-"}
+// Telefon: ${f.steps[1].phone_number || "-"}
+// Email: ${f.steps[1].email || "-"}
+// Adres: ${f.steps[1].home_address || "-"}
+// Posta Kodu: ${f.steps[1].post_code || "-"}
 
--- Pasaport Bilgileri --
-Numara: ${f.steps[2].passport_number || "-"}
-Başlangıç / Bitiş: ${f.steps[2].Passport_start_date || "-"} / ${f.steps[2].Passport_end_date || "-"}
-Veriliş: ${f.steps[2].passport_issuing_authority || "-"}
+// -- Pasaport Bilgileri --
+// Numara: ${f.steps[2].passport_number || "-"}
+// Başlangıç / Bitiş: ${f.steps[2].Passport_start_date || "-"} / ${f.steps[2].Passport_end_date || "-"}
+// Veriliş: ${f.steps[2].passport_issuing_authority || "-"}
 
--- İş / Şirket Bilgileri --
-Çalışma Durumu: ${f.steps[3].boolean_work || "-"}
-İşe Giriş Tarihi: ${toTRDate(f.steps[3].work_start_date) || "-"}
-Sektör: ${f.steps[3].sector || "-"}
-Şirket Türü: ${f.steps[3].company_type || "-"}
-Şirket Adı: ${f.steps[3].company_name || "-"}
-Durum: ${f.steps[3].company_statu || "-"}
-Adres: ${f.steps[3].company_address || "-"}
-Telefon: ${f.steps[3].company_phone_number || "-"}
-Pozisyon: ${f.steps[3].your_title || "-"}
+// -- İş / Şirket Bilgileri --
+// Çalışma Durumu: ${f.steps[3].boolean_work || "-"}
+// İşe Giriş Tarihi: ${toTRDate(f.steps[3].work_start_date) || "-"}
+// Sektör: ${f.steps[3].sector || "-"}
+// Şirket Türü: ${f.steps[3].company_type || "-"}
+// Şirket Adı: ${f.steps[3].company_name || "-"}
+// Durum: ${f.steps[3].company_statu || "-"}
+// Adres: ${f.steps[3].company_address || "-"}
+// Telefon: ${f.steps[3].company_phone_number || "-"}
+// Pozisyon: ${f.steps[3].your_title || "-"}
 
--- Davet / Finansal Durum --
-Davetiye Var mı: ${f.steps[4].boolean_invitation || "-"}
-Davetiye Türü: ${f.steps[4].invitation_type || "-"}
-Davet Gönderen: ${f.steps[4].invitation_sender_fullname || "-"}
-Doğum Tarihi: ${toTRDate(f.steps[4].invitation_sender_birthdate )|| "-"}
-Telefon: ${f.steps[4].invitation_sender_phone_number || "-"}
-Email: ${f.steps[4].invitation_sender_email || "-"}
-TC: ${f.steps[4].invitation_sender_tc_id || "-"}
-Adres: ${f.steps[4].invitation_sender_home_address || "-"}
-Davet Gönderen Şirket: ${f.steps[4].invitation_company_fullname || "-"}
-Şirket Telefon: ${f.steps[4].invitation_company_phone_number || "-"}
-Şirket Email: ${f.steps[4].invitation_company_email || "-"}
-Şirket Adres: ${f.steps[4].invitation_company_address || "-"}
--- Seyahat Bilgileri --
-Başlangıç / Bitiş: ${f.steps[5].travel_start_date || "-"} / ${f.steps[5].travel_end_date || "-"}
-Schengen Vizesi Var mı: ${f.steps[5].boolean_schengen_visa || "-"}
-Parmak İzi Alındı mı: ${f.steps[5].fingerprint_taken || "-"}
-Parmak İzi Tarihi: ${toTRDate(f.steps[5].fingerprint_taken_date) || "-"}
-Vize Etiket No: ${f.steps[5].schengen_visa_label_number || "-"}
-Daha Önce Yurt Dışına Çıktınız Mı: ${f.steps[5].boolean_abroad_country || "-"}
-Gidilen Ülkeler: ${(f.steps[5].abroad_country || []).join(", ") || "-"}
+// -- Davet / Finansal Durum --
+// Davetiye Var mı: ${f.steps[4].boolean_invitation || "-"}
+// Davetiye Türü: ${f.steps[4].invitation_type || "-"}
+// Davet Gönderen: ${f.steps[4].invitation_sender_fullname || "-"}
+// Doğum Tarihi: ${toTRDate(f.steps[4].invitation_sender_birthdate )|| "-"}
+// Telefon: ${f.steps[4].invitation_sender_phone_number || "-"}
+// Email: ${f.steps[4].invitation_sender_email || "-"}
+// TC: ${f.steps[4].invitation_sender_tc_id || "-"}
+// Adres: ${f.steps[4].invitation_sender_home_address || "-"}
+// Davet Gönderen Şirket: ${f.steps[4].invitation_company_fullname || "-"}
+// Şirket Telefon: ${f.steps[4].invitation_company_phone_number || "-"}
+// Şirket Email: ${f.steps[4].invitation_company_email || "-"}
+// Şirket Adres: ${f.steps[4].invitation_company_address || "-"}
+// -- Seyahat Bilgileri --
+// Başlangıç / Bitiş: ${f.steps[5].travel_start_date || "-"} / ${f.steps[5].travel_end_date || "-"}
+// Schengen Vizesi Var mı: ${f.steps[5].boolean_schengen_visa || "-"}
+// Parmak İzi Alındı mı: ${f.steps[5].fingerprint_taken || "-"}
+// Parmak İzi Tarihi: ${toTRDate(f.steps[5].fingerprint_taken_date) || "-"}
+// Vize Etiket No: ${f.steps[5].schengen_visa_label_number || "-"}
+// Daha Önce Yurt Dışına Çıktınız Mı: ${f.steps[5].boolean_abroad_country || "-"}
+// Gidilen Ülkeler: ${(f.steps[5].abroad_country || []).join(", ") || "-"}
 
-${f.steps[6].passportFile ? "Pasaport Fotoğrafı: Mevcut" : "Pasaport Fotoğrafı: Yok"}
-${f.steps[6].photoFile ? "Vesikalık Fotoğraf: Mevcut" : "Vesikalık Fotoğraf: Yok"}
+// ${f.steps[6].passportFile ? "Pasaport Fotoğrafı: Mevcut" : "Pasaport Fotoğrafı: Yok"}
+// ${f.steps[6].photoFile ? "Vesikalık Fotoğraf: Mevcut" : "Vesikalık Fotoğraf: Yok"}
 
-Başvuru Tarihi: ${new Date().toLocaleString("tr-TR")}
-`.trim();
+// Başvuru Tarihi: ${new Date().toLocaleString("tr-TR")}
+// `.trim();
 
 const htmlBody = `
-<h2>Schengen Vize Başvuru</h2>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #f0f2f5;
+    color: #1a1d23;
+    padding: 32px 16px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .wrapper {
+    max-width: 860px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 40px rgba(0,0,0,0.10);
+  }
+  .doc-header {
+    background: linear-gradient(135deg, #1a1060 0%, #2d1fa3 60%, #4f46e5 100%);
+    padding: 36px 40px 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .doc-header-icon {
+    width: 54px; height: 54px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+  }
+  .doc-header-text h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: #fff;
+    letter-spacing: 0.3px;
+  }
+  .doc-header-text p {
+    font-size: 12px;
+    color: rgba(255,255,255,0.65);
+    margin-top: 4px;
+  }
+  .doc-body { padding: 32px 40px 40px; }
+  .section { margin-bottom: 36px; }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 15px;
+    color: #1a1060;
+    letter-spacing: 0.5px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e8edf5;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title span.badge {
+    background: #1a1060;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.8px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #e4e9f0;
+  }
+  tr { border-bottom: 1px solid #e4e9f0; }
+  tr:last-child { border-bottom: none; }
+  tr:nth-child(even) td { background: #f8fafd; }
+  tr:nth-child(even) th { background: #eef2fa; }
+  th {
+    background: #f1f4fb;
+    color: #374569;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px 14px;
+    text-align: left;
+    width: 38%;
+    vertical-align: top;
+    letter-spacing: 0.2px;
+  }
+  td {
+    padding: 10px 14px;
+    color: #1a1d23;
+    font-size: 13.5px;
+    vertical-align: top;
+  }
+  .sub-entry {
+    background: #f6f9ff;
+    border: 1px solid #dce6f5;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  .sub-entry:last-child { margin-bottom: 0; }
+  .sub-entry strong { color: #1a1060; display: block; margin-bottom: 4px; font-size: 14px; }
+  .photo-row {
+    display: flex;
+    gap: 24px;
+    margin-top: 28px;
+    padding-top: 28px;
+    border-top: 2px solid #e8edf5;
+  }
+  .photo-box {
+    flex: 1;
+    background: #f6f9ff;
+    border: 1px solid #dce6f5;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+  .photo-box p {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6b7a99;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .photo-box img { max-width: 180px; border-radius: 6px; border: 2px solid #dce6f5; }
+  .doc-footer {
+    background: #f6f9ff;
+    border-top: 1px solid #e4e9f0;
+    padding: 14px 40px;
+    text-align: right;
+    font-size: 14px;
+    color: #8a94aa;
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
 
-<h3>Kişisel Bilgiler</h3>
-<table border="1" cellspacing="0" cellpadding="5" style="border-collapse: collapse; width:100%; background-color:#f9f9f9;">
-  <tbody>
-    <tr><th style="background-color:#e0e0e0;">Ad Soyad</th><td>${f.steps[1].fullName || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">TC</th><td>${f.steps[1].tcId || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Cinsiyet</th><td>${f.steps[1].gender || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Medeni Durum</th><td>${f.steps[1].maritalStatus || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Doğum Tarihi</th><td>${toTRDate(f.steps[1].birthDate) || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Doğum Yeri</th><td>${f.steps[1].birthPlace || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Telefon</th><td>${f.steps[1].phone_number || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Email</th><td>${f.steps[1].email || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Adres</th><td>${f.steps[1].home_address || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Posta Kodu</th><td>${f.steps[1].post_code || "-"}</td></tr>
-  </tbody>
-</table>
+  <div class="doc-header">
+    <div class="doc-header-icon">🇪🇺</div>
+    <div class="doc-header-text">
+      <h1>Schengen Vize Başvuru Formu</h1>
+      <p>Başvuru özeti — Tüm bölümler</p>
+    </div>
+  </div>
 
-<h3>Pasaport Bilgileri</h3>
-<table border="1" cellspacing="0" cellpadding="5" style="border-collapse: collapse; width:100%;">
-  <tbody>
-    <tr><th style="background-color:#e0e0e0;">No</th><td>${f.steps[2].passport_number || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Başlangıç / Bitiş</th><td>${f.steps[2].Passport_start_date || "-"} / ${f.steps[2].Passport_end_date || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Veriliş</th><td>${f.steps[2].passport_issuing_authority || "-"}</td></tr>
-  </tbody>
-</table>
+  <div class="doc-body">
 
-<h3>İş / Şirket Bilgileri</h3>
-<table border="1" cellspacing="0" cellpadding="5" style="border-collapse: collapse; width:100%;">
-  <tbody>
-   <tr><th style="background-color:#e0e0e0;">Çalışma Durumu</th><td>${f.steps[3].boolean_work || "-"}</td></tr>
-   <tr><th style="background-color:#e0e0e0;">İşe Giriş Tarihi</th><td>${toTRDate(f.steps[3].work_start_date) || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Sektör</th><td>${f.steps[3].sector || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Şirket Türü</th><td>${f.steps[3].company_type || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Şirket Adı</th><td>${f.steps[3].company_name || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Durum</th><td>${f.steps[3].company_statu || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Adres</th><td>${f.steps[3].company_address || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Telefon</th><td>${f.steps[3].company_phone_number || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Pozisyon</th><td>${f.steps[3].your_title || "-"}</td></tr>
-  </tbody>
-</table>
+    <!-- 1. KİŞİSEL BİLGİLER -->
+    <div class="section">
+      <div class="section-title"><span class="badge">01</span> KİŞİSEL BİLGİLER</div>
+      <table>
+        <tr><th>Adı Soyadı (Pasaport ile aynı)</th><td>${f.steps[1].fullName || "-"}</td></tr>
+        <tr><th>T.C. Kimlik Numarası</th><td>${f.steps[1].tcId || "-"}</td></tr>
+        <tr><th>Cinsiyeti</th><td>${f.steps[1].gender || "-"}</td></tr>
+        <tr><th>Medeni Durumu</th><td>${f.steps[1].maritalStatus || "-"}</td></tr>
+        ${f.steps[1].maritalStatus === "EVLİ" && f.steps[1].maidenName && f.steps[1].gender === "KADIN" ? `
+        <tr><th>Kızlık Soyadı</th><td>${f.steps[1].maidenName || "-"}</td></tr>
+        ` : ""}
+        <tr><th>Doğum Tarihi</th><td>${toTRDate(f.steps[1].birthDate) || "-"}</td></tr>
+        <tr><th>Doğum Yeri</th><td>${f.steps[1].birthPlace || "-"}</td></tr>
+        <tr><th>Telefon Numarası</th><td>${f.steps[1].phone_number || "-"}</td></tr>
+        <tr><th>E-Posta Adresi</th><td>${f.steps[1].email || "-"}</td></tr>
+        <tr><th>Adresi</th><td>${f.steps[1].home_address || "-"}</td></tr>
+        <tr><th>Posta Kodu</th><td>${f.steps[1].post_code || "-"}</td></tr>
+      </table>
+    </div>
 
-<h3>Davetiye Bilgileri</h3>
-<table border="1" cellspacing="0" cellpadding="5" style="border-collapse: collapse; width:100%;">
-  <tbody>
-    <tr><th style="background-color:#e0e0e0;">Davetiye Var mı</th><td>${f.steps[4].boolean_invitation || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Davetiye Türü</th><td>${f.steps[4].invitation_type || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Davet Gönderen</th><td>${f.steps[4].invitation_sender_fullname || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Doğum Tarihi</th><td>${toTRDate(f.steps[4].invitation_sender_birthdate) || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Telefon</th><td>${f.steps[4].invitation_sender_phone_number || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Email</th><td>${f.steps[4].invitation_sender_email || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">TC</th><td>${f.steps[4].invitation_sender_tc_id || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Adres</th><td>${f.steps[4].invitation_sender_home_address || "-"}</td></tr>
-      <tr><th style="background-color:#e0e0e0;">Davet Gönderen Şirket</th><td>${f.steps[4].invitation_company_fullname || "-"}</td></tr>
+    <!-- 2. PASAPORT BİLGİLERİ -->
+    <div class="section">
+      <div class="section-title"><span class="badge">02</span> PASAPORT BİLGİLERİ</div>
+      <table>
+        <tr><th>Pasaport Numarası</th><td>${f.steps[2].passport_number || "-"}</td></tr>
+        <tr><th>Pasaport Veriliş Tarihi</th><td>${toTRDate(f.steps[2].Passport_start_date) || "-"}</td></tr>
+        <tr><th>Pasaport Geçerliliği Bitiş Tarihi</th><td>${toTRDate(f.steps[2].Passport_end_date) || "-"}</td></tr>
+        <tr><th>Pasaportu Veren Makam</th><td>${f.steps[2].passport_issuing_authority || "-"}</td></tr>
+      </table>
+    </div>
 
-    <tr><th style="background-color:#e0e0e0;">Şirket Telefon</th><td>${f.steps[4].invitation_company_phone_number || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Şirket Email</th><td>${f.steps[4].invitation_company_email || "-"}</td></tr>
+    <!-- 3. ÇALIŞMA BİLGİLERİ -->
+    <div class="section">
+      <div class="section-title"><span class="badge">03</span> ÇALIŞMA BİLGİLERİ</div>
+      <table>
+        <tr><th>Çalışma Durumu</th><td>${f.steps[3].boolean_work || "-"}</td></tr>
+        ${f.steps[3].boolean_work === "CALISIYOR" ? `
+        <tr><th>Sektör</th><td>${f.steps[3].sector || "-"}</td></tr>
+        ${f.steps[3].sector === "OZEL" ? `
+        <tr><th>Şirket Türü</th><td>${f.steps[3].company_type || "-"}</td></tr>
+        <tr><th>Şirket Adı</th><td>${f.steps[3].company_name || "-"}</td></tr>
+        <tr><th>Şirketteki Statüsü</th><td>${f.steps[3].company_statu || "-"}</td></tr>
+        <tr><th>İşe Giriş Tarihi</th><td>${toTRDate(f.steps[3].work_start_date) || "-"}</td></tr>
+        <tr><th>Şirket Adresi</th><td>${f.steps[3].company_address || "-"}</td></tr>
+        <tr><th>Şirket Telefon Numarası</th><td>${f.steps[3].company_phone_number || "-"}</td></tr>
+        <tr><th>Şirketteki Unvanınız</th><td>${f.steps[3].your_title || "-"}</td></tr>
+        ` : ""}
+        ${f.steps[3].sector === "KAMU" ? `
+        <tr><th>Kamu Kurumu Adı</th><td>${f.steps[3].company_name || "-"}</td></tr>
+        <tr><th>İşe Giriş Tarihi</th><td>${toTRDate(f.steps[3].work_start_date) || "-"}</td></tr>
+        <tr><th>Kamu Kurumu Adresi</th><td>${f.steps[3].company_address || "-"}</td></tr>
+        <tr><th>Kamu Kurumu Telefon Numarası</th><td>${f.steps[3].company_phone_number || "-"}</td></tr>
+        <tr><th>Kamu Kurumundaki Unvanınız</th><td>${f.steps[3].your_title || "-"}</td></tr>
+        ` : ""}
+        ` : ""}
+        ${f.steps[3].boolean_work === "OGRENCI" ? `
+        <tr><th>Okulunuzun Adı</th><td>${f.steps[3].school_name || "-"}</td></tr>
+        <tr><th>Okulunuzun Adresi</th><td>${f.steps[3].school_address || "-"}</td></tr>
+        <tr><th>Kaçıncı Sınıfa Gidiyorsunuz?</th><td>${f.steps[3].school_class_number || "-"}</td></tr>
+        ` : ""}
+        <tr><th>Seyahat Masraflarını Kim Karşılayacak?</th><td>${f.steps[3].who_pay || "-"}</td></tr>
+        ${f.steps[3].who_pay === "DIGER" ? `
+        <tr><th>Masrafı Karşılayanın Adı Soyadı</th><td>${f.steps[3].pay_fullname || "-"}</td></tr>
+        <tr><th>Masrafı Karşılayacak Kişinin Telefon Numarası</th><td>${f.steps[3].pay_phone_number || "-"}</td></tr>
+        <tr><th>Masrafı Karşılayacak Kişinin E-Posta Adresi</th><td>${f.steps[3].pay_email || "-"}</td></tr>
+        <tr><th>Masrafı Karşılayan Kişinin Çalışma Durumu</th><td>${f.steps[3].pay_boolean_work || "-"}</td></tr>
+        ${f.steps[3].pay_boolean_work === "CALISIYOR" ? `
+        <tr><th>Masrafı Karşılayanın İş Yeri Adı</th><td>${f.steps[3].pay_companyname || "-"}</td></tr>
+        ` : ""}
+        ` : ""}
+      </table>
+    </div>
 
-    <tr><th style="background-color:#e0e0e0;">Şirket Adres</th><td>${f.steps[4].invitation_company_home_address || "-"}</td></tr>
-  </tbody>
-</table>
+    <!-- 4. DAVET BİLGİLERİ -->
+    <div class="section">
+      <div class="section-title"><span class="badge">04</span> DAVET BİLGİLERİ</div>
+      <table>
+        <tr><th>Davetiyeniz Var mı?</th><td>${f.steps[4].boolean_invitation || "-"}</td></tr>
+        ${f.steps[4].boolean_invitation === "EVET" ? `
+        <tr><th>Davetiye Türü</th><td>${f.steps[4].invitation_type || "-"}</td></tr>
+        ${String(f.steps[4].invitation_type).toUpperCase() === "BIREYSEL" ? `
+        <tr><th>Davet Eden Kişinin Adı Soyadı</th><td>${f.steps[4].invitation_sender_fullname || "-"}</td></tr>
+        <tr><th>Davet Eden Kişinin Doğum Tarihi</th><td>${toTRDate(f.steps[4].invitation_sender_birthdate) || "-"}</td></tr>
+        <tr><th>Davet Eden Kişinin Telefon Numarası</th><td>${f.steps[4].invitation_sender_phone_number || "-"}</td></tr>
+        <tr><th>Davet Eden Kişinin E-posta Adresi</th><td>${f.steps[4].invitation_sender_email || "-"}</td></tr>
+        <tr><th>Davet Eden Kişinin Kimlik / Ülke ID Numarası</th><td>${f.steps[4].invitation_sender_tc_id || "-"}</td></tr>
+        <tr><th>Davet Eden Kişinin Adresi</th><td>${f.steps[4].invitation_sender_home_address || "-"}</td></tr>
+        ` : ""}
+        ${String(f.steps[4].invitation_type).toUpperCase() === "SIRKET" ? `
+        <tr><th>Davet Eden Şirket Adı</th><td>${f.steps[4].invitation_company_fullname || "-"}</td></tr>
+        <tr><th>Şirket Adresi</th><td>${f.steps[4].invitation_company_address || "-"}</td></tr>
+        <tr><th>Şirket Telefon</th><td>${f.steps[4].invitation_company_phone_number || "-"}</td></tr>
+        <tr><th>Şirket E-posta</th><td>${f.steps[4].invitation_company_email || "-"}</td></tr>
+        ` : ""}
+        ` : ""}
+      </table>
+    </div>
 
-<h3>Seyahat Bilgileri</h3>
-<table border="1" cellspacing="0" cellpadding="5" style="border-collapse: collapse; width:100%;">
-  <tbody>
-    <tr><th style="background-color:#e0e0e0;">Başlangıç / Bitiş</th><td>${f.steps[5].travel_start_date || "-"} / ${f.steps[5].travel_end_date || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Schengen Vizesi Var mı</th><td>${f.steps[5].boolean_schengen_visa || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Parmak İzi Alındı mı</th><td>${f.steps[5].fingerprint_taken || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Parmak İzi Tarihi</th><td>${toTRDate(f.steps[5].fingerprint_taken_date) || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Vize Etiket No</th><td>${f.steps[5].schengen_visa_label_number || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Daha Önce Yurt Dışına Çıktınız mı?</th><td>${f.steps[5].boolean_abroad_country || "-"}</td></tr>
-     <tr><th style="background-color:#e0e0e0;">Gidilen Ülkeler</th><td>${(f.steps[5].abroad_country || []).join(", ") || "-"}</td></tr>
+    <!-- 5. SCHENGEN & PARMAK İZİ BİLGİLERİ -->
+    <div class="section">
+      <div class="section-title"><span class="badge">05</span> SCHENGEN & PARMAK İZİ BİLGİLERİ</div>
+      <table>
+        <tr><th>Seyahat Başlangıç Tarihi</th><td>${toTRDate(f.steps[5].travel_start_date) || "-"}</td></tr>
+        <tr><th>Seyahat Bitiş Tarihi</th><td>${toTRDate(f.steps[5].travel_end_date) || "-"}</td></tr>
+        <tr><th>Daha Önce Schengen Vizesi Aldınız mı?</th><td>${f.steps[5].boolean_schengen_visa || "-"}</td></tr>
+        ${String(f.steps[5].boolean_schengen_visa).toUpperCase() === "EVET" ? `
+        <tr><th>Son Schengen vizenizin etiket numarası</th><td>${f.steps[5].schengen_visa_label_number || "-"}</td></tr>
+        <tr><th>Parmak İzi Alındı mı?</th><td>${f.steps[5].fingerprint_taken || "-"}</td></tr>
+        ${String(f.steps[5].fingerprint_taken).toUpperCase() === "EVET" ? `
+        <tr><th>Parmak İzi Tarihi</th><td>${toTRDate(f.steps[5].fingerprint_taken_date) || "-"}</td></tr>
+        ` : ""}
+        <tr><th>Daha önce yurtdışına çıktınız mı?</th><td>${f.steps[5].boolean_abroad_country || "-"}</td></tr>
+        ${Array.isArray(f.steps[5].abroad_country) && f.steps[5].abroad_country.length > 0 ? `
+        <tr><th>Gidilen Ülke — Gidiş / Dönüş Tarihleri</th><td>
+          ${f.steps[5].abroad_country.map((item, i) => `
+            <div class="sub-entry">
+              <strong>${i + 1}. Ülke</strong>
+              Ülke: ${item.country || "-"}<br/>
+              Gidiş Tarihi: ${toTRDate(item.start) || "-"}<br/>
+              Dönüş Tarihi: ${toTRDate(item.end) || "-"}
+            </div>`).join("")}
+        </td></tr>
+        ` : ""}
+        ` : ""}
+      </table>
+    </div>
 
-  </tbody>
-</table>
+    ${f.steps[6].passportFile || f.steps[6].photoFile ? `
+    <div class="photo-row">
+      ${f.steps[6].passportFile ? `
+      <div class="photo-box">
+        <p>Pasaport Fotoğrafı</p>
+        <img src="cid:passportPhoto" alt="Pasaport"/>
+      </div>` : ""}
+      ${f.steps[6].photoFile ? `
+      <div class="photo-box">
+        <p>Vesikalık</p>
+        <img src="cid:profilePhoto" alt="Vesikalık"/>
+      </div>` : ""}
+    </div>
+    ` : ""}
 
-${f.steps[6].passportFile ? `<h4>Pasaport Fotoğrafı</h4><img src="cid:passportPhoto" style="max-width:220px;border-radius:6px;"/>` : ""}
-${f.steps[6].photoFile ? `<h4>Vesikalık</h4><img src="cid:profilePhoto" style="max-width:220px;border-radius:6px;"/>` : ""}
+  </div>
 
-<p><small>Başvuru Tarihi: ${new Date().toLocaleString("tr-TR")}</small></p>
+  <div class="doc-footer">
+    Başvuru Tarihi: ${new Date().toLocaleString("tr-TR")}
+  </div>
+
+</div>
+</body>
+</html>
 `.trim();
 
 
@@ -833,8 +1130,8 @@ ${f.steps[6].photoFile ? `<h4>Vesikalık</h4><img src="cid:profilePhoto" style="
     const mailOptions = {
       from: `Aya Journey <${process.env.GOOGLE_MAIL_ADDRESS}>`,
       to: `${process.env.FORM_MAIL_ADRESS}`,
-      subject: `DENEME Schengen Vize Başvurusu - ${s(1).fullName || "İsimsiz"}`,
-      text: textBody,
+      subject: `Schengen Vize Başvurusu - ${s(1).fullName || "İsimsiz"}`,
+      // text: textBody,
       html: htmlBody,
       attachments,
     };
