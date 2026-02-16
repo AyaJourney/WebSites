@@ -2215,7 +2215,7 @@ useEffect(() => {
   fillOrganizationFallback();
 }, [form.steps[6].usaRelative, form.steps[6].organizationBoolean]);
 
-console.log(form,"form")
+
   return (
     <div className="min-h-screen bg-gray-100 p-6 flex items-start justify-center">
       {/* A4-like container */}

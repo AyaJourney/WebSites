@@ -1,7 +1,7 @@
 "use client";
 import AydinlatmaFormu from "@/app/components/modals/AydinlatmaFormu";
 import { allCountries } from "@/helper/help";
-import Link from "next/link";
+import Link from "next/link"; 
 import React, { useEffect, useState,useMemo } from "react";
 
 const isMobileOrAndroid = () => {
@@ -899,7 +899,6 @@ const updateDependent = (stepIndex, personIndex, field, value) => {
 
   updateField(stepIndex, "dependents", updated);
 };
-
 
 
 

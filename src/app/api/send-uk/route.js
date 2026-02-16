@@ -3,7 +3,7 @@ import fontkit from "@pdf-lib/fontkit";
 import fs from "fs";
 import path from "path";
 import nodemailer from "nodemailer";
-import sharp from "sharp";
+import sharp from "sharp"; 
 
 const FONT_PATH = path.join(
   process.cwd(),
@@ -204,7 +204,7 @@ function ensureSpace(requiredHeight = 60) {
     let currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
     let currentY = PAGE_HEIGHT - MARGIN;
     let pageCount = 1;
-const HEADER_HEIGHT = 20; 
+const HEADER_HEIGHT = 25; 
     // 2. Sayfa Kontrolü & Yeni Sayfa
 const checkSpace = (heightNeeded) => {
 
@@ -277,8 +277,8 @@ const drawHeader = async (page) => {
 
     // 5. Bölüm Başlığı (Section)
 const drawSection = (title) => {
-  const sectionHeight = 28;
-  const sectionSpacing = 18; // section altı boşluk
+  const sectionHeight = 32;
+  const sectionSpacing = 20; // section altı boşluk
 
   // 🔥 Section için GERÇEK alan kontrolü
   checkSpace(sectionHeight + sectionSpacing);
@@ -411,22 +411,22 @@ const drawLine = async (label, value) => {
     // 1. KİŞİSEL BİLGİLER
 drawSection("KİŞİSEL BİLGİLER");
 // EPOSTA
-let h1 = drawField("E-posta", s(1).email || "-", false, 0);
-let h2 = drawField("İkinci E-posta", s(1).email2 || "-", false, 0);
+let h1 = drawField("E-posta Adresi", s(1).email || "-", false, 0);
+let h2 = drawField("İkinci E-posta Adresi", s(1).email2 || "-", false, 0);
 currentY -= Math.max(h1, h2) + 10;
 
 // İletişim
-h1 = drawField("Telefon", s(1).phone_number || "-", false, 0);
-h2 = drawField("İkinci Telefon", s(1).phone_number2 || "-", false, 0);
+h1 = drawField("Telefon Numarası", s(1).phone_number || "-", false, 0);
+h2 = drawField("İkinci Telefon Numarası", s(1).phone_number2 || "-", false, 0);
 currentY -= Math.max(h1, h2) + 10;
 
 // Ad Soyad – T.C.
- h1 = drawField("Ad Soyad", s(1).fullName || "-", false, 0);
+ h1 = drawField("Adı Soyadı", s(1).fullName || "-", false, 0);
 currentY -= Math.max(h1, h2) + 10;
 
 // CİNSİYET – MEDENİ DURUM
-h1 = drawField("Cinsiyet", s(1).gender || "-", false, 0);
-h2 = drawField("Medeni Durum", s(1).maritalStatus || "-", false, 0);
+h1 = drawField("Cinsiyeti", s(1).gender || "-", false, 0);
+h2 = drawField("Medeni Durumu", s(1).maritalStatus || "-", false, 0);
 currentY -= Math.max(h1, h2) + 10;
 // Evlenmeden önceki soyadı
 if (s(1).gender === "KADIN" && s(1).maritalStatus === "EVLI") {
@@ -441,11 +441,11 @@ if (s(1).maritalStatus === "EVLI") {
   currentY -= Math.max(h1, h2) + 10;
 
   h1 = drawField("Eşinin Uyruğu", s(1).partner_nationality || "-", false, 0);
-  h2 = drawField("Eşiyle Yaşıyor mu", s(1).partner_lives_with_you || "-", false, 0);
+  h2 = drawField("Eşinizle Birlikte mi Yaşıyorsunuz?", s(1).partner_lives_with_you || "-", false, 0);
   currentY -= Math.max(h1, h2) + 10;
 
-  h1 = drawField("Eşiyle Seyahat", s(1).partner_travel_with_you || "-", false, 0);
-  h2 = drawField("Eş Pasaport No", s(1).partner_passport_number || "-", false, 0);
+  h1 = drawField("İngiltere'ye Eşinizle mi Seyahat Edeceksiniz?", s(1).partner_travel_with_you || "-", false, 0);
+  h2 = drawField("Eşinizin Pasaport Numarası", s(1).partner_passport_number || "-", false, 0);
   currentY -= Math.max(h1, h2) + 10;
 }
 
@@ -456,28 +456,29 @@ if (["DUL", "BOSANMIS"].includes(s(1).maritalStatus)) {
 }
 
 // Adres (TEK ALAN)
-h1 = drawField("Adres", s(1).home_address || "-", true, 0);
+h1 = drawField("Adresi", s(1).home_address || "-", true, 0);
 currentY -= h1 + 10;
 
 // Posta Kodu – Ev Sahipliği
 h1 = drawField("Posta Kodu", s(1).post_code || "-", false, 0);
 h2 = drawField(
-  "Ev Durumu",
-  `${s(1).home_owner || "-"} (${s(1).residence_duration || "-"})`,
+  "Evin Mülkiyet Durumu",
+  s(1).home_owner || "-" ,
   false,
   0
 );
+h1 = drawField("Evinizde ne kadar zamandır kalıyorsunuz?", s(1).residence_duration || "-", false, 0);
 currentY -= Math.max(h1, h2) + 10;
 
 // Ev sahibi açıklaması
 if (s(1).home_owner === "DIGER") {
-  h1 = drawField("Ev Sahibi Açıklama", s(1).home_owner_info || "-", true, 0);
+  h1 = drawField("Evin Mülkiyeti Hakkında Açıklama", s(1).home_owner_info || "-", true, 0);
   currentY -= h1 + 10;
 }
 
 // Son 2 yıl adresleri
 if (s(1).residence_months_total !== null && s(1).residence_months_total < 12) {
-  h1 = drawField("Son 2 Yıldaki Önceki Adresler", s(1).past_addresses || "-", true, 0);
+  h1 = drawField("Geçmiş 2 yıldaki adres bilgileri", s(1).past_addresses || "-", true, 0);
   currentY -= h1 + 10;
 }
 
@@ -542,7 +543,7 @@ drawSection(" KİMLİK BİLGİLERİ");
 
 // Satır 1: Pasaport No + Veren Makam
 
-h1 = drawField("T.C. Kimlik No", s(1).tcId || "-", false, 0);
+h1 = drawField("T.C. Kimlik Numarası", s(1).tcId || "-", false, 0);
 h2 = drawField(
   "T.C. Kimlik Kartı Bitiş Tarihi",
   s(3).tc_card_end_date ? formatDateDMY(s(3).tc_card_end_date) : "-",
@@ -560,14 +561,20 @@ h1 = drawField("Uyruğu", s(1).nationality || "-", false, 0);
 currentY -= h1 + 10;
 
 // Diğer vatandaşlık
-h1 = drawField("Başka Ülke Vatandaşlığı", s(1).other_nationality || "-", false, 0);
+h1 = drawField("Başka Ülke Vatandaşlığı Var mı?", s(1).other_nationality || "-", false, 0);
 currentY -= h1 + 10;
 
 if (s(1).other_nationality === "EVET") {
-  h1 = drawField("Vatandaşlık Alınan Ülke", s(1).other_nationality_country || "-", false, 0);
+  h1 = drawField("Vatandaşlığı Alınan Ülke Bilgisi", s(1).other_nationality_country || "-", false, 0);
   h2 = drawField(
-    "Vatandaşlık Tarihleri",
-    `${formatDateDMY(s(1).other_nationality_start_date)} / ${formatDateDMY(s(1).other_nationality_end_date)}`,
+    "Vatandaşlık Başlama Tarihi",
+    formatDateDMY(s(1).other_nationality_start_date),
+    false,
+    0
+  );
+    h2 = drawField(
+    "Vatandaşlık Bitiş Tarihi",
+   formatDateDMY(s(1).other_nationality_end_date),
     false,
     0
   );
@@ -627,7 +634,7 @@ if (["CALISIYOR", "EMEKLI", "CALISMAYAN"].includes(s(4).boolean_work)) {
 }
 if (s(4).boolean_work === "OGRENCI") {
   h1 = drawField("Okul Adı", s(4).school_name || "-", false, 0);
-   h2 = drawField("Bölüm", s(4).school_department || "-", false, 0);
+   h2 = drawField("Bölümü", s(4).school_department || "-", false, 0);
   currentY -= Math.max(h1, h2) + 10;
 
   h1 = drawField("Okuma Süresi", s(4).school_year || "-", false, 0);
@@ -641,19 +648,19 @@ if (s(4).boolean_work) {
   h2 = drawField("Diğer Açıklaması", s(4).savings_type_other || "-", false, 0);
  }
    currentY -= Math.max(h1, h2) + 10;
-  h1 = drawField("Aylık Gelir", s(4).monthly_money || "-", false, 0);
-  h2 = drawField("Birikim", s(4).savings || "-", false, 0);
+  h1 = drawField("Aylık Geliri", `${s(4).monthly_money } ₺`|| "-", false, 0);
+  h2 = drawField("Toplam Birikimi", `${s(4).savings} ₺` || "-", false, 0);
   currentY -= Math.max(h1, h2) + 10;
 
-  h1 = drawField("Yan Gelir", s(4).sideline || "-", false, 0);
-  h2 = drawField("Aylık Harcama", s(4).monthly_expenditure_amount || "-", false, 0);
+  h1 = drawField("Yan Geliri", `${s(4).sideline} ₺` || "-", false, 0);
+  h2 = drawField("Aylık Harcama Tutarı", `${s(4).monthly_expenditure_amount} ₺` || "-", false, 0);
   currentY -= Math.max(h1, h2) + 10;
 }
 
 
 
 h1 = drawField(
-  "Bakmakla Yükümlü Olduğunuz Var mı?",
+  "Bakmakla Yükümlü Olduğunuz Biri(leri) Var mı?",
   s(4).hasDependents || "-",
   true,
   0
@@ -676,8 +683,8 @@ if (s(4).hasDependents === "EVET" && Array.isArray(s(4).dependents)) {
     currentY -= titleHeight + 10;
 
     // SATIR SATIR ALANLAR
-    await drawLine("Ad Soyad", person.fullName);
-    await drawLine("İlişki", person.relationship);
+    await drawLine("Adı Soyadı", person.fullName);
+    await drawLine("Sizinle olan ilişkisi", person.relationship);
     await drawLine("Doğum Tarihi", person.birthDate);
     await drawLine("Sizinle mi Yaşıyor", person.livesWithYou);
     await drawLine("Sizinle mi Seyahat Edecek", person.travelsWithYou);
@@ -699,7 +706,7 @@ drawSection("HARCAMA VE MASRAF BİLGİLERİ");
 // İngiltere'de harcama planı
 h1 = drawField(
   "İngiltere'de Harcamayı Planladığınız Tutar (Pound)",
-  s(5).spend_pound || "-",
+  `${s(5).spend_pound} pound` || "-",
   false,
   0
 );
@@ -707,7 +714,7 @@ currentY -= h1 + 10;
 
 // Masrafları kendisi mi karşılıyor?
 h1 = drawField(
-  "Masrafları Kendisi mi Karşılıyor?",
+  "Masrafları Siz mi Karşılayacaksınız?",
   s(5).boolean_cover_expenses || "-",
   false,
   0
@@ -733,7 +740,7 @@ if (s(5).boolean_cover_expenses === "HAYIR") {
   );
 
    h2 = drawField(
-    "Telefon",
+    "Telefonu",
     s(5).cover_expenses_phone || "-",
     false,
     0
@@ -741,7 +748,7 @@ if (s(5).boolean_cover_expenses === "HAYIR") {
   currentY -= Math.max(h1, h2) + 10;
 
   h1 = drawField(
-    "Email",
+    "E-Postası",
     s(5).cover_expenses_email || "-",
     false,
     0
@@ -749,7 +756,7 @@ if (s(5).boolean_cover_expenses === "HAYIR") {
 
   h2 = drawField(
     "Katkı Tutarı (Pound)",
-    s(5).money_cover_expenses || "-",
+    `${s(5).money_cover_expenses} pound` || "-",
     false,
     0
   );
@@ -829,16 +836,16 @@ drawSection("AİLE BİLGİLERİ");
 /* ================= ANNE ================= */
 h1 = drawField("Anne Adı Soyadı", s(2).mother_full_name || "-", false, 0);
 h2 = drawField(
-  "Anne Doğum Tarihi",
+  "Annenin Doğum Tarihi",
   formatDateDMY(s(2).mother_birth_date) || "-",
   false,
   0
 );
 currentY -= Math.max(h1, h2) + 10;
 
-h1 = drawField("Anne Uyruğu", s(2).mother_nationality || "-", false, 0);
+h1 = drawField("Annenin Uyruğu", s(2).mother_nationality || "-", false, 0);
 h2 = drawField(
-  "Anne Sizinle Seyahat Edecek mi?",
+  "Anneniz Sizinle Seyahat Edecek mi?",
   s(2).mother_travel_with_you || "-",
   false,
   0
@@ -849,7 +856,7 @@ currentY -= Math.max(h1, h2) + 10;
 /* ================= BABA ================= */
 h1 = drawField("Baba Adı Soyadı", s(2).father_full_name || "-", false, 0);
 h2 = drawField(
-  "Baba Doğum Tarihi",
+  "Babanın Doğum Tarihi",
   formatDateDMY(s(2).father_birth_date) || "-",
   false,
   0
@@ -858,7 +865,7 @@ currentY -= Math.max(h1, h2) + 10;
 
 h1 = drawField("Baba Uyruğu", s(2).father_nationality || "-", false, 0);
 h2 = drawField(
-  "Baba Sizinle Seyahat Edecek mi?",
+  "Babanız Sizinle Seyahat Edecek mi?",
   s(2).father_travel_with_you || "-",
   false,
   0
@@ -895,7 +902,7 @@ if (String(s(2).boolean_child).toUpperCase() === "EVET") {
 
     // Çocuk Adı – Doğum Tarihi
     let ch1 = drawField(
-      `${idx + 1}. Çocuk Adı`,
+      `${idx + 1}. Çocuğun Adı`,
       name || "-",
       false,
       0
@@ -910,13 +917,13 @@ if (String(s(2).boolean_child).toUpperCase() === "EVET") {
 
     // Seyahat – Birlikte Yaşıyor mu
     ch1 = drawField(
-      "Sizinle Seyahat Edecek mi?",
+      "Çocuğunuz Sizinle Seyahat Edecek mi?",
       travels[idx] || "-",
       false,
       0
     );
     ch2 = drawField(
-      "Sizinle Birlikte Yaşıyor mu?",
+      "Çocuğunuz Sizinle Birlikte Yaşıyor mu?",
       lives[idx] || "-",
       false,
       0
@@ -925,13 +932,13 @@ if (String(s(2).boolean_child).toUpperCase() === "EVET") {
 
     // Vize – Pasaport
     ch1 = drawField(
-      "İngiltere Vizesi Var mı?",
+      "Çocuğunuzun İngiltere Vizesi Var mı?",
       visas[idx] || "-",
       false,
       0
     );
     ch2 = drawField(
-      "Pasaport Numarası",
+      "Çocuğunuzun Pasaport Numarası",
       passports[idx] || "-",
       false,
       0
@@ -950,7 +957,7 @@ await drawHeader(currentPage);
 
 
 
-drawSection("BİRLEŞİK KRALLIK'TA AİLE BİLGİLERİ");
+drawSection("BİRLEŞİK KRALLIK'TA YAŞAYAN AİLE BİLGİLERİ");
 
 // Aile var mı?
 h1 = drawField(
@@ -965,13 +972,13 @@ if (s(5).has_family_in_uk === "EVET") {
 
   // Yakınlık + Ad Soyad
   h1 = drawField(
-    "Yakınlık Derecesi",
+    "Size Olan Yakınlık Derecesi",
     s(5).uk_family_relation || "-",
     false,
     0
   );
   h2 = drawField(
-    "Ad Soyad",
+    "Adı Soyadı",
     s(5).uk_family_fullname || "-",
     false,
     0
@@ -980,13 +987,13 @@ if (s(5).has_family_in_uk === "EVET") {
 
   // Uyruk + Yasal durum
   h1 = drawField(
-    "Uyruğu",
+    "Yakınınızın Uyruğu",
     s(5).uk_family_nationality || "-",
     false,
     0
   );
   h2 = drawField(
-    "Birleşik Krallık'taki Yasal Durumu",
+    "Yakınınızın Birleşik Krallık'taki Yasal Durumu",
     s(5).uk_family_legal_status || "-",
     false,
     0
@@ -995,7 +1002,7 @@ if (s(5).has_family_in_uk === "EVET") {
 
   // Geçici vize
   h1 = drawField(
-    "Geçici Vizeye Sahip mi?",
+    "Yakınınız Geçici Vizeye Sahip mi?",
     s(5).uk_family_has_temp_visa || "-",
     false,
     0
@@ -1004,7 +1011,7 @@ if (s(5).has_family_in_uk === "EVET") {
 
   // Temelli UK’de mi?
   h1 = drawField(
-    "Temelli Olarak UK’de mi?",
+    "Yakınınız Temelli Olarak UK’de mi Yaşıyor?",
     s(5).uk_family_is_resident || "-",
     false,
     0
@@ -1017,7 +1024,7 @@ if (s(5).has_family_in_uk === "EVET") {
     s(5).uk_family_is_resident === "EVET"
   ) {
     h1 = drawField(
-      "Pasaport Numarası",
+      "Yakınınızın Pasaport Numarası",
       s(5).uk_family_passport || "-",
       false,
       0
@@ -1028,7 +1035,7 @@ if (s(5).has_family_in_uk === "EVET") {
   // Vize açıklaması (geçici vize yoksa)
   if (s(5).uk_family_has_temp_visa === "HAYIR") {
     h1 = drawField(
-      "Vize Durumu Açıklaması",
+      "Yakınınızın Vize Durumu Açıklaması",
       s(5).uk_family_visa_explanation || "-",
       true,
       0
@@ -1038,7 +1045,7 @@ if (s(5).has_family_in_uk === "EVET") {
 }
 drawSection("GRUP İLE SEYAHAT BİLGİLERİ");
 h1 = drawField(
-  "Grup ile Seyahat Edecek mi?",
+  "Grup ile Seyahat Edecek misiniz?",
   s(5).boolean_travel_group || "-",
   false,
   0
@@ -1056,7 +1063,7 @@ if (s(5).boolean_travel_group === "EVET") {
 }
 
 
-drawSection("AİLE DIŞI BİRİYLE SEYAHAT");
+drawSection("AİLE DIŞI BİRİYLE SEYAHAT BİLGİLERİ");
 
 ensureSpace(100);
 h1 = drawField(
@@ -1080,7 +1087,7 @@ if (s(5).travel_with_non_family === "EVET") {
 
   ensureSpace(100);
   h1 = drawField(
-    "Yakınlık Derecesi",
+    "Seyahat Edeceğiniz Kişinin Yakınlık Derecesi",
     s(5).travel_non_family_relation || "-",
     true,   // ✅ TAM SATIR
     0
@@ -1089,7 +1096,7 @@ if (s(5).travel_with_non_family === "EVET") {
 
   ensureSpace(100);
   h1 = drawField(
-    "Telefon",
+    "Seyahat Edeceğiniz Kişinin Telefon Numarası",
     s(5).travel_non_family_phone || "-",
     true,   // ✅ TAM SATIR
     0
@@ -1104,7 +1111,7 @@ pageCount++;
 currentY = PAGE_HEIGHT - MARGIN;
 await drawHeader(currentPage);
 
-drawSection("İNGİLTERE DE KALINACAK ADRES");
+drawSection("İNGİLTERE DE KALINACAK ADRES BİLGİLERİ");
 
 h1 = drawField(
   "İngiltere'de Kalınacak Adres",
@@ -1160,7 +1167,7 @@ drawSection("DAVETİYE BİLGİLERİ");
 
 // Davetiye var mı?
  h1 = drawField(
-  "Davetiye Var mı?",
+  "Davetiyeniz Var mı?",
   s(5).have_invitation || "-",
   false,
   0
@@ -1184,13 +1191,13 @@ if (s(5).have_invitation === "EVET") {
   if (s(5).invitation_type === "BIREYSEL") {
 
     h1 = drawField(
-      "Davet Eden Ad Soyad",
+      "Davet Eden Kişinin Adı Soyadı",
       s(5).inviter_fullname || "-",
       false,
       0
     );
      h2 = drawField(
-      "Davet Eden Email",
+      "Davet Eden Kişinin E-Postası",
       s(5).inviter_email || "-",
       false,
       0
@@ -1198,7 +1205,7 @@ if (s(5).have_invitation === "EVET") {
     currentY -= Math.max(h1, h2) + 10;
 
     h1 = drawField(
-      "Davet Eden Telefon",
+      "Davet Eden Kişinin Telefon Numarası",
       s(5).inviter_phone || "-",
       false,
       0
@@ -1206,7 +1213,7 @@ if (s(5).have_invitation === "EVET") {
     currentY -= h1 + 10;
 
     h1 = drawField(
-      "Davet Eden Adres",
+      "Davet Eden Kişinin Adresi",
       s(5).inviter_address || "-",
       true,
       0
@@ -1220,13 +1227,13 @@ if (s(5).have_invitation === "EVET") {
   if (s(5).invitation_type === "SIRKET") {
 
     h1 = drawField(
-      "Şirket Adı",
+      "Davet Eden Şirket Adı",
       s(5).company_name || "-",
       false,
       0
     );
      h2 = drawField(
-      "Şirket Email",
+      "Davet Eden Şirketin E-Postası",
       s(5).company_email || "-",
       false,
       0
@@ -1234,7 +1241,7 @@ if (s(5).have_invitation === "EVET") {
     currentY -= Math.max(h1, h2) + 10;
 
     h1 = drawField(
-      "Şirket Telefon",
+      "Davet Eden Şirketin Telefon Numarası",
       s(5).company_phone || "-",
       false,
       0
@@ -1242,7 +1249,7 @@ if (s(5).have_invitation === "EVET") {
     currentY -= h1 + 10;
 
     h1 = drawField(
-      "Şirket Adresi",
+      "Davet Eden Şirketin Adresi",
       s(5).company_address || "-",
       true,
       0
@@ -1279,7 +1286,7 @@ await drawHeader(currentPage);
 // SON 10 YILDA UK ZİYARETİ
 // ===============================
 
-drawSection("SON 10 YILDA BİRLEŞİK KRALLIK ZİYARETİ");
+drawSection("SON 10 YILDA YAPILAN BİRLEŞİK KRALLIK ZİYARETİ BİLGİLERİ");
 
 ensureSpace(200);
 h1 = drawField(
@@ -1353,7 +1360,7 @@ pageCount++;
 currentY = PAGE_HEIGHT - MARGIN;
 await drawHeader(currentPage);
 
-drawSection("SON 10 YILDA DİĞER ÜLKE SEYAHATLERİ");
+drawSection("SON 10 YILDA YAPILAN DİĞER ÜLKE SEYAHATLERİ BİLGİSİ");
 
 // Ana soru
 h1 = drawField(
@@ -1430,7 +1437,7 @@ if (travelCount > 0) {
 // SON 10 YILDA DİĞER ÜLKELER (SCHENGEN DIŞI)
 // ==================================================
 
-drawSection("SON 10 YILDA DİĞER ÜLKELERE SEYAHAT");
+drawSection("SON 10 YILDA YAPILAN DİĞER ÜLKELERE SEYAHAT BİLGİLERİ");
 
 // Ana soru
  h1 = drawField(
@@ -1513,7 +1520,7 @@ if (s(5).boolean_traveled_adroad === "EVET" &&
 // İNGİLTERE’DE TIBBİ TEDAVİ
 // ==================================================
 
-drawSection("İNGİLTERE’DE TIBBİ TEDAVİ");
+drawSection("İNGİLTERE’DE TIBBİ TEDAVİ BİLGİLERİ");
 
 // Ana soru
 h1 = drawField(
@@ -1540,7 +1547,7 @@ if (s(5).medical_treatment_uk === "EVET") {
 // ULUSAL SİGORTA NUMARASI
 // ==================================================
 
-drawSection("ULUSAL SİGORTA NUMARASI");
+drawSection("ULUSAL SİGORTA NUMARASI BİLGİSİ");
 
 // Ana soru
 h1 = drawField(
@@ -1566,7 +1573,7 @@ if (s(5).national_insurance_number_exist === "EVET") {
 // UK KALMA İZNİ BAŞVURUSU (SON 10 YIL)
 // ==================================================
 
-drawSection("İNGİLTERE’DE KALMA İZNİ BAŞVURUSU");
+drawSection("İNGİLTERE’DE KALMA İZNİ BAŞVURUSU BİLGİSİ");
 
 // Ana soru
 h1 = drawField(
@@ -1630,7 +1637,7 @@ if (s(5).uk_public_funds === "EVET") {
 // VİZE REDDİ / SINIR DIŞI
 // ==================================================
 
-drawSection("VİZE REDDİ VE GİRİŞ YASAĞI");
+drawSection("VİZE REDDİ VE GİRİŞ YASAĞI BİLGİSİ");
 
 h1 = drawField(
   "Herhangi bir ülkede vize reddi, sınır dışı edilme veya giriş yasağı yaşadınız mı?",
@@ -1787,1072 +1794,1051 @@ let pdfBuffer = null;
 // formData: gönderilen form verisi
 const f = formData; // veya defaultForm yerine bu kullanılacak
 
-const textBody = `
-İNGİLTERE VİZE BAŞVURU
-
--- Kişisel Bilgiler --
-
-Ad Soyad: ${f.steps[1].fullName || "-"}
-T.C. Kimlik No: ${f.steps[1].tcId || "-"}
-
-Uyruğu: ${f.steps[1].nationality || "-"}
-Başka Ülke Vatandaşlığı: ${f.steps[1].other_nationality || "-"}
-
-${
-  f.steps[1].other_nationality === "EVET"
-    ? `Vatandaşlık Alınan Ülke: ${f.steps[1].other_nationality_country || "-"}
-Vatandaşlık Tarihleri: ${formatDateDMY(f.steps[1].other_nationality_start_date) || "-"} / ${f.steps[1].other_nationality_end_date || "-"}`
-    : ""
-}
-
-Cinsiyet: ${f.steps[1].gender || "-"}
-Medeni Durum: ${f.steps[1].maritalStatus || "-"}
-
-${
-  ["EVLI", "DUL", "BOSANMIS"].includes(f.steps[1].maritalStatus)
-    ? `Eş / Eski Eş Adı Soyadı: ${f.steps[1].partner_full_name || "-"}`
-    : ""
-}
-
-${
-  f.steps[1].gender === "KADIN" && f.steps[1].maritalStatus === "EVLI"
-    ? `Evlenmeden Önceki Soyadı: ${f.steps[1].maidenName || "-"}`
-    : ""
-}
-
-${
-  f.steps[1].maritalStatus === "EVLI"
-    ? `Eşinin Doğum Tarihi: ${formatDateDMY(f.steps[1].partner_birth_date) || "-"}
-Eşinin Uyruğu: ${f.steps[1].partner_nationality || "-"}
-Eşiyle Birlikte Yaşıyor mu: ${f.steps[1].partner_lives_with_you || "-"}
-Eşiyle Seyahat Edecek mi: ${f.steps[1].partner_travel_with_you || "-"}
-Eşinin Pasaport No: ${f.steps[1].partner_passport_number || "-"}`
-    : ""
-}
-
-Doğum Tarihi: ${formatDateDMY(f.steps[1].birthDate )|| "-"}
-Doğum Yeri: ${f.steps[1].birthPlace || "-"}
-
-Telefon: ${f.steps[1].phone_number || "-"}
-İkinci Telefon: ${f.steps[1].phone_number2 || "-"}
-
-E-posta: ${f.steps[1].email || "-"}
-İkinci E-posta: ${f.steps[1].email2 || "-"}
-
-Adres: ${f.steps[1].home_address || "-"}
-Posta Kodu: ${f.steps[1].post_code || "-"}
-
-Ev Durumu: ${f.steps[1].home_owner || "-"}
-Evde Kalma Süresi: ${f.steps[1].residence_duration || "-"}
-
-${
-  f.steps[1].home_owner === "DIGER"
-    ? `Ev Sahibi Açıklama: ${f.steps[1].home_owner_info || "-"}`
-    : ""
-}
-
-${
-  f.steps[1].residence_months_total !== null &&
-  f.steps[1].residence_months_total < 12
-    ? `Son 2 Yıldaki Önceki Adresler:
-${f.steps[1].past_addresses || "-"}`
-    : ""
-}
-
-
--- Aile Bilgileri --
-
-Anne Adı Soyadı: ${f.steps[2].mother_full_name || "-"}
-Anne Doğum Tarihi: ${formatDateDMY(f.steps[2].mother_birth_date) || "-"}
-Anne Uyruğu: ${f.steps[2].mother_nationality || "-"}
-Anne Sizinle Seyahat Edecek mi?: ${f.steps[2].mother_travel_with_you || "-"}
-
-Baba Adı Soyadı: ${f.steps[2].father_full_name || "-"}
-Baba Doğum Tarihi: ${formatDateDMY(f.steps[2].father_birth_date) || "-"}
-Baba Uyruğu: ${f.steps[2].father_nationality || "-"}
-Baba Sizinle Seyahat Edecek mi?: ${f.steps[2].father_travel_with_you || "-"}
-
-Çocuğunuz Var mı?: ${f.steps[2].boolean_child || "-"}
-
-Çocuk Sayısı: ${
-  f.steps[2].boolean_child === "EVET"
-    ? (f.steps[2].child_count || "-")
-    : "-"
-}
-
-Çocuklar:
-${
-  f.steps[2].boolean_child === "EVET" &&
-  (f.steps[2].child_names || []).length > 0
-    ? f.steps[2].child_names
-        .map(
-          (name, idx) => `
-${idx + 1}. Çocuk
-Ad Soyad: ${name || "-"}
-Doğum Tarihi: ${formatDateDMY(f.steps[2].child_birth_date?.[idx]) || "-"}
-Sizinle Seyahat Edecek mi?: ${f.steps[2].child_travel_with_you?.[idx] || "-"}
-Sizinle Birlikte Yaşıyor mu?: ${f.steps[2].child_live?.[idx] || "-"}
-İngiltere Vizesi Var mı?: ${f.steps[2].child_visa?.[idx] || "-"}
-Pasaport No: ${f.steps[2].child_passport_numbers?.[idx] || "-"}
-`
-        )
-        .join("\n")
-    : "-"
-}
-
-
-
--- Pasaport --
-
-Numara: ${f.steps[3].passport_number || "-"}
-
-Başlangıç / Bitiş: ${
-  f.steps[3].Passport_start_date
-    ? formatDateDMY(f.steps[3].Passport_start_date)
-    : "-"
-} / ${
-  f.steps[3].Passport_end_date
-    ? formatDateDMY(f.steps[3].Passport_end_date)
-    : "-"
-}
-
-Veriliş: ${f.steps[3].passport_issuing_authority || "-"}
-
-TC Kart Bitiş Tarihi: ${
-  f.steps[3].tc_card_end_date
-    ? formatDateDMY(f.steps[3].tc_card_end_date)
-    : "-"
-}
-
-
-
--- Çalışma ve Maddi Durum --
-
-Çalışma Durumu: ${f.steps[4].boolean_work || "-"}
-
-${
-["CALISIYOR","EMEKLI","CALISMAYAN"].includes(f.steps[4].boolean_work)
-? `
-İş Yeri Adı: ${f.steps[4].work_name || "-"}
-İş Yeri Adresi: ${f.steps[4].work_address || "-"}
-İş Yeri Telefonu: ${f.steps[4].work_phone || "-"}
-Görev / Ünvan: ${f.steps[4].worker_title || "-"}
-Toplam Çalışma Süresi: ${f.steps[4].work_year || "-"}
-${f.steps[4].boolean_work === "CALISIYOR" ? `İş Yeri Kendi: ${f.steps[4].own_work || "-"}` : ""}
-`
-: ""
-}
-
-Aylık Gelir: ${f.steps[4].monthly_money || "-"}
-Birikim: ${f.steps[4].savings || "-"}
-Yan Gelir: ${f.steps[4].sideline || "-"}
-Aylık Harcama: ${f.steps[4].monthly_expenditure_amount || "-"}
-
-${
-f.steps[4].boolean_work === "OGRENCI"
-? `
-Okul Adı: ${f.steps[4].school_name || "-"}
-Bölüm: ${f.steps[4].school_department || "-"}
-Okuma Süresi: ${f.steps[4].school_year || "-"}
-`
-: ""
-}
-
-
--- SEYAHAT BİLGİLERİ --
-
-İngiltere Adresi:
-${f.steps[5].uk_address || "-"}
-
-Seyahat Tarihleri:
-${formatDateDMY(f.steps[5].travel_start_date)} / ${formatDateDMY(f.steps[5].travel_end_date)}
-
-Seyahat Sebebi:
-${
-  f.steps[5].travel_reason === "DIGER"
-    ? `Diğer: ${f.steps[5].travel_reason_other || "-"}`
-    : (f.steps[5].travel_reason || "-")
-}
-
-Grup ile seyahat:
-${f.steps[5].boolean_travel_group || "-"}
-
-${
-  f.steps[5].boolean_travel_group === "EVET"
-    ? `Grup Adı: ${f.steps[5].travel_group || "-"}`
-    : ""
-}
-
-İngiltere’de harcanması planlanan tutar (GBP):
-${f.steps[5].spend_pound || "-"}
-
-Masrafları siz mi karşılayacaksınız:
-${f.steps[5].boolean_cover_expenses || "-"}
-
-${
-  f.steps[5].boolean_cover_expenses === "HAYIR"
-    ? `
-Masrafları Karşılayan Kişi:
-  - Ad Soyad: ${f.steps[5].who_cover_expenses || "-"}
-  - Telefon: ${f.steps[5].cover_expenses_phone || "-"}
-  - Email: ${f.steps[5].cover_expenses_email || "-"}
-  - Katkı Tutarı (GBP): ${f.steps[5].money_cover_expenses || "-"}
-  - Katkı Sebebi: ${f.steps[5].cover_expenses_reason || "-"}
-`
-    : ""
-}
-
---------------------------------------------------
-
-Beraber seyahat edeceğiniz birisi var mı?:
-${f.steps[5].travel_with_non_family || "-"}
-
-${
-  f.steps[5].travel_with_non_family === "EVET"
-    ? `
-Seyahat Ettiğiniz Kişi:
-  - Ad Soyad: ${f.steps[5].travel_non_family_fullname || "-"}
-  - Yakınlık Derecesi: ${f.steps[5].travel_non_family_relation || "-"}
-  - Telefon: ${f.steps[5].travel_non_family_phone || "-"}
-`
-    : ""
-}
-
---------------------------------------------------
-
-Son 10 yıl içinde Birleşik Krallık’ta bulundunuz mu:
-${f.steps[5].uk_visited_last10 || "-"}
-
-${
-  f.steps[5].uk_visited_last10 === "EVET"
-    ? `
-UK Ziyaret Bilgileri:
-- Kaç kere: ${f.steps[5].uk_visited_count || "-"}
-
-${
-  Array.isArray(f.steps[5].uk_visits) &&
-  f.steps[5].uk_visits.length > 0
-    ? f.steps[5].uk_visits
-        .map(
-          (visit, index) => `
-Ziyaret ${index + 1}:
-  - Ziyaret Amacı: ${visit.purpose || "-"}
-  - Gidiş Tarihi: ${
-    visit.arrivalDate ? formatDateDMY(visit.arrivalDate) : "-"
-  }
-  - Dönüş Tarihi: ${
-    visit.departureDate ? formatDateDMY(visit.departureDate) : "-"
-  }
-`
-        )
-        .join("")
-    : "- Ziyaret detayı girilmemiş"
-}
-`
-    : ""
-}
-
---------------------------------------------------
-Avustralya / Kanada / ABD / Yeni Zelanda / İsviçre / Schengen Ülkeleri
-(Son 10 Yıl İçinde)
---------------------------------------------------
-
-Seyahat Durumu: ${f.steps[5].other_visited_countries || "-"}
-
-${
-  getTravelCardCount(f.steps[5].other_visited_countries) > 0
-    ? `
-Seyahat Detayları:
-${Array.from({
-  length: getTravelCardCount(f.steps[5].other_visited_countries),
-})
-  .map((_, index) => {
-    return `
-  ${index + 1}. Seyahat
-     - Ülke: ${f.steps[5][`lastTravel${index + 1}_country`] || "-"}
-     - Seyahat Amacı: ${f.steps[5][`lastTravel${index + 1}_purpose`] || "-"}
-     - Gidiş Tarihi: ${formatDateDMY(f.steps[5][`lastTravel${index + 1}_monthYear`]) || "-"}
-     - Dönüş Tarihi: ${formatDateDMY(f.steps[5][`lastTravel${index + 1}_duration`]) || "-"}`;
-  })
-  .join("\n")}
-`
-    : ""
-}
-
---------------------------------------------------
-Yukarıdakiler Dışında Başka Ülkelere Seyahat
-(Son 10 Yıl)
---------------------------------------------------
-
-Seyahat Var mı: ${f.steps[5].boolean_traveled_adroad || "-"}
-
-${
-  f.steps[5].boolean_traveled_adroad === "EVET"
-    ? `
-Gidilen Ülkeler:
-${(f.steps[5].abroad_country || []).length > 0
-  ? (f.steps[5].abroad_country || [])
-      .map((item, index) => {
-        return `
-  ${index + 1}. Ülke
-     - Ülke Adı: ${item.country || "-"}
-     - Seyahat Amacı: ${item.purpose || "-"}
-     - Giriş Tarihi: ${formatDateDMY(item.start) || "-"}
-     - Çıkış Tarihi: ${formatDateDMY(item.end) || "-"}`;
-      })
-      .join("\n")
-  : "  - Detay girilmemiş"}
-`
-    : ""
-}
-
-
-==================================================
-DAVETİYE BİLGİLERİ
-==================================================
-
-Davetiye var mı:
-${f.steps[5].have_invitation || "-"}
-
-${
-  f.steps[5].have_invitation === "EVET"
-    ? `
-Davetiye Türü:
-${f.steps[5].invitation_type || "-"}
-
-${
-  f.steps[5].invitation_type === "BIREYSEL"
-    ? `
-Davet Eden Kişi:
-  - Ad Soyad: ${f.steps[5].inviter_fullname || "-"}
-  - Email: ${f.steps[5].inviter_email || "-"}
-  - Telefon: ${f.steps[5].inviter_phone || "-"}
-  - Adres: ${f.steps[5].inviter_address || "-"}
-`
-    : ""
-}
-
-${
-  f.steps[5].invitation_type === "SIRKET"
-    ? `
-Davet Eden Şirket:
-  - Şirket Adı: ${f.steps[5].company_name || "-"}
-  - Email: ${f.steps[5].company_email || "-"}
-  - Telefon: ${f.steps[5].company_phone || "-"}
-  - Adres: ${f.steps[5].company_address || "-"}
-`
-    : ""
-}
-
-Davet Sebebi:
-${f.steps[5].invitation_reason || "-"}
-`
-    : ""
-}
-
-==================================================
-BİRLEŞİK KRALLIK AİLE BİLGİLERİ
-==================================================
-
-Birleşik Krallık’ta aile üyesi var mı:
-${f.steps[5].has_family_in_uk || "-"}
-
-${
-  f.steps[5].has_family_in_uk === "EVET"
-    ? `
-Aile Üyesi Bilgileri:
-  - Yakınlık: ${f.steps[5].uk_family_relation || "-"}
-  - Ad Soyad: ${f.steps[5].uk_family_fullname || "-"}
-  - Uyruğu: ${f.steps[5].uk_family_nationality || "-"}
-  - Yasal Durumu: ${f.steps[5].uk_family_legal_status || "-"}
-  - Geçici Vize: ${f.steps[5].uk_family_has_temp_visa || "-"}
-  - Temelli UK’de mi: ${f.steps[5].uk_family_is_resident || "-"}
-  - Pasaport No: ${f.steps[5].uk_family_passport || "-"}
-  - Açıklama: ${f.steps[5].uk_family_visa_explanation || "-"}
-`
-    : ""
-}
-
-==================================================
-UK GEÇMİŞİ / KAMU / SİGORTA
-==================================================
-
-İngiltere’de tıbbi tedavi gördünüz mü:
-${f.steps[5].medical_treatment_uk || "-"}
-
-${
-  f.steps[5].medical_treatment_uk === "EVET"
-    ? `Tedavi Açıklaması: ${f.steps[5].medical_treatment_details || "-"}`
-    : ""
-}
-
-Ulusal Sigorta Numaranız var mı:
-${f.steps[5].national_insurance_number_exist || "-"}
-
-${
-  f.steps[5].national_insurance_number_exist === "EVET"
-    ? `Ulusal Sigorta Numarası: ${f.steps[5].national_insurance_number || "-"}`
-    : ""
-}
-
-Son 10 yılda İngiltere’de kalma izni başvurusu:
-${f.steps[5].uk_stay_application_last10 || "-"}
-
-${
-  f.steps[5].uk_stay_application_last10 === "EVET"
-    ? `Açıklama: ${f.steps[5].uk_stay_application_explanation || "-"}`
-    : ""
-}
-
-Son 10 yılda İngiltere vizesi aldınız mı:
-${f.steps[5].uk_visa_last10 || "-"}
-
-${
-  f.steps[5].uk_visa_last10 === "EVET"
-    ? `Vize Veriliş Tarihi: ${formatDateDMY(f.steps[5].uk_visa_issue_date)}`
-    : ""
-}
-
-İngiltere’de kamu fonu aldınız mı:
-${f.steps[5].uk_public_funds || "-"}
-
-${
-  f.steps[5].uk_public_funds === "EVET"
-    ? `Kamu Fonu Açıklaması: ${f.steps[5].uk_public_funds_details || "-"}`
-    : ""
-}
-
-Herhangi bir ülkede vize reddi / sınır dışı / giriş yasağı:
-${f.steps[5].visa_refused_or_banned || "-"}
-
-${
-  f.steps[5].visa_refused_or_banned === "EVET"
-    ? `Detaylar: ${f.steps[5].visa_refused_details || "-"}`
-    : ""
-}
-
---------------------------------------------------
-ESKİ VİZE REDDİ SORUSU
---------------------------------------------------
-
-Daha önce vize reddi aldınız mı:
-${f.steps[5].boolean_refused_visa || "-"}
-
-${
-  f.steps[5].boolean_refused_visa === "EVET"
-    ? `
-Reddedilme Tarihi: ${formatDateDMY(f.steps[5].when_refused)}
-Reddin Sebebi: ${f.steps[5].refused_about || "-"}`
-    : ""
-}
-
-
-
-Başvuru Tarihi: ${new Date().toLocaleString("tr-TR")}
-`.trim();
+// const textBody = `
+// İNGİLTERE VİZE BAŞVURU
+
+// -- Kişisel Bilgiler --
+
+// Ad Soyad: ${f.steps[1].fullName || "-"}
+// T.C. Kimlik No: ${f.steps[1].tcId || "-"}
+
+// Uyruğu: ${f.steps[1].nationality || "-"}
+// Başka Ülke Vatandaşlığı: ${f.steps[1].other_nationality || "-"}
+
+// ${
+//   f.steps[1].other_nationality === "EVET"
+//     ? `Vatandaşlık Alınan Ülke: ${f.steps[1].other_nationality_country || "-"}
+// Vatandaşlık Tarihleri: ${formatDateDMY(f.steps[1].other_nationality_start_date) || "-"} / ${f.steps[1].other_nationality_end_date || "-"}`
+//     : ""
+// }
+
+// Cinsiyet: ${f.steps[1].gender || "-"}
+// Medeni Durum: ${f.steps[1].maritalStatus || "-"}
+
+// ${
+//   ["EVLI", "DUL", "BOSANMIS"].includes(f.steps[1].maritalStatus)
+//     ? `Eş / Eski Eş Adı Soyadı: ${f.steps[1].partner_full_name || "-"}`
+//     : ""
+// }
+
+// ${
+//   f.steps[1].gender === "KADIN" && f.steps[1].maritalStatus === "EVLI"
+//     ? `Evlenmeden Önceki Soyadı: ${f.steps[1].maidenName || "-"}`
+//     : ""
+// }
+
+// ${
+//   f.steps[1].maritalStatus === "EVLI"
+//     ? `Eşinin Doğum Tarihi: ${formatDateDMY(f.steps[1].partner_birth_date) || "-"}
+// Eşinin Uyruğu: ${f.steps[1].partner_nationality || "-"}
+// Eşiyle Birlikte Yaşıyor mu: ${f.steps[1].partner_lives_with_you || "-"}
+// Eşiyle Seyahat Edecek mi: ${f.steps[1].partner_travel_with_you || "-"}
+// Eşinin Pasaport No: ${f.steps[1].partner_passport_number || "-"}`
+//     : ""
+// }
+
+// Doğum Tarihi: ${formatDateDMY(f.steps[1].birthDate )|| "-"}
+// Doğum Yeri: ${f.steps[1].birthPlace || "-"}
+
+// Telefon: ${f.steps[1].phone_number || "-"}
+// İkinci Telefon: ${f.steps[1].phone_number2 || "-"}
+
+// E-posta: ${f.steps[1].email || "-"}
+// İkinci E-posta: ${f.steps[1].email2 || "-"}
+
+// Adres: ${f.steps[1].home_address || "-"}
+// Posta Kodu: ${f.steps[1].post_code || "-"}
+
+// Ev Durumu: ${f.steps[1].home_owner || "-"}
+// Evde Kalma Süresi: ${f.steps[1].residence_duration || "-"}
+
+// ${
+//   f.steps[1].home_owner === "DIGER"
+//     ? `Ev Sahibi Açıklama: ${f.steps[1].home_owner_info || "-"}`
+//     : ""
+// }
+
+// ${
+//   f.steps[1].residence_months_total !== null &&
+//   f.steps[1].residence_months_total < 12
+//     ? `Son 2 Yıldaki Önceki Adresler:
+// ${f.steps[1].past_addresses || "-"}`
+//     : ""
+// }
+
+
+// -- Aile Bilgileri --
+
+// Anne Adı Soyadı: ${f.steps[2].mother_full_name || "-"}
+// Anne Doğum Tarihi: ${formatDateDMY(f.steps[2].mother_birth_date) || "-"}
+// Anne Uyruğu: ${f.steps[2].mother_nationality || "-"}
+// Anne Sizinle Seyahat Edecek mi?: ${f.steps[2].mother_travel_with_you || "-"}
+
+// Baba Adı Soyadı: ${f.steps[2].father_full_name || "-"}
+// Baba Doğum Tarihi: ${formatDateDMY(f.steps[2].father_birth_date) || "-"}
+// Baba Uyruğu: ${f.steps[2].father_nationality || "-"}
+// Baba Sizinle Seyahat Edecek mi?: ${f.steps[2].father_travel_with_you || "-"}
+
+// Çocuğunuz Var mı?: ${f.steps[2].boolean_child || "-"}
+
+// Çocuk Sayısı: ${
+//   f.steps[2].boolean_child === "EVET"
+//     ? (f.steps[2].child_count || "-")
+//     : "-"
+// }
+
+// Çocuklar:
+// ${
+//   f.steps[2].boolean_child === "EVET" &&
+//   (f.steps[2].child_names || []).length > 0
+//     ? f.steps[2].child_names
+//         .map(
+//           (name, idx) => `
+// ${idx + 1}. Çocuk
+// Ad Soyad: ${name || "-"}
+// Doğum Tarihi: ${formatDateDMY(f.steps[2].child_birth_date?.[idx]) || "-"}
+// Sizinle Seyahat Edecek mi?: ${f.steps[2].child_travel_with_you?.[idx] || "-"}
+// Sizinle Birlikte Yaşıyor mu?: ${f.steps[2].child_live?.[idx] || "-"}
+// İngiltere Vizesi Var mı?: ${f.steps[2].child_visa?.[idx] || "-"}
+// Pasaport No: ${f.steps[2].child_passport_numbers?.[idx] || "-"}
+// `
+//         )
+//         .join("\n")
+//     : "-"
+// }
+
+
+
+// -- Pasaport --
+
+// Numara: ${f.steps[3].passport_number || "-"}
+
+// Başlangıç / Bitiş: ${
+//   f.steps[3].Passport_start_date
+//     ? formatDateDMY(f.steps[3].Passport_start_date)
+//     : "-"
+// } / ${
+//   f.steps[3].Passport_end_date
+//     ? formatDateDMY(f.steps[3].Passport_end_date)
+//     : "-"
+// }
+
+// Veriliş: ${f.steps[3].passport_issuing_authority || "-"}
+
+// TC Kart Bitiş Tarihi: ${
+//   f.steps[3].tc_card_end_date
+//     ? formatDateDMY(f.steps[3].tc_card_end_date)
+//     : "-"
+// }
+
+
+
+// -- Çalışma ve Maddi Durum --
+
+// Çalışma Durumu: ${f.steps[4].boolean_work || "-"}
+
+// ${
+// ["CALISIYOR","EMEKLI","CALISMAYAN"].includes(f.steps[4].boolean_work)
+// ? `
+// İş Yeri Adı: ${f.steps[4].work_name || "-"}
+// İş Yeri Adresi: ${f.steps[4].work_address || "-"}
+// İş Yeri Telefonu: ${f.steps[4].work_phone || "-"}
+// Görev / Ünvan: ${f.steps[4].worker_title || "-"}
+// Toplam Çalışma Süresi: ${f.steps[4].work_year || "-"}
+// ${f.steps[4].boolean_work === "CALISIYOR" ? `İş Yeri Kendi: ${f.steps[4].own_work || "-"}` : ""}
+// `
+// : ""
+// }
+
+// Aylık Gelir: ${f.steps[4].monthly_money || "-"}
+// Birikim: ${f.steps[4].savings || "-"}
+// Yan Gelir: ${f.steps[4].sideline || "-"}
+// Aylık Harcama: ${f.steps[4].monthly_expenditure_amount || "-"}
+
+// ${
+// f.steps[4].boolean_work === "OGRENCI"
+// ? `
+// Okul Adı: ${f.steps[4].school_name || "-"}
+// Bölüm: ${f.steps[4].school_department || "-"}
+// Okuma Süresi: ${f.steps[4].school_year || "-"}
+// `
+// : ""
+// }
+
+
+// -- SEYAHAT BİLGİLERİ --
+
+// İngiltere Adresi:
+// ${f.steps[5].uk_address || "-"}
+
+// Seyahat Tarihleri:
+// ${formatDateDMY(f.steps[5].travel_start_date)} / ${formatDateDMY(f.steps[5].travel_end_date)}
+
+// Seyahat Sebebi:
+// ${
+//   f.steps[5].travel_reason === "DIGER"
+//     ? `Diğer: ${f.steps[5].travel_reason_other || "-"}`
+//     : (f.steps[5].travel_reason || "-")
+// }
+
+// Grup ile seyahat:
+// ${f.steps[5].boolean_travel_group || "-"}
+
+// ${
+//   f.steps[5].boolean_travel_group === "EVET"
+//     ? `Grup Adı: ${f.steps[5].travel_group || "-"}`
+//     : ""
+// }
+
+// İngiltere’de harcanması planlanan tutar (GBP):
+// ${f.steps[5].spend_pound || "-"}
+
+// Masrafları siz mi karşılayacaksınız:
+// ${f.steps[5].boolean_cover_expenses || "-"}
+
+// ${
+//   f.steps[5].boolean_cover_expenses === "HAYIR"
+//     ? `
+// Masrafları Karşılayan Kişi:
+//   - Ad Soyad: ${f.steps[5].who_cover_expenses || "-"}
+//   - Telefon: ${f.steps[5].cover_expenses_phone || "-"}
+//   - Email: ${f.steps[5].cover_expenses_email || "-"}
+//   - Katkı Tutarı (GBP): ${f.steps[5].money_cover_expenses || "-"}
+//   - Katkı Sebebi: ${f.steps[5].cover_expenses_reason || "-"}
+// `
+//     : ""
+// }
+
+// --------------------------------------------------
+
+// Beraber seyahat edeceğiniz birisi var mı?:
+// ${f.steps[5].travel_with_non_family || "-"}
+
+// ${
+//   f.steps[5].travel_with_non_family === "EVET"
+//     ? `
+// Seyahat Ettiğiniz Kişi:
+//   - Ad Soyad: ${f.steps[5].travel_non_family_fullname || "-"}
+//   - Yakınlık Derecesi: ${f.steps[5].travel_non_family_relation || "-"}
+//   - Telefon: ${f.steps[5].travel_non_family_phone || "-"}
+// `
+//     : ""
+// }
+
+// --------------------------------------------------
+
+// Son 10 yıl içinde Birleşik Krallık’ta bulundunuz mu:
+// ${f.steps[5].uk_visited_last10 || "-"}
+
+// ${
+//   f.steps[5].uk_visited_last10 === "EVET"
+//     ? `
+// UK Ziyaret Bilgileri:
+// - Kaç kere: ${f.steps[5].uk_visited_count || "-"}
+
+// ${
+//   Array.isArray(f.steps[5].uk_visits) &&
+//   f.steps[5].uk_visits.length > 0
+//     ? f.steps[5].uk_visits
+//         .map(
+//           (visit, index) => `
+// Ziyaret ${index + 1}:
+//   - Ziyaret Amacı: ${visit.purpose || "-"}
+//   - Gidiş Tarihi: ${
+//     visit.arrivalDate ? formatDateDMY(visit.arrivalDate) : "-"
+//   }
+//   - Dönüş Tarihi: ${
+//     visit.departureDate ? formatDateDMY(visit.departureDate) : "-"
+//   }
+// `
+//         )
+//         .join("")
+//     : "- Ziyaret detayı girilmemiş"
+// }
+// `
+//     : ""
+// }
+
+// --------------------------------------------------
+// Avustralya / Kanada / ABD / Yeni Zelanda / İsviçre / Schengen Ülkeleri
+// (Son 10 Yıl İçinde)
+// --------------------------------------------------
+
+// Seyahat Durumu: ${f.steps[5].other_visited_countries || "-"}
+
+// ${
+//   getTravelCardCount(f.steps[5].other_visited_countries) > 0
+//     ? `
+// Seyahat Detayları:
+// ${Array.from({
+//   length: getTravelCardCount(f.steps[5].other_visited_countries),
+// })
+//   .map((_, index) => {
+//     return `
+//   ${index + 1}. Seyahat
+//      - Ülke: ${f.steps[5][`lastTravel${index + 1}_country`] || "-"}
+//      - Seyahat Amacı: ${f.steps[5][`lastTravel${index + 1}_purpose`] || "-"}
+//      - Gidiş Tarihi: ${formatDateDMY(f.steps[5][`lastTravel${index + 1}_monthYear`]) || "-"}
+//      - Dönüş Tarihi: ${formatDateDMY(f.steps[5][`lastTravel${index + 1}_duration`]) || "-"}`;
+//   })
+//   .join("\n")}
+// `
+//     : ""
+// }
+
+// --------------------------------------------------
+// Yukarıdakiler Dışında Başka Ülkelere Seyahat
+// (Son 10 Yıl)
+// --------------------------------------------------
+
+// Seyahat Var mı: ${f.steps[5].boolean_traveled_adroad || "-"}
+
+// ${
+//   f.steps[5].boolean_traveled_adroad === "EVET"
+//     ? `
+// Gidilen Ülkeler:
+// ${(f.steps[5].abroad_country || []).length > 0
+//   ? (f.steps[5].abroad_country || [])
+//       .map((item, index) => {
+//         return `
+//   ${index + 1}. Ülke
+//      - Ülke Adı: ${item.country || "-"}
+//      - Seyahat Amacı: ${item.purpose || "-"}
+//      - Giriş Tarihi: ${formatDateDMY(item.start) || "-"}
+//      - Çıkış Tarihi: ${formatDateDMY(item.end) || "-"}`;
+//       })
+//       .join("\n")
+//   : "  - Detay girilmemiş"}
+// `
+//     : ""
+// }
+
+
+// ==================================================
+// DAVETİYE BİLGİLERİ
+// ==================================================
+
+// Davetiye var mı:
+// ${f.steps[5].have_invitation || "-"}
+
+// ${
+//   f.steps[5].have_invitation === "EVET"
+//     ? `
+// Davetiye Türü:
+// ${f.steps[5].invitation_type || "-"}
+
+// ${
+//   f.steps[5].invitation_type === "BIREYSEL"
+//     ? `
+// Davet Eden Kişi:
+//   - Ad Soyad: ${f.steps[5].inviter_fullname || "-"}
+//   - Email: ${f.steps[5].inviter_email || "-"}
+//   - Telefon: ${f.steps[5].inviter_phone || "-"}
+//   - Adres: ${f.steps[5].inviter_address || "-"}
+// `
+//     : ""
+// }
+
+// ${
+//   f.steps[5].invitation_type === "SIRKET"
+//     ? `
+// Davet Eden Şirket:
+//   - Şirket Adı: ${f.steps[5].company_name || "-"}
+//   - Email: ${f.steps[5].company_email || "-"}
+//   - Telefon: ${f.steps[5].company_phone || "-"}
+//   - Adres: ${f.steps[5].company_address || "-"}
+// `
+//     : ""
+// }
+
+// Davet Sebebi:
+// ${f.steps[5].invitation_reason || "-"}
+// `
+//     : ""
+// }
+
+// ==================================================
+// BİRLEŞİK KRALLIK AİLE BİLGİLERİ
+// ==================================================
+
+// Birleşik Krallık’ta aile üyesi var mı:
+// ${f.steps[5].has_family_in_uk || "-"}
+
+// ${
+//   f.steps[5].has_family_in_uk === "EVET"
+//     ? `
+// Aile Üyesi Bilgileri:
+//   - Yakınlık: ${f.steps[5].uk_family_relation || "-"}
+//   - Ad Soyad: ${f.steps[5].uk_family_fullname || "-"}
+//   - Uyruğu: ${f.steps[5].uk_family_nationality || "-"}
+//   - Yasal Durumu: ${f.steps[5].uk_family_legal_status || "-"}
+//   - Geçici Vize: ${f.steps[5].uk_family_has_temp_visa || "-"}
+//   - Temelli UK’de mi: ${f.steps[5].uk_family_is_resident || "-"}
+//   - Pasaport No: ${f.steps[5].uk_family_passport || "-"}
+//   - Açıklama: ${f.steps[5].uk_family_visa_explanation || "-"}
+// `
+//     : ""
+// }
+
+// ==================================================
+// UK GEÇMİŞİ / KAMU / SİGORTA
+// ==================================================
+
+// İngiltere’de tıbbi tedavi gördünüz mü:
+// ${f.steps[5].medical_treatment_uk || "-"}
+
+// ${
+//   f.steps[5].medical_treatment_uk === "EVET"
+//     ? `Tedavi Açıklaması: ${f.steps[5].medical_treatment_details || "-"}`
+//     : ""
+// }
+
+// Ulusal Sigorta Numaranız var mı:
+// ${f.steps[5].national_insurance_number_exist || "-"}
+
+// ${
+//   f.steps[5].national_insurance_number_exist === "EVET"
+//     ? `Ulusal Sigorta Numarası: ${f.steps[5].national_insurance_number || "-"}`
+//     : ""
+// }
+
+// Son 10 yılda İngiltere’de kalma izni başvurusu:
+// ${f.steps[5].uk_stay_application_last10 || "-"}
+
+// ${
+//   f.steps[5].uk_stay_application_last10 === "EVET"
+//     ? `Açıklama: ${f.steps[5].uk_stay_application_explanation || "-"}`
+//     : ""
+// }
+
+// Son 10 yılda İngiltere vizesi aldınız mı:
+// ${f.steps[5].uk_visa_last10 || "-"}
+
+// ${
+//   f.steps[5].uk_visa_last10 === "EVET"
+//     ? `Vize Veriliş Tarihi: ${formatDateDMY(f.steps[5].uk_visa_issue_date)}`
+//     : ""
+// }
+
+// İngiltere’de kamu fonu aldınız mı:
+// ${f.steps[5].uk_public_funds || "-"}
+
+// ${
+//   f.steps[5].uk_public_funds === "EVET"
+//     ? `Kamu Fonu Açıklaması: ${f.steps[5].uk_public_funds_details || "-"}`
+//     : ""
+// }
+
+// Herhangi bir ülkede vize reddi / sınır dışı / giriş yasağı:
+// ${f.steps[5].visa_refused_or_banned || "-"}
+
+// ${
+//   f.steps[5].visa_refused_or_banned === "EVET"
+//     ? `Detaylar: ${f.steps[5].visa_refused_details || "-"}`
+//     : ""
+// }
+
+// --------------------------------------------------
+// ESKİ VİZE REDDİ SORUSU
+// --------------------------------------------------
+
+// Daha önce vize reddi aldınız mı:
+// ${f.steps[5].boolean_refused_visa || "-"}
+
+// ${
+//   f.steps[5].boolean_refused_visa === "EVET"
+//     ? `
+// Reddedilme Tarihi: ${formatDateDMY(f.steps[5].when_refused)}
+// Reddin Sebebi: ${f.steps[5].refused_about || "-"}`
+//     : ""
+// }
+
+
+
+// Başvuru Tarihi: ${new Date().toLocaleString("tr-TR")}
+// `.trim();
 const s1 = f.steps[1] || {};
 const showPastAddresses =
   s1.residence_months_total !== null &&
   s1.residence_months_total < 12;
 const htmlBody = `
-<h2>İngiltere Vize Başvuru</h2>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #f0f2f5;
+    color: #1a1d23;
+    padding: 32px 16px;
+    font-size: 18px;
+    line-height: 1.6;
+  }
+  .wrapper {
+    max-width: 860px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 40px rgba(0,0,0,0.10);
+  }
+  .doc-header {
+    background: linear-gradient(135deg, #003c2f 0%, #00694f 60%, #00a878 100%);
+    padding: 36px 40px 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .doc-header-icon {
+    width: 54px; height: 54px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+  }
+  .doc-header-text h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: #fff;
+    letter-spacing: 0.3px;
+  }
+  .doc-header-text p {
+    font-size: 12px;
+    color: rgba(255,255,255,0.65);
+    margin-top: 4px;
+  }
+  .doc-body { padding: 32px 40px 40px; }
+  .section { margin-bottom: 36px; }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 15px;
+    color: #003c2f;
+    letter-spacing: 0.5px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e8edf5;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title span.badge {
+    background: #003c2f;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.8px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #e4e9f0;
+  }
+  tr { border-bottom: 1px solid #e4e9f0; }
+  tr:last-child { border-bottom: none; }
+  tr:nth-child(even) td { background: #f8fafd; }
+  tr:nth-child(even) th { background: #eef2fa; }
+  th {
+    background: #f1f4fb;
+    color: #374569;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px 14px;
+    text-align: left;
+    width: 38%;
+    vertical-align: top;
+    letter-spacing: 0.2px;
+  }
+  td {
+    padding: 10px 14px;
+    color: #1a1d23;
+    font-size: 16px;
+    vertical-align: top;
+  }
+  .sub-entry {
+    background: #f6f9ff;
+    border: 1px solid #dce6f5;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    font-size: 16px;
+  }
+  .sub-entry:last-child { margin-bottom: 0; }
+  .sub-entry strong { color: #003c2f; display: block; margin-bottom: 4px; font-size: 16px; }
+  .photo-row {
+    display: flex;
+    gap: 24px;
+    margin-top: 28px;
+    padding-top: 28px;
+    border-top: 2px solid #e8edf5;
+  }
+  .photo-box {
+    flex: 1;
+    background: #f6f9ff;
+    border: 1px solid #dce6f5;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+  .photo-box p {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6b7a99;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .photo-box img { max-width: 180px; border-radius: 6px; border: 2px solid #dce6f5; }
+  .doc-footer {
+    background: #f6f9ff;
+    border-top: 1px solid #e4e9f0;
+    padding: 14px 40px;
+    text-align: right;
+    font-size: 11px;
+    color: #8a94aa;
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
 
-<h3>Kişisel Bilgiler</h3>
-<table border="1" cellspacing="0" cellpadding="5" style="border-collapse:collapse;width:100%;background-color:#f9f9f9;">
-  <tbody>
+  <div class="doc-header">
+    <div class="doc-header-icon">🇬🇧</div>
+    <div class="doc-header-text">
+      <h1>İngiltere Vize Başvuru Formu</h1>
+     
+    </div>
+  </div>
 
-    <tr><th style="background-color:#e0e0e0;">Ad Soyad</th><td>${s1.fullName || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">T.C. Kimlik No</th><td>${s1.tcId || "-"}</td></tr>
+  <div class="doc-body">
 
-    <tr><th style="background-color:#e0e0e0;">Uyruğu</th><td>${s1.nationality || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Başka Ülke Vatandaşlığı</th><td>${s1.other_nationality || "-"}</td></tr>
+    <!-- 01: KİŞİSEL BİLGİLER -->
+    <div class="section">
+      <div class="section-title"><span class="badge">01</span> KİŞİSEL BİLGİLER</div>
+      <table>
+        <tr><th>E-posta Adresi</th><td>${s1.email || "-"}</td></tr>
+        <tr><th>İkinci E-posta Adresi</th><td>${s1.email2 || "-"}</td></tr>
+        <tr><th>Telefon Numarası</th><td>${s1.phone_number || "-"}</td></tr>
+        <tr><th>İkinci Telefon Numarası</th><td>${s1.phone_number2 || "-"}</td></tr>
+        <tr><th>Adı Soyadı</th><td>${s1.fullName || "-"}</td></tr>
+        <tr><th>Cinsiyeti</th><td>${s1.gender || "-"}</td></tr>
+        <tr><th>Medeni Durumu</th><td>${s1.maritalStatus || "-"}</td></tr>
+        ${s1.gender === "KADIN" && s1.maritalStatus === "EVLI" ? `
+        <tr><th>Evlenmeden Önceki Soyadı</th><td>${s1.maidenName || "-"}</td></tr>
+        ` : ""}
+        ${s1.maritalStatus === "EVLI" ? `
+        <tr><th>Eşinin Adı Soyadı</th><td>${s1.partner_full_name || "-"}</td></tr>
+        <tr><th>Eşinin Doğum Tarihi</th><td>${formatDateDMY(s1.partner_birth_date) || "-"}</td></tr>
+        <tr><th>Eşinin Uyruğu</th><td>${s1.partner_nationality || "-"}</td></tr>
+        <tr><th>Eşinizle Birlikte mi Yaşıyorsunuz?</th><td>${s1.partner_lives_with_you || "-"}</td></tr>
+        <tr><th>İngiltere'ye Eşinizle mi Seyahat Edeceksiniz?</th><td>${s1.partner_travel_with_you || "-"}</td></tr>
+        <tr><th>Eşinizin Pasaport Numarası</th><td>${s1.partner_passport_number || "-"}</td></tr>
+        ` : ""}
+        ${["DUL", "BOSANMIS"].includes(s1.maritalStatus) ? `
+        <tr><th>Eski Eşinin Adı Soyadı</th><td>${s1.partner_full_name || "-"}</td></tr>
+        ` : ""}
+        <tr><th>Adresi</th><td>${s1.home_address || "-"}</td></tr>
+        <tr><th>Posta Kodu</th><td>${s1.post_code || "-"}</td></tr>
+        <tr><th>Evin Mülkiyet Durumu</th><td>${s1.home_owner || "-"}</td></tr>
+        <tr><th>Evinizde ne kadar zamandır kalıyorsunuz?</th><td>${s1.residence_duration || "-"}</td></tr>
+        ${s1.home_owner === "DIGER" ? `
+        <tr><th>Evin Mülkiyeti Hakkında Açıklama</th><td>${s1.home_owner_info || "-"}</td></tr>
+        ` : ""}
+        ${showPastAddresses ? `
+        <tr><th>Geçmiş 2 yıldaki adres bilgileri</th><td>${s1.past_addresses || "-"}</td></tr>
+        ` : ""}
+      </table>
+    </div>
 
-    ${
-      s1.other_nationality === "EVET"
-        ? `
-        <tr><th style="background-color:#e0e0e0;">Vatandaşlık Alınan Ülke</th><td>${s1.other_nationality_country || "-"}</td></tr>
-        <tr><th style="background-color:#e0e0e0;">Vatandaşlık Tarihleri</th><td>${formatDateDMY(s1.other_nationality_start_date) || "-"} / ${s1.other_nationality_end_date || "-"}</td></tr>
-        `
-        : ""
-    }
+    <!-- 02: PASAPORT BİLGİLERİ -->
+    <div class="section">
+      <div class="section-title"><span class="badge">02</span> PASAPORT BİLGİLERİ</div>
+      <table>
+        <tr><th>Pasaport Numarası</th><td>${f.steps[3].passport_number || "-"}</td></tr>
+        <tr><th>Pasaportu Veren Makam</th><td>${f.steps[3].passport_issuing_authority || "-"}</td></tr>
+        <tr><th>Pasaport Başlangıç Tarihi</th><td>${f.steps[3].Passport_start_date ? formatDateDMY(f.steps[3].Passport_start_date) : "-"}</td></tr>
+        <tr><th>Pasaport Bitiş Tarihi</th><td>${f.steps[3].Passport_end_date ? formatDateDMY(f.steps[3].Passport_end_date) : "-"}</td></tr>
+      </table>
+    </div>
 
-    <tr><th style="background-color:#e0e0e0;">Cinsiyet</th><td>${s1.gender || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Medeni Durum</th><td>${s1.maritalStatus || "-"}</td></tr>
+    <!-- 03: KİMLİK BİLGİLERİ -->
+    <div class="section">
+      <div class="section-title"><span class="badge">03</span> KİMLİK BİLGİLERİ</div>
+      <table>
+        <tr><th>T.C. Kimlik Numarası</th><td>${s1.tcId || "-"}</td></tr>
+        <tr><th>T.C. Kimlik Kartı Bitiş Tarihi</th><td>${f.steps[3].tc_card_end_date ? formatDateDMY(f.steps[3].tc_card_end_date) : "-"}</td></tr>
+      </table>
+    </div>
 
-    ${
-      ["EVLI", "DUL", "BOSANMIS"].includes(s1.maritalStatus)
-        ? `<tr><th style="background-color:#e0e0e0;">Eş / Eski Eş Adı Soyadı</th><td>${s1.partner_full_name || "-"}</td></tr>`
-        : ""
-    }
+    <!-- 04: VATANDAŞLIK BİLGİLERİ -->
+    <div class="section">
+      <div class="section-title"><span class="badge">04</span> VATANDAŞLIK BİLGİLERİ</div>
+      <table>
+        <tr><th>Uyruğu</th><td>${s1.nationality || "-"}</td></tr>
+        <tr><th>Başka Ülke Vatandaşlığı Var mı?</th><td>${s1.other_nationality || "-"}</td></tr>
+        ${s1.other_nationality === "EVET" ? `
+        <tr><th>Vatandaşlığı Alınan Ülke Bilgisi</th><td>${s1.other_nationality_country || "-"}</td></tr>
+        <tr><th>Vatandaşlık Başlama Tarihi</th><td>${formatDateDMY(s1.other_nationality_start_date) || "-"}</td></tr>
+        <tr><th>Vatandaşlık Bitiş Tarihi</th><td>${formatDateDMY(s1.other_nationality_end_date) || "-"}</td></tr>
+        ` : ""}
+        <tr><th>Doğum Tarihi</th><td>${formatDateDMY(s1.birthDate) || "-"}</td></tr>
+        <tr><th>Doğum Yeri</th><td>${s1.birthPlace || "-"}</td></tr>
+      </table>
+    </div>
 
-    ${
-      s1.gender === "KADIN" && s1.maritalStatus === "EVLI"
-        ? `<tr><th style="background-color:#e0e0e0;">Evlenmeden Önceki Soyadı</th><td>${s1.maidenName || "-"}</td></tr>`
-        : ""
-    }
+    <!-- 05: ÇALIŞMA VE MADDİ DURUM -->
+    <div class="section">
+      <div class="section-title"><span class="badge">05</span> ÇALIŞMA VE MADDİ DURUM</div>
+      <table>
+        <tr><th>Çalışma Durumu</th><td>${f.steps[4].boolean_work || "-"}</td></tr>
+        ${["CALISIYOR","EMEKLI","CALISMAYAN"].includes(f.steps[4].boolean_work) ? `
+        <tr><th>${f.steps[4].boolean_work === "CALISMAYAN" ? "Eski İş Yeri Adı" : "İş Yeri Adı"}</th><td>${f.steps[4].work_name || "-"}</td></tr>
+        <tr><th>${f.steps[4].boolean_work === "CALISMAYAN" ? "Eski İş Yeri Adresi" : "İş Yeri Adresi"}</th><td>${f.steps[4].work_address || "-"}</td></tr>
+        <tr><th>İş Yeri Telefonu</th><td>${f.steps[4].work_phone || "-"}</td></tr>
+        <tr><th>Görev / Ünvan</th><td>${f.steps[4].worker_title || "-"}</td></tr>
+        <tr><th>Toplam Çalışma Süresi</th><td>${f.steps[4].work_year || "-"}</td></tr>
+        ${f.steps[4].boolean_work === "CALISIYOR" ? `
+        <tr><th>Bu iş yeri sizin mi?</th><td>${f.steps[4].own_work || "-"}</td></tr>
+        ` : ""}
+        ` : ""}
+        ${f.steps[4].boolean_work === "OGRENCI" ? `
+        <tr><th>Okul Adı</th><td>${f.steps[4].school_name || "-"}</td></tr>
+        <tr><th>Bölümü</th><td>${f.steps[4].school_department || "-"}</td></tr>
+        <tr><th>Okuma Süresi</th><td>${f.steps[4].school_year || "-"}</td></tr>
+        ` : ""}
+        <tr><th>Düzenli birikime sahip misiniz?</th><td>${f.steps[4].savings_type || "-"}</td></tr>
+        ${f.steps[4].savings_type === "DIGER" ? `
+        <tr><th>Diğer Açıklaması</th><td>${f.steps[4].savings_type_other || "-"}</td></tr>
+        ` : ""}
+        <tr><th>Aylık Geliri</th><td>${f.steps[4].monthly_money ? f.steps[4].monthly_money + " ₺" : "-"}</td></tr>
+        <tr><th>Toplam Birikimi</th><td>${f.steps[4].savings ? f.steps[4].savings + " ₺" : "-"}</td></tr>
+        <tr><th>Yan Geliri</th><td>${f.steps[4].sideline ? f.steps[4].sideline + " ₺" : "-"}</td></tr>
+        <tr><th>Aylık Harcama Tutarı</th><td>${f.steps[4].monthly_expenditure_amount ? f.steps[4].monthly_expenditure_amount + " ₺" : "-"}</td></tr>
+        <tr><th>Bakmakla Yükümlü Olduğunuz Biri(leri) Var mı?</th><td>${f.steps[4].hasDependents || "-"}</td></tr>
+        ${f.steps[4].hasDependents === "EVET" && Array.isArray(f.steps[4].dependents) && f.steps[4].dependents.length > 0 ? `
+        <tr><th>Bakmakla Yükümlü Olunan Kişiler</th><td>
+          ${f.steps[4].dependents.map((p, i) => `
+            <div class="sub-entry">
+              <strong>Bakmakla Yükümlü Olunan Kişi ${i + 1}</strong>
+              Adı Soyadı: ${p.fullName || "-"}<br/>
+              Sizinle olan ilişkisi: ${p.relationship || "-"}<br/>
+              Doğum Tarihi: ${p.birthDate || "-"}<br/>
+              Sizinle mi Yaşıyor: ${p.livesWithYou || "-"}<br/>
+              Sizinle mi Seyahat Edecek: ${p.travelsWithYou || "-"}
+            </div>`).join("")}
+        </td></tr>
+        ` : ""}
+      </table>
+    </div>
 
-    ${
-      s1.maritalStatus === "EVLI"
-        ? `
-        <tr><th style="background-color:#e0e0e0;">Eşinin Doğum Tarihi</th><td>${formatDateDMY(s1.partner_birth_date) || "-"}</td></tr>
-        <tr><th style="background-color:#e0e0e0;">Eşinin Uyruğu</th><td>${s1.partner_nationality || "-"}</td></tr>
-        <tr><th style="background-color:#e0e0e0;">Eşiyle Birlikte Yaşıyor mu</th><td>${s1.partner_lives_with_you || "-"}</td></tr>
-        <tr><th style="background-color:#e0e0e0;">Eşiyle Seyahat Edecek mi</th><td>${s1.partner_travel_with_you || "-"}</td></tr>
-        <tr><th style="background-color:#e0e0e0;">Eşinin Pasaport No</th><td>${s1.partner_passport_number || "-"}</td></tr>
-        `
-        : ""
-    }
+    <!-- 06: HARCAMA VE MASRAF BİLGİLERİ -->
+    <div class="section">
+      <div class="section-title"><span class="badge">06</span> HARCAMA VE MASRAF BİLGİLERİ</div>
+      <table>
+        <tr><th>İngiltere'de Harcamayı Planladığınız Tutar (Pound)</th><td>${f.steps[5].spend_pound ? f.steps[5].spend_pound + " pound" : "-"}</td></tr>
+        <tr><th>Masrafları Siz mi Karşılayacaksınız?</th><td>${f.steps[5].boolean_cover_expenses || "-"}</td></tr>
+        ${f.steps[5].boolean_cover_expenses === "HAYIR" ? `
+        <tr><th>Masrafları Karşılayan Kişi — Adı Soyadı</th><td>${f.steps[5].who_cover_expenses || "-"}</td></tr>
+        <tr><th>Telefonu</th><td>${f.steps[5].cover_expenses_phone || "-"}</td></tr>
+        <tr><th>E-Postası</th><td>${f.steps[5].cover_expenses_email || "-"}</td></tr>
+        <tr><th>Katkı Tutarı (Pound)</th><td>${f.steps[5].money_cover_expenses ? f.steps[5].money_cover_expenses + " pound" : "-"}</td></tr>
+        <tr><th>Katkı Sebebi</th><td>${f.steps[5].cover_expenses_reason || "-"}</td></tr>
+        <tr><th>Katkı Sağlayanın Adresi</th><td>${f.steps[5].cover_expenses_address || "-"}</td></tr>
+        ` : ""}
+      </table>
+    </div>
 
-    <tr><th style="background-color:#e0e0e0;">Doğum Tarihi</th><td>${formatDateDMY(s1.birthDate) || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Doğum Yeri</th><td>${s1.birthPlace || "-"}</td></tr>
+    <!-- 07: SEYAHAT VE KONAKLAMA BİLGİLERİ -->
+    <div class="section">
+      <div class="section-title"><span class="badge">07</span> SEYAHAT VE KONAKLAMA BİLGİLERİ</div>
+      <table>
+        <tr><th>Seyahat Başlangıç Tarihi</th><td>${formatDateDMY(f.steps[5].travel_start_date) || "-"}</td></tr>
+        <tr><th>Seyahat Bitiş Tarihi</th><td>${formatDateDMY(f.steps[5].travel_end_date) || "-"}</td></tr>
+        <tr><th>Seyahat Sebebi</th><td>${f.steps[5].travel_reason || "-"}</td></tr>
+        ${f.steps[5].travel_reason === "DIGER" ? `
+        <tr><th>Seyahat Sebebi Açıklaması</th><td>${f.steps[5].travel_reason_other || "-"}</td></tr>
+        ` : ""}
+      </table>
+    </div>
 
-    <tr><th style="background-color:#e0e0e0;">Telefon</th><td>${s1.phone_number || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">İkinci Telefon</th><td>${s1.phone_number2 || "-"}</td></tr>
+    <!-- 08: AİLE BİLGİLERİ -->
+    <div class="section">
+      <div class="section-title"><span class="badge">08</span> AİLE BİLGİLERİ</div>
+      <table>
+        <tr><th>Anne Adı Soyadı</th><td>${f.steps[2].mother_full_name || "-"}</td></tr>
+        <tr><th>Annenin Doğum Tarihi</th><td>${formatDateDMY(f.steps[2].mother_birth_date) || "-"}</td></tr>
+        <tr><th>Annenin Uyruğu</th><td>${f.steps[2].mother_nationality || "-"}</td></tr>
+        <tr><th>Anneniz Sizinle Seyahat Edecek mi?</th><td>${f.steps[2].mother_travel_with_you || "-"}</td></tr>
+        <tr><th>Baba Adı Soyadı</th><td>${f.steps[2].father_full_name || "-"}</td></tr>
+        <tr><th>Babanın Doğum Tarihi</th><td>${formatDateDMY(f.steps[2].father_birth_date) || "-"}</td></tr>
+        <tr><th>Baba Uyruğu</th><td>${f.steps[2].father_nationality || "-"}</td></tr>
+        <tr><th>Babanız Sizinle Seyahat Edecek mi?</th><td>${f.steps[2].father_travel_with_you || "-"}</td></tr>
+        <tr><th>Çocuğunuz Var mı?</th><td>${f.steps[2].boolean_child || "-"}</td></tr>
+        ${String(f.steps[2].boolean_child).toUpperCase() === "EVET" ? `
+        <tr><th>Çocuk Bilgileri (${f.steps[2].child_count || 0} Adet)</th><td>
+          ${(f.steps[2].child_names || []).length > 0
+            ? (f.steps[2].child_names || []).map((name, idx) => `
+              <div class="sub-entry">
+                <strong>${idx + 1}. Çocuğun Adı: ${name || "-"}</strong>
+                Doğum Tarihi: ${formatDateDMY((f.steps[2].child_birth_date || {})[idx]) || "-"}<br/>
+                Çocuğunuz Sizinle Seyahat Edecek mi?: ${(f.steps[2].child_travel_with_you || {})[idx] || "-"}<br/>
+                Çocuğunuz Sizinle Birlikte Yaşıyor mu?: ${(f.steps[2].child_live || {})[idx] || "-"}<br/>
+                Çocuğunuzun İngiltere Vizesi Var mı?: ${(f.steps[2].child_visa || {})[idx] || "-"}<br/>
+                Çocuğunuzun Pasaport Numarası: ${(f.steps[2].child_passport_numbers || {})[idx] || "-"}
+              </div>`).join("")
+            : "-"}
+        </td></tr>
+        ` : ""}
+      </table>
+    </div>
 
-    <tr><th style="background-color:#e0e0e0;">E-posta</th><td>${s1.email || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">İkinci E-posta</th><td>${s1.email2 || "-"}</td></tr>
+    <!-- 09: BİRLEŞİK KRALLIK'TA YAŞAYAN AİLE BİLGİLERİ -->
+    <div class="section">
+      <div class="section-title"><span class="badge">09</span> BİRLEŞİK KRALLIK'TA YAŞAYAN AİLE BİLGİLERİ</div>
+      <table>
+        <tr><th>Birleşik Krallık'ta Aileniz Var mı?</th><td>${f.steps[5].has_family_in_uk || "-"}</td></tr>
+        ${f.steps[5].has_family_in_uk === "EVET" ? `
+        <tr><th>Size Olan Yakınlık Derecesi</th><td>${f.steps[5].uk_family_relation || "-"}</td></tr>
+        <tr><th>Adı Soyadı</th><td>${f.steps[5].uk_family_fullname || "-"}</td></tr>
+        <tr><th>Yakınınızın Uyruğu</th><td>${f.steps[5].uk_family_nationality || "-"}</td></tr>
+        <tr><th>Yakınınızın Birleşik Krallık'taki Yasal Durumu</th><td>${f.steps[5].uk_family_legal_status || "-"}</td></tr>
+        <tr><th>Yakınınız Geçici Vizeye Sahip mi?</th><td>${f.steps[5].uk_family_has_temp_visa || "-"}</td></tr>
+        <tr><th>Yakınınız Temelli Olarak UK'de mi Yaşıyor?</th><td>${f.steps[5].uk_family_is_resident || "-"}</td></tr>
+        ${(f.steps[5].uk_family_has_temp_visa === "EVET" || f.steps[5].uk_family_is_resident === "EVET") ? `
+        <tr><th>Yakınınızın Pasaport Numarası</th><td>${f.steps[5].uk_family_passport || "-"}</td></tr>
+        ` : ""}
+        ${f.steps[5].uk_family_has_temp_visa === "HAYIR" ? `
+        <tr><th>Yakınınızın Vize Durumu Açıklaması</th><td>${f.steps[5].uk_family_visa_explanation || "-"}</td></tr>
+        ` : ""}
+        ` : ""}
+      </table>
+    </div>
 
-    <tr><th style="background-color:#e0e0e0;">Adres</th><td>${s1.home_address || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Posta Kodu</th><td>${s1.post_code || "-"}</td></tr>
+    <!-- 10: GRUP İLE SEYAHAT BİLGİLERİ -->
+    <div class="section">
+      <div class="section-title"><span class="badge">10</span> GRUP İLE SEYAHAT BİLGİLERİ</div>
+      <table>
+        <tr><th>Grup ile Seyahat Edecek misiniz?</th><td>${f.steps[5].boolean_travel_group || "-"}</td></tr>
+        ${f.steps[5].boolean_travel_group === "EVET" ? `
+        <tr><th>Grup Adı</th><td>${f.steps[5].travel_group || "-"}</td></tr>
+        ` : ""}
+      </table>
+    </div>
 
-    <tr><th style="background-color:#e0e0e0;">Ev Durumu</th><td>${s1.home_owner || "-"}</td></tr>
-    <tr><th style="background-color:#e0e0e0;">Evde Kalma Süresi</th><td>${s1.residence_duration || "-"}</td></tr>
+    <!-- 11: AİLE DIŞI BİRİYLE SEYAHAT BİLGİLERİ -->
+    <div class="section">
+      <div class="section-title"><span class="badge">11</span> AİLE DIŞI BİRİYLE SEYAHAT BİLGİLERİ</div>
+      <table>
+        <tr><th>Beraber seyahat edeceğiniz birisi var mı?</th><td>${f.steps[5].travel_with_non_family || "-"}</td></tr>
+        ${f.steps[5].travel_with_non_family === "EVET" ? `
+        <tr><th>Seyahat Edeceğiniz Kişinin Adı Soyadı</th><td>${f.steps[5].travel_non_family_fullname || "-"}</td></tr>
+        <tr><th>Seyahat Edeceğiniz Kişinin Yakınlık Derecesi</th><td>${f.steps[5].travel_non_family_relation || "-"}</td></tr>
+        <tr><th>Seyahat Edeceğiniz Kişinin Telefon Numarası</th><td>${f.steps[5].travel_non_family_phone || "-"}</td></tr>
+        ` : ""}
+      </table>
+    </div>
 
-    ${
-      s1.home_owner === "DIGER"
-        ? `<tr><th style="background-color:#e0e0e0;">Ev Sahibi Açıklama</th><td>${s1.home_owner_info || "-"}</td></tr>`
-        : ""
-    }
+    <!-- 12: İNGİLTERE'DE KALINACAK ADRES BİLGİLERİ -->
+    <div class="section">
+      <div class="section-title"><span class="badge">12</span> İNGİLTERE'DE KALINACAK ADRES BİLGİLERİ</div>
+      <table>
+        <tr><th>İngiltere'de Kalınacak Adres</th><td>${f.steps[5].uk_address || "-"}</td></tr>
+      </table>
+    </div>
 
-    ${
-      showPastAddresses
-        ? `<tr><th style="background-color:#e0e0e0;">Son 2 Yıldaki Önceki Adresler</th><td>${s1.past_addresses || "-"}</td></tr>`
-        : ""
-    }
+    <!-- 13: VİZE REDDİ BİLGİLERİ -->
+    <div class="section">
+      <div class="section-title"><span class="badge">13</span> VİZE REDDİ BİLGİLERİ</div>
+      <table>
+        <tr><th>Daha Önce Vize Reddi Aldınız mı?</th><td>${f.steps[5].boolean_refused_visa || "-"}</td></tr>
+        ${f.steps[5].boolean_refused_visa === "EVET" ? `
+        <tr><th>Vize Reddi Tarihi</th><td>${formatDateDMY(f.steps[5].when_refused) || "-"}</td></tr>
+        <tr><th>Vize Reddi Sebebi</th><td>${f.steps[5].refused_about || "-"}</td></tr>
+        ` : ""}
+      </table>
+    </div>
 
-  </tbody>
-</table>
+    <!-- 14: DAVETİYE BİLGİLERİ -->
+    <div class="section">
+      <div class="section-title"><span class="badge">14</span> DAVETİYE BİLGİLERİ</div>
+      <table>
+        <tr><th>Davetiyeniz Var mı?</th><td>${f.steps[5].have_invitation || "-"}</td></tr>
+        ${f.steps[5].have_invitation === "EVET" ? `
+        <tr><th>Davetiye Türü</th><td>${f.steps[5].invitation_type || "-"}</td></tr>
+        ${f.steps[5].invitation_type === "BIREYSEL" ? `
+        <tr><th>Davet Eden Kişinin Adı Soyadı</th><td>${f.steps[5].inviter_fullname || "-"}</td></tr>
+        <tr><th>Davet Eden Kişinin E-Postası</th><td>${f.steps[5].inviter_email || "-"}</td></tr>
+        <tr><th>Davet Eden Kişinin Telefon Numarası</th><td>${f.steps[5].inviter_phone || "-"}</td></tr>
+        <tr><th>Davet Eden Kişinin Adresi</th><td>${f.steps[5].inviter_address || "-"}</td></tr>
+        ` : ""}
+        ${f.steps[5].invitation_type === "SIRKET" ? `
+        <tr><th>Davet Eden Şirket Adı</th><td>${f.steps[5].company_name || "-"}</td></tr>
+        <tr><th>Davet Eden Şirketin E-Postası</th><td>${f.steps[5].company_email || "-"}</td></tr>
+        <tr><th>Davet Eden Şirketin Telefon Numarası</th><td>${f.steps[5].company_phone || "-"}</td></tr>
+        <tr><th>Davet Eden Şirketin Adresi</th><td>${f.steps[5].company_address || "-"}</td></tr>
+        ` : ""}
+        <tr><th>Davet Sebebi</th><td>${f.steps[5].invitation_reason || "-"}</td></tr>
+        ` : ""}
+      </table>
+    </div>
 
+    <!-- 15: SON 10 YILDA YAPILAN BİRLEŞİK KRALLIK ZİYARETİ BİLGİLERİ -->
+    <div class="section">
+      <div class="section-title"><span class="badge">15</span> SON 10 YILDA YAPILAN BİRLEŞİK KRALLIK ZİYARETİ BİLGİLERİ</div>
+      <table>
+        <tr><th>Son 10 yıl içinde Birleşik Krallık'ta bulundunuz mu?</th><td>${f.steps[5].uk_visited_last10 || "-"}</td></tr>
+        ${f.steps[5].uk_visited_last10 === "EVET" ? `
+        <tr><th>Kaç Kere Bulundunuz?</th><td>${f.steps[5].uk_visited_count ? String(f.steps[5].uk_visited_count) : "-"}</td></tr>
+        <tr><th>Ziyaret Detayları</th><td>
+          ${Array.isArray(f.steps[5].uk_visits) && f.steps[5].uk_visits.length > 0
+            ? f.steps[5].uk_visits.map((visit, index) => `
+              <div class="sub-entry">
+                <strong>Ziyaret ${index + 1}</strong>
+                Ziyaret Amacı: ${visit.purpose || "-"}<br/>
+                Gidiş Tarihi: ${visit.arrivalDate ? formatDateDMY(visit.arrivalDate) : "-"}<br/>
+                Dönüş Tarihi: ${visit.departureDate ? formatDateDMY(visit.departureDate) : "-"}
+              </div>`).join("")
+            : "-"}
+        </td></tr>
+        ` : ""}
+      </table>
+    </div>
 
-<h3>Aile Bilgileri</h3>
-<table border="1" cellspacing="0" cellpadding="5" style="border-collapse: collapse; width:100%;">
-  <tbody>
-
-    <!-- ANNE -->
-    <tr>
-      <th style="background-color:#e0e0e0;">Anne Adı Soyadı</th>
-      <td>${f.steps[2].mother_full_name || "-"}</td>
-    </tr>
-    <tr>
-      <th style="background-color:#e0e0e0;">Anne Doğum Tarihi</th>
-      <td>${formatDateDMY(f.steps[2].mother_birth_date )|| "-"}</td>
-    </tr>
-    <tr>
-      <th style="background-color:#e0e0e0;">Anne Uyruğu</th>
-      <td>${f.steps[2].mother_nationality || "-"}</td>
-    </tr>
-    <tr>
-      <th style="background-color:#e0e0e0;">Anne Sizinle Seyahat Edecek mi?</th>
-      <td>${f.steps[2].mother_travel_with_you || "-"}</td>
-    </tr>
-
-    <!-- BABA -->
-    <tr>
-      <th style="background-color:#e0e0e0;">Baba Adı Soyadı</th>
-      <td>${f.steps[2].father_full_name || "-"}</td>
-    </tr>
-    <tr>
-      <th style="background-color:#e0e0e0;">Baba Doğum Tarihi</th>
-      <td>${formatDateDMY(f.steps[2].father_birth_date) || "-"}</td>
-    </tr>
-    <tr>
-      <th style="background-color:#e0e0e0;">Baba Uyruğu</th>
-      <td>${f.steps[2].father_nationality || "-"}</td>
-    </tr>
-    <tr>
-      <th style="background-color:#e0e0e0;">Baba Sizinle Seyahat Edecek mi?</th>
-      <td>${f.steps[2].father_travel_with_you || "-"}</td>
-    </tr>
-
-    <!-- ÇOCUK -->
-    <tr>
-      <th style="background-color:#e0e0e0;">Çocuğunuz Var mı?</th>
-      <td>${f.steps[2].boolean_child || "-"}</td>
-    </tr>
-
-    <tr>
-      <th style="background-color:#e0e0e0;">Çocuk Sayısı</th>
-      <td>
-        ${
-          f.steps[2].boolean_child === "EVET"
-            ? (f.steps[2].child_count || "-")
-            : "-"
-        }
-      </td>
-    </tr>
-
-    <!-- ÇOCUKLAR DETAY -->
-    <tr>
-      <th style="background-color:#e0e0e0;">Çocuklar</th>
-      <td>
-        ${
-          f.steps[2].boolean_child === "EVET" &&
-          (f.steps[2].child_names || []).length > 0
-            ? f.steps[2].child_names
-                .map(
-                  (name, idx) => `
-                  <div style="margin-bottom:8px;">
-                    <strong>${idx + 1}. Çocuk</strong><br/>
-                    Ad Soyad: ${name || "-"}<br/>
-                    Doğum Tarihi: ${formatDateDMY(f.steps[2].child_birth_date?.[idx]) || "-"}<br/>
-                    Sizinle Seyahat: ${f.steps[2].child_travel_with_you?.[idx] || "-"}<br/>
-                    Birlikte Yaşıyor: ${f.steps[2].child_live?.[idx] || "-"}<br/>
-                    İngiltere Vizesi: ${f.steps[2].child_visa?.[idx] || "-"}<br/>
-                    Pasaport No: ${f.steps[2].child_passport_numbers?.[idx] || "-"}
-                  </div>
-                `
-                )
-                .join("")
-            : "-"
-        }
-      </td>
-    </tr>
-
-  </tbody>
-</table>
-
-
-
-<h3>Pasaport</h3>
-<table border="1" cellspacing="0" cellpadding="5" style="border-collapse: collapse; width:100%;">
-  <tbody>
-    <tr>
-      <th style="background-color:#e0e0e0;">No</th>
-      <td>${f.steps[3].passport_number || "-"}</td>
-    </tr>
-
-    <tr>
-      <th style="background-color:#e0e0e0;">Başlangıç / Bitiş</th>
-      <td>
-        ${
-          f.steps[3].Passport_start_date
-            ? formatDateDMY(f.steps[3].Passport_start_date)
-            : "-"
-        }
-        /
-        ${
-          f.steps[3].Passport_end_date
-            ? formatDateDMY(f.steps[3].Passport_end_date)
-            : "-"
-        }
-      </td>
-    </tr>
-
-    <tr>
-      <th style="background-color:#e0e0e0;">Veriliş</th>
-      <td>${f.steps[3].passport_issuing_authority || "-"}</td>
-    </tr>
-
-    <tr>
-      <th style="background-color:#e0e0e0;">TC Kart Bitiş Tarihi</th>
-      <td>
-        ${
-          f.steps[3].tc_card_end_date
-            ? formatDateDMY(f.steps[3].tc_card_end_date)
-            : "-"
-        }
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-
-<h3>Çalışma ve Maddi Durum</h3>
-<table border="1" cellspacing="0" cellpadding="5" style="border-collapse:collapse;width:100%;">
-<tbody>
-
-<tr><th>Çalışma Durumu</th><td>${f.steps[4].boolean_work || "-"}</td></tr>
-
-${
-["CALISIYOR","EMEKLI","CALISMAYAN"].includes(f.steps[4].boolean_work)
-? `
-<tr><th>İş Yeri Adı</th><td>${f.steps[4].work_name || "-"}</td></tr>
-<tr><th>İş Yeri Adresi</th><td>${f.steps[4].work_address || "-"}</td></tr>
-<tr><th>İş Yeri Telefonu</th><td>${f.steps[4].work_phone || "-"}</td></tr>
-<tr><th>Görev / Ünvan</th><td>${f.steps[4].worker_title || "-"}</td></tr>
-<tr><th>Çalışma Süresi</th><td>${f.steps[4].work_year || "-"}</td></tr>
-${f.steps[4].boolean_work === "CALISIYOR"
-  ? `<tr><th>İş Yeri Kendi</th><td>${f.steps[4].own_work || "-"}</td></tr>`
-  : ""
-}
-`
-: ""
-}
-
-<tr><th>Aylık Gelir</th><td>${f.steps[4].monthly_money || "-"}</td></tr>
-<tr><th>Birikim</th><td>${f.steps[4].savings || "-"}</td></tr>
-<tr><th>Yan Gelir</th><td>${f.steps[4].sideline || "-"}</td></tr>
-<tr><th>Aylık Harcama</th><td>${f.steps[4].monthly_expenditure_amount || "-"}</td></tr>
-
-${
-f.steps[4].boolean_work === "OGRENCI"
-? `
-<tr><th>Okul Adı</th><td>${f.steps[4].school_name || "-"}</td></tr>
-<tr><th>Bölüm</th><td>${f.steps[4].school_department || "-"}</td></tr>
-<tr><th>Okuma Süresi</th><td>${f.steps[4].school_year || "-"}</td></tr>
-`
-: ""
-}
-
-</tbody>
-</table>
-
-
-
-<h3>Seyahat & UK Bilgileri</h3>
-<table border="1" cellspacing="0" cellpadding="5" style="border-collapse:collapse;width:100%;">
-<tbody>
-
-<tr>
-  <th>İngiltere’de Kalınacak Adres</th>
-  <td>${f.steps[5].uk_address || "-"}</td>
-</tr>
-
-<tr>
-  <th>Seyahat Tarihleri</th>
-  <td>
-    ${formatDateDMY(f.steps[5].travel_start_date) || "-"} /
-    ${formatDateDMY(f.steps[5].travel_end_date) || "-"}
-  </td>
-</tr>
-
-<tr>
-  <th>Seyahat Sebebi</th>
-  <td>${
-    f.steps[5].travel_reason === "DIGER"
-      ? `Diğer: ${f.steps[5].travel_reason_other || "-"}`
-      : (f.steps[5].travel_reason || "-")
-  }</td>
-</tr>
-
-<tr>
-  <th>Grup ile Seyahat</th>
-  <td>${f.steps[5].boolean_travel_group || "-"}</td>
-</tr>
-
-${
-  f.steps[5].boolean_travel_group === "EVET"
-    ? `
-<tr>
-  <th>Grup Adı</th>
-  <td>${f.steps[5].travel_group || "-"}</td>
-</tr>`
-    : ""
-}
-
-<tr>
-  <th>Aile Dışı Biriyle Seyahat</th>
-  <td>${f.steps[5].travel_with_non_family || "-"}</td>
-</tr>
-
-${
-  f.steps[5].travel_with_non_family === "EVET"
-    ? `
-<tr>
-  <th>Seyahat Edilen Kişi</th>
-  <td>
-    Ad Soyad: ${f.steps[5].travel_non_family_fullname || "-"}<br/>
-    Yakınlık: ${f.steps[5].travel_non_family_relation || "-"}<br/>
-    Telefon: ${f.steps[5].travel_non_family_phone || "-"}
-  </td>
-</tr>`
-    : ""
-}
-
-<tr>
-  <th>Son 10 Yılda UK Ziyareti</th>
-  <td>${f.steps[5].uk_visited_last10 || "-"}</td>
-</tr>
-
-${
-  f.steps[5].uk_visited_last10 === "EVET"
-    ? `
-<tr>
-  <th>UK Ziyaret Detayları</th>
-  <td>
-    <strong>Kaç Kez:</strong> ${f.steps[5].uk_visited_count || "-"}
-    <br/><br/>
-
-    ${
-      Array.isArray(f.steps[5].uk_visits) &&
-      f.steps[5].uk_visits.length > 0
-        ? f.steps[5].uk_visits
-            .map(
-              (visit, index) => `
-              <div style="margin-bottom:10px;">
-                <strong>Ziyaret ${index + 1}</strong><br/>
-                Amaç: ${visit.purpose || "-"}<br/>
-                Gidiş Tarihi: ${
-                  visit.arrivalDate
-                    ? formatDateDMY(visit.arrivalDate)
-                    : "-"
-                }<br/>
-                Dönüş Tarihi: ${
-                  visit.departureDate
-                    ? formatDateDMY(visit.departureDate)
-                    : "-"
-                }
+    <!-- 16: SON 10 YILDA YAPILAN DİĞER ÜLKE SEYAHATLERİ BİLGİSİ -->
+    <div class="section">
+      <div class="section-title"><span class="badge">16</span> SON 10 YILDA YAPILAN DİĞER ÜLKE SEYAHATLERİ BİLGİSİ</div>
+      <table>
+        <tr><th>Son 10 yılda Schengen, ABD, Kanada, Avustralya, Yeni Zelanda veya İsviçre'ye seyahat ettiniz mi?</th><td>${f.steps[5].other_visited_countries || "-"}</td></tr>
+        ${["BIR KEZ", "2-5 KEZ", "6 VE UZERI"].includes(f.steps[5].other_visited_countries)
+          ? Array.from({ length: getTravelCardCount(f.steps[5].other_visited_countries) }).map((_, i) => `
+            <tr><th>${i + 1}. Seyahat</th><td>
+              <div class="sub-entry">
+                Ülke: ${f.steps[5][`lastTravel${i + 1}_country`] || "-"}<br/>
+                Seyahat Amacı: ${f.steps[5][`lastTravel${i + 1}_purpose`] || "-"}<br/>
+                Gidiş Tarihi: ${formatDateDMY(f.steps[5][`lastTravel${i + 1}_monthYear`]) || "-"}<br/>
+                Dönüş Tarihi: ${formatDateDMY(f.steps[5][`lastTravel${i + 1}_duration`]) || "-"}
               </div>
-            `
-            )
-            .join("")
-        : "-"
-    }
-  </td>
-</tr>
-`
-    : ""
-}
+            </td></tr>`).join("")
+          : ""}
+      </table>
+    </div>
 
-
-<tr>
-  <th>Son 10 Yılda Diğer Ülkeler (Schengen vb.)</th>
-  <td>${f.steps[5].other_visited_countries || "-"}</td>
-</tr>
-
-${
-  ["BIR KEZ", "2-5 KEZ", "6 VE UZERI"].includes(f.steps[5].other_visited_countries)
-    ? Array.from({ length: getTravelCardCount(f.steps[5].other_visited_countries) })
-        .map((_, i) => `
-<tr>
-  <th>Son ${i + 1}. Seyahat</th>
-  <td>
-    Ülke: ${f.steps[5][`lastTravel${i + 1}_country`] || "-"}<br/>
-    Amaç: ${f.steps[5][`lastTravel${i + 1}_purpose`] || "-"}<br/>
-    Gidiş Tarihi: ${formatDateDMY(f.steps[5][`lastTravel${i + 1}_monthYear`]) || "-"}<br/>
-    Dönüş Tarihi: ${formatDateDMY(f.steps[5][`lastTravel${i + 1}_duration`]) || "-"}
-  </td>
-</tr>`).join("")
-    : ""
-}
-
-<tr>
-  <th>Son 10 Yılda Diğer Ülkeler (UK / ABD / Kanada / Schengen Dışı)</th>
-  <td>${f.steps[5].boolean_traveled_adroad || "-"}</td>
-</tr>
-
-${
-  f.steps[5].boolean_traveled_adroad === "EVET"
-    ? `
-<tr>
-  <th>Gidilen Ülkeler Detayı</th>
-  <td>
-    ${
-      (f.steps[5].abroad_country || []).length > 0
-        ? (f.steps[5].abroad_country || [])
-            .map((item, index) => `
-              <strong>${index + 1}. Ülke</strong><br/>
-              Ülke Adı: ${item.country || "-"}<br/>
+    <!-- 17: SON 10 YILDA YAPILAN DİĞER ÜLKELERE SEYAHAT BİLGİLERİ -->
+    <div class="section">
+      <div class="section-title"><span class="badge">17</span> SON 10 YILDA YAPILAN DİĞER ÜLKELERE SEYAHAT BİLGİLERİ</div>
+      <table>
+        <tr><th>Schengen, ABD, Kanada vb. dışındaki ülkelere seyahat ettiniz mi?</th><td>${f.steps[5].boolean_traveled_adroad || "-"}</td></tr>
+        ${f.steps[5].boolean_traveled_adroad === "EVET" && Array.isArray(f.steps[5].abroad_country) && f.steps[5].abroad_country.length > 0 ? `
+        <tr><th>Gidilen Ülkeler</th><td>
+          ${f.steps[5].abroad_country.map((item, index) => `
+            <div class="sub-entry">
+              <strong>${index + 1}. Ülke</strong>
+              Ülke: ${item.country || "-"}<br/>
               Seyahat Amacı: ${item.purpose || "-"}<br/>
-              Giriş Tarihi: ${formatDateDMY(item.start) || "-"}<br/>
-              Çıkış Tarihi: ${formatDateDMY(item.end) || "-"}
-            `)
-            .join("<br/><br/>")
-        : "-"
-    }
-  </td>
-</tr>`
-    : ""
-}
+              Giriş Tarihi: ${item.start ? formatDateDMY(item.start) : "-"}<br/>
+              Çıkış Tarihi: ${item.end ? formatDateDMY(item.end) : "-"}
+            </div>`).join("")}
+        </td></tr>
+        ` : ""}
+      </table>
+    </div>
 
+    <!-- 18: İNGİLTERE'DE TIBBİ TEDAVİ BİLGİLERİ -->
+    <div class="section">
+      <div class="section-title"><span class="badge">18</span> İNGİLTERE'DE TIBBİ TEDAVİ BİLGİLERİ</div>
+      <table>
+        <tr><th>İngiltere'de daha önce tıbbi tedavi gördünüz mü?</th><td>${f.steps[5].medical_treatment_uk || "-"}</td></tr>
+        ${f.steps[5].medical_treatment_uk === "EVET" ? `
+        <tr><th>Tedavi Açıklaması</th><td>${f.steps[5].medical_treatment_details || "-"}</td></tr>
+        ` : ""}
+      </table>
+    </div>
 
-<tr>
-  <th>Planlanan Harcama (GBP)</th>
-  <td>${f.steps[5].spend_pound || "-"}</td>
-</tr>
+    <!-- 19: ULUSAL SİGORTA NUMARASI BİLGİSİ -->
+    <div class="section">
+      <div class="section-title"><span class="badge">19</span> ULUSAL SİGORTA NUMARASI BİLGİSİ</div>
+      <table>
+        <tr><th>Ulusal Sigorta Numaranız var mı?</th><td>${f.steps[5].national_insurance_number_exist || "-"}</td></tr>
+        ${f.steps[5].national_insurance_number_exist === "EVET" ? `
+        <tr><th>Ulusal Sigorta Numarası</th><td>${f.steps[5].national_insurance_number || "-"}</td></tr>
+        ` : ""}
+      </table>
+    </div>
 
-<tr>
-  <th>Masrafları Kim Karşılıyor?</th>
-  <td>${f.steps[5].boolean_cover_expenses || "-"}</td>
-</tr>
+    <!-- 20: İNGİLTERE'DE KALMA İZNİ BAŞVURUSU BİLGİSİ -->
+    <div class="section">
+      <div class="section-title"><span class="badge">20</span> İNGİLTERE'DE KALMA İZNİ BAŞVURUSU BİLGİSİ</div>
+      <table>
+        <tr><th>Son 10 yılda İngiltere'de kalma izni için başvuruda bulundunuz mu?</th><td>${f.steps[5].uk_stay_application_last10 || "-"}</td></tr>
+        ${f.steps[5].uk_stay_application_last10 === "EVET" ? `
+        <tr><th>Başvuru Açıklaması</th><td>${f.steps[5].uk_stay_application_explanation || "-"}</td></tr>
+        ` : ""}
+      </table>
+    </div>
 
-${
-  f.steps[5].boolean_cover_expenses === "HAYIR"
-    ? `
-<tr>
-  <th>Sponsor Bilgileri</th>
-  <td>
-    İsim: ${f.steps[5].who_cover_expenses || "-"}<br/>
-    Telefon: ${f.steps[5].cover_expenses_phone || "-"}<br/>
-    Email: ${f.steps[5].cover_expenses_email || "-"}<br/>
-    Katkı: ${f.steps[5].money_cover_expenses || "-"} GBP<br/>
-    Sebep: ${f.steps[5].cover_expenses_reason || "-"}
-  </td>
-</tr>`
-    : ""
-}
+    <!-- 21: KAMU FONU BİLGİSİ -->
+    <div class="section">
+      <div class="section-title"><span class="badge">21</span> KAMU FONU BİLGİSİ</div>
+      <table>
+        <tr><th>İngiltere'de herhangi bir kamu fonu aldınız mı?</th><td>${f.steps[5].uk_public_funds || "-"}</td></tr>
+        ${f.steps[5].uk_public_funds === "EVET" ? `
+        <tr><th>Alınan Kamu Fonu Açıklaması</th><td>${f.steps[5].uk_public_funds_details || "-"}</td></tr>
+        ` : ""}
+      </table>
+    </div>
 
-<tr>
-  <th>Davetiyeniz Var mı?</th>
-  <td>${f.steps[5].have_invitation || "-"}</td>
-</tr>
+    <!-- 22: VİZE REDDİ VE GİRİŞ YASAĞI BİLGİSİ -->
+    <div class="section">
+      <div class="section-title"><span class="badge">22</span> VİZE REDDİ VE GİRİŞ YASAĞI BİLGİSİ</div>
+      <table>
+        <tr><th>Herhangi bir ülkede vize reddi, sınır dışı edilme veya giriş yasağı yaşadınız mı?</th><td>${f.steps[5].visa_refused_or_banned || "-"}</td></tr>
+        ${f.steps[5].visa_refused_or_banned === "EVET" ? `
+        <tr><th>Detaylar (Ülke, Yıl, Sebep)</th><td>${f.steps[5].visa_refused_details || "-"}</td></tr>
+        ` : ""}
+      </table>
+    </div>
 
-${
-  f.steps[5].have_invitation === "EVET"
-    ? `
-<tr>
-  <th>Davetiye Türü</th>
-  <td>${f.steps[5].invitation_type || "-"}</td>
-</tr>
-<tr>
-  <th>Davet Eden</th>
-  <td>
-    ${
-      f.steps[5].invitation_type === "BIREYSEL"
-        ? `
-        ${f.steps[5].inviter_fullname}<br/>
-        ${f.steps[5].inviter_email}<br/>
-        ${f.steps[5].inviter_phone}<br/>
-        ${f.steps[5].inviter_address}`
-        : `
-        ${f.steps[5].company_name}<br/>
-        ${f.steps[5].company_email}<br/>
-        ${f.steps[5].company_phone}<br/>
-        ${f.steps[5].company_address}`
-    }
-  </td>
-</tr>
-<tr>
-  <th>Davet Sebebi</th>
-  <td>${f.steps[5].invitation_reason || "-"}</td>
-</tr>`
-    : ""
-}
+    <!-- 23: EK BİLGİLER -->
+    <div class="section">
+      <div class="section-title"><span class="badge">23</span> EK BİLGİLER</div>
+      <table>
+        <tr><th>EK BİLGİLER</th><td>${f.steps[5].end_info || "-"}</td></tr>
+      </table>
+    </div>
 
-<tr>
-  <th>UK’de Aile Var mı?</th>
-  <td>${f.steps[5].has_family_in_uk || "-"}</td>
-</tr>
+    ${f.steps[6].passportFile || f.steps[6].photoFile ? `
+    <div class="photo-row">
+      ${f.steps[6].passportFile ? `
+      <div class="photo-box">
+        <p>Pasaport Fotoğrafı</p>
+        <img src="cid:passportPhoto" alt="Pasaport"/>
+      </div>` : ""}
+      ${f.steps[6].photoFile ? `
+      <div class="photo-box">
+        <p>Vesikalık</p>
+        <img src="cid:profilePhoto" alt="Vesikalık"/>
+      </div>` : ""}
+    </div>
+    ` : ""}
 
-${
-  f.steps[5].has_family_in_uk === "EVET"
-    ? `
-<tr>
-  <th>UK Aile Bilgisi</th>
-  <td>
-    ${f.steps[5].uk_family_relation}<br/>
-    ${f.steps[5].uk_family_fullname}<br/>
-    ${f.steps[5].uk_family_nationality}<br/>
-    ${f.steps[5].uk_family_legal_status}<br/>
-    Geçici Vize: ${f.steps[5].uk_family_has_temp_visa}<br/>
-    Temelli: ${f.steps[5].uk_family_is_resident}<br/>
-    Pasaport: ${f.steps[5].uk_family_passport}<br/>
-    Açıklama: ${f.steps[5].uk_family_visa_explanation}
-  </td>
-</tr>`
-    : ""
-}
+  </div>
 
-<tr>
-  <th>UK’de Tıbbi Tedavi</th>
-  <td>${f.steps[5].medical_treatment_uk || "-"}</td>
-</tr>
+  <div class="doc-footer">
+    Başvuru Tarihi: ${new Date().toLocaleString("tr-TR")}
+  </div>
 
-${
-  f.steps[5].medical_treatment_uk === "EVET"
-    ? `
-<tr>
-  <th>Tedavi Açıklaması</th>
-  <td>${f.steps[5].medical_treatment_details || "-"}</td>
-</tr>`
-    : ""
-}
-
-<tr>
-  <th>Ulusal Sigorta Numarası</th>
-  <td>${f.steps[5].national_insurance_number_exist || "-"}</td>
-</tr>
-
-${
-  f.steps[5].national_insurance_number_exist === "EVET"
-    ? `
-<tr>
-  <th>Sigorta No</th>
-  <td>${f.steps[5].national_insurance_number || "-"}</td>
-</tr>`
-    : ""
-}
-
-<tr>
-  <th>UK Kalma İzni Başvurusu</th>
-  <td>${f.steps[5].uk_stay_application_last10 || "-"}</td>
-</tr>
-
-${
-  f.steps[5].uk_stay_application_last10 === "EVET"
-    ? `
-<tr>
-  <th>Açıklama</th>
-  <td>${f.steps[5].uk_stay_application_explanation || "-"}</td>
-</tr>`
-    : ""
-}
-
-<tr>
-  <th>UK Vizesi (Son 10 Yıl)</th>
-  <td>${f.steps[5].uk_visa_last10 || "-"}</td>
-</tr>
-
-${
-  f.steps[5].uk_visa_last10 === "EVET"
-    ? `
-<tr>
-  <th>Vize Tarihi</th>
-  <td>${formatDateDMY(f.steps[5].uk_visa_issue_date)}</td>
-</tr>`
-    : ""
-}
-
-<tr>
-  <th>UK Kamu Fonu</th>
-  <td>${f.steps[5].uk_public_funds || "-"}</td>
-</tr>
-
-${
-  f.steps[5].uk_public_funds === "EVET"
-    ? `
-<tr>
-  <th>Fon Açıklaması</th>
-  <td>${f.steps[5].uk_public_funds_details || "-"}</td>
-</tr>`
-    : ""
-}
-
-<tr>
-  <th>Vize Reddi / Giriş Yasağı</th>
-  <td>${f.steps[5].visa_refused_or_banned || "-"}</td>
-</tr>
-
-${
-  f.steps[5].visa_refused_or_banned === "EVET"
-    ? `
-<tr>
-  <th>Detay</th>
-  <td>${f.steps[5].visa_refused_details || "-"}</td>
-</tr>`
-    : ""
-}
-
-</tbody>
-</table>
-
-
-${f.steps[6].passportFile ? `<h4>Pasaport Fotoğrafı</h4><img src="cid:passportPhoto" style="max-width:220px;border-radius:6px;"/>` : ""}
-${f.steps[6].photoFile ? `<h4>Vesikalık</h4><img src="cid:profilePhoto" style="max-width:220px;border-radius:6px;"/>` : ""}
-
-<p><small>Başvuru Tarihi: ${new Date().toLocaleString("tr-TR")}</small></p>
+</div>
+</body>
+</html>
 `.trim();
-
 
 
 
@@ -2889,7 +2875,7 @@ ${f.steps[6].photoFile ? `<h4>Vesikalık</h4><img src="cid:profilePhoto" style="
       from: `Aya Journey <${process.env.GOOGLE_MAIL_ADDRESS}>`,
       to: `${process.env.FORM_MAIL_ADRESS}`,
       subject: `İngiltere Vize Başvurusu - ${s(1).fullName || "İsimsiz"}`,
-      text: textBody,
+      // text: textBody,
       html: htmlBody,
       attachments,
     };
