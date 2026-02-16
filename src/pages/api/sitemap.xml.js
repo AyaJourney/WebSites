@@ -108,17 +108,17 @@ export default async function handler(req, res) {
     "/amerika-vize-reddi-sonrasi-ne-yapilmali",// burası tamam
     "/amerika-vize-reddi-ikinci-basvuru", // burası tamam
     "/amerika-vize-214b-nasil-kaldirilir", //burası tamam
-    "/amerika-vize-reddi-psikolojik-hatalar",
-    "/amerika-vize-reddi-dosya-analizi",
-    "/amerika-vize-reddi-evrak-yetersizligi",
-    "/amerika-vize-reddi-banka-hesabi",
-    "/amerika-vize-reddi-sponsor",
-    "/amerika-vize-reddi-ogrenci",
-    "/amerika-vize-reddi-calisan",
-    "/amerika-vize-reddi-sirket-sahibi",
-    "/amerika-vize-reddi-yeni-ise-baslayan",
-    "/amerika-vize-reddi-dusuk-maas",
-    "/amerika-vize-reddi-bekar",
+    "/amerika-vize-reddi-psikolojik-hatalar",//burası tamam
+    "/amerika-vize-reddi-dosya-analizi",//burası tamam
+    "/amerika-vize-reddi-evrak-yetersizligi",//burası tamam
+    "/amerika-vize-reddi-banka-hesabi",//burası tamam
+    "/amerika-vize-reddi-sponsor",//burası tamam
+    "/amerika-vize-reddi-ogrenci",//burası tamam
+    "/amerika-vize-reddi-calisan",//burası tamam
+    "/amerika-vize-reddi-sirket-sahibi",//burası tamam
+    "/amerika-vize-reddi-yeni-ise-baslayan",//burası tamam
+    "/amerika-vize-reddi-dusuk-maas",//burası tamam
+    "/amerika-vize-reddi-bekar",//burası tamam
     "/amerika-vize-reddi-evli",
     "/macaristan-vize",
     "/macaristan-vize-evraklari",
@@ -167,7 +167,30 @@ export default async function handler(req, res) {
     "/portekiz-vize",
 "/portekiz-vize-evraklari",
 "/portekiz-vize-randevusu",
-"/portekiz-vize-reddi"
+"/portekiz-vize-reddi",
+"/isvec-vize",
+"/isvec-vize-evraklari",
+"/isvec-vize-randevusu",
+"/isvec-vize-reddi",
+"/isvicre-vize",
+"/isvicre-vize-evraklari",
+"/isvicre-vize-randevusu",
+"/isvicre-vize-reddi",
+"/izlanda-vize",
+"/izlanda-vize-evraklari",
+"/izlanda-vize-randevusu",
+"/izlanda-vize-reddi",
+"/kibris-vize",
+"/letonya-vize",
+"/letonya-vize-evraklari",
+"/letonya-vize-randevusu",
+"/letonya-vize-reddi",
+"/liechtenstein-vize",
+"/liechtenstein-vize-evraklari",
+"/liechtenstein-vize-randevusu",
+"/liechtenstein-vize-reddi",
+
+
 
 
 

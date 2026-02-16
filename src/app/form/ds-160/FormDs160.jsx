@@ -2956,15 +2956,15 @@ onChange={(e) => {
     <option value="">SEÇİNİZ</option>
 
     <option value="TEMP. BUSINESS OR PLEASURE VISITOR (B)">
-     Geçici İş ve/veya Eğlence Amaçlı Ziyaretçi
+   Turistik(B1/B2)
     </option>
 
     <option value="ACADEMIC OR LANGUAGE STUDENT (F)">
-     Akademik veya Dil Öğrencisi
+     Dil Eğitimi veya Okul(F1)
     </option>
 
     <option value="EXCHANGE VISITOR (J)">
-     Değişim Programı
+    Staj ve Değişim Programı(J1)
     </option>
   </select>
 
@@ -2985,7 +2985,7 @@ onChange={(e) => {
     <option value="">SEÇİNİZ</option>
 
     <option value="BUSINESS OR TOURISM (TEMPORARY VISITOR) (B1/B2)">
-     GEÇİCİ İŞ VEYA EĞLENCE AMAÇLI ZİYARETÇİ (B1/B2)
+     TURİST (B1/B2)
     </option>
 
     <option value="BUSINESS/CONFERENCE (B1)">
@@ -2993,7 +2993,7 @@ onChange={(e) => {
     </option>
 
     <option value="TOURISM/MEDICAL TREATMENT (B2)">
-    TURİZM/TIBBİ TEDAVİ (B2)
+    TIBBİ TEDAVİ (B2)
     </option>
   </select>
 
@@ -3045,7 +3045,7 @@ onChange={(e) => {
     <option value="">SEÇİNİZ</option>
 
     <option value="EXCHANGE VISITOR (J1)">
-   DEĞİŞİM PROGRAMI (J1)
+  STAJ VE DEĞİŞİM PROGRAMI (J1)
     </option>
 
     <option value="CHILD OF A J1 (J2)">

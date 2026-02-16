@@ -73,42 +73,42 @@ const visaLinks = [
     flag: "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/ES.svg",
     alt: "İspanya Bayrağı",
   },
-  // {
-  //   href: "/isvec-vize",
-  //   label: "İsveç Schengen Vizesi",
-  //   flag: "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/SE.svg",
-  //   alt: "İsveç Bayrağı",
-  // },
-  // {
-  //   href: "/isvicre-vize",
-  //   label: "İsviçre Schengen Vizesi",
-  //   flag: "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/CH.svg",
-  //   alt: "İsviçre Bayrağı",
-  // },
+  {
+    href: "/isvec-vize",
+    label: "İsveç Schengen Vizesi",
+    flag: "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/SE.svg",
+    alt: "İsveç Bayrağı",
+  },
+  {
+    href: "/isvicre-vize",
+    label: "İsviçre Schengen Vizesi",
+    flag: "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/CH.svg",
+    alt: "İsviçre Bayrağı",
+  },
   {
     href: "/italya-vize",
     label: "İtalya Schengen Vizesi",
     flag: "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/IT.svg",
     alt: "İtalya Bayrağı",
   },
-  // {
-  //   href: "/izlanda-vize",
-  //   label: "İzlanda Schengen Vizesi",
-  //   flag: "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/IS.svg",
-  //   alt: "İzlanda Bayrağı",
-  // },
-  // {
-  //   href: "/kibris-vize",
-  //   label: "Kıbrıs Schengen Vizesi",
-  //   flag: "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/CY.svg",
-  //   alt: "Kıbrıs Bayrağı",
-  // },
-  // {
-  //   href: "/letonya-vize",
-  //   label: "Letonya Schengen Vizesi",
-  //   flag: "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/LV.svg",
-  //   alt: "Letonya Bayrağı",
-  // },
+  {
+    href: "/izlanda-vize",
+    label: "İzlanda Schengen Vizesi",
+    flag: "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/IS.svg",
+    alt: "İzlanda Bayrağı",
+  },
+  {
+    href: "/kibris-vize",
+    label: "Kıbrıs Schengen Vizesi",
+    flag: "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/CY.svg",
+    alt: "Kıbrıs Bayrağı",
+  },
+  {
+    href: "/letonya-vize",
+    label: "Letonya Schengen Vizesi",
+    flag: "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/LV.svg",
+    alt: "Letonya Bayrağı",
+  },
   // {
   //   href: "/liechtenstein-vize",
   //   label: "Liechtenstein Schengen Vizesi",
@@ -190,13 +190,7 @@ return (
         <Link
           key={href}
           href={href}
-          className="group relative flex flex-col items-center justify-center 
-          gap-4 p-6 rounded-2xl 
-          bg-white/70 backdrop-blur-lg 
-          border border-gray-200 
-          shadow-sm hover:shadow-xl 
-          hover:-translate-y-1 
-          transition-all duration-300 ease-out"
+          className="group relative flex flex-col items-center justify-center gap-4 p-6 rounded-2xl  bg-white/70 backdrop-blur-lg  border border-gray-200  shadow-sm hover:shadow-xl  hover:-translate-y-1 transition-all duration-300 ease-out"
         >
           {/* Hover Gradient Effect */}
           <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
