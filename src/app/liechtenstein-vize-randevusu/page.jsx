@@ -33,7 +33,7 @@ export default function LiechtensteinVizeRandevusu() {
 
         <link
           rel="canonical"
-          href="https://www.siteadresin.com/liechtenstein-vize-randevusu"
+          href="https://ayajourney.com/liechtenstein-vize-randevusu"
         />
 
         <script

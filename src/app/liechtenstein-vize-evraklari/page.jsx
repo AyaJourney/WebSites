@@ -33,7 +33,7 @@ export default function LiechtensteinVizeEvraklari() {
 
         <link
           rel="canonical"
-          href="https://www.siteadresin.com/liechtenstein-vize-evraklari"
+          href="https://ayajourney.com/liechtenstein-vize-evraklari"
         />
 
         <script
