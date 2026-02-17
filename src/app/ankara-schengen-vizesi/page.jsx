@@ -256,7 +256,17 @@ export default function Page() {
     <a href="/yunanistan-vize" className="hover:underline">Yunanistan Schengen Vizesi</a>
   </div>
 </div>
+<div>
+  <h2 className="text-3xl font-bold text-slate-900">
+    Schengen Vize Reddine Dair Rehberler
+  </h2>
 
+  <ul className="mt-6 space-y-2 text-slate-700">
+    <li><a href="/schengen-vize-reddi-nedenleri" className="hover:underline">Schengen Vize Reddi Nedenleri</a></li>
+    <li><a href="/vize-reddi-itiraz-rehberi" className="hover:underline">Vize Reddi İtiraz Rehberi</a></li>
+    <li><a href="/vize-reddi-sonrasi-kontrol-listesi" className="hover:underline">Red Sonrası Kontrol Listesi</a></li>
+  </ul>
+</div>
             <div>
               <h2 className="text-3xl font-bold text-slate-900">
                 Ankara Schengen Vize Reddinin En Sık Nedenleri
