@@ -220,7 +220,9 @@ export default async function handler(req, res) {
 "/slovenya-vize",
 "/slovenya-vize-evraklari",
 "/slovenya-vize-randevusu",
-"/slovenya-vize-reddi"
+"/slovenya-vize-reddi",
+"/kanada-vizesi",
+"/kanada-vize-evraklari"
 
 
 
