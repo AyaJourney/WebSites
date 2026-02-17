@@ -230,7 +230,8 @@ export default async function handler(req, res) {
 "/avustralya-vize",
 "/avustralya-vize-evraklari",
 "/avustralya-vize-randevusu",
-"/avustralya-vize-reddi"
+"/avustralya-vize-reddi",
+"/2026-vize-gundemi"
 
 
 
