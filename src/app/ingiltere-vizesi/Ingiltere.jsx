@@ -624,7 +624,7 @@ const UKVisaPage = () => {
   ))}
 </div>
         <div className="flex flex-wrap gap-4 pt-4 text-sm">
-  <Link href="/ingiltere-vize-evraklari" className="text-blue-600 hover:underline">
+  <Link href="/birlesik-krallik-vize-evraklari" className="text-blue-600 hover:underline">
     İngiltere vize evrakları →
   </Link>
   <Link href="/ingiltere-vize-randevusu-nasil-alinir" className="text-blue-600 hover:underline">
@@ -702,7 +702,7 @@ const UKVisaPage = () => {
             <h2 className="text-3xl font-bold text-slate-900">Gerekli belgeleri tamamlayın</h2>
             <p className="text-slate-600 mb-6">
   Detaylı evrak listesi için 
-  <Link href="/ingiltere-vize-evraklari" className="text-blue-600 font-semibold hover:underline ml-1 mr-1">
+  <Link href="/birlesik-krallik-vize-evraklari" className="text-blue-600 font-semibold hover:underline ml-1 mr-1">
     İngiltere vize evrakları rehberini
   </Link> inceleyin.
 </p>
@@ -971,7 +971,7 @@ const UKVisaPage = () => {
 <div className="text-center mb-10">
   <p className="text-slate-700">
     Başvuru öncesi 
-    <Link href="/ingiltere-vize-evraklari" className="text-blue-600 font-semibold hover:underline ml-1 mr-1">
+    <Link href="/birlesik-krallik-vize-evraklari" className="text-blue-600 font-semibold hover:underline ml-1 mr-1">
       evrak listenizi kontrol edin
     </Link> 
     ve ardından 
