@@ -451,13 +451,14 @@ export default function BirlesikKrallikVizeEvraklariPage() {
       question: 'IHS (Immigration Health Surcharge) nedir?',
       answer: 'IHS, 6 aydan uzun süre İngiltere\'de kalacak kişilerin ödemesi gereken sağlık katkı payıdır. Öğrenciler için yıllık £776, diğer vize tipleri için £1035\'tür. Bu ücret vize başvurusu sırasında online ödenir ve NHS hizmetlerinden faydalanmanızı sağlar. Turist vizesi (6 aydan az) için IHS ödemesi gerekmez.'
     },
-    {
-      question: 'Hangi belgeler İngilizce olmalı?',
-      answer: 'Tüm belgeler İngilizce veya İngilizce çevirisi ile sunulmalıdır. Türkçe belgeler için yeminli tercüman tarafından onaylanmış çeviri gereklidir. Çeviride tercümanın adı, imzası ve iletişim bilgileri bulunmalıdır. Özellikle evlilik cüzdanı, doğum belgesi, diploma gibi resmi belgeler apostil veya konsolosluk onaylı olmalı ve İngilizce çevirisi eklenmelidir.'
-    },
+
     {
       question: 'VFS Global randevusu nasıl alınır?',
-      answer: 'Online başvurunuzu tamamladıktan ve ücretinizi ödedikten sonra VFS Global Türkiye websitesinden randevu alabilirsiniz. Ankara, İstanbul ve İzmir\'de başvuru merkezleri bulunmaktadır. Randevu günü pasaportunuz, belgeleriniz ve randevu onay belgesi ile gidilmelidir. Biyometrik veriler (parmak izi ve fotoğraf) alınır.'
+      answer: 'Online başvurunuzu tamamladıktan ve ücretinizi ödedikten sonra VFS Global Türkiye websitesinden randevu alabilirsiniz. İstanbul", "Ankara", "İzmir", "Bursa", "Antalya", "Adana", "Gaziantep,Trabzon\'da başvuru merkezleri bulunmaktadır. Randevu günü pasaportunuz ve randevu onay belgesi ile gidilmelidir. '
+    },
+      {
+      question: 'Randevuya belge götürmem gerekir mi?',
+      answer: 'Belgeler online olarak sisteme yüklenir ayrıca randevuya belge götürmenize gerek yoktur.'
     }
   ];
 
