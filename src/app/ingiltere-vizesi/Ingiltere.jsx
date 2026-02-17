@@ -627,7 +627,7 @@ const UKVisaPage = () => {
   <Link href="/ingiltere-vize-evraklari" className="text-blue-600 hover:underline">
     İngiltere vize evrakları →
   </Link>
-  <Link href="/ingiltere-vize-randevusu" className="text-blue-600 hover:underline">
+  <Link href="/ingiltere-vize-randevusu-nasil-alinir" className="text-blue-600 hover:underline">
     İngiltere vize randevusu →
   </Link>
   <Link href="/ingiltere-vize-reddi" className="text-blue-600 hover:underline">
@@ -732,7 +732,7 @@ const UKVisaPage = () => {
             <h2 className="text-3xl font-bold text-slate-900">Başvuruyu 5 adımda tamamlayın</h2>
             <p className="text-slate-600 mb-6">
   Randevu aşaması hakkında detaylı bilgi için 
-  <Link href="/ingiltere-vize-randevusu" className="text-blue-600 font-semibold hover:underline ml-1 mr-1">
+  <Link href="/ingiltere-vize-randevusu-nasil-alinir" className="text-blue-600 font-semibold hover:underline ml-1 mr-1">
     İngiltere vize randevusu sayfasına
   </Link> göz atın.
 </p>
@@ -975,7 +975,7 @@ const UKVisaPage = () => {
       evrak listenizi kontrol edin
     </Link> 
     ve ardından 
-    <Link href="/ingiltere-vize-randevusu" className="text-blue-600 font-semibold hover:underline ml-1 mr-1">
+    <Link href="/ingiltere-vize-randevusu-nasil-alinir" className="text-blue-600 font-semibold hover:underline ml-1 mr-1">
       randevunuzu oluşturun.
     </Link>
   </p>
