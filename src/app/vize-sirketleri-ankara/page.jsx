@@ -1,4 +1,5 @@
 // app/vize-sirketleri-ankara/page.jsx
+import Link from "next/link";
 import React from "react";
 
 export const metadata = {
@@ -76,64 +77,81 @@ export default function Page() {
         }}
       />
     
-    <main className="min-h-screen bg-zinc-50">
-  {/* Hero */}
+<main className="min-h-screen bg-zinc-50">
+
+  {/* HERO */}
   <section className="max-w-6xl mx-auto px-4 sm:px-8 pt-14 pb-10">
     <div className="bg-white border border-slate-200/70 rounded-2xl shadow-sm p-7 sm:p-10">
-      <p className="text-sm text-slate-500">Ankara • Vize Danışmanlığı</p>
+
+      <p className="text-sm text-slate-500">Ankara • Profesyonel Vize Danışmanlığı</p>
 
       <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 mt-2">
         Vize Şirketleri Ankara
       </h1>
 
-      <p className="text-slate-600 mt-4 leading-relaxed max-w-2xl">
-        Ankara’daki vize şirketleri arasından doğru firmayı seçmek, vize
-        başvurunuzun sorunsuz ilerlemesi için kritik öneme sahiptir. Bu sayfada
-        Ankara vize şirketlerini değerlendirirken dikkat edilmesi gereken
-        noktaları ve profesyonel danışmanlığın avantajlarını bulabilirsiniz.
+      <p className="text-slate-600 mt-4 leading-relaxed max-w-3xl">
+        Ankara’daki vize şirketleri arasından doğru firmayı seçmek, başvurunuzun
+        olumlu sonuçlanmasında kritik rol oynar. Özellikle
+        <Link href="/schengen-vizesi" className="font-semibold hover:underline mx-1">
+          Schengen vizesi
+        </Link>,
+        <Link href="/amerika-vizesi" className="font-semibold hover:underline mx-1">
+          Amerika vizesi
+        </Link>
+        ve
+        <Link href="/ingiltere-vizesi" className="font-semibold hover:underline mx-1">
+          İngiltere vizesi
+        </Link>
+        başvurularında uzman destek ret riskini azaltır.
       </p>
 
-      {/* 🔥 ANA SEO H2 */}
       <h2 className="text-lg sm:text-xl font-semibold text-slate-900 mt-6">
         Ankara’da Vize Şirketi Seçerken Nelere Dikkat Edilmeli?
       </h2>
+
       <p className="text-slate-600 mt-2 max-w-3xl">
-        Ankara’daki vize şirketleri arasında seçim yaparken firmanın güncel
-        konsolosluk prosedürlerine hâkim olması, şeffaf çalışması ve gerçek
-        müşteri yorumlarına sahip olması büyük önem taşır. Yanlış yönlendirme,
-        vize reddi riskini artırabilir.
+        Firmanın güncel konsolosluk prosedürlerine hâkim olması,
+        <Link href="/vize-reddi-gercek-nedenler" className="font-semibold hover:underline mx-1">
+          vize reddi nedenlerini
+        </Link>
+        iyi analiz edebilmesi ve şeffaf çalışması önemlidir.
       </p>
 
       <div className="mt-6 flex flex-col sm:flex-row gap-3">
-        <a
+        <Link
           href="/randevu"
           className="inline-flex items-center justify-center rounded-xl px-5 py-3 font-semibold bg-slate-900 text-white hover:bg-slate-800 transition"
         >
           Randevu Oluştur
-        </a>
-        <a
+        </Link>
+        <Link
           href="/iletisim"
           className="inline-flex items-center justify-center rounded-xl px-5 py-3 font-semibold bg-white text-slate-900 border border-slate-300 hover:bg-slate-50 transition"
         >
           İletişime Geç
-        </a>
+        </Link>
       </div>
     </div>
   </section>
 
-  {/* İçerik */}
+  {/* CONTENT */}
   <section className="max-w-6xl mx-auto px-4 sm:px-8 pb-12">
-    <div className="bg-white border border-slate-200/70 rounded-2xl shadow-sm p-7 sm:p-10 space-y-8">
+    <div className="bg-white border border-slate-200/70 rounded-2xl shadow-sm p-7 sm:p-10 space-y-10">
 
       <div>
         <h2 className="text-2xl font-bold text-slate-900">
           Güvenilir Bir Ankara Vize Şirketi Nasıl Anlaşılır?
         </h2>
-        <ul className="list-disc list-inside text-slate-600 mt-3 space-y-2">
-          <li>Gerçek müşteri yorumları ve şeffaf referanslar</li>
-          <li>Vize türlerine göre uzmanlaşmış danışman kadrosu</li>
-          <li>Randevu ve evrak süreçlerinde açık bilgilendirme</li>
-          <li>Başvuru süreci boyunca ulaşılabilir destek</li>
+
+        <ul className="list-disc list-inside text-slate-600 mt-4 space-y-2">
+          <li>Gerçek müşteri yorumları ve doğrulanabilir referanslar</li>
+          <li>Ülke bazlı uzmanlaşmış danışman kadrosu</li>
+          <li>
+            <Link href="/vize-alirken-yapilan-hatalar" className="hover:underline font-medium">
+              Vize sürecinde yapılan hatalara
+            </Link> hâkimiyet
+          </li>
+          <li>Süreç boyunca ulaşılabilir destek</li>
         </ul>
       </div>
 
@@ -141,78 +159,104 @@ export default function Page() {
         <h2 className="text-2xl font-bold text-slate-900">
           Aya Journey Ankara Vize Danışmanlığı Yaklaşımı
         </h2>
+
         <p className="text-slate-600 mt-3">
           Aya Journey, Ankara merkezli vize danışmanlığı hizmeti sunarak
-          başvuruları kişiye özel şekilde ele alır. Evrak kontrolü, randevu
-          planlama ve başvuru takibi süreçlerinde şeffaf ve planlı bir yaklaşım
-          benimser.
+          başvuruları kişiye özel şekilde planlar.
+          <Link href="/aya-journey-yorumlari" className="font-semibold hover:underline mx-1">
+            Müşteri yorumlarını
+          </Link>
+          inceleyebilir ve süreci şeffaf şekilde değerlendirebilirsiniz.
         </p>
-
-        <a
-          href="/aya-journey-yorumlari"
-          className="inline-block mt-3 text-slate-900 font-semibold hover:underline"
-        >
-          Aya Journey müşteri yorumlarını inceleyin →
-        </a>
       </div>
 
       <div>
         <h2 className="text-2xl font-bold text-slate-900">
           Ankara’daki Vize Şirketleri Hangi Vize Türlerinde Hizmet Verir?
         </h2>
+
         <p className="text-slate-600 mt-3">
-          Ankara’daki vize danışmanlık şirketleri en sık aşağıdaki vize türleri
-          için hizmet vermektedir:
+          En sık başvuru yapılan vize türleri:
         </p>
 
         <ul className="list-disc list-inside text-slate-600 mt-3 space-y-2">
           <li>
-            <a href="/ankara-schengen-vizesi" className="hover:underline">
+            <Link href="/ankara-schengen-vizesi" className="hover:underline font-medium">
               Ankara Schengen Vizesi
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/ankara-amerika-vizesi" className="hover:underline">
+            <Link href="/ankara-amerika-vizesi" className="hover:underline font-medium">
               Ankara Amerika Vizesi
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/ankara-vize-danismanligi" className="hover:underline">
+            <Link href="/ingiltere-vize-danismanligi-ankara" className="hover:underline font-medium">
+              Ankara İngiltere Vize Danışmanlığı
+            </Link>
+          </li>
+          <li>
+            <Link href="/vize-danismanlik-ankara" className="hover:underline font-medium">
               Ankara Vize Danışmanlığı Genel Rehberi
-            </a>
+            </Link>
           </li>
         </ul>
       </div>
+
+      {/* AUTHORITY BOOST */}
+      <div>
+        <h2 className="text-2xl font-bold text-slate-900">
+          Ankara’da En Sık Başvurulan Ülkeler
+        </h2>
+
+        <div className="grid md:grid-cols-3 gap-4 mt-4 text-sm">
+          <Link href="/almanya-vize" className="hover:underline">Almanya Vizesi →</Link>
+          <Link href="/fransa-vize" className="hover:underline">Fransa Vizesi →</Link>
+          <Link href="/italya-vize" className="hover:underline">İtalya Vizesi →</Link>
+          <Link href="/hollanda-vize" className="hover:underline">Hollanda Vizesi →</Link>
+          <Link href="/ispanya-vize" className="hover:underline">İspanya Vizesi →</Link>
+          <Link href="/yunanistan-vize" className="hover:underline">Yunanistan Vizesi →</Link>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  {/* CTA */}
+  {/* FINAL CTA */}
   <section className="max-w-6xl mx-auto px-4 sm:px-8 pb-16">
     <div className="bg-slate-900 rounded-2xl p-7 sm:p-10 text-white">
+
       <h2 className="text-2xl font-bold">
         Ankara’da Güvenilir Bir Vize Şirketi Arıyorsanız
       </h2>
+
       <p className="text-slate-300 mt-3 max-w-2xl">
-        Vize sürecinizi doğru planlamak ve başvurunuzu güvenle ilerletmek için
-        uzman danışmanlarımızla iletişime geçebilirsiniz.
+        Başvurunuzu profesyonel şekilde planlamak ve
+        <Link href="/vize-reddi-durumunda-ne-yapilmali" className="font-semibold hover:underline mx-1 text-white">
+          ret riskini minimize etmek
+        </Link>
+        için uzman ekibimizle iletişime geçebilirsiniz.
       </p>
 
       <div className="mt-6 flex flex-col sm:flex-row gap-3">
-        <a
+        <Link
           href="/randevu"
           className="inline-flex items-center justify-center rounded-xl px-5 py-3 font-semibold bg-white text-slate-900 hover:bg-slate-100 transition"
         >
           Hemen Randevu Al
-        </a>
-        <a
+        </Link>
+
+        <Link
           href="/iletisim"
           className="inline-flex items-center justify-center rounded-xl px-5 py-3 font-semibold border border-white/40 hover:bg-white/10 transition"
         >
           Sorunuzu İletin
-        </a>
+        </Link>
       </div>
+
     </div>
   </section>
+
 </main>
 
     
