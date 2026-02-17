@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 export const metadata = {
   title: "İngiltere Vize Danışmanlığı Ankara | Çukurambar Başvuru Merkezi",
@@ -82,121 +83,136 @@ const Page = () => {
     })
   }}
 />
-       <main className="max-w-300 mx-auto px-4 py-12 mt-5 text-gray-900 leading-relaxed">
-      
-      {/* 1. HERO & H1: Ankara Anahtar Kelime Stratejisi */}
-      <section className="mb-16">
-        <h1 className="text-3xl md:text-5xl font-extrabold mb-6 tracking-tight text-slate-900">
-          İngiltere Vize Danışmanlığı Ankara: Uzman Başvuru Merkezi
-        </h1>
+<main className="max-w-300 mx-auto px-4 py-12 mt-5 text-gray-900 leading-relaxed">
 
-        <p className="text-xl text-gray-700 max-w-4xl mb-6">
-          <strong>AYA Journey Ankara</strong>, Başkent’te İngiltere vizesi süreçlerinizi profesyonelce yönetir. 
-          Çukurambar ofisimizde; İngiltere Büyükelçiliği kriterlerine tam uyumlu 
-          dosya hazırlığı ve %98 başarı oranıyla hizmetinizdeyiz.
+  {/* HERO */}
+  <section className="mb-16">
+    <h1 className="text-3xl md:text-5xl font-extrabold mb-6 tracking-tight text-slate-900">
+      İngiltere Vize Danışmanlığı Ankara: Uzman Başvuru Merkezi
+    </h1>
+
+    <p className="text-xl text-gray-700 max-w-4xl mb-6">
+      <strong>AYA Journey Ankara</strong>, Başkent’te 
+      <Link href="/ingiltere-vizesi" className="text-red-700 font-semibold hover:underline mx-1">
+        İngiltere vizesi
+      </Link>
+      süreçlerinizi profesyonelce yönetir. 
+      <Link href="/birlesik-krallik-vize-evraklari" className="text-red-700 font-semibold hover:underline mx-1">
+        İngiltere vize evrakları
+      </Link>
+      kriterlerine tam uyumlu dosya hazırlığı ve %98 başarı oranıyla hizmetinizdeyiz.
+    </p>
+
+    <div className="flex flex-wrap gap-4 mt-8">
+      <Link href="/randevu" className="inline-block bg-red-700 text-white font-bold px-8 py-4 rounded-lg hover:bg-red-800 transition shadow-lg">
+        Ankara Randevusu İçin Tıklayın
+      </Link>
+
+      <a
+        href="https://wa.me/905302199056?text=Merhaba%2C%20İngiltere%20vize%20başvurusu%20için%20bilgi%20almak%20istiyorum."
+        className="inline-block bg-white border-2 border-gray-300 text-gray-800 font-bold px-8 py-4 rounded-lg hover:bg-gray-50 transition"
+      >
+        Hemen Bilgi Al
+      </a>
+    </div>
+  </section>
+
+  {/* HİZMETLER */}
+  <section className="mb-16">
+    <h2 className="text-3xl font-bold mb-8">Ankara İngiltere Vize Hizmetlerimiz</h2>
+
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 text-gray-700">
+
+      <Link href="/ingiltere-vizesi" className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:border-red-200 transition">
+        <h3 className="text-xl font-bold mb-3 text-gray-800">Turist & Ziyaretçi Vizesi</h3>
+        <p className="text-sm">
+          İngiltere turist ve ziyaretçi vizelerinde profesyonel başvuru stratejisi.
         </p>
+      </Link>
 
-        <div className="flex flex-wrap gap-4 mt-8">
-          <a href="/randevu" className="inline-block bg-red-700 text-white font-bold px-8 py-4 rounded-lg hover:bg-red-800 transition shadow-lg">
-            Ankara Randevusu İçin Tıklayın
-          </a>
-          <a  href="https://wa.me/905302199056?text=Merhaba%2C%20vize%20ba%C5%9Fvurum%20i%C3%A7in%20profesyonel%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum.%20Uygun%20oldu%C4%9Funuzda%20s%C3%BCreci%20birlikte%20planlayabilir%20miyiz%3F"
-          className="inline-block bg-white border-2 border-gray-300 text-gray-800 font-bold px-8 py-4 rounded-lg hover:bg-gray-50 transition">
-            Hemen Bilgi Al
-          </a>
-        </div>
-      </section>
-
-      {/* 2. STATS & GÜVEN (ANKARA ÖZEL) */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16 border-y border-gray-100 py-8 text-center bg-slate-50 rounded-xl">
-        <div><p className="text-3xl font-bold text-red-700">10+</p><p className="text-sm text-gray-600">Yıllık Tecrübe</p></div>
-        <div><p className="text-3xl font-bold text-red-700">Çukurambar</p><p className="text-sm text-gray-600">Merkezi Lokasyon</p></div>
-        <div><p className="text-3xl font-bold text-red-700">Ankara</p><p className="text-sm text-gray-600">Vize Danışmanlığı</p></div>
-        <div><p className="text-3xl font-bold text-red-700">%98</p><p className="text-sm text-gray-600">Onay Başarısı</p></div>
-      </div>
-
-      {/* 3. ANKARA HİZMET KAPSAMI */}
-      <section className="mb-16">
-        <h2 className="text-3xl font-bold mb-8">Ankara İngiltere Vize Hizmetlerimiz</h2>
-        
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 text-gray-700">
-          <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:border-red-200 transition">
-            <h3 className="text-xl font-bold mb-3 text-gray-800">Turist & Ziyaretçi Vizesi</h3>
-            <p className="text-sm">İngiltere'ye turistik gezi veya akraba ziyareti amacıyla gidecekler için profesyonel başvuru stratejisi.</p>
-          </div>
-          <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:border-red-200 transition">
-            <h3 className="text-xl font-bold mb-3 text-gray-800">Tier 4 Öğrenci Vizesi</h3>
-            <p className="text-sm">Ankara'daki üniversite öğrencileri için dil okulu, lisans ve yüksek lisans vize süreçleri yönetimi.</p>
-          </div>
-          <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:border-red-200 transition">
-            <h3 className="text-xl font-bold mb-3 text-gray-800">Vize Reddi Analizi</h3>
-            <p className="text-sm">Daha önce İngiltere'den ret almış Ankara merkezli başvuruların yeniden yapılandırılması.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. LOKASYON & LOKAL SEO (ÇUKURAMBAR VURGUSU) */}
-      <section className="mb-16 bg-white rounded-3xl border-2 border-dashed border-gray-200 h-100">
-  
-        <div className="grid md:grid-cols-2 gap-4 items-start justify-start">
-          <div className="p-10">
-                  <h2 className="text-3xl font-bold mb-6">Ankara Ofisimiz ve Ulaşım</h2>
-            <p className="text-gray-700 mb-4">
-              Ankara ofisimiz, vize işlemlerinin kalbi olan <strong>Çukurambar</strong> bölgesinde yer almaktadır. 
-              <strong> Kızılay, Söğütözü, Bahçelievler ve Eskişehir Yolu</strong> üzerinden ulaşım oldukça kolaydır.
-            </p>
-            <p className="text-gray-700">
-              Ankara İngiltere başvuru merkezi (TLS Contact) ile koordineli çalışarak randevu süreçlerinizi hızlandırıyoruz.
-            </p>
-          </div>
-          <div className="flex items-start justify-start">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d743.3320388142544!2d32.81232332649057!3d39.90887088085886!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d349b988f4bea5%3A0x9c16ddcef1c2d4ae!2sAYA%20Journey!5e0!3m2!1str!2str!4v1770189697075!5m2!1str!2str" 
-  width="600"         
-  height="400"
-  style={{ border: 0 }}
-  allowFullScreen
-  loading="lazy"
-  referrerPolicy="no-referrer-when-downgrade"></iframe>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. ANKARA İÇİN SSS (SEO Boost) */}
-      <section className="mb-16">
-        <h2 className="text-3xl font-bold mb-8">Sıkça Sorulan Sorular</h2>
-        <div className="space-y-4">
-          <details className="group p-4 bg-gray-50 rounded-lg cursor-pointer">
-            <summary className="font-bold text-lg list-none flex justify-between items-center">
-              Ankara'da İngiltere vize başvurusu nereye yapılır?
-              <span className="group-open:rotate-180 transition">▼</span>
-            </summary>
-            <p className="mt-2 text-gray-600">Ankara'daki başvurular için parmak izi verme işlemi Söğütözü/Ankara adresindeki resmi TLS Contact merkezinde yapılır. Danışmanlık hizmetimizle dosyanızı bu aşamaya hazır hale getiriyoruz.</p>
-          </details>
-          <details className="group p-4 bg-gray-50 rounded-lg cursor-pointer">
-            <summary className="font-bold text-lg list-none flex justify-between items-center">
-              Ankara ofisinizde hangi vize türlerine bakılıyor?
-              <span className="group-open:rotate-180 transition">▼</span>
-            </summary>
-            <p className="mt-2 text-gray-600">Turistik, Ticari, Öğrenci (Short-term/Student Visa), Aile Birleşimi ve Yerleşim vizelerinin tamamında uzman desteği sağlıyoruz.</p>
-          </details>
-        </div>
-      </section>
-
-      {/* 6. FINAL CTA: Güçlü Kapanış */}
-      <section className="bg-red-800 rounded-3xl p-10 text-center text-white shadow-xl">
-        <h2 className="text-3xl font-bold mb-4">
-          İngiltere Vize Sürecinizi Şansa Bırakmayın
-        </h2>
-        <p className="text-red-100 mb-8 max-w-2xl mx-auto">
-          Başkent’in en güvenilir danışmanlık firması ile çalışarak ret riskini minimize edin. 
-          Eksiksiz evrak ve profesyonel niyet mektubu ile başvurunuzu güçlendirelim.
+      <Link href="/birlesik-krallik-vize-evraklari" className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:border-red-200 transition">
+        <h3 className="text-xl font-bold mb-3 text-gray-800">Evrak Hazırlık & Dosya Güçlendirme</h3>
+        <p className="text-sm">
+          İngiltere vize evrak listesi ve banka analiz süreci.
         </p>
-        <a href="/randevu" className="bg-white text-red-800 px-12 py-4 rounded-full font-extrabold text-lg hover:bg-gray-100 transition inline-block">
-          Ücretsiz Randevu Oluştur
-        </a>
-      </section>
+      </Link>
 
-    </main>
+      <Link href="/ingiltere-vize-reddi-nedenleri" className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:border-red-200 transition">
+        <h3 className="text-xl font-bold mb-3 text-gray-800">Vize Reddi Analizi</h3>
+        <p className="text-sm">
+          İngiltere ret nedenleri ve yeniden başvuru stratejisi.
+        </p>
+      </Link>
+
+    </div>
+  </section>
+
+  {/* RANDEVU BLOĞU */}
+  <section className="mb-16 bg-slate-50 p-8 rounded-2xl border border-gray-200">
+    <h2 className="text-2xl font-bold mb-4">Ankara TLS Contact Randevu Süreci</h2>
+
+    <p className="text-gray-700 mb-4">
+      İngiltere vize başvuruları Ankara’da 
+      <Link href="/ingiltere-vize-randevusu-nasil-alinir" className="text-red-700 font-semibold hover:underline mx-1">
+        TLS Contact randevu sistemi
+      </Link>
+      üzerinden yapılır. Randevu yoğunluğu dönemsel olarak artmaktadır.
+    </p>
+
+    <Link href="/ingiltere-vize-randevusu-nasil-alinir" className="text-red-700 font-bold hover:underline">
+      İngiltere Randevu Nasıl Alınır? →
+    </Link>
+  </section>
+
+  {/* ÇAPRAZ SEO BAĞLANTI */}
+  <section className="mb-16">
+    <h2 className="text-2xl font-bold mb-6">Diğer Popüler Vize Danışmanlık Hizmetlerimiz</h2>
+
+    <div className="grid md:grid-cols-3 gap-4 font-semibold">
+
+      <Link href="/amerika-vizesi" className="hover:underline text-blue-700">
+        Amerika Vizesi →
+      </Link>
+
+      <Link href="/schengen-vizesi" className="hover:underline text-blue-700">
+        Schengen Vizesi →
+      </Link>
+
+      <Link href="/kanada-vize-randevusu-nasil-alinir" className="hover:underline text-blue-700">
+        Kanada Vizesi →
+      </Link>
+
+      <Link href="/ingiltere-vize-danismanligi-istanbul" className="hover:underline text-blue-700">
+        İngiltere Vize Danışmanlığı İstanbul →
+      </Link>
+
+      <Link href="/ankara-vize-danismanligi" className="hover:underline text-blue-700">
+        Ankara Vize Danışmanlığı →
+      </Link>
+
+      <Link href="/vize-reddi-itiraz-rehberi" className="hover:underline text-blue-700">
+        Vize Reddi İtiraz Rehberi →
+      </Link>
+
+    </div>
+  </section>
+
+  {/* FINAL CTA */}
+  <section className="bg-red-800 rounded-3xl p-10 text-center text-white shadow-xl">
+    <h2 className="text-3xl font-bold mb-4">
+      İngiltere Vize Sürecinizi Şansa Bırakmayın
+    </h2>
+
+    <p className="text-red-100 mb-8 max-w-2xl mx-auto">
+      Eksiksiz evrak, doğru finansal analiz ve profesyonel başvuru stratejisi ile ret riskini minimize edin.
+    </p>
+
+    <Link href="/randevu" className="bg-white text-red-800 px-12 py-4 rounded-full font-extrabold text-lg hover:bg-gray-100 transition inline-block">
+      Ücretsiz Randevu Oluştur
+    </Link>
+  </section>
+
+</main>
     </>
  
   );
