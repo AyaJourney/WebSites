@@ -25,8 +25,20 @@ const documents = [
   { icon: <GoDotFill />, title: "İkametgah belgesi" },
   { icon: <GoDotFill />, title: "Son 3 aylık banka hesap dökümü" },
   { icon: <GoDotFill />, title: "İngilizce vize dilekçesi" },
+  { icon: <GoDotFill />, title: "Gov.uk üzerinden doldurulmuş başvuru formu" },
+  { icon: <GoDotFill />, title: "Sponsor varsa: Sponsor mektubu, mali belgeleri ve sponsora ait iş yeri belgeleri" },
+  { icon: <GoDotFill />, title: "E Devletten alınmış SGK Hizmet Dökümü (uzun vadeli ve barkodlu belge olacak)" },
+  { icon: <GoDotFill />, title: "E Devletten alınmış SGK İşe Giriş Bildirges (barkodlu belge olacak)" },
+  { icon: <GoDotFill />, title: "Aile nüfus kayıt örneği (tam vukuatlı)" },
+  { icon: <GoDotFill />, title: "İkametgah belgesi" },
+  { icon: <GoDotFill />, title: "Tapu senedi (ev sahibi iseniz)/kira kontratı (kiracı iseniz), araç ruhsatı" },
+  { icon: <GoDotFill />, title: "Seyahat amaç mektubu (Cover Letter - İngilizce)" },
+  { icon: <GoDotFill />, title: "Davet mektubu (Davet gönderen şirket bilgileri ve davet gönderme amacı)" },
+  { icon: <GoDotFill />, title: "Fuar/konferans katılım belgesi (varsa)" },
   { icon: <GoDotFill />, title: "Seyahat sağlık sigortası (Zorunlu değil)" },
   { icon: <GoDotFill />, title: "Otel ve uçak rezervasyonları (Zorunlu değil)" },
+ 
+
 ];
 
 // Başvuru adımları
@@ -59,7 +71,7 @@ const processSteps = [
     step: 5,
     title: "Randevuya Katılım",
     description:
-      "Belirlenen randevu tarihinde başvuru merkezine gidilerek biyometri işlemleri tamamlanır. Randevuya katılım zorunludur.",
+      "Belirlenen randevu tarihinde başvuru merkezine gidilerek başvurucu yetişkin veya çocuk fark etmeksizin biyometri işlemleri tamamlanır. Randevuya katılım zorunludur.",
   },
 ];
 
@@ -587,9 +599,9 @@ const UKVisaPage = () => {
 >
   {[
     { label: "Ortalama randevu bulma süresi", value: "15 iş günü", icon: <FaClock /> },
-    { label: "6 aylık harç bedeli", value: "173 $",desc:"İstenen süreye göre harç miktarı değişmektedir", icon: <FaFileInvoiceDollar /> },
+    { label: "6 aylık harç bedeli", value: "180 $",desc:"İstenen süreye göre harç miktarı değişmektedir", icon: <FaFileInvoiceDollar /> },
     { label: "Başarı ihtimali", value: "Yüksek", icon: <FaCheckCircle /> },
-    { label: "Açıklanma / değerlendirme süresi", value: "10 iş günü", icon: <FaClock /> },
+    { label: "Açıklanma / değerlendirme süresi", value: "15 iş günü", icon: <FaClock /> },
     { label: "Hizmet bedeli", value: "400 $", icon: <FaFileInvoiceDollar /> },
 
 
@@ -630,7 +642,7 @@ const UKVisaPage = () => {
   <Link href="/ingiltere-vize-randevusu-nasil-alinir" className="text-blue-600 hover:underline">
     İngiltere vize randevusu →
   </Link>
-  <Link href="/ingiltere-vize-reddi" className="text-blue-600 hover:underline">
+  <Link href="/ingiltere-vize-reddi-nedenleri" className="text-blue-600 hover:underline">
     İngiltere vize reddi →
   </Link>
 </div>
@@ -842,7 +854,7 @@ const UKVisaPage = () => {
     <p><strong>İngiltere vize reddi aldım, itiraz hakkım var mı?</strong><br />
   Standart ziyaretçi vizelerinde itiraz hakkı bulunmaz. 
   Detaylı analiz için 
-  <Link href="/ingiltere-vize-reddi" className="text-blue-600 font-semibold hover:underline ml-1 mr-1">
+  <Link href="/ingiltere-vize-reddi-nedenleri" className="text-blue-600 font-semibold hover:underline ml-1 mr-1">
     İngiltere vize reddi rehberini
   </Link> inceleyebilirsiniz.</p>
 

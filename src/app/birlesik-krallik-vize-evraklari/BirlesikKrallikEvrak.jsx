@@ -233,7 +233,7 @@ export default function BirlesikKrallikVizeEvraklariPage() {
         icon: <FaPassport />,
         items: [
           'Geçerli pasaport (kurs süresi + 6 ay geçerli)',
-          'Online başvuru formu (CAS numarası ile)',
+          'Online başvuru formu',
           'CAS (Confirmation of Acceptance for Studies)'
         ],
         critical: true
@@ -374,7 +374,7 @@ export default function BirlesikKrallikVizeEvraklariPage() {
         title: 'Sponsor (UK\'deki Eş/Aile) Belgeleri',
         icon: <FaUserTie />,
         items: [
-          'BRP (Biometric Residence Permit) veya pasaport',
+          'BRP (Biometric Residence Permit) oturum kartı veya pasaport',
           'İş yazısı ve maaş bordroları (son 6 ay)',
           'Minimum £29,000 yıllık gelir (çocuksuz)',
           'Her çocuk için +£3,800, 2. çocuktan sonra +£2,400',
