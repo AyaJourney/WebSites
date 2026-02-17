@@ -522,7 +522,7 @@ export default function BirlesikKrallikVizeEvraklariPage() {
     },
     {
       title: 'VFS Global Merkezleri',
-      description: 'Ankara, İstanbul (Beşiktaş), İzmir\'de başvuru merkezi bulunmaktadır.'
+      description: 'İstanbul", "Ankara", "İzmir", "Bursa", "Antalya", "Adana", "Gaziantep,Trabzon\'da başvuru merkezi bulunmaktadır.'
     }
   ];
 

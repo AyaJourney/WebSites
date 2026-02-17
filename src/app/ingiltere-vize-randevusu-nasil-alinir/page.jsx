@@ -126,7 +126,7 @@ const IngiltereRandevuSayfasi = () => {
       TLScontact Türkiye Merkezleri
     </h3>
     <div className="flex flex-wrap justify-center gap-4">
-      {["İstanbul", "Ankara", "İzmir", "Bursa", "Antalya", "Adana", "Gaziantep"].map((city) => (
+      {["İstanbul", "Ankara", "İzmir", "Bursa", "Antalya", "Adana", "Gaziantep,Trabzon"].map((city) => (
         <span key={city} className="px-6 py-3 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-700">
           {city}
         </span>
