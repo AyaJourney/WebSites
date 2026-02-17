@@ -43,7 +43,7 @@ const jsonLd = {
           "name": "Amerika vizesi için bankada ne kadar para olmalı?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Amerika vizesi için bankada belirli bir alt limit yoktur. Önemli olan, seyahat masraflarınızı karşılayacak tutarın hesapta olması ve bu paranın kaynağının belgelenebilir olmasıdır."
+            "text": "Amerika vizesi için bankada belirli bir alt limit yoktur. Önemli olan, seyahat masraflarınızı karşılayacak tutarın hesapta olması ve bu paranın kaynağının belgelenebilir olmasıdır ayrıca B1/B2 Turist Vizesi için herhangi bir banka dökümü sunulması zorunlu değildir."
           }
         },
         {
@@ -131,7 +131,7 @@ const jsonLd = {
               <p className="text-xl text-blue-100 leading-relaxed mb-8">
               Amerika vize evrakları eksik veya hatalı hazırlandığında,
   Amerika vize reddi kaçınılmaz hale gelir.
-  Mesleki durumunuza göre hazırladığımız bu güncel evrak listesi
+  Hazırladığımız bu güncel evrak listesi
   ile Amerika vize başvurunuzu güvence altına alın.
               
               </p>
@@ -584,7 +584,7 @@ const jsonLd = {
               </svg>
             </summary>
             <div className="px-6 pb-6 text-gray-700 leading-relaxed">
-              Amerika vizesi için bankada belirli bir alt limit yoktur. Önemli olan, seyahat masraflarınızı karşılayacak tutarın hesapta olması ve bu paranın kaynağının belgelenebilir olmasıdır. F1 ve J1 vizesinde genellikle 3-6 aylık hareketli hesap dökümü istenir.
+              Amerika vizesi için bankada belirli bir alt limit yoktur. Önemli olan, seyahat masraflarınızı karşılayacak tutarın hesapta olması ve bu paranın kaynağının belgelenebilir olmasıdır. F1 ve J1 vizesinde genellikle 3-6 aylık hareketli hesap dökümü istenir. B1/B2 vizesi için herhangi bir banka dökümü sunulması zorunlu değildir.
             </div>
           </details>
 
@@ -608,7 +608,7 @@ const jsonLd = {
               </svg>
             </summary>
             <div className="px-6 pb-6 text-gray-700 leading-relaxed">
-              DS-160, Amerika vizesi için doldurulması zorunlu olan online başvuru formudur. Amerikan Konsolosluğu'nun resmi web sitesinden doldurulur. Form tamamlandıktan sonra confirmation sayfası (barkodlu çıktı) alınmalı ve mülakatta ibraz edilmelidir.
+              DS-160, Amerika vizesi için doldurulması zorunlu olan online başvuru formudur. ABD Konsolosluğu'nun resmi web sitesinden doldurulur. Form tamamlandıktan sonra confirmation sayfası (barkodlu çıktı) alınmalı ve mülakatta ibraz edilmelidir.
             </div>
           </details>
 

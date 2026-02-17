@@ -510,11 +510,11 @@ export default function BirlesikKrallikVizeEvraklariPage() {
   const ukSpecificInfo = [
     {
       title: 'Priority Hizmetleri',
-      description: 'Standart (15 iş günü): Normal ücret | Priority (5 iş günü): +£500 | Super Priority (24 saat): +£1000'
+      description: 'Standart (15 iş gününde sonuç): Normal ücret | Priority (5 iş gününde sonuç): +£500 | Super Priority (24 saatte sonuç): +£1000'
     },
     {
       title: 'IHS Ücreti',
-      description: 'Öğrenciler: £470/yıl | Diğer vize tipleri: £624/yıl | 6 aydan uzun vizeler için zorunlu'
+      description: 'Öğrenciler: £776/yıl | Diğer vize tipleri: £1035/yıl | 6 aydan uzun vizeler için zorunlu'
     },
     {
       title: 'Biyometrik Veriler',
@@ -582,7 +582,7 @@ export default function BirlesikKrallikVizeEvraklariPage() {
               <div className="flex flex-wrap justify-center gap-4 mb-12">
                 <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-6 py-4 border border-white/30">
                   <div className="text-3xl font-black mb-1">15</div>
-                  <div className="text-sm text-white/80">İş Günü</div>
+                  <div className="text-sm text-white/80">İş Gününde Sonuç</div>
                 </div>
                 <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-6 py-4 border border-white/30">
                   <div className="text-3xl font-black mb-1">6</div>

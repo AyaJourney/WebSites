@@ -131,7 +131,7 @@ const AmerikaDs160NasilDoldurulur = () => {
           <ul className="space-y-4 text-slate-600">
             <li>• Pasaport bilgileriyle uyumsuz cevaplar</li>
             <li>• Meslek ve gelir bilgisini eksik yazmak</li>
-            <li>• Seyahat amacını net ifade edememek</li>
+            <li>• Seyahat amacını net ifade edememek bu nedenle form ile beyanın çelişmesi</li>
             <li>• Önceki vize reddini gizlemek</li>
             <li>• Yanlış fotoğraf yüklemek</li>
           </ul>
