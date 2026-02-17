@@ -2,49 +2,102 @@
 import React from "react";
 
 export const metadata = {
-  title: "Ankara Vize Danışmanlığı | Schengen, Amerika, İngiltere",
+  title:
+    "Ankara Vize Danışmanlığı 2026 | Schengen, Amerika, İngiltere Vize Danışmanlık Hizmeti",
+
   description:
-    "Ankara vize danışmanlığı hizmeti: Schengen, Amerika ve İngiltere vize başvurularında evrak hazırlığı, randevu planlama ve profesyonel danışmanlık desteği.",
+    "Ankara vize danışmanlığı hizmeti ile Schengen, Amerika (ABD) ve İngiltere vize başvurularınızı güvenle tamamlayın. Evrak hazırlama, form doldurma, randevu alma ve başvuru takibi desteği. Ankara’da profesyonel vize danışmanlık şirketi.",
+
   keywords: [
+    // Ana Anahtar Kelimeler
     "ankara vize danışmanlığı",
-    "ankara vize",
-    "vize şirketleri ankara",
+    "ankara vize şirketleri",
+    "ankara vize merkezi",
+    "vize danışmanlık ankara",
+    "ankara vize ofisi",
+
+    // Schengen
     "ankara schengen vizesi",
+    "ankara schengen danışmanlık",
+    "ankara italya vizesi",
+    "ankara almanya vizesi",
+    "ankara fransa vizesi",
+    "ankara hollanda vizesi",
+    "ankara ispanya vizesi",
+
+    // Amerika
     "ankara amerika vizesi",
+    "ankara abd vizesi",
+    "amerika turist vizesi ankara",
+    "amerika öğrenci vizesi ankara",
+    "amerika vize randevu ankara",
+
+    // İngiltere
     "ankara ingiltere vizesi",
+    "ingiltere turist vizesi ankara",
+    "ingiltere öğrenci vizesi ankara",
+    "uk visa ankara",
+
+    // İşlemsel Aramalar
     "vize randevu ankara",
+    "vize evrak hazırlama ankara",
+    "vize başvuru danışmanlığı",
+    "ankara hızlı vize",
+    "acil vize ankara",
+
+    // Güven Odaklı
+    "en iyi vize danışmanlık ankara",
+    "güvenilir vize şirketi ankara",
+    "ankara profesyonel vize danışmanlığı",
   ],
+
   alternates: {
-    canonical: "/ankara-vize-danismanligi",
+    canonical: "https://www.ayajourney.com/ankara-vize-danismanligi",
   },
+
   openGraph: {
-    title: "Ankara Vize Danışmanlığı | Schengen, Amerika, İngiltere",
+    title:
+      "Ankara Vize Danışmanlığı | Schengen, Amerika & İngiltere Vize Desteği",
     description:
-      "Ankara’da vize danışmanlığı: Schengen, Amerika ve İngiltere vize süreçlerinde evrak, randevu ve başvuru desteği.",
-    url: "/ankara-vize-danismanligi",
+      "Ankara’da Schengen, ABD ve İngiltere vize danışmanlığı. Evrak kontrolü, başvuru formu, randevu planlama ve süreç takibi. Vize sürecinizi uzman desteğiyle güvenle tamamlayın.",
+    url: "https://www.ayajourney.com/ankara-vize-danismanligi",
     type: "website",
     locale: "tr_TR",
-    siteName: "Aya Journey",
+    siteName: "Aya Journey Vize Danışmanlığı",
     images: [
       {
-        url: "/og/ankara-vize-danismanligi.jpg", // varsa
+        url: "https://www.ayajourney.com/images/ayalogoxl.webp",
         width: 1200,
         height: 630,
-        alt: "Ankara Vize Danışmanlığı",
+        alt: "Ankara Vize Danışmanlığı - Schengen, Amerika ve İngiltere Vize Hizmeti",
       },
     ],
   },
+
   twitter: {
     card: "summary_large_image",
-    title: "Ankara Vize Danışmanlığı | Schengen, Amerika, İngiltere",
+    title:
+      "Ankara Vize Danışmanlığı | Schengen, ABD & İngiltere Vize Hizmeti",
     description:
-      "Ankara’da vize danışmanlığı: evrak, randevu ve başvuru desteğiyle vize sürecinizi kolaylaştırın.",
-    images: ["/og/ankara-vize-danismanligi.jpg"], // varsa
+      "Ankara’da profesyonel vize danışmanlığı. Schengen, Amerika ve İngiltere başvurularında uzman destek alın.",
+    images: [
+      "https://www.ayajourney.com/images/ayalogoxl.webp",
+    ],
   },
+
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
   },
+
+  category: "travel",
 };
 
 export default function Page() {
