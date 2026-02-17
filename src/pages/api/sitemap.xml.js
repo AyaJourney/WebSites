@@ -119,17 +119,17 @@ export default async function handler(req, res) {
     "/amerika-vize-reddi-yeni-ise-baslayan",//burası tamam
     "/amerika-vize-reddi-dusuk-maas",//burası tamam
     "/amerika-vize-reddi-bekar",//burası tamam
-    "/amerika-vize-reddi-evli",
-    "/macaristan-vize",
-    "/macaristan-vize-evraklari",
-    "/macaristan-vize-randevusu",
-    "/macaristan-vize-reddi",
-    "/italya-vize",
-    "/italya-vize-evraklari",
-    "/italya-vize-randevusu",
-    "/italya-vize-reddi",
-    "/danimarka-vize",
-    "/danimarka-vize-evraklari",
+    "/amerika-vize-reddi-evli", // burası tamam
+    "/macaristan-vize",//burası tamam
+    "/macaristan-vize-evraklari",//burası tamam
+    "/macaristan-vize-randevusu",//burası tamam
+    "/macaristan-vize-reddi",//burası tamam
+    "/italya-vize",//burası tamam
+    "/italya-vize-evraklari",//burası tamam
+    "/italya-vize-randevusu",//burası tamam
+    "/italya-vize-reddi",//burası tamam
+    "/danimarka-vize",//burası tamam
+    "/danimarka-vize-evraklari",//burası tamam
     "/danimarka-vize-randevusu",
     "/danimarka-vize-reddi",
     "/almanya-vize",
