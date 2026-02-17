@@ -208,7 +208,7 @@ const Page = () => {
         <h2 className="text-3xl md:text-4xl font-bold mb-6">
           Schengen Vizenizi Şansa Bırakmayın!
         </h2>
-        <p className="text-blue-900 mb-8 text-lg max-w-2xl mx-auto">
+        <p className="text-white-900 mb-8 text-lg max-w-2xl mx-auto">
           Eksik evrak veya yanlış beyan nedeniyle reddedilen vizeler pasaportunuzda kalıcı iz bırakır. Ankara uzmanlığımızla başvurunuzu profesyonelce yapalım.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
