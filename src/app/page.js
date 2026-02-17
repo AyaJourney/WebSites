@@ -24,27 +24,35 @@ const HomeClient = dynamic(() => import("./components/home/HomeClient"), {
 
 
 export const metadata = {
-title: "Vize Danışmanlığı | Amerika, Schengen & İngiltere – Aya Journey",
+  title:
+    "Vize Danışmanlığı 2026 | Amerika, Schengen & İngiltere – Aya Journey",
+
   description:
-    "Amerika, Schengen, İngiltere ve Portekiz vize başvurularında uzman danışmanlık. DS-160, vize mülakatı ve ret riskini azaltan profesyonel destek Aya Journey’de.",
+    "Amerika, Schengen, İngiltere, Kanada ve Portekiz vize başvurularında uzman danışmanlık. DS-160 form doldurma, mülakat hazırlığı ve ret risk analizi ile profesyonel destek Aya Journey’de.",
+
   keywords: [
     "vize danışmanlığı",
     "amerika vize danışmanlığı",
     "schengen vize danışmanlığı",
     "ingiltere vizesi",
+    "kanada vizesi",
     "portekiz d7 vizesi",
     "ds-160 danışmanlık",
     "vize mülakat hazırlığı",
     "ankara vize danışmanlığı",
-    "istanbul vize danışmanlığı"
+    "istanbul vize danışmanlığı",
+    "vize reddi danışmanlığı"
   ],
+
   alternates: {
     canonical: "https://ayajourney.com",
   },
+
   openGraph: {
-    title: "Vize Danışmanlığı & Göçmenlik Uzmanı | Aya Journey",
+    title:
+      "Vize Danışmanlığı & Göçmenlik Uzmanı 2026 | Aya Journey",
     description:
-      "Vize reddi riskini azaltın. Amerika ve Schengen vize başvurularında uzman danışmanlık ile sürecinizi güvenle yönetin.",
+      "Amerika ve Schengen vizesi başvurularında ret riskini azaltan profesyonel danışmanlık.",
     url: "https://ayajourney.com",
     siteName: "Aya Journey",
     locale: "tr_TR",
@@ -58,22 +66,90 @@ title: "Vize Danışmanlığı | Amerika, Schengen & İngiltere – Aya Journey"
       },
     ],
   },
+
   twitter: {
     card: "summary_large_image",
-    title: "Vize Danışmanlığı & Göçmenlik Uzmanı | Aya Journey",
+    title:
+      "Vize Danışmanlığı 2026 | Amerika & Schengen Uzmanı",
     description:
-      "Amerika ve Schengen vizesi başvurularında profesyonel danışmanlık.",
+      "DS-160, Schengen başvurusu ve mülakat hazırlığında profesyonel destek.",
     images: ["https://ayajourney.com/images/logo.webp"],
   },
+
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
   },
+
+  category: "travel",
 };
 
 export default function Home() {
+  const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://ayajourney.com/#webpage",
+      url: "https://ayajourney.com/",
+      name: "Vize Danışmanlığı | Amerika, Schengen & İngiltere",
+      datePublished: "2024-01-10",
+      dateModified: "2026-03-17",
+      inLanguage: "tr-TR",
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://ayajourney.com/#organization",
+      name: "Aya Journey",
+      url: "https://ayajourney.com/",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://ayajourney.com/images/logo.webp",
+      },
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: "+90 530 219 90 56",
+        contactType: "customer service",
+        areaServed: "TR",
+        availableLanguage: "Turkish",
+      },
+    },
+    {
+      "@type": "Service",
+      name: "Vize Danışmanlığı",
+      provider: {
+        "@id": "https://ayajourney.com/#organization",
+      },
+      areaServed: {
+        "@type": "Country",
+        name: "Turkey",
+      },
+      serviceType: [
+        "Amerika Vize Danışmanlığı",
+        "Schengen Vize Danışmanlığı",
+        "İngiltere Vize Danışmanlığı",
+        "Kanada Vize Danışmanlığı",
+      ],
+    },
+  ],
+};
   return (
-    <main className="flex flex-col w-full bg-white mt-9">
+    <>
+    <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(structuredData),
+  }}
+/>
+    
+        <main className="flex flex-col w-full bg-white mt-9">
       <HomeClient />
       {/* HERO */}
    <SideNav />
@@ -128,6 +204,8 @@ export default function Home() {
       </section>
 
     </main>
+    </>
+
   );
 }
 

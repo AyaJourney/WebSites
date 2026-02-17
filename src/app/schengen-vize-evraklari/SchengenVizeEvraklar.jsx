@@ -232,13 +232,58 @@ export default function SchengenVizeEvraklariPage() {
     ],
     business: [
       {
-        title: 'Pasaport & Temel Belgeler',
+        title: 'Pasaport',
         icon: <FaPassport />,
         items: [
-          'Geçerli pasaport (3+ ay geçerlilik)',
-          'Başvuru formu (imzalı)',
-          'Fotoğraf (35x45mm, biyometrik)',
-          'Seyahat sağlık sigortası (30.000 Euro)'
+          'Son kullanma tarihi vize bitiş tarihinden en az 3 ay sonra olmalı',
+          'En az 2 boş sayfa bulunmalı',
+          'Varsa eski pasaportların ve diğer bütün vize ve damgaların bulunduğu sayfaların fotokopisi'
+
+        ],
+        critical: true
+      },
+      {
+        title: 'Vize Başvuru Formu',
+        icon: <FaFileAlt />,
+        items: [
+          'Başvuran tarafından ıslak imzalanmalı',
+          'Tüm bilgiler evraklar ile tutarlı olmalı',
+          'Eksiksiz doldurulmalı',
+          'İmza pasaport imzası ile aynı olmalı'
+        ],
+        critical: true
+      },
+       {
+        title: 'Fotoğraf',
+        icon: <FaFileAlt />,
+        items: [
+          '35x45 mm boyutunda, renkli',
+          'Beyaz veya açık renkli fon',
+          'Son 6 ay içinde çekilmiş',
+          'Biyometrik standartlara uygun',
+          'Mat kağıda basılmış (parlak olmamalı)'
+        ],
+        critical: true
+      },
+      {
+        title: 'Seyahat Sağlık Sigortası',
+        icon: <FaClipboardCheck />,
+        items: [
+          'Minimum 30.000 Euro teminat',
+          'Tüm Schengen ülkelerinde geçerli',
+          'Seyahat tarihlerini kapsayan',
+          'Acil sağlık hizmetleri ve repatriasyon dahil'
+        ],
+        critical: true
+      },
+      {
+        title: 'Uçak Bileti Rezervasyonu',
+        icon: <FaPlane />,
+        items: [
+          'Gidiş-dönüş rezervasyonu',
+          'Başvuru sahibinin adına kayıtlı',
+          'Seyahat tarihleri net belirtilmiş',
+          'Rezervasyon kodu içermeli'
         ],
         critical: true
       },
@@ -246,11 +291,11 @@ export default function SchengenVizeEvraklariPage() {
         title: 'İş İlişkisi Belgeleri',
         icon: <FaUserTie />,
         items: [
-          'Türkiye\'deki şirketten iş yazısı (kaşeli ve imzalı)',
+          'Türkiye\'deki şirketten iş veren yazısı (kaşeli ve imzalı)',
           'Gidilecek ülkedeki firma/kuruluştan davet mektubu',
-          'Davet mektubunda toplantı/fuar detayları',
+          'Davetiye olmadığı durumda toplantı/fuar katılım belgesi',
           'Ticari ilişki belgeleri (varsa)',
-          'Şirket imza sirküleri'
+       
         ],
         critical: true
       },
@@ -260,9 +305,11 @@ export default function SchengenVizeEvraklariPage() {
         items: [
           'Ticaret sicil gazetesi',
           'Vergi levhası',
-          'SGK işyeri bildirge belgesi',
+          'SGK kayıtları(barkodlu belge)',
           'Son 3 aylık şirket banka ekstreleri',
-          'Faaliyet belgesi'
+          'Faaliyet belgesi',
+          'Şirket imza sirküleri',
+          'Başvuran çalışan ise maaş bordrosu'
         ],
         critical: true
       },
@@ -270,23 +317,83 @@ export default function SchengenVizeEvraklariPage() {
         title: 'Seyahat Belgeleri',
         icon: <FaPlane />,
         items: [
-          'Uçak bileti rezervasyonu',
-          'Otel rezervasyonu veya ev sahibi davet mektubu',
-          'Seyahat programı/takvimi',
-          'Fuar/konferans katılım belgesi (varsa)'
+         
+          'Otel rezervasyonu veya konaklamaya ilişkin detaylar',
+          'Niyet mektubu',
+          
+        ],
+        critical: true
+      },
+            {
+        title: 'Kişisel Belgeler',
+        icon: <FaPlane />,
+        items: [
+         
+          'Kimlik fotokopisi',
+          'Nüfus kayıt örneği',
+          'İkametgah belgesi',
+         ' Oturma veya çalışma izni fotokopisi (TC Vatandaşı olmayanlar için)',
+
+          
         ],
         critical: true
       }
     ],
     family: [
-      {
-        title: 'Pasaport & Temel Belgeler',
+  {
+        title: 'Pasaport',
         icon: <FaPassport />,
         items: [
-          'Geçerli pasaport (3+ ay geçerlilik)',
-          'Başvuru formu (imzalı)',
-          'Fotoğraf (35x45mm, biyometrik)',
-          'Seyahat sağlık sigortası (30.000 Euro)'
+          'Son kullanma tarihi vize bitiş tarihinden en az 3 ay sonra olmalı',
+          'En az 2 boş sayfa bulunmalı',
+          'Varsa eski pasaportların ve diğer bütün vize ve damgaların bulunduğu sayfaların fotokopisi'
+
+        ],
+        critical: true
+      },
+       {
+        title: 'Vize Başvuru Formu',
+        icon: <FaFileAlt />,
+        items: [
+          
+          'Başvuran tarafından ıslak imzalanmalı',
+          'Tüm bilgiler evraklar ile tutarlı olmalı',
+          'Eksiksiz doldurulmalı',
+          'İmza pasaport imzası ile aynı olmalı'
+        ],
+        critical: true
+      },
+       {
+        title: 'Fotoğraf',
+        icon: <FaFileAlt />,
+        items: [
+          '35x45 mm boyutunda, renkli',
+          'Beyaz veya açık renkli fon',
+          'Son 6 ay içinde çekilmiş',
+          'Biyometrik standartlara uygun',
+          'Mat kağıda basılmış (parlak olmamalı)'
+        ],
+        critical: true
+      },
+      {
+        title: 'Seyahat Sağlık Sigortası',
+        icon: <FaClipboardCheck />,
+        items: [
+          'Minimum 30.000 Euro teminat',
+          'Tüm Schengen ülkelerinde geçerli',
+          'Seyahat tarihlerini kapsayan',
+          'Acil sağlık hizmetleri ve repatriasyon dahil'
+        ],
+        critical: true
+      },
+      {
+        title: 'Uçak Bileti Rezervasyonu',
+        icon: <FaPlane />,
+        items: [
+          'Gidiş-dönüş rezervasyonu',
+          'Başvuru sahibinin adına kayıtlı',
+          'Seyahat tarihleri net belirtilmiş',
+          'Rezervasyon kodu içermeli'
         ],
         critical: true
       },
@@ -294,11 +401,10 @@ export default function SchengenVizeEvraklariPage() {
         title: 'Davet Mektubu ve Ev Sahibi Belgeleri',
         icon: <FaHotel />,
         items: [
-          'Ev sahibinden resmi davet mektubu (noter onaylı)',
+          'Başvurulan ülkeden gönderilen davet mektubu',
           'Ev sahibinin kimlik/pasaport fotokopisi',
           'Ev sahibinin oturma izni veya vatandaşlık belgesi',
-          'Ev sahibinin adres belgesi (ikametgah)',
-          'Barınma taahhütnamesi (verpflichtungserklärung)'
+          ''
         ],
         critical: true
       },
@@ -326,17 +432,17 @@ export default function SchengenVizeEvraklariPage() {
         ],
         critical: true
       },
-      {
-        title: 'Seyahat Belgeleri',
-        icon: <FaPlane />,
+       {
+        title: 'İş/Gelir Durumu Belgeleri',
+        icon: <MdWorkOutline />,
         items: [
-          'Uçak bileti rezervasyonu (gidiş-dönüş)',
-          'Seyahat programı',
-          'Daha önceki ziyaret belgeleri (varsa)',
-          'Dönüş niyetini gösteren belgeler'
+          'Çalışanlar ve şirket sahipleri için: Şirkete ait, şirket faaliyet durumuna uygun belgeler ',
+          'Emekli: Emekli maaşı belgesi',
+          'Öğrenci: Öğrenci belgesi ve veli izin mektubu',
+         
         ],
         critical: false
-      }
+      },
     ]
   };
 

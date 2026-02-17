@@ -28,6 +28,9 @@ return (
             Profesyonel Amerika Vize Danışmanlığı
           </span>
         </h1>
+        <p className="text-sm text-slate-500 text-center mt-4">
+  Son Güncelleme: 17 Mart 2026 • 2026 Güncel Bilgiler
+</p>
     <div className="relative max-w-7xl mx-auto px-6 py-24 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
       {/* ================= MOBILE IMAGE CARD (TOP) ================= */}
