@@ -222,7 +222,15 @@ export default async function handler(req, res) {
 "/slovenya-vize-randevusu",
 "/slovenya-vize-reddi",
 "/kanada-vizesi",
-"/kanada-vize-evraklari"
+"/kanada-vize-evraklari",
+"/dubai-vizesi",
+"/dubai-vize-evraklari",
+"/dubai-vize-ucreti",
+"/dubai-vize-reddi",
+"/avustralya-vize",
+"/avustralya-vize-evraklari",
+"/avustralya-vize-randevusu",
+"/avustralya-vize-reddi"
 
 
 
