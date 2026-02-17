@@ -31,6 +31,7 @@ export default function Navbar() {
         { name: "Amerika Vizesi", href: "/amerika-vizesi" },
         { name: "Schengen Vizesi", href: "/schengen-vizesi" },
         { name: "İngiltere Vizesi", href: "/ingiltere-vizesi" },
+        { name: "Kanada Vizesi", href: "/kanada-vizesi" },
         { name: "Portekiz D7 Vizesi", href: "/portekiz-d7-vize" },
         { name: "Yurt Dışı Eğitim & Kariyer Programları", href: "/egitim" },
         { name: "Amerika DS-160 Vize Başvuru Formu", href: "/form/ds-160" },
