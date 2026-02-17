@@ -458,7 +458,7 @@ export default function BirlesikKrallikVizeEvraklariPage() {
     },
       {
       question: 'Randevuya belge götürmem gerekir mi?',
-      answer: 'Belgeler online olarak sisteme yüklenir ayrıca randevuya belge götürmenize gerek yoktur.'
+      answer: 'Belgeler online olarak sisteme yüklenir ayrıca randevuya pasaportunuz ve randevu onay belgesi harici belge götürmenize gerek yoktur.'
     }
   ];
 
