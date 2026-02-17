@@ -172,7 +172,7 @@ export default function BirlesikKrallikVizeEvraklariPage() {
           'Günlük minimum 600 Pound bütçe göstermeli',
           'Düzenli gelir-gider akışı olmalı',
           'Maaş bordroları (son 3 ay)',
-          'Sponsor varsa: Sponsor mektubu ve mali belgeleri',
+          'Sponsor varsa: Sponsor mektubu, mali belgeleri ve sponsora ait iş yeri belgeleri ',
           'Yatırım hesapları, gayrimenkul değerleme raporları (varsa)',
           'Çalışanlar ve emekliler için maaş hesabı dökümü'
         ],
@@ -182,13 +182,14 @@ export default function BirlesikKrallikVizeEvraklariPage() {
         title: 'İş ve Gelir Belgeleri',
         icon: <MdWorkOutline />,
         items: [
-          'Çalışanlar: İş yazısı (İngilizce, kaşeli, ıslak imzalı)',
+          'Çalışanlar: İş yazısı (İngilizce, kaşeli, ıslak imzalı),Ticaret sicil gazetesi, vergi levhası, faaliyet belgesi(son bir ay içinde alınmış olmalı) ve şirkete ait imza sirküleri',
           'İş yazısında: Pozisyon, maaş, işe başlama tarihi, izin onayı',
-          'Serbest meslek: Ticaret sicil gazetesi, vergi levhası ',
-          'Emekli: Emekli maaşı belgesi (SGK)',
-          'Öğrenci: Öğrenci belgesi ve veli izin mektubu',
+          'Şirket Sahibi: Ticaret sicil gazetesi, vergi levhası, faaliyet belgesi(son bir ay içinde alınmış olmalı) ve şirkete ait imza sirküleri ',
+          'Emekli: Emekli aylık belgesi (E-Devletten barkodlu belge alınmalı)',
+          'Öğrenci: Öğrenci belgesi',
           'İşveren bilgileri ve iletişim detayları',
-          'İş ait faaliyet belgesi (son 1 ayda alınmış)'
+          'E Devletten alınmış SGK Hizmet Dökümü (uzun vadeli ve barkodlu belge olacak)',
+          "E Devletten alınmış SGK İşe Giriş Bildirges (barkodlu belge olacak)",
         ],
         critical: true
       },
@@ -489,7 +490,7 @@ export default function BirlesikKrallikVizeEvraklariPage() {
     {
       title: 'Evrak Tercümesi',
       icon: <FaCheckCircle />,
-      description: 'Türkçe belgelerin İngilizce çevirilerini yeminli tercümandan yaptırın.',
+      description: 'Skilled Worker Visa(Çalışma Vizesi) ve Family Visa(Aile Vizesi) da Türkçe belgelerin İngilizce çevirilerini yeminli tercümandan yaptırın.',
       type: 'warning'
     }
   ];
