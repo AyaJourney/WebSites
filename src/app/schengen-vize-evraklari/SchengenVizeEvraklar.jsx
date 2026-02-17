@@ -449,7 +449,7 @@ export default function SchengenVizeEvraklariPage() {
   const faqs = [
     {
       question: 'Schengen vizesi için bankada ne kadar para olmalı?',
-      answer: 'Schengen vizesi için bankada belirli bir alt limit yoktur ancak günlük minimum 50-70 Euro arasında bir bütçe göstermeniz önerilir. Örneğin 15 günlük seyahat için yaklaşık 750-1000 Euro bankada olmalıdır. Önemli olan, seyahat masraflarınızı karşılayacak tutarın hesapta olması ve düzenli gelir/gider akışının görünmesidir. Son 3-6 aylık banka ekstresi istenebilir.'
+      answer: 'Schengen vizesi için bankada belirli bir alt limit yoktur ancak günlük minimum 100-150 Euro arasında bir bütçe göstermeniz önerilir. Örneğin 7 günlük seyahat için yaklaşık 1000-1500  Euro bankada olmalıdır. Önemli olan, seyahat masraflarınızı karşılayacak tutarın hesapta olması ve düzenli gelir/gider akışının görünmesidir. Son 3-6 aylık banka ekstresi istenebilir.'
     },
     {
       question: 'Schengen vize fotoğrafı nasıl olmalı?',
@@ -457,7 +457,7 @@ export default function SchengenVizeEvraklariPage() {
     },
     {
       question: 'Schengen vizesi kaç günde çıkar?',
-      answer: 'Schengen vizesi başvurusu genellikle 15 iş günü içinde sonuçlanır. Bazı özel durumlarda inceleme süresi 30 güne kadar uzayabilir. Acil durumlar için ek ücret ödeyerek 3 iş günü içinde sonuç alınabilir. Yaz ayları ve tatil dönemlerinde süreç daha uzun sürebileceği için başvurunuzu seyahat tarihinden en az 3-4 hafta önce yapmanız önerilir.'
+      answer: 'Schengen vizesi başvurusu genellikle 15 iş günü içinde sonuçlanır. Bazı özel durumlarda inceleme süresi 30 güne kadar uzayabilir. Yaz ayları ve tatil dönemlerinde süreç daha uzun sürebileceği için başvurunuzu seyahat tarihinden en az 3-4 ay önce yapmanız önerilir.'
     },
     {
       question: 'Schengen vizesi için seyahat sigortası zorunlu mu?',
@@ -465,19 +465,19 @@ export default function SchengenVizeEvraklariPage() {
     },
     {
       question: 'İş yazısında neler olmalı?',
-      answer: 'İş yazısında; çalışanın tam adı-soyadı, TC kimlik numarası, pozisyonu/ünvanı, maaş bilgisi, işe başlama tarihi, izin onayı ve izin süresinin belirtilmesi gerekir. Yazı firma antetli kağıda yazılmalı, yetkili imza ve kaşe içermelidir. Seyahat tarihlerinin ve amacının (tatil/iş seyahati) belirtilmesi önemlidir. Şirket adres ve iletişim bilgileri de yer almalıdır.'
+      answer: 'İş yazısında; çalışanın tam adı-soyadı, TC kimlik numarası, pozisyonu/ünvanı, maaş bilgisi, işe başlama tarihi, izin onayı ve izin süresi ile birlikte seyahati booyunca sigortasının devam edeceğinin ve ücretli/ücretsiz izinde olacağının belirtilmesi gerekir. Yazı, firmanın antetli kağıdına yazılmalı, yetkili imza ve kaşe içermelidir. Seyahat tarihlerinin ve amacının (tatil/iş seyahati) belirtilmesi önemlidir. Şirket adres ve iletişim bilgileri de yer almalıdır.'
     },
     {
       question: 'Davet mektubu nasıl olmalı?',
-      answer: 'Davet mektubu ev sahibi tarafından yazılmalı ve noter onaylı olmalıdır. Mektupta; davet eden kişinin tam kimlik bilgileri, adresi, ziyaretçi ile ilişkisi, kalış süresi, barınma ve masrafların kim tarafından karşılanacağı belirtilmelidir. Davet edenin pasaport/kimlik fotokopisi, oturma izni ve adres belgesi eklenmelidir. Bazı ülkeler için belediyeden alınan resmi davet belgesi (Verpflichtungserklärung) gerekebilir.'
+      answer: 'Davet mektubu,davet gönderen kişi tarafından bulunduğu ülkenin ilgili resmi kurumundan almalıdır. Mektupta; davet eden kişinin tam kimlik bilgileri, adresi,  kalış süresi belirtilmelidir. Davet edenin pasaport/kimlik fotokopisi, oturma izni ve adres belgesi eklenmelidir. Bazı ülkeler için belediyeden alınan resmi davet belgesi (Verpflichtungserklärung) gerekebilir.'
     },
     {
       question: 'Schengen vizesi hangi ülkelerde geçerlidir?',
       answer: 'Schengen vizesi 27 Avrupa ülkesinde geçerlidir: Almanya, Avusturya, Belçika, Çekya, Danimarka, Estonya, Finlandiya, Fransa, Hollanda, İspanya, İsveç, İsviçre, İtalya, İzlanda, Letonya, Litvanya, Lüksemburg, Macaristan, Malta, Norveç, Polonya, Portekiz, Slovakya, Slovenya, Yunanistan, Liechtenstein ve Hırvatistan. Tek vize ile bu ülkelerin tamamında seyahat edebilirsiniz.'
     },
     {
-      question: 'Hangi konsolosluğa başvuru yapmalıyım?',
-      answer: 'Tek ülke ziyaret edecekseniz o ülkenin konsolosluğuna, birden fazla ülke gezecekseniz en uzun süre kalacağınız ülkenin konsolosluğuna başvurmalısınız. Eşit süre kalacaksanız ilk giriş yapacağınız ülkeyi seçmelisiniz. Transit geçiş yapacaksanız, asıl hedef ülkenin konsolosluğuna başvurulur.'
+      question: 'Hangi ülkeye başvuru yapmalıyım?',
+      answer: 'Tek ülke ziyaret edecekseniz o ülke üzerinden, birden fazla ülke gezecekseniz en uzun süre kalacağınız ülkeye başvurmalısınız. Eşit süre kalacaksanız ilk giriş yapacağınız ülkeyi seçmelisiniz. Transit geçiş yapacaksanız, asıl hedef ülkeye başvurulur.'
     }
   ];
 
@@ -516,7 +516,7 @@ export default function SchengenVizeEvraklariPage() {
     'İş yazısının kaşesiz veya imzasız olması',
     'Fotoğrafların biyometrik standartlara uygun olmaması',
     'Başvuru formundaki bilgi hataları veya tutarsızlıklar',
-    'Uçak biletinin kesilmiş olması (rezervasyon olmalı)'
+    'Eksik veya sahte evrak sunulması'
   ];
 
   return (
