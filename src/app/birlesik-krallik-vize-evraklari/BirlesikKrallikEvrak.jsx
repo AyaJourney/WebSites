@@ -51,14 +51,7 @@ export default function BirlesikKrallikVizeEvraklariPage() {
               "text": "Standart İngiltere vize başvurusu 3 hafta (15 iş günü) içinde sonuçlanır. Priority hizmeti (5 iş günü) veya Super Priority hizmeti (24 saat) ile süreç hızlandırılabilir. Başvuru yoğunluğuna göre süreler değişebilir."
             }
           },
-          {
-            "@type": "Question",
-            "name": "TB test zorunlu mu?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Evet, Türkiye'den İngiltere'ye 6 aydan uzun süre kalacaklar için TB (tüberküloz) testi zorunludur. Test onaylı sağlık merkezlerinde yapılmalı ve sonuç 6 ay geçerlidir. Kısa süreli turist ve iş ziyaretlerinde genellikle istenmez."
-            }
-          },
+     
           {
             "@type": "Question",
             "name": "İngiltere vize başvurusu nasıl yapılır?",
@@ -169,7 +162,7 @@ export default function BirlesikKrallikVizeEvraklariPage() {
         icon: <FaMoneyBillWave />,
         items: [
           'Son 3 aylık banka hesap ekstreleri (tüm sayfalar)',
-          'Günlük minimum 600 Pound bütçe göstermeli',
+          'Günlük minimum 350-400 Pound bütçe göstermeli',
           'Düzenli gelir-gider akışı olmalı',
           'Maaş bordroları (son 3 ay)',
           'Sponsor varsa: Sponsor mektubu, mali belgeleri ve sponsora ait iş yeri belgeleri ',
@@ -202,7 +195,7 @@ export default function BirlesikKrallikVizeEvraklariPage() {
           'Arkadaş/akraba evinde kalacaksa: Davet mektubu',
           'Ev sahibinin pasaport/kimlik fotokopisi',
           'Ev sahibinin adres belgesi (council tax bill, utility bill)',
-          'Ev sahibinin BRP kartı fotokopisi (varsa)',
+          'Ev sahibinin BRP kartı (oturum kartı) fotokopisi (varsa)',
           'Konaklama ilişkisini açıklayan mektup'
         ],
         critical: true
@@ -216,7 +209,7 @@ export default function BirlesikKrallikVizeEvraklariPage() {
           'Araç ruhsatı',
           'Aile nüfus kayıt örneği (tam vukuatlı)',
           'İkametgah belgesi',
-          'Çocuk varsa: Doğum belgeleri',
+         
          
         ],
         critical: false
@@ -227,7 +220,7 @@ export default function BirlesikKrallikVizeEvraklariPage() {
         items: [
           'Seyahat amaç mektubu (Cover Letter - İngilizce)',
          
-          'Davet mektubu (iş toplantısı için)',
+          'Davet mektubu (Davet gönderen şirket bilgileri ve davet gönderme amacı)',
           'Fuar/konferans katılım belgesi (varsa)',
       
         ],
@@ -435,7 +428,7 @@ export default function BirlesikKrallikVizeEvraklariPage() {
   const faqs = [
     {
       question: 'İngiltere vizesi için bankada ne kadar para olmalı?',
-      answer: 'İngiltere vizesi için günlük minimum 100-150 Pound arasında bir bütçe göstermeniz önerilir. Örneğin 10 günlük seyahat için yaklaşık 1000-1500 Pound bankada olmalıdır. Önemli olan son 6 aylık düzenli gelir-gider akışının görünmesidir. Para hesapta en az 3-6 ay durmuş olmalı, son anda yatırılan büyük miktarlar şüphe uyandırabilir.'
+      answer: 'İngiltere vizesi için günlük minimum 350-400 Pound arasında bir bütçe göstermeniz önerilir. Örneğin 10 günlük seyahat için yaklaşık 1000-1500 Pound bankada olmalıdır. Önemli olan son 6 aylık düzenli gelir-gider akışının görünmesidir. Para hesapta en az 3-6 ay durmuş olmalı, son anda yatırılan büyük miktarlar şüphe uyandırabilir.'
     },
 
     {
@@ -444,7 +437,7 @@ export default function BirlesikKrallikVizeEvraklariPage() {
     },
     {
       question: 'TB test zorunlu mu?',
-      answer: 'TB (tüberküloz) testi, İngiltere\'ye 6 aydan uzun süre kalacak herkes için zorunludur. Buna öğrenci vizesi, çalışma vizesi ve aile vizesi başvuruları dahildir. Test onaylı sağlık merkezlerinde yapılmalı ve sonuç 6 ay geçerlidir. Kısa süreli turist ve iş ziyaretlerinde (6 aydan az) genellikle TB testi istenmez. Test ücreti yaklaşık 50-80 Pound arasındadır.'
+      answer: 'TB (tüberküloz) testi, Türkiye Cumhuriyeti vatandaşları için zorunlu değildir.',
     },
     {
       question: 'İngiltere vize başvurusu nasıl yapılır?',
@@ -452,11 +445,11 @@ export default function BirlesikKrallikVizeEvraklariPage() {
     },
     {
       question: 'İngiltere için seyahat sigortası zorunlu mu?',
-      answer: 'İngiltere vizesi için seyahat sigortası zorunlu değildir ancak şiddetle tavsiye edilir. Schengen vizesinden farklı olarak UK başvurularında sigorta şart koşulmaz. Ancak sağlık masraflarını karşılayacak kapsamlı bir sigorta başvurunuzu güçlendirir. NHS (İngiltere Sağlık Sistemi) turistler ve ziyaretçiler için ücretsiz değildir ve tedavi masrafları oldukça yüksektir.'
+      answer: 'İngiltere vizesi için seyahat sigortası zorunlu değildir.',
     },
     {
       question: 'IHS (Immigration Health Surcharge) nedir?',
-      answer: 'IHS, 6 aydan uzun süre İngiltere\'de kalacak kişilerin ödemesi gereken sağlık katkı payıdır. Öğrenciler için yıllık £470, diğer vize tipleri için £624\'tür. Bu ücret vize başvurusu sırasında online ödenir ve NHS hizmetlerinden faydalanmanızı sağlar. Turist vizesi (6 aydan az) için IHS ödemesi gerekmez.'
+      answer: 'IHS, 6 aydan uzun süre İngiltere\'de kalacak kişilerin ödemesi gereken sağlık katkı payıdır. Öğrenciler için yıllık £776, diğer vize tipleri için £1035\'tür. Bu ücret vize başvurusu sırasında online ödenir ve NHS hizmetlerinden faydalanmanızı sağlar. Turist vizesi (6 aydan az) için IHS ödemesi gerekmez.'
     },
     {
       question: 'Hangi belgeler İngilizce olmalı?',
@@ -500,12 +493,11 @@ export default function BirlesikKrallikVizeEvraklariPage() {
     'Finansal belgelerde son anda yatırılan paralar',
     'Eksik veya tarihi geçmiş belgeler',
     'Seyahat amacını net açıklamamak',
-    'Sponsor gelirinin minimum şartı karşılamaması (aile vizesi)',
-    'TB testinin güncel olmaması veya onaylı yerden alınmaması',
+    'Sponsor gelirinin minimum şartı karşılamaması',
+    'Şüpheli görünen bakiye hareketleri',
     'Dil yeterlilik belgesinin UKVI onaylı olmaması',
-    'Konaklama planının belirsiz olması',
     'İş yazısının kaşesiz veya eksik bilgili olması',
-    'Çeviri belgelerinin yeminli tercüman onaylı olmaması'
+   
   ];
 
   const ukSpecificInfo = [
@@ -533,11 +525,11 @@ export default function BirlesikKrallikVizeEvraklariPage() {
         <title>Birleşik Krallık Vize Evrakları 2026 - UK Visitor Visa Belgeler | Aya Journey</title>
         <meta 
           name="description" 
-          content="İngiltere vizesi için gerekli tüm evraklar ve belgeler. Standard Visitor, Student, Work, Family visa için güncel evrak listesi. TB testi, IHS, finansal gereksinimler." 
+          content="İngiltere vizesi için gerekli tüm evraklar ve belgeler. Standard Visitor, Student, Work, Family visa için güncel evrak listesi.  IHS, finansal gereksinimler." 
         />
         <meta 
           name="keywords" 
-          content="ingiltere vize evrakları, uk vize belgeler, birleşik krallık vizesi, uk visitor visa evrakları, ingiltere vize başvurusu, tb test, ihs, standard visitor visa, uk student visa" 
+          content="ingiltere vize evrakları, uk vize belgeler, birleşik krallık vizesi, uk visitor visa evrakları, ingiltere vize başvurusu,  ihs, standard visitor visa, uk student visa" 
         />
         <meta property="og:title" content="Birleşik Krallık Vize Evrakları 2026 - UK Visa Belgeler" />
         <meta property="og:description" content="İngiltere vizesi için gerekli tüm evraklar. Standard Visitor, Student, Work, Family visa belgeler listesi." />
