@@ -11,6 +11,8 @@ const references = [
   { name: "Konyaspor", logo: "/referans/konya spor.jpg" },
   { name: "Kiler Holding", logo: "/referans/kiler holding.jpg" },
   { name: "Biletinial", logo: "/referans/bilet.png" },
+  { name: "Punto Eğitim Danışmanlık", logo: "/referans/Punto-Logo.png" },
+
 ];
 
 const CardReferans = () => {

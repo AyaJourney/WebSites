@@ -9,7 +9,12 @@
   /* Transition yerine direkt animasyonla her şeyi halletmek daha güvenli */
   animation: gentle-pop 0.9s ease-out forwards;
 }
-
+@keyframes gentle-pop {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 /* Referanslar - Standart "show" sınıfına çekildi ve GPU dostu yapıldı */
 .referanslar-title-init {
   opacity: 0;

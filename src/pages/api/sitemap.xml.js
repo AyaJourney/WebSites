@@ -130,17 +130,17 @@ export default async function handler(req, res) {
     "/italya-vize-reddi",//burası tamam
     "/danimarka-vize",//burası tamam
     "/danimarka-vize-evraklari",//burası tamam
-    "/danimarka-vize-randevusu",
-    "/danimarka-vize-reddi",
-    "/almanya-vize",
-    "/almanya-vize-evraklari",
-    "/almanya-vize-randevusu",
-    "/almanya-vize-reddi",
-    "/bulgaristan-vize",
-    "/bulgaristan-vize-evraklari",
-    "/bulgaristan-vize-randevusu",
-    "/bulgaristan-vize-reddi",
-    "/cekya-vize",
+    "/danimarka-vize-randevusu",//burası tamam
+    "/danimarka-vize-reddi", //burası tamam
+    "/almanya-vize",//burası tamam
+    "/almanya-vize-evraklari",//burası tamam
+    "/almanya-vize-randevusu",//burası tamam
+    "/almanya-vize-reddi",//burası tamam
+    "/bulgaristan-vize",//burası tamam
+    "/bulgaristan-vize-evraklari",//burası tamam
+    "/bulgaristan-vize-randevusu",//burası tamam
+    "/bulgaristan-vize-reddi",//burası tamam
+    "/cekya-vize",//burası tamam
     "/cekya-vize-evraklari",
     "/cekya-vize-randevusu",
     "/cekya-vize-reddi",
