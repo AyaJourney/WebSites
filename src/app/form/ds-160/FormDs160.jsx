@@ -77,6 +77,7 @@ const defaultForm = {
       school_state:"",
       school_post_code:"",
       stayDurationUnit:"",
+      stayDurationValue:"",
       usaArrivalCity:"",
       usaAddress:"",
       usaAddressCity:"",
@@ -235,6 +236,7 @@ spouseBirthPlaceCountry:"",
 spouseBirthDate:"",
 spouseAddress:"",
 otherSpouseAddress:"",
+
 otherSpouseAddressCity:"",
 otherSpouseAddressCountry:"",
 otherSpouseAddressPostCode:"",
@@ -247,7 +249,7 @@ oldSpouseNationality:"",
 oldSpouseBirthPlace:"",
 oldSpouseEndCountry:"",
 oldSpouseInfo:"",
-
+spouseOccupation:"",
 },
    9: {
       occupation: "",
@@ -1674,7 +1676,7 @@ async function sendForm(payload, crmForm) {
   }, [form, storageMethod]);
 const requiredFields = {
   1: ["fullName", "gender", "maritalStatus", "birthDate", "birthPlace","birthCountry"],
-  2: ["nationality","otherNationalityExist", "otherSessionExist",], // Diğer uyruk veya VKN isteğe bağlı
+  2: ["nationality","tcId","otherNationalityExist", "otherSessionExist",], // Diğer uyruk veya VKN isteğe bağlı
   3: [
     "visaType",
     "visaTypeDesc",
@@ -1742,7 +1744,8 @@ const requiredFields = {
   ],
   10:[
 "languages",
-"militaryStatus",
+
+
 
   ]
 };
@@ -1801,50 +1804,655 @@ const handleMirrorSelect = (field, value) => {
 };
 
 const validateStep = (step, formData) => {
-  const fields = requiredFields[step] || [];
-  if (!formData.steps[step]) return { valid: false, missing: fields };
+  const stepData = formData.steps?.[step] || {};
+  let fields = [...(requiredFields[step] || [])];
+
+  const addField = (name) => {
+    if (!fields.includes(name)) fields.push(name);
+  };
+
+  const isEmpty = (val) => {
+    if (val === undefined || val === null) return true;
+    if (typeof val === "string" && val.trim() === "") return true;
+    return false;
+  };
 
 
-  const missing = fields.filter(field => {
-    const val = formData.steps[step][field];
-    return val === undefined || val === null || String(val).trim() === "";
+if (step === 2) {
+
+    if (stepData.otherNationalityExist === "YES") {
+      addField("otherNationality");
+    }
+
+    if (stepData.otherSessionExist ==="YES") {
+      addField("otherSessionExistCountry");
+    }
+  }
+if (step === 3) {
+
+    if (stepData.tourismPlanFinalized === "YES") {
+      addField("exactArrival");
+      addField("usaArrivalCity");
+      addField("exactDeparture");
+      addField("usaDepartureCity");
+      addField("usaLocations");
+      addField("usaAddress");
+      addField("usaAddressCity");
+      addField("usaAddressState");
+    }
+        if (stepData.tourismPlanFinalized === "NO") {
+      addField("estimatedArrival");
+      addField("stayDurationValue");
+      addField("stayDurationUnit");
+    
+    }
+
+    if (stepData.whoPays ==="OTHER") {
+      addField("relationfullName");
+      addField("relationDegree");
+      addField("payerRelationAddress");
+      addField("payerRelationCity");
+      addField("payerRelationCountry");
+      addField("payerRelationPostCode");
+      addField("payerPhone");
+      addField("payerMail");
+    }
+     if (stepData.whoPays ==="COMPANY") {
+      addField("relationCompanyfullName");
+      addField("payerCompanyPhone");
+      addField("payerRelation");
+      addField("payerCompanyAddress");
+      addField("payerCity");
+      // addField("payerState");
+      addField("payerPostCode");
+      addField("payerCountry");
+    }
+  }
+
+ if (step === 4) {
+
+if (String(stepData?.travelAlone).toUpperCase() === "YES") {
+
+  const count = Number(stepData?.companionCount);
+
+  if (!count || count < 1) {
+    addField("companionCount");
+  }
+
+}
+ if (stepData?.companionCount > 0) {
+
+    const companions = stepData?.companions || [];
+
+    companions.forEach((person, index) => {
+
+      if (isEmpty(person.fullName)) {
+        addField(`companion_fullName_${index}`);
+      }
+
+      if (isEmpty(person.relationship)) {
+        addField(`companion_relationship_${index}`);
+      }
+
+      if (isEmpty(person.hasVisa)) {
+        addField(`companion_hasVisa_${index}`);
+      }
+
+    });
+  }
+
+     if (stepData.organizationTravel === "YES") {
+      addField("organizationTravelName");
+    }
+
+if (stepData?.beenToUS === "YES") {
+
+   if (!stepData?.travelCount || stepData.travelCount === "") {
+    fields.push("travelCount");
+  }
+
+  const travels = stepData?.travels || [];
+
+  if (travels.length === 0) {
+    fields.push("travelCount");
+  }
+ 
+  travels.forEach((travel, index) => {
+
+    if (!travel?.date) {
+      addField(`travel_date_${index}`);
+    }
+
+    if (
+      !travel?.durationValue ||
+      Number(travel.durationValue) <= 0
+    ) {
+      addField(`travel_durationValue_${index}`);
+    }
+
+    if (!travel?.durationUnit) {
+      addField(`travel_durationUnit_${index}`);
+    }
+
   });
+}
+
+ if (stepData.hadUSVisa ==="YES") {
+         ["visaDate","visaNumber","hadVisaType","hadFingerprints","visaLostStolen","visaCancelled","hadVisaCountry"]
+        .forEach(addField);
+
+        if(stepData.visaLostStolen === "YES"){
+           addField("visaLostStolenInfo");
+            addField("visaLostStolenYear");
+        }
+           if(stepData.visaCancelled === "YES"){
+           addField("visaCancelledDetail");
+        }
+    }
+
+
+     if (stepData.visaRefused ==="YES") {
+         ["visaDateLastRefused","visaRefusedDetail",]
+        .forEach(addField);
+
+        
+    }
+ if(stepData.immigration === "YES"){
+           addField("immigrationDetail");
+        }
+          if (stepData.hadUSDriverLicense === "YES") {
+      addField("driverLicenseState");
+    }
+  }  
+  
+if (step ===5) {
+
+if (String(stepData?.hasSocialMedia).toUpperCase() === "YES") {
+
+  const accounts = stepData?.socialMediaAccounts || [];
+
+  // 🔴 En az bir platform seçilmeli
+  if (!accounts.length) {
+    addField("socialMediaAccounts_empty");
+  }
+
+  // 🔴 Seçilen platformların username'i zorunlu
+  accounts.forEach((acc, index) => {
+    if (!acc?.username || acc.username.trim() === "") {
+      addField(`socialMedia_username_${index}`);
+    }
+  });
+}
+
+if (stepData.lostPassportBoolean ==="YES") {
+         ["lostPassportNumber","lostPassportAuthorityCountry","lostPassportInfo"]
+        .forEach(addField);
+  }
+
+}
+
+if(step === 6) {
+  if (stepData.usaRelative ==="YES") {
+         ["usaRelativeFullName","usaRelativeInfo","usaRelativeAddress","usaRelativeAddressCity","usaRelativePhone","usaRelativePostCode","usaRelativeAddressState","usaRelativeEmail"]
+        .forEach(addField);
+  }
+    if (stepData.organizationBoolean ==="YES") {
+         ["organizationInfo","usaRelativeAddress","usaRelativeAddressCity","usaRelativeAddressState","usaRelativePhone","usaRelativePostCode","usaRelativeAddressState","usaRelativeEmail"]
+        .forEach(addField);
+  }
+
+}
+if(step === 7) {
+     if (stepData.isMotherInUSA ==="YES") {
+      addField("isMotherUSAStatus");
+    }
+        if (stepData.isFatherInUSA ==="YES") {
+      addField("isFatherUSAStatus");
+    }
+    if (String(stepData?.hasRelativeInUSA).toUpperCase() === "YES") {
+
+  const count = Number(stepData?.relativeCount);
+
+  // Kaç kişi zorunlu
+  if (!count || count < 1) {
+    addField("relativeCount");
+  }
+
+  const relatives = stepData?.relatives || [];
+
+  relatives.forEach((relative, index) => {
+
+    if (!relative?.fullName?.trim()) {
+      addField(`relative_fullName_${index}`);
+    }
+
+    if (!relative?.level) {
+      addField(`relative_level_${index}`);
+    }
+
+    if (!relative?.status) {
+      addField(`relative_status_${index}`);
+    }
+
+  });
+}
+}
+
+if(step === 8) {
+ const maritalStatus = formData.steps[1]?.maritalStatus;
+  const stepData = formData.steps[8];
+
+  if (maritalStatus === "MARRIED") {
+
+    addField("spouseFullName");
+    addField("marriageDate");
+    addField("spouseBirthDate");
+    addField("spouseNationality");
+    addField("spouseBirthPlace");
+    addField("spouseBirthPlaceCountry");
+    addField("spouseOccupation");
+    addField("spouseAddress");
+
+    // Erkek ise kızlık soyadı zorunlu
+    if (formData.steps[1]?.gender === "M") {
+      addField("wifeMaidenName");
+    }
+
+    // Eğer OTHER adres seçilmişse
+    if (stepData?.spouseAddress === "OTHER") {
+      addField("otherSpouseAddress");
+      addField("otherSpouseAddressCity");
+      addField("otherSpouseAddressCountry");
+      addField("otherSpouseAddressPostCode");
+    }
+  }
+if (["WIDOWED", "DIVORCED"].includes(maritalStatus)) {
+
+    addField("oldSpouseFullName");
+    addField("oldSpouseBirthDate");
+    addField("oldMarriageDate");
+    addField("oldMarriageEndDate");
+    addField("oldSpouseNationality");
+    addField("oldSpouseBirthPlace");
+    addField("oldSpouseBirthPlaceCountry");
+    addField("oldSpouseEndCountry");
+    addField("oldSpouseInfo");
+
+    // 🔥 Tarih mantık kontrolü
+    if (
+      stepData?.oldMarriageDate &&
+      stepData?.oldMarriageEndDate &&
+      stepData.oldMarriageEndDate < stepData.oldMarriageDate
+    ) {
+      addField("oldMarriageInvalidDate");
+    }
+  }
+}
+
+if (step === 9) {
+  const stepData = formData.steps[9];
+  const occupation = stepData?.occupation;
+
+  if (!occupation) {
+    addField("occupation");
+  }
+
+  // ================= NOT EMPLOYED =================
+  if (occupation === "NOT EMPLOYED") {
+    if (isEmpty(stepData?.otherJobDescription)) {
+      addField("otherJobDescription");
+    }
+  }
+
+  // ================= OTHER =================
+  if (occupation === "OTHER") {
+
+    addField("otherJobDescription");
+    addField("workOrSchoolName");
+    addField("workOrSchoolAddress");
+    addField("workOrSchoolCity");
+    addField("workOrSchoolCountry");
+    addField("workOrSchoolPostCode");
+    addField("workStartDate");
+    addField("jobDescription");
+
+  }
+
+  // ================= NORMAL JOB =================
+  if (
+    occupation &&
+    !["HOMEMAKER", "RETIRED", "NOT EMPLOYED", "OTHER"].includes(occupation)
+  ) {
+
+    addField("workOrSchoolName");
+    addField("workOrSchoolAddress");
+    addField("workOrSchoolCity");
+    addField("workOrSchoolCountry");
+    addField("workOrSchoolPostCode");
+    addField("workOrSchoolPhone");
+
+    addField("workStartDate");
+    addField("jobDescription");
+
+  }
+
+    if (isEmpty(stepData?.previousJobBoolean)) {
+    addField("previousJobBoolean");
+  }
+
+  // Eğer YES ise
+  if (stepData?.previousJobBoolean === "YES") {
+
+    const jobs = stepData?.previousJobs || [];
+
+    // En az 1 iş girilmeli
+    if (!jobs.length) {
+      addField("previousJobs_empty");
+    }
+
+    jobs.forEach((job, index) => {
+
+      if (isEmpty(job.companyName))
+        addField(`previous_companyName_${index}`);
+
+      if (isEmpty(job.position))
+        addField(`previous_position_${index}`);
+
+      if (isEmpty(job.previusWorkAddress))
+        addField(`previous_previusWorkAddress_${index}`);
+
+      if (isEmpty(job.previusWorkCity))
+        addField(`previous_previusWorkCity_${index}`);
+
+      if (isEmpty(job.previusWorkCountry))
+        addField(`previous_previusWorkCountry_${index}`);
+      if (isEmpty(job.previusWorkPhone))
+        addField(`previous_previusWorkPhone_${index}`);
+      if (isEmpty(job.previusWorkPostCode))
+        addField(`previous_previusWorkPostCode_${index}`);
+
+      if (isEmpty(job.startDate))
+        addField(`previous_startDate_${index}`);
+
+      if (isEmpty(job.endDate))
+        addField(`previous_endDate_${index}`);
+
+      if (isEmpty(job.previusSupervisorFullname))
+        addField(`previous_previusSupervisorFullname_${index}`);
+
+      if (isEmpty(job.previusDuties))
+        addField(`previous_previusDuties_${index}`);
+
+      // 🔥 Tarih kontrolü
+      if (
+        job.startDate &&
+        job.endDate &&
+        job.endDate < job.startDate
+      ) {
+        addField(`previous_invalidDate_${index}`);
+      }
+
+    });
+  }
+
+
+  const level = stepData?.educationBoolean;
+
+  if (isEmpty(level)) {
+    addField("educationBoolean");
+  }
+
+  const educations = stepData?.previousEducations || [];
+
+  // 🎓 SADECE LİSE VE ÜZERİNDE DETAY İSTENECEK
+  const requiresDetails = [
+    "HIGH_SCHOOL",
+    "ASSOCIATE_DEGREE",
+    "BACHELOR_DEGREE",
+    "MASTER_DEGREE",
+    "PHD"
+  ].includes(level);
+
+  if (requiresDetails) {
+
+    if (!educations.length) {
+      addField("previousEducations_empty");
+    }
+
+    educations.forEach((edu, index) => {
+
+      if (isEmpty(edu.schoolName))
+        addField(`edu_schoolName_${index}`);
+
+      if (isEmpty(edu.address1))
+        addField(`edu_address1_${index}`);
+
+      if (isEmpty(edu.city))
+        addField(`edu_city_${index}`);
+
+     
+
+      if (isEmpty(edu.post_code))
+        addField(`edu_post_code_${index}`);
+
+      if (isEmpty(edu.country))
+        addField(`edu_country_${index}`);
+
+      if (isEmpty(edu.department))
+        addField(`edu_department_${index}`);
+
+      if (isEmpty(edu.fromDate))
+        addField(`edu_fromDate_${index}`);
+
+      if (isEmpty(edu.toDate))
+        addField(`edu_toDate_${index}`);
+
+      if (edu.fromDate && edu.toDate && edu.toDate < edu.fromDate) {
+        addField(`edu_invalidDate_${index}`);
+      }
+
+    });
+  }
+}
+
+if (step === 10) {
+
+  const gender = formData.steps[1]?.gender;
+  const stepData = formData.steps[10];
+
+  if (!stepData?.visitedCountries || 
+      stepData.visitedCountries.trim() === "") {
+    addField("visitedCountries");
+  }
+
+
+ if (gender === "M") {
+
+    addField("militaryStatus");
+
+    if (String(stepData?.militaryStatus).toUpperCase() === "YES") {
+      addField("militaryStartDate");
+      addField("militaryEndDate");
+    }
+  }
+}
+
+
+
+const missing = fields.filter(field => {
+  if (field === "visitedCountries") {
+  return !stepData?.visitedCountries ||
+         stepData.visitedCountries.trim() === "";
+}
+  if (field.startsWith("edu_")) {
+
+  const parts = field.split("_");
+  const key = parts[1];
+  const index = parts[2];
+
+  if (field.includes("invalidDate")) {
+    return true;
+  }
+
+  return isEmpty(stepData?.previousEducations?.[index]?.[key]);
+}
+  if (field.startsWith("previous_")) {
+
+  const parts = field.split("_");
+  const key = parts[1];
+  const index = parts[2];
+
+  if (field.includes("invalidDate")) {
+    return true;
+  }
+
+  return isEmpty(stepData?.previousJobs?.[index]?.[key]);
+}
+  if (field === "relativeCount") {
+  const raw = stepData?.relativeCount;
+  return !raw || Number(raw) < 1;
+}
+
+// Relative array kontrol
+if (field.startsWith("relative_")) {
+  const parts = field.split("_");
+  const key = parts[1];
+  const index = parts[2];
+
+  return isEmpty(stepData?.relatives?.[index]?.[key]);
+}
+if (field === "socialMediaAccounts_empty") {
+  return true;
+}
+
+if (field.startsWith("socialMedia_username_")) {
+  const index = field.split("_")[2];
+  return isEmpty(stepData?.socialMediaAccounts?.[index]?.username);
+}
+  if (field === "travelCount") {
+    const val = stepData?.travelCount;
+    return !val || Number(val) <= 0;
+  }
+
+  if (field === "companionCount") {
+    const raw = stepData?.companionCount;
+
+    return (
+      raw === undefined ||
+      raw === null ||
+      raw === "" ||
+      Number(raw) < 1
+    );
+  }
+
+  // Companion array kontrolü
+  if (field.startsWith("companion_")) {
+    const parts = field.split("_");
+    const key = parts[1];
+    const index = parts[2];
+    return isEmpty(stepData?.companions?.[index]?.[key]);
+  }
+
+  if (field.startsWith("travel_")) {
+    const parts = field.split("_");
+    const key = parts[1];
+    const index = parts[2];
+    return isEmpty(stepData?.travels?.[index]?.[key]);
+  }
+
+  if (field === "travels_empty") {
+    return true;
+  }
+
+  return isEmpty(stepData[field]);
+});
+
 
   return { valid: missing.length === 0, missing: missing || [] }; 
 };
-const goNext = () => {
-     const { valid, missing = [] } = validateStep(form.currentStep, form);
-  let newErrors = { ...errors };
 
-    if (!valid) {
+
+
+
+
+const goNext = () => {
+
+  const current = form.currentStep;
+  const maritalStatus = form.steps[1]?.maritalStatus;
+
+  const { valid, missing = [] } = validateStep(current, form);
+
+  let newErrors = {};
+
+  if (!valid) {
     missing.forEach(field => {
       newErrors[field] = "Bu alan zorunludur";
     });
-  }
-    if (!valid) {
     setErrors(newErrors);
     return;
-  } 
-    setErrors({});
+  }
+
+  setErrors({});
+
+  let nextStep = current + 1;
+
+  // 🔥 Eğer 7. adımdaysak ve kişi bekar ise 8'i atla
+  if (current === 7 && maritalStatus == "SINGLE") {
+    nextStep = 9;
+  }
+
   setForm(prev => ({
     ...prev,
-    currentStep: prev.currentStep + 1
+    currentStep: nextStep
   }));
 };
 
-  const goPrev = () => {
-    setForm((prev) => {
-      const prevStep = Math.max(1, prev.currentStep - 1);
-      return { ...prev, currentStep: prevStep };
-    });
-  };
-  const jumpTo = (step) => {
-    
-     if (Object.keys(errors).length === 0) {
-    setForm((prev) => ({ ...prev, currentStep: step }));
-}
+const goPrev = () => {
 
-  };
+  const maritalStatus = form.steps[1]?.maritalStatus;
+
+  setForm(prev => {
+
+    let prevStep = prev.currentStep - 1;
+
+    // 🔥 Eğer 9'dan geliyorsak ve evli değilse 8’i atla
+    if (prev.currentStep === 9 && maritalStatus == "SINGLE") {
+      prevStep = 7;
+    }
+
+    return {
+      ...prev,
+      currentStep: Math.max(1, prevStep)
+    };
+  });
+};
+const jumpTo = (step) => {
+
+  const { valid, missing = [] } = validateStep(form.currentStep, form);
+
+  if (!valid) {
+    let newErrors = {};
+    missing.forEach(field => {
+      newErrors[field] = "Bu alan zorunludur";
+    });
+
+    setErrors(newErrors);
+    return;
+  }
+
+  const maritalStatus = form.steps[1]?.maritalStatus;
+
+  // 🔥 8'e gitmeye çalışıyorsa ama evli değilse engelle
+  if (step === 8 && maritalStatus == "SINGLE") {
+    return;
+  }
+
+  setErrors({});
+  setForm(prev => ({
+    ...prev,
+    currentStep: step
+  }));
+};
 const updateField = (step, field, value) => {
   setForm((prev) => {
     const updatedSteps = {
@@ -1868,7 +2476,7 @@ if (step === 5) {
     : "";
 
   const daireNo = s.home_apartment_no
-    ? `DAİRE NO: ${normalizeAddressPart(s.home_apartment_no)}`
+    ? `DAIRE NO: ${normalizeAddressPart(s.home_apartment_no)}`
     : "";
 
   const ilce = s.home_district
@@ -1983,7 +2591,7 @@ const markCompleted = (step) => {
     if (isCurrent) base += " ring-4 ring-blue-200";
     return base;
   };
-const [errors, setErrors] = React.useState({});
+const [errors, setErrors] = useState({});
 
 
 const normalizeInput = (value) => {
@@ -2215,7 +2823,21 @@ useEffect(() => {
   fillOrganizationFallback();
 }, [form.steps[6].usaRelative, form.steps[6].organizationBoolean]);
 
+const passportEndDate = form.steps[5].passportEnd;
 
+let showPassportWarning = false;
+
+if (passportEndDate) {
+  const today = new Date();
+  const endDate = new Date(passportEndDate);
+
+  const diffTime = endDate - today;
+  const diffDays = diffTime / (1000 * 60 * 60 * 24);
+
+  if (diffDays <= 90) {
+    showPassportWarning = true;
+  }
+}
   return (
     <div className="min-h-screen bg-gray-100 p-6 flex items-start justify-center">
       {/* A4-like container */}
@@ -2367,7 +2989,7 @@ onChange={(e) => {
 
     {/* CİNSİYET */}
     <div>
-      <label className="text-sm font-medium">Cinsiyet</label>
+      <label className="text-sm font-medium">Cinsiyetinizi Seçiniz</label>
       <select
        name="gender"
         className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
@@ -2448,7 +3070,7 @@ onChange={(e) => {
     </div>
 
 <div>
-  <label className="text-sm font-medium">Doğum Yeri Ülke</label>
+  <label className="text-sm font-medium">Doğduğunuz Ülkeyi Seçiniz</label>
 
   <select
     name="birthCountry"
@@ -2489,13 +3111,15 @@ onChange={(e) => {
 
      {/* MEDENİ DURUM */}
     <div>
-      <label className="text-sm font-medium">Medeni Durumu</label>
+      <label className="text-sm font-medium">Medeni Durumunuzu Seçiniz</label>
       <select
        name="maritalStatus"
         className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
           ${errors.maritalStatus ? "border-red-500" : "border-gray-300"}`}
         value={form.steps[1].maritalStatus || ""}
-        onChange={(e) => updateField(1, "maritalStatus", e.target.value)}
+        onChange={(e) =>{ updateField(1, "maritalStatus", e.target.value);
+
+        }}
       >
         <option value="">Seçiniz</option>
         <option value="SINGLE">BEKAR</option>
@@ -2513,7 +3137,7 @@ onChange={(e) => {
 
       {/* ================= ESKİ EVLİLİKLER ================= */}
       {(form.steps[1].otherMarriages === "EVET" ||
-        ["DUL", "BOSANMIS"].includes(form.steps[1].maritalStatus)) && (
+        ["WIDOWED", "DIVORCED"].includes(form.steps[1].maritalStatus)) && (
         <div className="md:col-span-2 space-y-4">
           <div className="flex justify-between items-center">
             <h4 className="font-semibold">Eski Evlilik Bilgileri</h4>
@@ -2590,7 +3214,7 @@ onChange={(e) => {
         className="w-full mt-1 p-3 border rounded-xl"
         value={m.marriageStartDate}
         max={
-          form.steps[1].maritalStatus === "EVLI" &&
+          form.steps[1].maritalStatus === "MARRIED" &&
           form.steps[1].marriageDate
             ? form.steps[1].marriageDate
             : undefined
@@ -2607,7 +3231,7 @@ onChange={(e) => {
     </div>
 
     {/* ESKİ EVLİLİK BİTİŞ */}
-    <div>
+ {form.steps[1].maritalStatus === "DIVORCED" && (  <div>
       <label className="text-sm font-medium">
         Evlilik Bitiş Tarihi
       </label>
@@ -2629,7 +3253,8 @@ onChange={(e) => {
       {/* <p className="text-xs text-gray-500 mt-1">
         Başlangıçtan sonra ve şimdiki evlilikten önce olmalıdır
       </p> */}
-    </div>
+    </div>)}  
+
   </div>
 ))}
 
@@ -2651,7 +3276,7 @@ onChange={(e) => {
 
       {/* Uyruğunuz */}
 <div>
-  <label className="text-sm font-medium">Uyruğunuz</label>
+  <label className="text-sm font-medium">Uyruğunuzu Seçiniz</label>
 
   <select
     name="nationality"
@@ -2710,7 +3335,7 @@ onChange={(e) => {
       {/* Diğer Uyruğunuz (koşullu) */}
       {form.steps[2].otherNationalityExist === "YES" && (
       <div>
-  <label className="text-sm font-medium">Diğer Uyruğunuz</label>
+  <label className="text-sm font-medium">Diğer Uyruğunuzu Seçiniz</label>
 
   <select
     name="otherNationality"
@@ -2847,28 +3472,6 @@ onChange={(e) => {
         {/* <p className="text-xs text-gray-400 mt-1">11 haneli rakam</p> */}
         {errors.tcId && <p className="text-red-500 text-xs mt-1">{errors.tcId}</p>}
       </div>
- {/* <div>
-                  <label className="text-sm font-medium">TC Kimlik Kartı Son Geçerlilik Tarihi</label>
-                  <input
-                    type="date"
-                    name="tcEndDate"
-                    min={new Date().toISOString().split("T")[0]}
-                    className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
-          ${errors.tcEndDate ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
-                    value={form.steps[2].tcEndDate || ""}
-                    onChange={(e) => updateField(2, "tcEndDate", e.target.value)}
-                  />
-                  {errors.tcEndDate && <p className="text-red-500 text-xs mt-1">{errors.tcEndDate}</p>}
-                </div> */}
-
-
-
-              {/* BURASI TAŞINACAK */}
-                
-{/* BURAYA KADAR */}
-
-
-
 
 
       {/* Sosyal Güvenlik Numarası */}
@@ -2945,7 +3548,7 @@ onChange={(e) => {
 
  
     <div>
-  <label className="text-sm font-medium">Vize Amacı</label>
+  <label className="text-sm font-medium">Vize Amacınızı Seçiniz</label>
   <select
     name="visaType"
     className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
@@ -2974,7 +3577,7 @@ onChange={(e) => {
 </div>
    {form.steps[3].visaType == "TEMP. BUSINESS OR PLEASURE VISITOR (B)" && (
           <div>
-  <label className="text-sm font-medium">Vize Türü</label>
+  <label className="text-sm font-medium">Vize Türünü Seçiniz</label>
   <select
     name="visaTypeDesc"
     className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
@@ -3783,10 +4386,14 @@ onChange={(e) => {
           type="date"
           name="exactArrival"
           min={new Date().toISOString().split("T")[0]}
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+    ${errors.exactArrival ? "border-red-500" : "border-gray-300"}`}
           value={form.steps[3].exactArrival || ""}
           onChange={(e) => updateField(3, "exactArrival", e.target.value)}
         />
+         {errors.exactArrival && (
+    <p className="text-red-500 text-xs mt-1">{errors.exactArrival}</p>
+  )}
       </div>
         <div>
         <label className="text-sm font-medium">ABD’ye Varış Şehri</label>
@@ -3824,10 +4431,12 @@ onChange={(e) => {
           type="date"
           name="exactDeparture"
           min={new Date().toISOString().split("T")[0]}
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+         className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+    ${errors.exactDeparture ? "border-red-500" : "border-gray-300"}`}
           value={form.steps[3].exactDeparture || ""}
           onChange={(e) => updateField(3, "exactDeparture", e.target.value)}
         />
+         {errors.exactDeparture && <p className="text-red-500 text-xs mt-1">{errors.exactDeparture}</p>}
       </div>
             <div>
         <label className="text-sm font-medium">ABD’den Ayrılış Şehri</label>
@@ -3951,7 +4560,7 @@ onChange={(e) => {
 
 
             <div>
-  <label className="text-sm font-medium">ABD’de Konaklayacağınız Eyalet</label>
+  <label className="text-sm font-medium">ABD’de Konaklayacağınız Eyaleti Seçiniz</label>
 
   <select
     name="usaAddressState"
@@ -4001,10 +4610,16 @@ onChange={(e) => {
           type="date"
           min={new Date().toISOString().split("T")[0]}
           name="estimatedArrival"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.estimatedArrival ? "border-red-500" : "border-gray-300"}`}
           value={form.steps[3].estimatedArrival || ""}
           onChange={(e) => updateField(3, "estimatedArrival", e.target.value)}
         />
+        {errors.estimatedArrival && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.estimatedArrival}
+    </p>
+  )}
       </div>
 
       {/* ABD’de Kalış Süresi */}
@@ -4017,7 +4632,7 @@ onChange={(e) => {
       type="text"
       name="stayDurationValue"
       className={`w-24 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
-        ${errors.stayDuration ? "border-red-500" : "border-gray-300"}`}
+        ${errors.stayDurationValue ? "border-red-500" : "border-gray-300"}`}
       value={form.steps[3].stayDurationValue || ""}
       onChange={(e) => {
         if (isMobile) {
@@ -4033,12 +4648,16 @@ onChange={(e) => {
       }}
       placeholder="Örn: 1"
     />
-
+{errors.stayDurationValue && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.stayDurationValue}
+    </p>
+  )}
     {/* SÜRE BİRİMİ */}
     <select
       name="stayDurationUnit"
       className={`w-40 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
-        ${errors.stayDuration ? "border-red-500" : "border-gray-300"}`}
+        ${errors.stayDurationUnit ? "border-red-500" : "border-gray-300"}`}
       value={form.steps[3].stayDurationUnit || ""}
       onChange={(e) => updateField(3, "stayDurationUnit", e.target.value)}
     >
@@ -4051,9 +4670,9 @@ onChange={(e) => {
     </select>
   </div>
 
-  {errors.stayDuration && (
+  {errors.stayDurationUnit && (
     <p className="text-red-500 text-xs mt-1">
-      {errors.stayDuration}
+      {errors.stayDurationUnit}
     </p>
   )}
 </div>
@@ -4120,7 +4739,7 @@ onChange={(e) => {
 
 
             <div>
-  <label className="text-sm font-medium">ABD’de Konaklayacağınız Eyalet</label>
+  <label className="text-sm font-medium">ABD’de Konaklayacağınız Eyaleti Seçiniz</label>
 
   <select
     name="usaAddressState"
@@ -4225,7 +4844,8 @@ onChange={(e) => {
             <label className="text-sm font-medium">Sponsorun Adı Soyadı</label>
             <input
               name="relationfullName"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.relationfullName ? "border-red-500" : "border-gray-300"}`}
               value={form.steps[3].relationfullName || ""}
                      onChange={(e) => {
                 if (isMobile) {
@@ -4421,19 +5041,23 @@ onChange={(e) => {
             <label className="text-sm font-medium">Sponsorun Telefonu</label>
             <input
               name="payerPhone"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+             className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.payerPhone ? "border-red-500" : "border-gray-300"}`}   
               value={form.steps[3].payerPhone || ""}
               onChange={(e) => updateField(3, "payerPhone", e.target.value)}
             />
+              {errors.payerPhone && <p className="text-red-500 text-xs mt-1">{errors.payerPhone}</p>}
           </div>
            <div>
             <label className="text-sm font-medium">Sponsorun E-Postası</label>
             <input
               name="payerMail"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.payerMail ? "border-red-500" : "border-gray-300"}`}   
               value={form.steps[3].payerMail || ""}
               onChange={(e) => updateField(3, "payerMail", e.target.value)}
             />
+               {errors.payerMail && <p className="text-red-500 text-xs mt-1">{errors.payerMail}</p>}
           </div>
         </>
       )}
@@ -4443,7 +5067,8 @@ onChange={(e) => {
             <label className="text-sm font-medium">Sponsor Şirket/Organizasyon Adı</label>
             <input
               name="relationCompanyfullName"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+             className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.relationCompanyfullName ? "border-red-500" : "border-gray-300"}`}   
               value={form.steps[3].relationCompanyfullName || ""}
                      onChange={(e) => {
                 if (isMobile) {
@@ -4473,19 +5098,23 @@ onChange={(e) => {
             <label className="text-sm font-medium">Sponsor Şirket/Organizasyon Telefon</label>
             <input
               name="payerCompanyPhone"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.payerCompanyPhone ? "border-red-500" : "border-gray-300"}`}   
               value={form.steps[3].payerCompanyPhone || ""}
               onChange={(e) => updateField(3, "payerCompanyPhone", e.target.value)}
             />
+             {errors.payerCompanyPhone && <p className="text-red-500 text-xs mt-1">{errors.payerCompanyPhone}</p>}
           </div>
            <div>
             <label className="text-sm font-medium">Sponsorun Sizinle Olan İlişkisi</label>
             <input
               name="payerRelation"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+               className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.payerRelation ? "border-red-500" : "border-gray-300"}`}   
               value={form.steps[3].payerRelation || ""}
               onChange={(e) => updateField(3, "payerRelation", e.target.value)}
             />
+             {errors.payerRelation && <p className="text-red-500 text-xs mt-1">{errors.payerRelation}</p>}
           </div>
 
                      <div>
@@ -4717,13 +5346,13 @@ onChange={(e) => {
   <label className="text-sm font-medium">Tek mi Seyahat Edeceksiniz?</label>
   <select
     className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
-          ${errors.beenToUS ? "border-red-500" : "border-gray-300"}`}
+          ${errors.travelAlone ? "border-red-500" : "border-gray-300"}`}
     value={form.steps[4]?.travelAlone || ""}
     onChange={(e) => {
       const val = e.target.value;
       updateField(4, "travelAlone", val);
 
-      if (val === "YES") {
+      if (val === "NO") {
         updateField(4, "companionCount", 0);
         updateField(4, "companions", []);
       }
@@ -4744,14 +5373,16 @@ onChange={(e) => {
       type="number"
       min={1}
       max={10}
-      className="w-full mt-1 p-3 border rounded-xl"
-      value={form.steps[4]?.companionCount || ""}
+     className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.companionCount ? "border-red-500" : "border-gray-300"}`}
+     value={form.steps[4]?.companionCount ?? ""}
       onChange={(e) => {
         const count = Number(e.target.value || 0);
         updateField(4, "companionCount", count);
         adjustCompanions(count);
       }}
     />
+     {errors.companionCount && <p className="text-red-500 text-xs mt-1">{errors.companionCount}</p>}
   </div>
 )}
 
@@ -4769,7 +5400,11 @@ onChange={(e) => {
     <div className="mb-3">
       <label className="text-sm font-medium">Adı Soyadı</label>
       <input
-        className="w-full mt-1 p-3 border rounded-xl"
+       className={`w-full mt-1 p-3 border rounded-xl
+${errors[`companion_fullName_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
         value={person.fullName || ""}
         onChange={(e) =>
           updateArrayField(
@@ -4781,13 +5416,18 @@ onChange={(e) => {
           )
         }
       />
+       {errors[`companion_fullName_${index}`] && <p className="text-red-500 text-xs mt-1">{errors[`companion_fullName_${index}`]}</p>}
     </div>
 
     {/* YAKINLIK */}
     <div className="mb-3">
       <label className="text-sm font-medium">Yakınlık Derecesi</label>
       <select
-        className="w-full mt-1 p-3 border rounded-xl"
+       className={`w-full mt-1 p-3 border rounded-xl
+${errors[`companion_relationship_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
         value={person.relationship || ""}
         onChange={(e) =>
           updateArrayField(
@@ -4808,13 +5448,18 @@ onChange={(e) => {
         <option value="BUSINESS">İş Ortağı</option>
         <option value="OTHER">Diğer</option>
       </select>
+           {errors[`companion_relationship_${index}`] && <p className="text-red-500 text-xs mt-1">{errors[`companion_relationship_${index}`]}</p>}
     </div>
 
     {/* VİZE */}
     <div>
       <label className="text-sm font-medium">Vizesi Var mı?</label>
       <select
-        className="w-full mt-1 p-3 border rounded-xl"
+       className={`w-full mt-1 p-3 border rounded-xl
+${errors[`companion_hasVisa_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
         value={person.hasVisa || ""}
         onChange={(e) =>
           updateArrayField(
@@ -4830,6 +5475,7 @@ onChange={(e) => {
         <option value="YES">Evet</option>
         <option value="NO">Hayır</option>
       </select>
+        {errors[`companion_hasVisa_${index}`] && <p className="text-red-500 text-xs mt-1">{errors[`companion_hasVisa_${index}`]}</p>}
     </div>
   </div>
 ))
@@ -4861,7 +5507,9 @@ onChange={(e) => {
               type="text"
               name="organizationTravelName"
           
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.organizationTravelName ? "border-red-500" : "border-gray-300"}`}
+
               value={form.steps[4].organizationTravelName || ""}
               onChange={(e) =>
       updateField(
@@ -4880,6 +5528,7 @@ onChange={(e) => {
     }
         
             />
+             {errors.organizationTravelName && <p className="text-red-500 text-xs mt-1">{errors.organizationTravelName}</p>}
           </div>
 
 
@@ -4910,13 +5559,14 @@ onChange={(e) => {
 {form.steps[4].beenToUS === "YES" && (
   <div>
     <label className="text-sm font-medium">
-      ABD’ye Kaç Kere Seyahat Ettiniz?
+   ABD’ye Kaç Kere Seyahat Ettiniz?
     </label>
 
   <select
-  className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
-  value={form.steps[4].travelCount || ""}
-  onChange={(e) => {
+  className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.travelCount ? "border-red-500" : "border-gray-300"}`}
+   value={form.steps[4]?.travelCount || ""}
+   onChange={(e) => {
     const value = e.target.value;
 
     if (value === "5+") {
@@ -4951,7 +5601,7 @@ onChange={(e) => {
   ))}
   <option value="5">5 ve daha fazla</option>
 </select>
-
+ {errors.travelCount && <p className="text-red-500 text-xs mt-1">{errors.travelCount}</p>}
   </div>
 )}
 
@@ -4967,7 +5617,7 @@ onChange={(e) => {
   >
     {/* Kart Başlığı – sol üst */}
     <h4 className="absolute -top-3 left-4 bg-gray-50 px-2 text-sm font-medium">
-      {form.steps[4].travelCount === "5"
+      {form.steps[4].travelCount > "4"
         ? `Son 5 Seyahat – ${index + 1}. Seyahat`
         : `${index + 1}. Seyahat`}
     </h4>
@@ -4980,7 +5630,11 @@ onChange={(e) => {
         <input
           type="date"
           max={new Date().toISOString().split("T")[0]}
-          className="w-full mt-1 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+         className={`w-full mt-1 p-3 border rounded-xl
+${errors[`travel_date_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
           value={travel.date}
           onChange={(e) => {
             const updated = [...form.steps[4].travels];
@@ -4988,6 +5642,7 @@ onChange={(e) => {
             updateField(4, "travels", updated);
           }}
         />
+          {errors[`travel_date_${index}`] && <p className="text-red-500 text-xs mt-1">{errors[`travel_date_${index}`]}</p>}
       </div>
 
       {/* Kaldığınız Süre */}
@@ -4998,7 +5653,11 @@ onChange={(e) => {
     <input
       type="number"
       min="1"
-      className="w-full mt-1 p-3 border rounded-xl"
+    className={`w-full mt-1 p-3 border rounded-xl
+${errors[`travel_durationValue_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
       value={travel.durationValue || ""}
       onChange={(e) => {
         const updated = [...form.steps[4].travels];
@@ -5006,8 +5665,13 @@ onChange={(e) => {
         updateField(4, "travels", updated);
       }}
     />
+     {errors[`travel_durationValue_${index}`] && <p className="text-red-500 text-xs mt-1">{errors[`travel_durationValue_${index}`]}</p>}
         <select
-      className="w-full mt-1 p-3 border rounded-xl"
+      className={`w-full mt-1 p-3 border rounded-xl
+${errors[`travel_durationUnit_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
       value={travel.durationUnit || ""}
       onChange={(e) => {
         const updated = [...form.steps[4].travels];
@@ -5020,6 +5684,7 @@ onChange={(e) => {
       <option value="MONTHS">Ay</option>
       <option value="YEARS">Yıl</option>
     </select>
+     {errors[`travel_durationUnit_${index}`] && <p className="text-red-500 text-xs mt-1">{errors[`travel_durationUnit_${index}`]}</p>}
   </div>
 
 
@@ -5086,14 +5751,14 @@ onChange={(e) => {
     name="driverLicenseState"
     className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
       ${errors.driverLicenseState ? "border-red-500" : "border-gray-300"}`}
-    value={form.steps[3].driverLicenseState || ""}
+    value={form.steps[4].driverLicenseState || ""}
     onChange={(e) => {
       if (isMobile) {
         // Mobile: Normalizasyon YOK
-        updateField(3, "driverLicenseState", e.target.value);
+        updateField(4, "driverLicenseState", e.target.value);
       } else {
         // Desktop/Diğer: Normalizasyon VAR
-        updateField(3, "driverLicenseState", (e.target.value));
+        updateField(4, "driverLicenseState", (e.target.value));
       }
     }}
    
@@ -5131,15 +5796,15 @@ onChange={(e) => {
           onChange={(e) => updateField(4, "hadUSVisa", e.target.value)}
         >
           <option value="">Seçiniz</option>
-          <option value="EVET">Evet</option>
-          <option value="HAYIR">Hayır</option>
+          <option value="YES">Evet</option>
+          <option value="NO">Hayır</option>
         </select>
          {errors.hadUSVisa && <p className="text-red-500 text-xs mt-1">{errors.hadUSVisa}</p>}
 
       </div>
 
       {/* Evet ise tarihi ve vize numarası */}
-      {form.steps[4].hadUSVisa === "EVET" && (
+      {form.steps[4].hadUSVisa === "YES" && (
         <>
           <div>
             <label className="text-sm font-medium">Son Alınan Vize Başlangıç Tarihi</label>
@@ -5147,17 +5812,20 @@ onChange={(e) => {
               type="date"
               name="visaDate"
               max={new Date().toISOString().split("T")[0]}
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.visaDate ? "border-red-500" : "border-gray-300"}`}
               value={form.steps[4].visaDate || ""}
               onChange={(e) => updateField(4, "visaDate", e.target.value)}
         
             />
+                     {errors.visaDate && <p className="text-red-500 text-xs mt-1">{errors.visaDate}</p>}
           </div>
           <div>
             <label className="text-sm font-medium">Son Alınan Vize Numarası</label>
             <input
               name="visaNumber"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.visaNumber ? "border-red-500" : "border-gray-300"}`}
               value={form.steps[4].visaNumber || ""}
                        onChange={(e) => {
                 if (isMobile) {
@@ -5178,6 +5846,7 @@ onChange={(e) => {
             }}
                   placeholder="Sağ altta bulunan kırmızı ile yazılmış numara"
             />
+             {errors.visaNumber && <p className="text-red-500 text-xs mt-1">{errors.visaNumber}</p>}
           </div>
                 <div>
   <label className="text-sm font-medium">Son Alınan Vize Türü</label>
@@ -5202,10 +5871,46 @@ onChange={(e) => {
       J1 – Değişim Programı (Work & Travel, Staj, Kültürel Değişim)
     </option>
   </select>
-
+  {errors.hadVisaType && <p className="text-red-500 text-xs mt-1">{errors.hadVisaType}</p>}
 
 </div>
+<div>
+  <label className="text-sm font-medium">Son Alınan Vizeyi Hangi Ülkeden Aldınız Seçiniz</label>
 
+  <select
+    name="hadVisaCountry"
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.hadVisaCountry ? "border-red-500" : "border-gray-300"}`}
+    value={form.steps[4].hadVisaCountry || ""}
+    onChange={(e) => {
+      if (isMobile) {
+        // Mobile: Normalizasyon YOK
+        updateField(4, "hadVisaCountry", e.target.value);
+      } else {
+        // Desktop: Normalizasyon VAR
+        updateField(4, "hadVisaCountry", (e.target.value));
+      }
+    }}
+   
+  >
+    <option value="">Ülke Seçiniz</option>
+
+    {countryName.map((country) => (
+      <option
+        key={country.value}
+        value={country.value}   // 👈 VALUE = LABEL
+      >
+        {country.label}
+      </option>
+    ))}
+  </select>
+
+  {errors.hadVisaCountry && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.hadVisaCountry}
+    </p>
+  )}
+</div>
   <div>
   <label className="text-sm font-medium">10 Parmak İzi Verdiniz Mi?</label>
   <select
@@ -5227,7 +5932,7 @@ onChange={(e) => {
 
   </select>
 
-
+ {errors.hadFingerprints && <p className="text-red-500 text-xs mt-1">{errors.hadFingerprints}</p>}
 </div>
 
 
@@ -5258,7 +5963,7 @@ onChange={(e) => {
     </option>
 
   </select>
-
+{errors.visaLostStolen && <p className="text-red-500 text-xs mt-1">{errors.visaLostStolen}</p>}
 
 </div>
 
@@ -5269,7 +5974,8 @@ onChange={(e) => {
             <label className="text-sm font-medium">Son Alınan Vizenin Kaybolduğu/Çalındığı Yıl</label>
             <input
               name="visaLostStolenYear"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+    ${errors.visaLostStolen ? "border-red-500" : "border-gray-300"}`}
               value={form.steps[4].visaLostStolenYear || ""}
                        onChange={(e) => {
                 if (isMobile) {
@@ -5290,12 +5996,14 @@ onChange={(e) => {
             }}
                   placeholder="Örn: 2020"
             />
+            {errors.visaLostStolenYear && <p className="text-red-500 text-xs mt-1">{errors.visaLostStolenYear}</p>}
           </div>
       <div>
             <label className="text-sm font-medium">Kaybolma/Çalınma Olayını Açıklayınız</label>
             <input
               name="visaLostStolenInfo"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+             className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+    ${errors.visaLostStolenInfo ? "border-red-500" : "border-gray-300"}`}
               value={form.steps[4].visaLostStolenInfo || ""}
                        onChange={(e) => {
                 if (isMobile) {
@@ -5316,6 +6024,7 @@ onChange={(e) => {
             }}
                   placeholder="Açıklayınız"
             />
+             {errors.visaLostStolenInfo && <p className="text-red-500 text-xs mt-1">{errors.visaLostStolenInfo}</p>}
           </div>
     </>
 
@@ -5347,7 +6056,7 @@ onChange={(e) => {
   <label className="text-sm font-medium">İptal Nedenini Açıklayınız</label>
   <textarea
     rows={2}
-    className="w-full mt-1 p-3 border rounded-xl resize-none"
+     className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300 focus:ring-2 focus:ring-blue-500 resize-none ${errors.visaCancelledDetail ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
     value={form.steps[4].visaCancelledDetail || ""}
     onChange={(e) =>
       updateField(
@@ -5365,6 +6074,9 @@ onChange={(e) => {
       )
     }
   />
+   {errors.visaCancelledDetail && (
+      <p className="text-red-500 text-xs mt-1">{errors.visaCancelledDetail}</p>
+    )}
 </div>
 
     
@@ -5407,17 +6119,20 @@ onChange={(e) => {
               type="date"
               name="visaDateLastRefused"
               max={new Date().toISOString().split("T")[0]}
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+               className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.visaDateLastRefused ? "border-red-500" : "border-gray-300"}`}
+
               value={form.steps[4].visaDateLastRefused || ""}
               onChange={(e) => updateField(4, "visaDateLastRefused", e.target.value)}
         
             />
+             {errors.visaDateLastRefused && <p className="text-red-500 text-xs mt-1">{errors.visaDateLastRefused}</p>}
           </div>
 <div className="md:col-span-2">
   <label className="text-sm font-medium">Vize Reddi Nedenini Açıklayınız</label>
   <textarea
     rows={2}
-    className="w-full mt-1 p-3 border rounded-xl resize-none"
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300 focus:ring-2 focus:ring-blue-500 resize-none ${errors.visaRefusedDetail ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
     value={form.steps[4].visaRefusedDetail || ""}
     onChange={(e) =>
       updateField(
@@ -5435,6 +6150,9 @@ onChange={(e) => {
       )
     }
   />
+   {errors.visaRefusedDetail && (
+      <p className="text-red-500 text-xs mt-1">{errors.visaRefusedDetail}</p>
+    )}
 </div>
 
     
@@ -5467,8 +6185,8 @@ onChange={(e) => {
 <div className="md:col-span-2">
   <label className="text-sm font-medium">Göçmenlik Başvurusunu Açıklayınız</label>
   <textarea
-    rows={2}
-    className="w-full mt-1 p-3 border rounded-xl resize-none"
+    rows={2} 
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300 focus:ring-2 focus:ring-blue-500 resize-none ${errors.immigrationDetail ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
     value={form.steps[4].immigrationDetail || ""}
     onChange={(e) =>
       updateField(
@@ -5486,6 +6204,9 @@ onChange={(e) => {
       )
     }
   />
+  {errors.immigrationDetail && (
+      <p className="text-red-500 text-xs mt-1">{errors.immigrationDetail}</p>
+    )}
 </div>
 
     
@@ -5905,7 +6626,7 @@ onChange={(e) => {
   <div className="mt-4 p-4 border rounded-2xl bg-gray-50">
     <h4 className="font-medium mb-3">Kullandığınız Sosyal Medyalar</h4>
 
-    {["Instagram", "LinkedIn", "Facebook", "X(Twitter)","Youtube"].map((platform) => {
+    {["Instagram", "LinkedIn", "Facebook", "X(Twitter)","Youtube"].map((platform,index) => {
       const exists = form.steps[5].socialMediaAccounts?.find(
         (p) => p.platform === platform
       );
@@ -5914,7 +6635,13 @@ onChange={(e) => {
         <div key={platform} className="mb-4">
           {/* Checkbox */}
           <label className="flex items-center gap-2 font-medium">
+            {errors.socialMediaAccounts_empty && (
+  <p className="text-red-500 text-xs mt-2">
+    En az bir sosyal medya seçmelisiniz
+  </p>
+)}
             <input
+            
               type="checkbox"
               checked={!!exists}
               onChange={(e) => {
@@ -5934,8 +6661,13 @@ onChange={(e) => {
 
           {/* Username input */}
           {exists && (
+            
             <input
-              className="w-full mt-2 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+             className={`w-full mt-2 p-3 border rounded-xl shadow-sm focus:ring-2 outline-none
+${errors[`socialMedia_username_${index}`]
+  ? "border-red-500"
+  : "border-gray-300 focus:ring-blue-500"}
+`}
               placeholder={`${platform} kullanıcı adınız`}
               value={exists.username}
               onChange={(e) => {
@@ -5961,7 +6693,13 @@ onChange={(e) => {
                 }
               }}
             />
+            
           )}
+          {errors[`socialMedia_username_${index}`] && (
+  <p className="text-red-500 text-xs mt-1">
+    Kullanıcı adı zorunludur
+  </p>
+)}
         </div>
       );
     })}
@@ -6122,7 +6860,11 @@ onChange={(e) => {
           onChange={(e) => updateField(5, "passportEnd", e.target.value)}
         />
           {errors.passportEnd && <p className="text-red-500 text-xs mt-1">{errors.passportEnd}</p>}
-
+{showPassportWarning && (
+  <p className="text-blue-600 text-xs mt-1">
+    Dikkat! Pasaportunuzun bitiş tarihine 90 günden az kalmıştır.
+  </p>
+)}
       </div>
 
       {/* Daha önce kayıp pasaport */}
@@ -6218,7 +6960,8 @@ onChange={(e) => {
         <label className="text-sm font-medium">Kaybolan/Çalınan Pasaport Açıklaması</label>
         <input
           name="lostPassportInfo"
-          className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.lostPassportInfo ? "border-red-500" : "border-gray-300"}`}
           value={form.steps[5].lostPassportInfo || ""}
        onChange={(e) => {
                 if (isMobile) {
@@ -6239,6 +6982,11 @@ onChange={(e) => {
             }}
          
         />
+          {errors.lostPassportInfo && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.lostPassportInfo}
+    </p>
+  )}
       </div>
   </>
 )}
@@ -6385,28 +7133,34 @@ onChange={(e) => {
             <label className="text-sm font-medium">Yakınınızın Telefonu</label>
             <input
               name="usaRelativePhone"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+               className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.usaRelativePhone ? "border-red-500" : "border-gray-300"}`}   
               value={form.steps[6].usaRelativePhone || ""}
               onChange={(e) => updateField(6, "usaRelativePhone", e.target.value)}
             />
+             {errors.usaRelativePhone && <p className="text-red-500 text-xs mt-1">{errors.usaRelativePhone}</p>}
           </div>
     <div>
             <label className="text-sm font-medium">Yakınınızın E-Postası</label>
             <input
               name="usaRelativeEmail"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+               className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.usaRelativeEmail ? "border-red-500" : "border-gray-300"}`}   
               value={form.steps[6].usaRelativeEmail || ""}
               onChange={(e) => updateField(6, "usaRelativeEmail", e.target.value)}
             />
+             {errors.usaRelativeEmail && <p className="text-red-500 text-xs mt-1">{errors.usaRelativeEmail}</p>}
           </div>
  <div>
             <label className="text-sm font-medium">Yakınınızın Posta Kodu</label>
             <input
               name="usaRelativePostCode"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+               className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.usaRelativePostCode ? "border-red-500" : "border-gray-300"}`}   
               value={form.steps[6].usaRelativePostCode || ""}
               onChange={(e) => updateField(6, "usaRelativePostCode", e.target.value)}
             />
+             {errors.usaRelativePostCode && <p className="text-red-500 text-xs mt-1">{errors.usaRelativePostCode}</p>}
           </div>
             <div>
   <label className="text-sm font-medium">Yakınınızın Yaşadığı Eyalet</label>
@@ -6478,7 +7232,8 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
               type="text"
               name="organizationInfo"
           
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+  ${errors.organizationInfo ? "border-red-500" : "border-gray-300"}`}
               value={form.steps[6].organizationInfo || ""}
               onChange={(e) =>
       updateField(
@@ -6497,6 +7252,7 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
     }
         
             />
+            {errors.organizationInfo && <p className="text-red-500 text-xs mt-1">{errors.organizationInfo}</p>}
           </div>
 
    {form.steps[6].usaRelative === "NO" && (
@@ -6600,28 +7356,46 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
             <label className="text-sm font-medium">Etkinlik/Organizasyon Telefon</label>
             <input
               name="usaRelativePhone"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.usaRelativePhone ? "border-red-500" : "border-gray-300"}`}
               value={form.steps[6].usaRelativePhone || ""}
               onChange={(e) => updateField(6, "usaRelativePhone", e.target.value)}
             />
+              {errors.usaRelativePhone && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.usaRelativePhone}
+    </p>
+  )}
           </div>
     <div>
             <label className="text-sm font-medium">Etkinlik/Organizasyon E-Posta</label>
             <input
               name="usaRelativeEmail"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.usaRelativeEmail ? "border-red-500" : "border-gray-300"}`}
               value={form.steps[6].usaRelativeEmail || ""}
               onChange={(e) => updateField(6, "usaRelativeEmail", e.target.value)}
             />
+              {errors.usaRelativeEmail && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.usaRelativeEmail}
+    </p>
+  )}
           </div>
  <div>
             <label className="text-sm font-medium">Etkinlik/Organizasyon Posta Kodu</label>
             <input
               name="usaRelativePostCode"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.usaRelativePostCode ? "border-red-500" : "border-gray-300"}`}
               value={form.steps[6].usaRelativePostCode || ""}
               onChange={(e) => updateField(6, "usaRelativePostCode", e.target.value)}
             />
+              {errors.usaRelativePostCode && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.usaRelativePostCode}
+    </p>
+  )}
           </div>
     </>
    )}
@@ -6848,7 +7622,9 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
     <input
       type="number"
       min={1}
-      className="w-full mt-1 p-3 border rounded-xl"
+   className={`w-full mt-1 p-3 border rounded-xl
+${errors.relativeCount ? "border-red-500" : "border-gray-300"}
+`}
       value={form.steps[7].relativeCount || ""}
       onChange={(e) => {
         const count = Number(e.target.value);
@@ -6864,6 +7640,11 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
         updateField(7, "relatives", relativesArray);
       }}
     />
+    {errors.relativeCount && (
+  <p className="text-red-500 text-xs mt-1">
+    Kişi sayısı zorunludur
+  </p>
+)}
   </div>
 )}
 { form.steps[7].relativeCount > 0 && (
@@ -6880,7 +7661,11 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
     <div className="mb-3">
       <label className="text-sm font-medium">Ad Soyad</label>
       <input
-        className="w-full mt-1 p-3 border rounded-xl"
+       className={`w-full mt-1 p-3 border rounded-xl
+${errors[`relative_fullName_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
         value={relative.fullName}
         onChange={(e) => {
           const updated = [...form.steps[7].relatives];
@@ -6898,13 +7683,22 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
         }}
         placeholder="Ad Soyad"
       />
+      {errors[`relative_fullName_${index}`] && (
+  <p className="text-red-500 text-xs mt-1">
+    Ad soyad zorunludur
+  </p>
+)}
     </div>
 
     {/* Yakınlık Derecesi */}
     <div className="mb-3">
       <label className="text-sm font-medium">Yakınlık Derecesi</label>
       <select
-        className="w-full mt-1 p-3 border rounded-xl"
+      className={`w-full mt-1 p-3 border rounded-xl
+${errors[`relative_level_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
         value={relative.level}
         onChange={(e) => {
           const updated = [...form.steps[7].relatives];
@@ -6918,13 +7712,18 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
         <option value="CHILD">Çocuğu</option>
         <option value="SIBLING">Kardeşi</option>
       </select>
+       {errors[`relative_level_${index}`] && <p className="text-red-500 text-xs mt-1">{errors[`relative_level_${index}`]}</p>}
     </div>
 
     {/* Yasal Statü */}
     <div>
       <label className="text-sm font-medium">Yasal Statüsü</label>
       <select
-        className="w-full mt-1 p-3 border rounded-xl"
+       className={`w-full mt-1 p-3 border rounded-xl
+${errors[`relative_status_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
         value={relative.status}
         onChange={(e) => {
           const updated = [...form.steps[7].relatives];
@@ -6938,6 +7737,7 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
         <option value="NONIMMIGRANT">Göçmen Olmayan</option>
         <option value="OTHER/I DON'T KNOW">Diğer/Bilmiyorum</option>
       </select>
+       {errors[`relative_status_${index}`] && <p className="text-red-500 text-xs mt-1">{errors[`relative_status_${index}`]}</p>}
     </div>
   </div>
 )   
@@ -6981,7 +7781,8 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
       <div>
             <label className="text-sm font-medium">Eş Adı Soyadı</label>
             <input
-              className="w-full mt-1 p-3 border rounded-xl"
+              className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.spouseFullName ? "border-red-500" : "border-gray-300"}`}
               value={form.steps[8].spouseFullName}
               onChange={(e) =>
                 updateField(
@@ -6995,13 +7796,15 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
                 updateField(8, "spouseFullName", normalizeInput(e.target.value))
               }
             />
+              {errors.spouseFullName && <p className="text-red-500 text-xs mt-1">{errors.spouseFullName}</p>}
           </div>
 
          {form.steps[1].gender === "M" && (  
           <div>
             <label className="text-sm font-medium">Eşinizin Kızlık Soyadı</label>
             <input
-              className="w-full mt-1 p-3 border rounded-xl"
+                           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.wifeMaidenName ? "border-red-500" : "border-gray-300"}`}
               value={form.steps[8].wifeMaidenName}
               onChange={(e) =>
                 updateField(
@@ -7015,6 +7818,7 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
                 updateField(8, "wifeMaidenName", normalizeInput(e.target.value))
               }
             />
+            {errors.wifeMaidenName && <p className="text-red-500 text-xs mt-1">{errors.wifeMaidenName}</p>}
           </div>)}  
         
           <div>
@@ -7022,10 +7826,12 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
             <input
               type="date"
               max={new Date().toISOString().split("T")[0]}
-              className="w-full mt-1 p-3 border rounded-xl"
+                   className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.marriageDate ? "border-red-500" : "border-gray-300"}`}
               value={form.steps[8].marriageDate}
               onChange={(e) => updateField(8, "marriageDate", e.target.value)}
             />
+             {errors.marriageDate && <p className="text-red-500 text-xs mt-1">{errors.marriageDate}</p>}
           </div>
 
         
@@ -7035,12 +7841,14 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
             <input
               type="date"
               max={new Date().toISOString().split("T")[0]}
-              className="w-full mt-1 p-3 border rounded-xl"
+                className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.spouseBirthDate ? "border-red-500" : "border-gray-300"}`}
               value={form.steps[8].spouseBirthDate}
               onChange={(e) =>
                 updateField(8, "spouseBirthDate", e.target.value)
               }
             />
+             {errors.spouseBirthDate && <p className="text-red-500 text-xs mt-1">{errors.spouseBirthDate}</p>}
           </div>
 
 <div>
@@ -7087,7 +7895,8 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
 <div>
   <label className="text-sm font-medium">Eş Doğum Yeri</label>
   <input
-    className="w-full mt-1 p-3 border rounded-xl"
+                   className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.spouseBirthPlace ? "border-red-500" : "border-gray-300"}`}
     value={form.steps[8].spouseBirthPlace || ""}
     onChange={(e) =>
       updateField(
@@ -7101,6 +7910,11 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
       updateField(8, "spouseBirthPlace", normalizeInput(e.target.value))
     }
   />
+    {errors.spouseBirthPlace && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.spouseBirthPlace}
+    </p>
+  )}
 </div>
 <div>
   <label className="text-sm font-medium">Eşinizin Doğduğu Ülke</label>
@@ -7143,20 +7957,26 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
 <div>
   <label className="text-sm font-medium">Eş Mesleği</label>
   <input
-    className="w-full mt-1 p-3 border rounded-xl"
-    value={form.steps[1].spouseOccupation || ""}
+    className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
+      ${errors.spouseOccupation ? "border-red-500" : "border-gray-300"}`}
+    value={form.steps[8].spouseOccupation || ""}
     onChange={(e) =>
       updateField(
-        1,
+        8,
         "spouseOccupation",
         isMobile ? e.target.value : normalizeInput(e.target.value)
       )
     }
     onBlur={(e) =>
       isMobile &&
-      updateField(1, "spouseOccupation", normalizeInput(e.target.value))
+      updateField(8, "spouseOccupation", normalizeInput(e.target.value))
     }
   />
+    {errors.spouseOccupation && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.spouseOccupation}
+    </p>
+  )}
 </div>
 
 {/* EŞ İKAMET ADRESİ */}
@@ -7213,14 +8033,14 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
           name="otherSpouseAddressCity"
           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
           ${errors.otherSpouseAddressCity ? "border-red-500" : "border-gray-300"}`}   
-          value={form.steps[3].otherSpouseAddressCity || ""}
+          value={form.steps[8].otherSpouseAddressCity || ""}
                onChange={(e) => {
                 if (isMobile) {
                     // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(3, "otherSpouseAddressCity", e.target.value);
+                    updateField(8, "otherSpouseAddressCity", e.target.value);
                 } else {
                     // Desktop/Diğer: Normalizasyon YAP
-                    updateField(3, "otherSpouseAddressCity", normalizeInput(e.target.value));
+                    updateField(8, "otherSpouseAddressCity", normalizeInput(e.target.value));
                 }
             }}
             
@@ -7244,14 +8064,14 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
     name="otherSpouseAddressCountry"
     className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
       ${errors.otherSpouseAddressCountry ? "border-red-500" : "border-gray-300"}`}
-    value={form.steps[3].otherSpouseAddressCountry || ""}
+    value={form.steps[8].otherSpouseAddressCountry || ""}
     onChange={(e) => {
       if (isMobile) {
         // Mobile: Normalizasyon YOK
-        updateField(3, "otherSpouseAddressCountry", e.target.value);
+        updateField(8, "otherSpouseAddressCountry", e.target.value);
       } else {
         // Desktop/Diğer: Normalizasyon VAR
-        updateField(3, "otherSpouseAddressCountry", (e.target.value));
+        updateField(8, "otherSpouseAddressCountry", (e.target.value));
       }
     }}
    
@@ -7280,14 +8100,14 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
           name="otherSpouseAddressPostCode"
           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
           ${errors.otherSpouseAddressPostCode ? "border-red-500" : "border-gray-300"}`}   
-          value={form.steps[3].otherSpouseAddressPostCode || ""}
+          value={form.steps[8].otherSpouseAddressPostCode || ""}
                onChange={(e) => {
                 if (isMobile) {
                     // Mobile: Normalizasyon YOK, sadece değeri sakla
-                    updateField(3, "otherSpouseAddressPostCode", e.target.value);
+                    updateField(8, "otherSpouseAddressPostCode", e.target.value);
                 } else {
                     // Desktop/Diğer: Normalizasyon YAP
-                    updateField(3, "otherSpouseAddressPostCode", normalizeInput(e.target.value));
+                    updateField(8, "otherSpouseAddressPostCode", normalizeInput(e.target.value));
                 }
             }}
             
@@ -7295,7 +8115,7 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
             onBlur={(e) => {
                 if (isMobile) {
                     const normalizedValue = normalizeInput(e.target.value);
-                    updateField(3, "otherSpouseAddressPostCode", normalizedValue);
+                    updateField(8, "otherSpouseAddressPostCode", normalizedValue);
                 }
             }}
           
@@ -7307,37 +8127,7 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
   </>
 )}
 
-          {/* <div>
-            <label className="text-sm font-medium">
-              Başka evlilik yaptınız mı?
-            </label>
-            <select
-              className="w-full mt-1 p-3 border rounded-xl"
-              value={form.steps[1].otherMarriages}
-              onChange={(e) =>{
-                    const selectedValue = e.target.value;
-
- updateField(1, "otherMarriages", e.target.value)
- if (selectedValue === "HAYIR") {
-      updateField(1, "marriages", [
-        {
-          spouseFullName: "",
-          spouseBirthDate: "",
-          marriageStartDate: "",
-          marriageEndDate: ""
-        }
-      ]);
-    }
-              }
-               
-                
-              }
-            >
-              <option value="">SEÇİNİZ</option>
-              <option value="EVET">EVET</option>
-              <option value="HAYIR">HAYIR</option>
-            </select>
-          </div> */}
+        
         </>
 )}
 
@@ -7351,7 +8141,8 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
       <div>
             <label className="text-sm font-medium">Eski Eş Adı Soyadı</label>
             <input
-              className="w-full mt-1 p-3 border rounded-xl"
+              className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.oldSpouseFullName ? "border-red-500" : "border-gray-300"}`}  
               value={form.steps[8].oldSpouseFullName}
               onChange={(e) =>
                 updateField(
@@ -7365,18 +8156,22 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
                 updateField(8, "oldSpouseFullName", normalizeInput(e.target.value))
               }
             />
+             {errors.oldSpouseFullName && <p className="text-red-500 text-xs mt-1">{errors.oldSpouseFullName}</p>}
+
           </div>
  <div>
             <label className="text-sm font-medium">Eski Eş Doğum Tarihi</label>
             <input
               type="date"
               max={new Date().toISOString().split("T")[0]}
-              className="w-full mt-1 p-3 border rounded-xl"
+              className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.oldSpouseBirthDate ? "border-red-500" : "border-gray-300"}`} 
               value={form.steps[8].oldSpouseBirthDate}
               onChange={(e) =>
                 updateField(8, "oldSpouseBirthDate", e.target.value)
               }
             />
+              {errors.oldSpouseBirthDate && <p className="text-red-500 text-xs mt-1">{errors.oldSpouseBirthDate}</p>}
           </div>
      
     <div>
@@ -7384,10 +8179,12 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
             <input
               type="date"
               max={new Date().toISOString().split("T")[0]}
-              className="w-full mt-1 p-3 border rounded-xl"
+                           className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.oldMarriageDate ? "border-red-500" : "border-gray-300"}`} 
               value={form.steps[8].oldMarriageDate}
               onChange={(e) => updateField(8, "oldMarriageDate", e.target.value)}
             />
+               {errors.oldMarriageDate && <p className="text-red-500 text-xs mt-1">{errors.oldMarriageDate}</p>}
           </div>
 
             <div>
@@ -7395,10 +8192,12 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
             <input
               type="date"
               max={new Date().toISOString().split("T")[0]}
-              className="w-full mt-1 p-3 border rounded-xl"
+             className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.oldMarriageEndDate ? "border-red-500" : "border-gray-300"}`} 
               value={form.steps[8].oldMarriageEndDate}
               onChange={(e) => updateField(8, "oldMarriageEndDate", e.target.value)}
             />
+             {errors.oldMarriageEndDate && <p className="text-red-500 text-xs mt-1">{errors.oldMarriageEndDate}</p>}
           </div>
 
          
@@ -7447,7 +8246,8 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
 <div>
   <label className="text-sm font-medium">Eski Eş Doğum Yeri</label>
   <input
-    className="w-full mt-1 p-3 border rounded-xl"
+               className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.oldSpouseBirthPlace ? "border-red-500" : "border-gray-300"}`} 
     value={form.steps[8].oldSpouseBirthPlace || ""}
     onChange={(e) =>
       updateField(
@@ -7461,6 +8261,11 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
       updateField(8, "oldSpouseBirthPlace", normalizeInput(e.target.value))
     }
   />
+    {errors.oldSpouseBirthPlace && (
+    <p className="text-red-500 text-xs mt-1">
+      {errors.oldSpouseBirthPlace}
+    </p>
+  )}
 </div>
 <div>
   <label className="text-sm font-medium">Eski Eşinizin Doğduğu Ülke</label>
@@ -7540,7 +8345,7 @@ onChange={(e) => updateField(6, "organizationBoolean", e.target.value)}
         <label className="text-sm font-medium">Evliliğiniz Nasıl Sona Erdi?</label>
         <textarea
           name="oldSpouseInfo"
-          className="w-full resize-none  mt-1 p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none border-gray-300 focus:ring-2 focus:ring-blue-500 resize-none ${errors.oldSpouseInfo ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}`}
           rows="4"
           value={form.steps[8].oldSpouseInfo || ""}
 onChange={(e) => {
@@ -7562,6 +8367,9 @@ onChange={(e) => {
             }}
           placeholder="Eklemek istediğiniz bilgiler..."
         ></textarea>
+           {errors.oldSpouseInfo && (
+      <p className="text-red-500 text-xs mt-1">{errors.oldSpouseInfo}</p>
+    )}
       </div>
 
 
@@ -7622,7 +8430,7 @@ onChange={(e) => {
 
       {/* İşyerinizin/Okul Adı */}
   {
-    (form?.steps[9]?.occupation !== "HOMEMAKER" && form?.steps[9]?.occupation !== "RETIRED"&& form?.steps[9]?.occupation !== "NOT EMPLOYED" ) && (
+    (form?.steps[9]?.occupation !== "HOMEMAKER" && form?.steps[9]?.occupation !== "RETIRED"&& form?.steps[9]?.occupation !== "NOT EMPLOYED"&& form?.steps[9]?.occupation !== "" ) && (
 <>
 {(form?.steps[9]?.occupation == "OTHER" ) && (
    <div>
@@ -7816,10 +8624,13 @@ onChange={(e) => {
             <label className="text-sm font-medium">İş Yeri/Okul Telefon</label>
             <input
               name="workOrSchoolPhone"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+             className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
+          ${errors.workOrSchoolPhone ? "border-red-500" : "border-gray-300"}`}   
               value={form.steps[9]?.workOrSchoolPhone || ""}
               onChange={(e) => updateField(9, "workOrSchoolPhone", e.target.value)}
             />
+             {errors.workOrSchoolPhone && <p className="text-red-500 text-xs mt-1">{errors.workOrSchoolPhone}</p>}
+
           </div>
 
       {/* İşe Giriş Tarihi */}
@@ -7843,7 +8654,11 @@ onChange={(e) => {
 
       {/* İş Tanımı & Ünvan */}
       <div className="md:col-span-2">
-        <label className="text-sm font-medium">Açık İş Tanımınız, Görevleriniz ve Ünvanınız</label>
+         <label className="text-sm font-medium">
+    {form?.steps[9]?.occupation === "STUDENT"
+      ? "Bölümünüzü ve Kaçıncı Sınıfta Olduğunuzu Yazınız"
+      : "Açık İş Tanımınız, Görevleriniz ve Ünvanınız"}
+  </label>
         <textarea
           name="jobDescription"
           className={`w-full resize-none mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
@@ -7867,7 +8682,7 @@ onChange={(e) => {
                     updateField(9, "jobDescription", normalizedValue);
                 }
             }}
-          placeholder="Örn: Yazılım geliştirme, proje yönetimi, takım liderliği"
+        
           rows={3}
         />
         {errors.jobDescription && <p className="text-red-500 text-xs mt-1">{errors.jobDescription}</p>}
@@ -7967,7 +8782,7 @@ onChange={(e) => {
 
 {  form?.steps[9]?.previousJobBoolean === "YES" && ( 
   <div className="md:col-span-2 mt-8">
-  <h4 className="font-semibold mb-3">Daha Önce Çalıştığınız Yerler</h4>
+  <h4 className="font-semibold mb-3">Daha Önce Çalıştığınız Yerler (Birden fazla varsa eski iş bilgisi ekle butonunu kullanınız)</h4>
 
   {form?.steps[9]?.previousJobs?.map((job, index) => (
     <div
@@ -7991,7 +8806,11 @@ onChange={(e) => {
         <div>
           <label className="text-sm font-medium">İş Yeri Adı</label>
           <input
-            className="w-full mt-1 p-3 border rounded-xl"
+           className={`w-full mt-1 p-3 border rounded-xl
+${errors[`previous_companyName_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
             value={job.companyName || ""}
             onChange={(e) => {
               const val = e.target.value;
@@ -8016,13 +8835,22 @@ onChange={(e) => {
             }}
             placeholder="Firma Adı"
           />
+           {errors[`previous_companyName_${index}`] &&
+  <p className="text-red-500 text-xs mt-1">
+    {errors[`previous_companyName_${index}`]}
+  </p>
+}
         </div>
 
  
         <div>
           <label className="text-sm font-medium">Ünvan</label>
           <input
-            className="w-full mt-1 p-3 border rounded-xl"
+                      className={`w-full mt-1 p-3 border rounded-xl
+${errors[`previous_position_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
             value={job.position || ""}
             onChange={(e) => {
               const val = e.target.value;
@@ -8047,6 +8875,7 @@ onChange={(e) => {
             }}
             placeholder="Örn: Yazılım Uzmanı"
           />
+                     {errors[`previous_position_${index}`] && <p className="text-red-500 text-xs mt-1">{errors[`previous_position_${index}`]}</p>}
         </div>
 
         {/* İŞ YERİ ADRESİ */}
@@ -8056,8 +8885,11 @@ onChange={(e) => {
         <label className="text-sm font-medium">İş Yerinin Adresi</label>
         <input
           name="previusWorkAddress"
-          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
-          ${errors.previusWorkAddress ? "border-red-500" : "border-gray-300"}`}   
+           className={`w-full mt-1 p-3 border rounded-xl
+${errors[`previous_previusWorkAddress_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`} 
           value={job?.previusWorkAddress || ""}
        onChange={(e) => {
               const val = e.target.value;
@@ -8082,7 +8914,7 @@ onChange={(e) => {
             }}
           
         />
-        {errors.previusWorkAddress && <p className="text-red-500 text-xs mt-1">{errors.previusWorkAddress}</p>}
+        {errors[`previous_previusWorkAddress_${index}`] && <p className="text-red-500 text-xs mt-1">{errors[`previous_previusWorkAddress_${index}`]}</p>}
 
       </div>
 
@@ -8091,8 +8923,11 @@ onChange={(e) => {
         <label className="text-sm font-medium">İş Yerinin Bulunduğu Şehir</label>
         <input
           name="previusWorkCity"
-          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
-          ${errors.workOrSchoolCity ? "border-red-500" : "border-gray-300"}`}   
+                    className={`w-full mt-1 p-3 border rounded-xl
+${errors[`previous_previusWorkCity_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
    
              value={job?.previusWorkCity || ""}
        onChange={(e) => {
@@ -8118,7 +8953,7 @@ onChange={(e) => {
             }}
           
         />
-        {errors.previusWorkCity && <p className="text-red-500 text-xs mt-1">{errors.previusWorkCity}</p>}
+        {errors[`previous_previusWorkCity_${index}`] && <p className="text-red-500 text-xs mt-1">{errors[`previous_previusWorkCity_${index}`]}</p>}
 
       </div>
 
@@ -8127,8 +8962,11 @@ onChange={(e) => {
 
   <select
     name="previusWorkCountry"
-    className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none
-      ${errors.previusWorkCountry ? "border-red-500" : "border-gray-300"}`}
+    className={`w-full mt-1 p-3 border rounded-xl
+${errors[`previous_previusWorkCountry_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
     value={job?.previusWorkCountry || ""}
        onChange={(e) => {
               const val = e.target.value;
@@ -8154,9 +8992,9 @@ onChange={(e) => {
     ))}
   </select>
 
-  {errors.previusWorkCountry && (
+  {errors[`previous_previusWorkCountry_${index}`] && (
     <p className="text-red-500 text-xs mt-1">
-      {errors.previusWorkCountry}
+      {errors[`previous_previusWorkCountry_${index}`]}
     </p>
   )}
 </div>
@@ -8164,8 +9002,11 @@ onChange={(e) => {
         <label className="text-sm font-medium">İş Yeri Posta Kodu</label>
         <input
           name="previusWorkPostCode"
-          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
-          ${errors.previusWorkPostCode ? "border-red-500" : "border-gray-300"}`}   
+          className={`w-full mt-1 p-3 border rounded-xl
+${errors[`previous_previusWorkPostCode_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
           value={job?.previusWorkPostCode || ""}
        onChange={(e) => {
               const val = e.target.value;
@@ -8190,14 +9031,18 @@ onChange={(e) => {
             }}
           
         />
-        {errors.previusWorkPostCode && <p className="text-red-500 text-xs mt-1">{errors.previusWorkPostCode}</p>}
+        {errors[`previous_previusWorkPostCode_${index}`] && <p className="text-red-500 text-xs mt-1">{errors[`previous_previusWorkPostCode_${index}`]}</p>}
 
       </div>
           <div>
             <label className="text-sm font-medium">İş Yeri Telefon</label>
             <input
               name="previusWorkPhone"
-              className="w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                       className={`w-full mt-1 p-3 border rounded-xl
+${errors[`previous_previusWorkPhone_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
              value={job?.previusWorkPhone || ""}
               onChange={(e) => {
               const val = e.target.value;
@@ -8210,6 +9055,8 @@ onChange={(e) => {
               );
             }}
             />
+              {errors[`previous_previusWorkPhone_${index}`] && <p className="text-red-500 text-xs mt-1">{errors[`previous_previusWorkPhone_${index}`]}</p>}
+
           </div>
 
 
@@ -8219,12 +9066,18 @@ onChange={(e) => {
           <input
             type="date"
             max={new Date().toISOString().split("T")[0]}
-            className="w-full mt-1 p-3 border rounded-xl"
+                                  className={`w-full mt-1 p-3 border rounded-xl
+${errors[`previous_startDate_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
             value={job.startDate || ""}
             onChange={(e) =>
               updateArrayField(9, "previousJobs", index, "startDate", e.target.value)
             }
           />
+           {errors[`previous_startDate_${index}`] && <p className="text-red-500 text-xs mt-1">{errors[`previous_startDate_${index}`]}</p>}
+
         </div>
 
         {/* İŞTEN ÇIKIŞ TARİHİ */}
@@ -8233,7 +9086,11 @@ onChange={(e) => {
           <input
             type="date"
             
-            className="w-full mt-1 p-3 border rounded-xl"
+            className={`w-full mt-1 p-3 border rounded-xl
+${errors[`previous_endDate_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
             min={job.startDate || undefined}
             max={new Date().toISOString().split("T")[0]}
             value={job.endDate || ""}
@@ -8241,6 +9098,7 @@ onChange={(e) => {
               updateArrayField(9, "previousJobs", index, "endDate", e.target.value)
             }
           />
+           {errors[`previous_endDate_${index}`] && <p className="text-red-500 text-xs mt-1">{errors[`previous_endDate_${index}`]}</p>}
         </div>
 
 {/* YONETİCİ BİLGİSİ */}
@@ -8248,8 +9106,11 @@ onChange={(e) => {
         <label className="text-sm font-medium">Yönetici Adı Soyadı</label>
         <input
           name="previusSupervisorFullname"
-          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
-          ${errors.previusSupervisorFullname ? "border-red-500" : "border-gray-300"}`}   
+                      className={`w-full mt-1 p-3 border rounded-xl
+${errors[`previous_previusSupervisorFullname_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
    
              value={job?.previusSupervisorFullname || ""}
        onChange={(e) => {
@@ -8275,7 +9136,7 @@ onChange={(e) => {
             }}
           
         />
-        {errors.previusSupervisorFullname && <p className="text-red-500 text-xs mt-1">{errors.previusSupervisorFullname}</p>}
+        {errors[`previous_previusSupervisorFullname_${index}`] && <p className="text-red-500 text-xs mt-1">{errors[`previous_previusSupervisorFullname_${index}`]}</p>}
 
       </div>
 
@@ -8284,8 +9145,11 @@ onChange={(e) => {
         <label className="text-sm font-medium">Kısaca Görevinizi Yazınız</label>
         <input
           name="previusDuties"
-          className={`w-full mt-1 p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none 
-          ${errors.previusDuties ? "border-red-500" : "border-gray-300"}`}   
+                               className={`w-full mt-1 p-3 border rounded-xl
+${errors[`previous_previusDuties_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
    
              value={job?.previusDuties || ""}
        onChange={(e) => {
@@ -8311,7 +9175,7 @@ onChange={(e) => {
             }}
           
         />
-        {errors.previusDuties && <p className="text-red-500 text-xs mt-1">{errors.previusDuties}</p>}
+        {errors[`previous_previusDuties_${index}`] && <p className="text-red-500 text-xs mt-1">{errors[`previous_previusDuties_${index}`]}</p>}
 
       </div>
 
@@ -8363,7 +9227,7 @@ onChange={(e) => {
 {form.steps[9]?.previousEducations?.map((edu, index) => (
   <div
     key={index}
-    className="relative border border-gray-200 rounded-2xl bg-white shadow-sm p-6 mb-8"
+    className="relative mt-5 border border-gray-200 rounded-2xl bg-white shadow-sm p-6 mb-8"
   >
     {/* BAŞLIK */}
     <h4 className="text-lg font-semibold text-gray-800 mb-6 border-b pb-2">
@@ -8379,7 +9243,11 @@ onChange={(e) => {
           Kurumun Adı
         </label>
         <input
-          className="w-full mt-1 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+         className={`w-full mt-1 p-3 border rounded-xl
+${errors[`edu_schoolName_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
           value={edu.schoolName ?? ""}
           onChange={(e) =>
             updateArrayField(
@@ -8391,6 +9259,11 @@ onChange={(e) => {
             )
           }
         />
+        {errors[`edu_schoolName_${index}`] &&
+  <p className="text-red-500 text-xs mt-1">
+    {errors[`edu_schoolName_${index}`]}
+  </p>
+}
       </div>
 
       {/* ADRES */}
@@ -8399,7 +9272,11 @@ onChange={(e) => {
          Adresi
         </label>
         <input
-          className="w-full mt-1 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+          className={`w-full mt-1 p-3 border rounded-xl
+${errors[`edu_address1_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
           value={edu.address1 ?? ""}
           onChange={(e) =>
             updateArrayField(
@@ -8411,13 +9288,22 @@ onChange={(e) => {
             )
           }
         />
+                {errors[`edu_schoolName_${index}`] &&
+  <p className="text-red-500 text-xs mt-1">
+    {errors[`edu_address1_${index}`]}
+  </p>
+}
       </div>
 
       {/* ŞEHİR */}
       <div>
         <label className="text-sm font-medium text-gray-700">Şehir</label>
         <input
-          className="w-full mt-1 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+                   className={`w-full mt-1 p-3 border rounded-xl
+${errors[`edu_city_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
           value={edu.city ?? ""}
           onChange={(e) =>
             updateArrayField(
@@ -8429,6 +9315,11 @@ onChange={(e) => {
             )
           }
         />
+                        {errors[`edu_schoolName_${index}`] &&
+  <p className="text-red-500 text-xs mt-1">
+    {errors[`edu_city_${index}`]}
+  </p>
+}
       </div>
 
       {/* EYALET */}
@@ -8455,7 +9346,11 @@ onChange={(e) => {
           Posta Kodu
         </label>
         <input
-          className="w-full mt-1 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+                            className={`w-full mt-1 p-3 border rounded-xl
+${errors[`edu_post_code_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
           value={edu.post_code ?? ""}
           onChange={(e) =>
             updateArrayField(
@@ -8467,13 +9362,22 @@ onChange={(e) => {
             )
           }
         />
+                                {errors[`edu_post_code_${index}`] &&
+  <p className="text-red-500 text-xs mt-1">
+    {errors[`edu_post_code_${index}`]}
+  </p>
+}
       </div>
 
       {/* ÜLKE */}
       <div>
         <label className="text-sm font-medium text-gray-700">Ülke</label>
         <select
-          className="w-full mt-1 p-3 border rounded-xl bg-white focus:ring-2 focus:ring-blue-500 outline-none"
+          className={`w-full mt-1 p-3 border rounded-xl
+${errors[`edu_country_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
           value={edu.country ?? ""}
           onChange={(e) =>
             updateArrayField(
@@ -8492,6 +9396,11 @@ onChange={(e) => {
             </option>
           ))}
         </select>
+         {errors[`edu_country_${index}`] &&
+  <p className="text-red-500 text-xs mt-1">
+    {errors[`edu_country_${index}`]}
+  </p>
+}
       </div>
 
       {/* BÖLÜM */}
@@ -8503,7 +9412,11 @@ onChange={(e) => {
   {edu.level === "HIGH_SCHOOL" ? (
     /* 🎓 SADECE LİSE → SELECT */
     <select
-      className="w-full mt-1 p-3.5 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+      className={`w-full mt-1 p-3 border rounded-xl
+${errors[`edu_department_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
       value={edu.department ?? ""}
       onChange={(e) =>
         updateArrayField(
@@ -8519,11 +9432,16 @@ onChange={(e) => {
       <option value="ACADEMIC">Akademik</option>
       <option value="VOCATIONAL">Meslek</option>
     </select>
+    
   ) : (
     /* 🎓 ÜNİ / YL / DR → INPUT */
     <input
       type="text"
-      className="w-full mt-1 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+     className={`w-full mt-1 p-3 border rounded-xl
+${errors[`edu_department_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
       value={edu.department ?? ""}
       onChange={(e) =>
         updateArrayField(
@@ -8537,6 +9455,11 @@ onChange={(e) => {
       placeholder="Bölüm / Program"
     />
   )}
+   {errors[`edu_department_${index}`] &&
+  <p className="text-red-500 text-xs mt-1">
+    {errors[`edu_department_${index}`]}
+  </p>
+}
 </div>
 
       {/* TARİHLER */}
@@ -8546,7 +9469,11 @@ onChange={(e) => {
         </label>
         <input
           type="date"
-          className="w-full mt-1 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+         className={`w-full mt-1 p-3 border rounded-xl
+${errors[`edu_fromDate_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
           value={edu.fromDate ?? ""}
           onChange={(e) =>
             updateArrayField(
@@ -8558,6 +9485,11 @@ onChange={(e) => {
             )
           }
         />
+         {errors[`edu_fromDate_${index}`] &&
+  <p className="text-red-500 text-xs mt-1">
+    {errors[`edu_fromDate_${index}`]}
+  </p>
+}
       </div>
 
       <div>
@@ -8566,7 +9498,11 @@ onChange={(e) => {
         </label>
         <input
           type="date"
-          className="w-full mt-1 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+          className={`w-full mt-1 p-3 border rounded-xl
+${errors[`edu_toDate_${index}`]
+  ? "border-red-500"
+  : "border-gray-300"}
+`}
           value={edu.toDate ?? ""}
           onChange={(e) =>
             updateArrayField(
@@ -8578,6 +9514,11 @@ onChange={(e) => {
             )
           }
         />
+        {errors[`edu_toDate_${index}`] &&
+  <p className="text-red-500 text-xs mt-1">
+    {errors[`edu_toDate_${index}`]}
+  </p>
+}
       </div>
 
     </div>
@@ -8598,7 +9539,7 @@ onChange={(e) => {
       {/* LANGUAGES - ZORUNLU */}
 <div className="relative md:col-span-2 w-full">
   <label className="text-sm font-medium">
-    Bildiğiniz Diller
+    Bildiğiniz Dilleri Seçiniz
   </label>
 
   {/* DROPDOWN HEADER */}
@@ -8669,19 +9610,27 @@ onChange={(e) => {
 
       {/* GİDİLEN ÜLKELER */}
   <div className="col-span-2">
-  <label className="text-sm font-medium">Ziyaret Edilen Ülkeler</label>
+  <label className="text-sm font-medium">Son 5 Senede Ziyaret Ettiğiniz Ülkeleri Seçiniz</label>
 
-  <VisitedCountriesSelect
-    value={form?.steps?.[10]?.visitedCountries || ""}
-    onChange={(val) =>
-      updateField(10, "visitedCountries", val || "")
-    }
-  />
+<VisitedCountriesSelect
+  value={form?.steps?.[10]?.visitedCountries || ""}
+  onChange={(val) =>
+    updateField(10, "visitedCountries", val || "")
+  }
+    error={errors.visitedCountries}
+/>
+
+{errors.visitedCountries && (
+  <p className="text-red-500 text-xs mt-1">
+    {errors.visitedCountries}
+  </p>
+)}
 </div>
  
       {/* ASKERLİK DURUMU */}
+{form?.steps[1]?.gender === "M" && (
 <div className="col-span-2">
-  <label className="text-sm font-medium">Askerlik Durumu</label>
+  <label className="text-sm font-medium">Askerlik Durumunuzu Seçiniz</label>
 
   <select
    className={`w-full mt-1 p-3 border rounded-xl text-left flex justify-between items-center
@@ -8707,65 +9656,45 @@ onChange={(e) => {
     <p className="text-red-500 text-xs mt-1">{errors.militaryStatus}</p>
   )}
 </div>
+)} 
+
 {form?.steps[10]?.militaryStatus === "YES" && (
   <div className=" grid grid-cols-1 md:grid-cols-2 gap-4">
     <div>
-      <label className="text-sm font-medium">Başlangıç Tarihi</label>
+      <label className="text-sm font-medium">Askerlik Başlama Tarihi</label>
       <input
         type="date"
-        className="w-full mt-1 p-3 border rounded-xl"
+       className={`w-full mt-1 p-3 border rounded-xl text-left flex justify-between items-center
+      ${errors.militaryStartDate ? "border-red-500" : "border-gray-300"}`}
         value={form?.steps[10]?.militaryStartDate || ""}
         onChange={(e) =>
           updateField(10, "militaryStartDate", e.target.value)
         }
       />
+       {errors.militaryStartDate && (
+    <p className="text-red-500 text-xs mt-1">{errors.militaryStartDate}</p>
+  )}
     </div>
 
     <div>
-      <label className="text-sm font-medium">Bitiş Tarihi</label>
+      <label className="text-sm font-medium">Askerlik Bitiş Tarihi</label>
       <input
         type="date"
-        className="w-full mt-1 p-3 border rounded-xl"
+       className={`w-full mt-1 p-3 border rounded-xl text-left flex justify-between items-center
+      ${errors.militaryEndDate ? "border-red-500" : "border-gray-300"}`}
         value={form?.steps[10]?.militaryEndDate || ""}
         onChange={(e) =>
           updateField(10, "militaryEndDate", e.target.value)
         }
       />
+       {errors.militaryEndDate && (
+    <p className="text-red-500 text-xs mt-1">{errors.militaryEndDate}</p>
+  )}
     </div>
   </div>
 )}
-{form?.steps[10]?.militaryStatus === "MUAF" && (
-  <div className="">
-    <label className="text-sm font-medium">Muafiyet Nedeni</label>
-    <select
-      className="w-full mt-1 p-3 border rounded-xl"
-      value={form?.steps[10]?.exemptionReason || ""}
-      onChange={(e) =>
-        updateField(10, "exemptionReason", e.target.value)
-      }
-    >
-      <option value="">Seçiniz</option>
-      <option value="SAGLIK">Sağlık</option>
-      <option value="BEDELLI">Bedelli</option>
-      <option value="YAS">Yaş</option>
-      <option value="DIGER">Diğer</option>
-    </select>
-  </div>
-)}
-{form?.steps[10]?.militaryStatus === "YAPMADI" && (
-  <div className="">
-    <label className="text-sm font-medium">Tecil Tarihi</label>
-    <input
-      type="date"
-      className="w-full mt-1 p-3 border rounded-xl"
-      value={form?.steps[10]?.defermentDate || ""}
-      onChange={(e) =>
-        updateField(10, "defermentDate", e.target.value)
-      }
-    />
-  </div>
-)}
-{/*  */}
+
+
 
       {/* EK BİLGİ */}
       <div className="col-span-2">

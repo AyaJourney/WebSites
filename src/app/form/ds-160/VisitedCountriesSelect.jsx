@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { allCountries } from "@/helper/help"; // senin export ettiğin yer
+import { allCountries2 } from "@/helper/help"; // senin export ettiğin yer
 
 export function VisitedCountriesSelect({
   value,
-  onChange,
+  onChange,error
 }) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
@@ -21,7 +21,7 @@ const toggleCountry = (current = "", country) => {
 };
   const selected = parseCountries(value);
 
-  const filtered = allCountries.filter(c =>
+  const filtered = allCountries2.filter(c =>
     c.label.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -29,7 +29,9 @@ const toggleCountry = (current = "", country) => {
     <div className="relative">
       {/* INPUT GÖRÜNÜMÜ */}
       <div
-        className="w-full mt-1 p-3 border rounded-xl shadow-sm cursor-pointer bg-white"
+       className={`w-full mt-1 p-3 border rounded-xl shadow-sm cursor-pointer bg-white
+  ${error ? "border-red-500" : "border-gray-300 focus:ring-2 focus:ring-blue-500"}
+`}
         onClick={() => setOpen(o => !o)}
       >
         {selected.length > 0

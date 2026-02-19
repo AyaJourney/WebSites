@@ -51,26 +51,43 @@ export async function POST(req) {
     const pdfDoc = await PDFDocument.create();
     pdfDoc.registerFontkit(fontkit);
 
-    // ✅ FONT'U BİR KERE YÜKLE (BAŞTA)
-    let regularFont, boldFont;
-    const fontPath = path.join(process.cwd(), "public", "fonts", "OpenSans_Condensed-Regular.ttf");
 
-    if (fs.existsSync(fontPath)) {
-      try {
-        const fontBytes = fs.readFileSync(fontPath);
-        const customFont = await pdfDoc.embedFont(fontBytes);
-        regularFont = customFont;
-        boldFont = customFont;
-      } catch (fontError) {
-        console.warn("Özel font dosyası bozuk veya yüklenemedi, standart fonta geçiliyor:", fontError);
-        regularFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
-        boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-      }
-    } else {
-      console.warn("Font dosyası bulunamadı, standart font kullanılıyor.");
+      let regularFont, boldFont;
+
+  const regularFontPath = path.join(
+    process.cwd(),
+    "public",
+    "fonts",
+    "Inter_18pt-Regular.ttf"
+  );
+
+  const boldFontPath = path.join(
+    process.cwd(),
+    "public",
+    "fonts",
+    "Inter_18pt-Bold.ttf"
+  );
+
+ if (fs.existsSync(regularFontPath) && fs.existsSync(boldFontPath)) {
+    try {
+      const regularFontBytes = fs.readFileSync(regularFontPath);
+      const boldFontBytes = fs.readFileSync(boldFontPath);
+
+      regularFont = await pdfDoc.embedFont(regularFontBytes);
+      boldFont = await pdfDoc.embedFont(boldFontBytes);
+    } catch (fontError) {
+      console.warn(
+        "Inter font yüklenemedi, standart fonta geçiliyor:",
+        fontError
+      );
       regularFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
       boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
     }
+  } else {
+    console.warn("Inter font dosyaları bulunamadı, standart font kullanılıyor.");
+    regularFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+    boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+  }
 
     // ✅ LOGO'YU BİR KERE YÜKLE (BAŞTA)
     let logoImage = null;
@@ -102,320 +119,262 @@ export async function POST(req) {
       border: rgb(0.85, 0.85, 0.85)
     };
 
-    const PAGE_WIDTH = 595;
-    const PAGE_HEIGHT = 842;
-    const MARGIN = 40;
-    const CONTENT_WIDTH = PAGE_WIDTH - (MARGIN * 2);
-
-    // --- Yardımcı Fonksiyonlar ---
-   const wrapText = (text, maxWidth, font, size) => {
-
+// 1. Sabitler
+const PAGE_WIDTH = 595;
+const PAGE_HEIGHT = 842;
+const MARGIN = 40;
+const CONTENT_WIDTH = PAGE_WIDTH - MARGIN * 2;
+const HEADER_HEIGHT = 48;
+const FOOTER_HEIGHT = 25;
+const LINE_GAP = 6;
+const SECTION_GAP = 0;
+const FIELD_GAP = 10;
+const FONT_SIZE = 14;
+const LINE_HEIGHT = FONT_SIZE + LINE_GAP;
+ const SECTION_HEIGHT = 32;
+// 2. wrapText
+const wrapText = (text, maxWidth, font, size) => {
   if (!text) return [];
-
   text = String(text).normalize("NFC");
-
   const lines = [];
   const paragraphs = text.split(/\r?\n/);
-
   paragraphs.forEach((paragraph, pIndex) => {
-
-    if (paragraph.trim() === "") {
-      lines.push("");
-      return;
-    }
-
+    if (paragraph.trim() === "") { lines.push(""); return; }
     const words = paragraph.split(" ");
     let currentLine = "";
-
     words.forEach((word) => {
-
-      // Eğer kelime tek başına maxWidth'i aşıyorsa
       if (font.widthOfTextAtSize(word, size) > maxWidth) {
-
-        if (currentLine) {
-          lines.push(currentLine);
-          currentLine = "";
-        }
-
+        if (currentLine) { lines.push(currentLine); currentLine = ""; }
         let chunk = "";
-
         for (let char of [...word]) {
           const testChunk = chunk + char;
-          const width = font.widthOfTextAtSize(testChunk, size);
-
-          if (width < maxWidth) {
-            chunk = testChunk;
-          } else {
-            lines.push(chunk);
-            chunk = char;
-          }
+          if (font.widthOfTextAtSize(testChunk, size) < maxWidth) chunk = testChunk;
+          else { lines.push(chunk); chunk = char; }
         }
-
-        if (chunk) {
-          currentLine = chunk;
-        }
-
+        if (chunk) currentLine = chunk;
       } else {
-
-        const testLine = currentLine
-          ? currentLine + " " + word
-          : word;
-
-        const width = font.widthOfTextAtSize(testLine, size);
-
-        if (width < maxWidth) {
-          currentLine = testLine;
-        } else {
-          lines.push(currentLine);
-          currentLine = word;
-        }
+        const testLine = currentLine ? currentLine + " " + word : word;
+        if (font.widthOfTextAtSize(testLine, size) < maxWidth) currentLine = testLine;
+        else { lines.push(currentLine); currentLine = word; }
       }
     });
-
-    if (currentLine) {
-      lines.push(currentLine);
-    }
-
-    if (pIndex !== paragraphs.length - 1) {
-      lines.push("");
-    }
-
+    if (currentLine) lines.push(currentLine);
+    if (pIndex !== paragraphs.length - 1) lines.push("");
   });
-
   return lines;
 };
 
-    // State yönetimi
-    let currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
-    let currentY = PAGE_HEIGHT - MARGIN;
-    let pageCount = 1;
+// 3. drawHeader — kullanımdan ÖNCE tanımlanmalı
+const drawHeader = (page) => {
+  if (logoImage) {
+    page.drawImage(logoImage, { x: MARGIN, y: PAGE_HEIGHT - 38, width: 110, height: 33 });
+  } else {
+    page.drawText("AYA JOURNEY", {
+      x: MARGIN, y: PAGE_HEIGHT - 38,
+      size: 18, font: boldFont, color: COLORS.primary,
+    });
+  }
+  const title = "ABD DS-160 VİZE BAŞVURU FORMU BİLGİ FİŞİ";
+  page.drawText(title, {
+    x: PAGE_WIDTH - MARGIN - boldFont.widthOfTextAtSize(title, 10),
+    y: PAGE_HEIGHT - 28,
+    size: 10, font: boldFont, color: COLORS.textLabel,
+  });
+  page.drawLine({
+    start: { x: MARGIN, y: PAGE_HEIGHT - HEADER_HEIGHT },
+    end: { x: PAGE_WIDTH - MARGIN, y: PAGE_HEIGHT - HEADER_HEIGHT },
+    thickness: 0.5, color: COLORS.primary,
+  });
+};
 
-    // ✅ OPTIMIZE EDİLMİŞ checkSpace
-   const HEADER_HEIGHT = 15; // Header toplam yüksekliği (logon dahil)
-const SAFE_TOP_GAP = 0;   // Header ile içerik arası boşluk
+// 4. drawFooter
+const drawFooter = (page, pNum) => {
+  const text = `Sayfa ${pNum}`;
+  const width = regularFont.widthOfTextAtSize(text, 9);
+  page.drawLine({
+    start: { x: MARGIN, y: MARGIN + 12 },
+    end: { x: PAGE_WIDTH - MARGIN, y: MARGIN + 12 },
+    thickness: 0.5, color: COLORS.textLabel,
+  });
+  page.drawText(text, {
+    x: (PAGE_WIDTH - width) / 2, y: MARGIN,
+    size: 9, font: regularFont, color: COLORS.textLabel,
+  });
+};
 
+// 5. checkSpace — drawFooter ve drawHeader'dan sonra
 const checkSpace = (heightNeeded) => {
-
-  if (currentY - heightNeeded < MARGIN + 40) {
-
-    // Mevcut sayfaya footer bas
+  const minY = MARGIN + FOOTER_HEIGHT;
+  if (currentY - heightNeeded < minY) {
     drawFooter(currentPage, pageCount);
-
-    // Yeni sayfa
     currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
     pageCount++;
-
-    // Header çiz
     drawHeader(currentPage);
-
-    // 🔥 Header alanını düş
-    currentY = PAGE_HEIGHT - MARGIN - HEADER_HEIGHT - SAFE_TOP_GAP;
-
+    currentY = PAGE_HEIGHT - MARGIN - HEADER_HEIGHT;
     return true;
   }
-
   return false;
 };
 
-    // ✅ OPTIMIZE EDİLMİŞ drawHeader (async kaldırıldı, logo parametre)
-    const drawHeader = (page) => {
-      if (logoImage) {
-        page.drawImage(logoImage, {
-          x: MARGIN,
-          y: PAGE_HEIGHT - 42,
-          width: 110,
-          height: 33
-        });
-      } else {
-        page.drawText("AYA JOURNEY", {
-          x: MARGIN,
-          y: PAGE_HEIGHT - 45 - 20,
-          size: 18,
-          font: boldFont,
-          color: COLORS.primary,
-        });
-      }
+// 6. drawSection — checkSpace'den sonra
+const drawSection = (title) => {
+  // 25'ten 32'ye büyütüldü
+  const blockHeight = SECTION_HEIGHT + SECTION_GAP;
+  checkSpace(blockHeight);
 
-      page.drawText("ABD DS-160 VİZE BAŞVURU FORMU BILGI FISI", {
-        x: PAGE_WIDTH - MARGIN - boldFont.widthOfTextAtSize("ABD DS-160 VİZE BAŞVURU FORMU BILGI FISI", 10),
-        y: PAGE_HEIGHT - 38,
-        size: 10,
-        font: boldFont,
-        color: COLORS.textLabel,
-      });
+  currentY -= SECTION_GAP;
 
-      currentY = PAGE_HEIGHT - 50;
-    };
+  currentPage.drawRectangle({
+    x: MARGIN,
+    y: currentY - SECTION_HEIGHT,
+    width: CONTENT_WIDTH,
+    height: SECTION_HEIGHT,
+    color: COLORS.primary,
+  });
 
-    const drawFooter = (page, pNum) => {
-      const text = `Sayfa ${pNum}`;
-      const width = regularFont.widthOfTextAtSize(text, 9);
-      page.drawText(text, {
-        x: (PAGE_WIDTH - width) / 2,
-        y: 20,
-        size: 9,
-        font: regularFont,
-        color: COLORS.textLabel
-      });
-    };
+  // Yazıyı dikeyde ortala
+  const textY = currentY - SECTION_HEIGHT / 2 - 11 / 2; // 11 = font size
 
-    const drawSection = (title) => {
-      checkSpace(50);
-      currentY -= 15;
-      
-      currentPage.drawRectangle({
-        x: MARGIN,
-        y: currentY - 25,
-        width: CONTENT_WIDTH,
-        height: 25,
-        color: COLORS.primary,
-      });
+  currentPage.drawText(title.toUpperCase(), {
+    x: MARGIN + 10,
+    y: textY,
+    size: 11,
+    font: boldFont,
+    color: COLORS.white,
+  });
 
-      currentPage.drawText(title.toUpperCase(), {
-        x: MARGIN + 10,
-        y: currentY - 19,
-        size: 11,
-        font: boldFont,
-        color: COLORS.white
-      });
+  currentY -= SECTION_HEIGHT + 16; // alt boşluk 10'dan 16'ya çıkarıldı
+};
 
-      currentY -= 40;
-    };
+// 7. drawField
 const drawField = (label, value) => {
-
-  // 🔥 Her zaman tam genişlik
-  const colWidth = CONTENT_WIDTH;
-
-  const valStr = value ? String(value) : "-";
-  const labelSize = 14;
-  const valueSize = 14;
-  const lineSpacing = valueSize + 4;
-
-  const drawX = MARGIN;
-
-  const valueLines = wrapText(
-    valStr,
-    colWidth,
-    regularFont,
-    valueSize
-  );
-
-  const labelHeight = labelSize + 6;
-
-  // 🔥 Önce label için yer kontrolü
-  if (checkSpace(labelHeight + 10)) {
-    currentY -= 20; // header ile çakışmaması için boşluk
+  if (
+    value === null ||
+    value === undefined ||
+    String(value).trim() === "" ||
+    String(value).trim() === "-"
+  ) {
+    return 0;
   }
+
+  const valStr = String(value).trim();
+  const valueLines = wrapText(valStr, CONTENT_WIDTH, regularFont, FONT_SIZE);
+
+  const labelH = LINE_HEIGHT;
+  const valH = valueLines.length * LINE_HEIGHT;
+  const BOTTOM_BORDER = 1;        // border kalınlığı
+  const FIELD_PADDING_TOP = 6;    // field üstü boşluk
+  const FIELD_PADDING_BOTTOM = 10; // border altı boşluk
+  const totalH = FIELD_PADDING_TOP + labelH + valH + BOTTOM_BORDER + FIELD_PADDING_BOTTOM;
+
+  checkSpace(totalH);
+
+  // Üst boşluk
+  currentY -= FIELD_PADDING_TOP;
 
   // LABEL
   currentPage.drawText(label, {
-    x: drawX,
+    x: MARGIN,
     y: currentY,
-    size: labelSize,
+    size: FONT_SIZE,
     font: boldFont,
-    color: COLORS.textLabel
+    color: COLORS.textMain,
   });
+  currentY -= labelH;
 
-  currentY -= labelHeight;
-
-  // 🔥 Satır satır yaz
+  // VALUE satırları
   valueLines.forEach((line) => {
-
-    // Her satırdan önce kontrol
-    if (checkSpace(lineSpacing)) {
-
-      currentY -= 20; // header altı boşluk
-
-      // Yeni sayfadaysak label tekrar yaz
-      currentPage.drawText(label, {
-        x: drawX,
-        y: currentY,
-        size: labelSize,
-        font: boldFont,
-        color: COLORS.textLabel
-      });
-
-      currentY -= labelHeight;
-    }
-
+    if (checkSpace(LINE_HEIGHT)) { /* yeni sayfada devam */ }
     currentPage.drawText(line, {
-      x: drawX,
+      x: MARGIN,
       y: currentY,
-      size: valueSize,
+      size: FONT_SIZE,
       font: regularFont,
-      color: COLORS.textMain
+      color: COLORS.textMain,
     });
-
-    currentY -= lineSpacing;
+    currentY -= LINE_HEIGHT;
   });
 
-  currentY -= 12;
+  // İnce alt çizgi
+  currentPage.drawLine({
+    start: { x: MARGIN, y: currentY },
+    end: { x: MARGIN + CONTENT_WIDTH, y: currentY },
+    thickness: 0.4,
+    color: rgb(0.85, 0.85, 0.85), // açık gri
+  });
 
-  return labelHeight + (valueLines.length * lineSpacing);
+  // Border altı boşluk
+  currentY -= FIELD_PADDING_BOTTOM;
+
+  return totalH;
 };
+
+// 8. State — TÜM fonksiyonlar tanımlandıktan sonra
+let currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+let currentY = PAGE_HEIGHT - MARGIN - HEADER_HEIGHT;
+let pageCount = 1;
+
+
+drawHeader(currentPage);
 
 
     // --- Veri İşleme ve Çizim Başlangıcı ---
     const s = (n) => formData.payload?.steps?.[String(n)] || {};
 
     // --- BÖLÜM 1: Kişisel Bilgiler ---
-    drawHeader(currentPage);
+   
 
     drawSection("1. KİŞİSEL BİLGİLER");
 
     let h1 = drawField("Adınız Soyadınız", s(1).fullName, false, 0);
-    currentY -= h1 + 10;
+  
 
     h1 = drawField("Doğum Tarihi", toTRDate(s(1).birthDate), false, 0);
     let h2 = drawField("Pasaportta Belirtilen Doğum Yeri", s(1).birthPlace, false,0);
-    currentY -= Math.max(h1, h2) + 10;
+
 
     h1 = drawField("Doğum Yeri Ülke", s(1).birthCountry, false, 0);
-    currentY -= h1 + 10;
+   
 
     h1 = drawField("Medeni Durumu", s(1).maritalStatus, false, 0);
     h2 = s(1).maritalStatus === "MARRIED"
       ? drawField("Daha Önce Kullanılan Ad ve Soyad", s(1).maidenName, false,0)
-      : drawField("Cinsiyet", s(1).gender, false,0);
-    currentY -= Math.max(h1, h2) + 10;
-
+      : drawField("Cinsiyet", s(1).gender === "M" ? "MALE" :s(1).gender === "F" ? "FEMALE" : "-" , false,0);
+  
     // --- BÖLÜM 2: Kimlik ve Uyruk ---
     drawSection("2. BÖLÜM — KİMLİK VE UYRUK BİLGİLERİ");
 
     h1 = drawField("Uyruğunuz", s(2).nationality || "-", false, 0);
     h2 = drawField(
       "Diğer Uyruğunuz",
-      s(2).otherNationalityExist === "EVET" && s(2).otherNationality ? s(2).otherNationality : "-",
+      s(2).otherNationalityExist === "YES" && s(2).otherNationality ? s(2).otherNationality : "-",
       false,
      0
     );
-    currentY -= Math.max(h1, h2) + 10;
+   
 
     h1 = drawField(
       "Diğer Uyruğunuza ait pasaport numarası(varsa)",
-      s(2).otherNationalityExist === "EVET" && s(2).otherNationalityPassportNo ? s(2).otherNationalityPassportNo : "-",
+      s(2).otherNationalityExist === "YES" && s(2).otherNationalityPassportNo ? s(2).otherNationalityPassportNo : "-",
       false,
       0
     );
-    currentY -= h1 + 10;
+   
 
     h1 = drawField("Ulusal Kimlik Numaranız", s(2).tcId || "-", false, 0);
     h2 = drawField("Sosyal Güvenlik Numarası (ABD’de bulunduysanız)", s(2).ssn || "-", false,0);
-    currentY -= Math.max(h1, h2) + 10;
+   
 
     h1 = drawField("ABD Vergi Kimlik Numarası (ABD’de bulunduysanız)", s(2).vkn || "-", false, 0);
-    currentY -= h1 + 10;
-
-
-
+  
     h1 = drawField("Kendi Ülkeniz Dışında Bir Ülkede Oturumunuz Var Mı?", s(2).otherSessionExist || "-", false, 0);
     h2 = drawField(
       "Oturum Aldığınız Ülke",
-      s(2).otherSessionExist === "EVET" && s(2).otherSessionExistCountry ? s(2).otherSessionExistCountry : "-",
+      s(2).otherSessionExist === "YES" && s(2).otherSessionExistCountry ? s(2).otherSessionExistCountry : "-",
       false,
      0
     );
-    currentY -= Math.max(h1, h2) + 10;
+   
 
 
 
@@ -428,72 +387,73 @@ const drawField = (label, value) => {
     if(s(3).tourismPlanFinalized ==="YES"){
     h1 = drawField("ABD'ye Kesin Gidiş Tarihi", s(3).exactArrival ? toTRDate(s(3).exactArrival) : "-", false,0); 
     h2 = drawField("ABD’den Kesin Dönüş Tarihi", s(3).exactDeparture ? toTRDate(s(3).exactArrival) : "-", false,0);
-     currentY -= Math.max(h1, h2) + 10; 
+    
   h1= drawField("ABD’ye Varış Şehri", s(3).usaArrivalCity || "-", false,0);
   h2= drawField("ABD’den Ayrılış Şehri", s(3).usaDepartureCity || "-", false,0);
-   currentY -= Math.max(h1, h2) + 10;
+ 
   h1= drawField("ABD’de Ziyaret Etmeyi Planladığınız Yerler", s(3).usaLocations || "-", false,0); 
     }
     if(s(3).tourismPlanFinalized ==="NO"){
  h1 = drawField("Kesin Değilse Tahmini Gidiş Tarihiniz", s(3).estimatedArrival ? toTRDate(s(3).estimatedArrival) : "-", false, 0);
-    h2 = drawField("ABD’de Ne Kadar Kalacaksınız?", s(3).stayDuration || "-", false,0);
-    currentY -= Math.max(h1, h2) + 10;
+
+  
 
     }
+        if (s(3).tourismPlanFinalized === "NO") {
+  const stayText = s(3).stayDurationValue && s(3).stayDurationUnit
+    ? `${s(3).stayDurationValue} ${s(3).stayDurationUnit}`
+    : null;
+
+  h1 = drawField("ABD'de Ne Kadar Kalacaksınız?", stayText, false, 0);
+}
      h1 = drawField("ABD’de Konaklayacağınız Şehir", s(3).usaAddressCity || "-", true, 0);
     h2 = drawField("ABD’de Konaklayacağınız Eyalet", s(3).usaAddressState || "-", true,0);
-    currentY -= Math.max(h1, h2) + 10;
+   
     h1 = drawField("ABD’de Konaklayacağınız Adres", s(3).stayAddress || "-", true, 0);
     h2 = drawField("Masrafları Kim Karşılayacak", s(3).whoPays || "-", true,0);
-    currentY -= Math.max(h1, h2) + 10;
+   
 
     if (s(3).whoPays === "OTHER") {
       h1 = drawField("Sponsor Adı Soyadı ", s(3).relationfullName || "-", true, 0);
       h2 = drawField("Sponsor Yakınlık Derecesi", s(3).relationDegree || "-", true,0);
-      currentY -= Math.max(h1, h2) + 10;
+     
 
       h1 = drawField("Sponsorun Yaşadığı Şehir", s(3).payerRelationCity || "-", true, 0);
       h2 = drawField("Sponsorun Yaşadığı Ülke", s(3).payerRelationCountry || "-", true,0);
-      currentY -= Math.max(h1, h2) + 10;
+     
 
       h1 = drawField("Sponsorun Adresi", s(3).payerRelationAddress || "-", true, 0);
       h2 = drawField("Sponsorun Posta Kodu", s(3).payerRelationPostCode || "-", true,0);
-      currentY -= Math.max(h1, h2) + 10;
+     
 
       h1 = drawField("Sponsorun Telefon Numarası", s(3).payerPhone || "-", true, 0);
       h2 = drawField("Sponsorun E-Postası", s(3).payerMail || "-", true,0);
-      currentY -= Math.max(h1, h2) + 10;
+     
     }
 
 if (s(3).whoPays === "COMPANY") {
       h1 = drawField("Sponsor Şirket/Organizasyon Adı", s(3).relationCompanyfullName || "-", true, 0);
       h2 = drawField("Sponsor Şirket/Organizasyon Telefonu", s(3).payerCompanyPhone || "-", true,0);
-      currentY -= Math.max(h1, h2) + 10;
+     
 
       h1 = drawField("Sponsorun Sizinle Olan İlişkisi", s(3).payerRelation || "-", true, 0);
 
-      currentY -= Math.max(h1, h2) + 10;
+     
 
       h1 = drawField("Sponsor Şirket/Organisazyonun Bulunduğu Adresi", s(3).payerCompanyAddress || "-", true, 0);
       h2 = drawField("Sponsor Şirket/Organisazyonun Bulunduğu Şehri", s(3).payerCity || "-", true,0);
-      currentY -= Math.max(h1, h2) + 10;
+     
        h1 = drawField("Sponsor Şirket/Organisazyonun Bulunduğu Eyaleti", s(3).payerState || "-", true, 0);
       h2 = drawField("Sponsor Şirket/Organisazyonun Bulunduğu Posta Kodu", s(3).payerPostCode || "-", true,0);
-      currentY -= Math.max(h1, h2) + 10;
+     
 
       h1 = drawField("Sponsor Şirket/Organisazyonun Bulunduğu Ülke", s(3).payerCountry || "-", true, 0);
      
-      currentY -= Math.max(h1, h2) + 10;
+     
      
     }
 
-    drawFooter(currentPage, pageCount);
-
-    // --- BÖLÜM 4: Seyahat ve Vize Geçmişi ---
-    currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
-    pageCount++;
-    currentY = PAGE_HEIGHT - MARGIN;
-    drawHeader(currentPage);
+   
 
     drawSection("4. BÖLÜM — SEYAHAT VE ABD GEÇMİŞİ");
 
@@ -502,11 +462,11 @@ if (s(3).whoPays === "COMPANY") {
     if(s(4).organizationTravel === "YES"){
         h1 = drawField("Grup veya Organizasyon Adı", s(4).organizationTravelName || "-", true, 0);
     }
-    currentY -= Math.max(h1, h2) + 10;
+   
 
     if (s(4).travelAlone === "YES") {
       h1 = drawField("Kaç kişi ile seyahat edeceksiniz", s(4).companionCount || "-", false, 0);
-      currentY -= h1 + 10;
+     
 
   
    if (Array.isArray(s(4).companions) && s(4).companions.length > 0) {
@@ -533,7 +493,7 @@ if (s(3).whoPays === "COMPANY") {
       0
     );
 
-    currentY -= Math.max(h1, h2, h3) + 10;
+    
   });
 }
 
@@ -542,7 +502,7 @@ if (s(3).whoPays === "COMPANY") {
     }
 
     h1 = drawField("Daha Önce ABD'de Bulundunuz mu?", s(4).beenToUS || "-", true, 0);
-    currentY -= h1 + 10; 
+    
 
     if (s(4).beenToUS === "YES") {
       h1 = drawField("ABD’ye Kaç Kere Seyahat Ettiniz?", s(4).travelCount || "-", false, 0);
@@ -550,21 +510,21 @@ if (s(3).whoPays === "COMPANY") {
         s(4).travels.slice(0, 5).forEach((travel, index) => {
           let hA = drawField(`ABD Seyahati ${index + 1} - Gidiş Tarihi`, travel.date ? toTRDate(travel.date) : "-", false, 0);
           let hB = drawField(`ABD Seyahati ${index + 1} - Kalış Süresi`, travel.duration || "-", false,0);
-          currentY -= Math.max(hA, hB) + 10;
+         
         });
       } 
     }
 
     h1 = drawField("Daha Önce ABD Vizesi Aldınız mı?", s(4).hadUSVisa || "-", true, 0);
-    currentY -= h1 + 10;
+  
 
     if (s(4).hadUSVisa === "YES") {
       let hA = drawField("Son Alınan Vize Başlangıç Tarihi", s(4).visaDate ? toTRDate(s(4).visaDate) : "-", false, 0);
       let hB = drawField("Son Alınan Vize Numarası", s(4).visaNumber || "-", false,0);
-      currentY -= Math.max(hA, hB) + 10;
+     
       hA = drawField("Son Alınan Vize Türü", s(4).hadVisaType || "-", false, 0);
        hB = drawField("10 Parmak İzi Verdiniz Mi?", s(4).hadFingerprints || "-", false,0);
-      currentY -= Math.max(hA, hB) + 10;
+     
      hA = drawField("Son Alınan Vize Kayboldu/Çalındı mı?", s(4).visaLostStolen || "-", false, 0);
      if(s(4)?.visaLostStolen === "YES"){
        hA = drawField("Son Alınan Vizenin Kaybolduğu/Çalındığı Yıl", s(4).hadVisaType || "-", false, 0);
@@ -574,7 +534,7 @@ if (s(3).whoPays === "COMPANY") {
       if(s(4).visaCancelled === "YES"){
         hA = drawField("İptal Nedenini Açıklayınız", s(4).visaCancelledDetail || "-", false, 0);
       }
-      currentY -= Math.max(hA, hB) + 10;
+     
 
     }
 
@@ -585,7 +545,7 @@ if (s(3).whoPays === "COMPANY") {
        h1 = drawField("Göçmenlik Başvurusunu Açıklayınız", s(4).immigrationDetail || "-", true, 0);
     }
 
- currentY -= Math.max(h1, h2) + 10;
+
  h1 = drawField("Daha Önce ABD Ehliyeti Aldınız mı?", s(4).hadUSDriverLicense || "-", true, 0);
 if(s(4)?.hadUSDriverLicense === "YES"){
        h1 = drawField("Sürücü Belge Numarası", s(4).driverLicanceNumber || "-", true, 0);
@@ -593,195 +553,170 @@ if(s(4)?.hadUSDriverLicense === "YES"){
 
 
     }
-    drawFooter(currentPage, pageCount);
-
-    // --- BÖLÜM 5: İletişim ve Pasaport ---
-    currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
-    pageCount++;
-    currentY = PAGE_HEIGHT - MARGIN;
-    drawHeader(currentPage);
+   
 
     drawSection("5. BÖLÜM — İLETİŞİM VE PASAPORT BİLGİLERİ");
 
     h1 = drawField("Ev Adresi", s(5).homeAddress || "-", true, 0);
-    currentY -= h1 + 10;
+  
 
     h1 = drawField("İletişim Numarası 1", s(5).phone1 || "-", false, 0);
     h2 = drawField("İletişim Numarası 2", s(5).phone2 || "-", false,0);
-    currentY -= Math.max(h1, h2) + 10;
+   
 
     h1 = drawField("İş Telefonu", s(5).workPhone || "-", false, 0);
-    currentY -= h1 + 10;
+  
 
     h1 = drawField("E-posta Adresiniz", s(5).email || "-", false, 0);
-    currentY -= h1 + 10;
+  
 
     h1 = drawField("Sosyal Medya Hesabı Var mı?", s(5).hasSocialMedia || "-", false, 0);
-    currentY -= h1 + 10;
+  
 
-    if (s(5).hasSocialMedia === "EVET" && Array.isArray(s(5).socialMediaAccounts) && s(5).socialMediaAccounts.length > 0) {
+    if (s(5).hasSocialMedia === "YES" && Array.isArray(s(5).socialMediaAccounts) && s(5).socialMediaAccounts.length > 0) {
       s(5).socialMediaAccounts.forEach((acc, index) => {
         let hSM = drawField(acc.platform || `Sosyal Medya ${index + 1}`, acc.username || "-", false, 0);
-        currentY -= hSM + 6;
+       
       });
-      currentY -= 6;
+     
     }
 
     h1 = drawField("Pasaport Türünüz", s(5).passportType || "-", false, 0);
     h2 = drawField("Pasaport Numaranız", s(5).passportNumber || "-", false,0);
-    currentY -= Math.max(h1, h2) + 10;
+   
 
     h1 = drawField("Pasaportu Veren Ülke", s(5).passportAuthorityCountry || "-", false, 0);
     h2 = drawField("Pasaportu Veren Makam", s(5).passportAuthority || "-", false, 0);
-    currentY -= Math.max(h1, h2) + 10;
+   
 
 
     h1 = drawField("Pasaport Başlangıç Tarihi", s(5).passportStart ? toTRDate(s(5).passportStart) : "-", false, 0);
     h2 = drawField("Pasaport Bitiş Tarihi", s(5).passportEnd ? toTRDate(s(5).passportEnd) : "-", false, 0);
-    currentY -= Math.max(h1, h2) + 10;
+   
 
     h1 = drawField("Daha Önce Pasaportu Kaybettiniz/Çaldırdınız mı?", s(5).lostPassportBoolean || "-", false, 0);
-    currentY -= h1 + 10;
+  
 
     if (s(5).lostPassportBoolean === "YES") {
       h1 = drawField("Kaybolan/Çalınan Pasaport Numaranız", s(5).lostPassportNumber || "-", false, 0);
       h2 = drawField("Kaybolan/Çalınan Pasaportu Veren Ülke", s(5).lostPassportAuthorityCountry || "-", false,0);
-      currentY -= Math.max(h1, h2) + 10;
+     
 
       h1 = drawField("Kaybolan/Çalınan Pasaport Açıklaması", s(5).lostPassportInfo || "-", true, 0);
-      currentY -= h1 + 10;
+    
     }
 
-    drawFooter(currentPage, pageCount);
-
-    // --- BÖLÜM 6: ABD'de Akraba ve Organizasyon ---
-    currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
-    pageCount++;
-    currentY = PAGE_HEIGHT - MARGIN;
-    drawHeader(currentPage);
+   
 
     drawSection("6. BÖLÜM — ABD'DE AKRABA VE ORGANİZASYON BİLGİLERİ");
 
     h1 = drawField("ABD'de Yakınınız Var mı?", s(6).usaRelative || "-", false, 0);
-    currentY -= h1 + 10;
+  
 
     if (s(6).usaRelative === "YES") {
       h1 = drawField("Yakının Adı Soyadı", s(6).usaRelativeFullName || "-", false, 0);
       h2 = drawField("Yakınlık Derecesi", s(6).usaRelativeInfo || "-", false,0);
-      currentY -= Math.max(h1, h2) + 10;
+     
 
       h1 = drawField("Yakının Yaşadığı Adresi", s(6).usaRelativeAddress || "-", true, 0);
-      currentY -= h1 + 10;
+    
 
       h1 = drawField("Yakının Yaşadığı Şehir", s(6).usaRelativeAddressCity || "-", false, 0);
       h2 = drawField("Yakının Yaşadığı Eyalet", s(6).usaRelativeAddressState || "-", false,0);
-      currentY -= Math.max(h1, h2) + 10;
+     
 
       h1 = drawField("Yakının Yaşadığı Posta Kodu", s(6).usaRelativePostCode || "-", false, 0);
-      currentY -= h1 + 10;
+    
 
       h1 = drawField("Yakınınızın Telefonu", s(6).usaRelativePhone || "-", false, 0);
       h2 = drawField("Yakınınızın E-Postası", s(6).usaRelativeEmail || "-", false,0);
-      currentY -= Math.max(h1, h2) + 10;
+     
     }
 
     h1 = drawField("ABD'de Bir Organizasyon/Etkinliğe Katılacak mısınız?", s(6).organizationBoolean || "-", false, 0);
-    currentY -= h1 + 10;
+  
 
     if (s(6).organizationBoolean === "YES") {
       h1 = drawField("Etkinlik/Organizasyon Adı", s(6).organizationInfo || "-", true, 0);
-      currentY -= h1 + 10;
+    
 
       h1 = drawField("Etkinlik/Organizasyon Adresi", s(6).organizationAddress || "-", true, 0);
-      currentY -= h1 + 10;
+    
 
       h1 = drawField("Etkinlik/Organizasyon Şehri", s(6).organizationAddressCity || "-", false, 0);
       h2 = drawField("Etkinlik/Organizasyon Eyaleti", s(6).organizationAddressState || "-", false,0);
-      currentY -= Math.max(h1, h2) + 10;
+     
 
       h1 = drawField("Etkinlik/Organizasyon Posta Kodu", s(6).organizationPostCode || "-", false, 0);
-      currentY -= h1 + 10;
+    
 
       h1 = drawField("Etkinlik/Organizasyon Telefonu", s(6).organizationPhone || "-", false, 0);
       h2 = drawField("Etkinlik/Organizasyon E-Postası", s(6).organizationEmail || "-", false,0);
-      currentY -= Math.max(h1, h2) + 10;
+     
     }
 
-    drawFooter(currentPage, pageCount);
-
-    // --- BÖLÜM 7: Anne, Baba ve ABD'de Akrabalar ---
-    currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
-    pageCount++;
-    currentY = PAGE_HEIGHT - MARGIN;
-    drawHeader(currentPage);
+   
 
     drawSection("7. BÖLÜM — ANNE, BABA VE ABD'DE AKRABALAR");
 
-    h1 = drawField("Anne Adı Soyadı", s(7).motherFullName || "-", false, 0);
-    h2 = drawField("Anne Doğum Tarihi", s(7).motherBirthDate ? toTRDate(s(7).motherBirthDate) : "-", false,0);
-    currentY -= Math.max(h1, h2) + 10;
-
-    h1 = drawField("Anneniz ABD'de mi Yaşıyor?", s(7).isMotherInUSA || "-", false, 0);
-      if (s(7).isMotherInUSA === "EVET") {
-      h1 = drawField("Anneniz ABD'de de Statüsü Nedir?", s(7).isMotherInUSA || "-", false,0);
-      currentY -= h1 + 10;
-    }
-   
-    currentY -= h1 + 10;
-
     h1 = drawField("Baba Adı Soyadı", s(7).fatherFullName || "-", false, 0);
     h2 = drawField("Baba Doğum Tarihi", s(7).fatherBirthDate ? toTRDate(s(7).fatherBirthDate) : "-", false,0);
-    currentY -= Math.max(h1, h2) + 10;
+   
     h1 = drawField("Babanız ABD'de mi Yaşıyor?", s(7).isFatherInUSA || "-", false, 0);
-       if (s(7).isFatherInUSA === "EVET") {
+       if (s(7).isFatherInUSA === "YES") {
       h1 =drawField("Babanız ABD'de de Statüsü Nedir?", s(7).isFatherInUSA || "-", false,0);
-      currentY -= h1 + 10;
+    
     }
    
-    currentY -= h1 + 10;
+     h1 = drawField("Anne Adı Soyadı", s(7).motherFullName || "-", false, 0);
+    h2 = drawField("Anne Doğum Tarihi", s(7).motherBirthDate ? toTRDate(s(7).motherBirthDate) : "-", false,0);
+   
+
+    h1 = drawField("Anneniz ABD'de mi Yaşıyor?", s(7).isMotherInUSA || "-", false, 0);
+      if (s(7).isMotherInUSA === "YES") {
+      h1 = drawField("Anneniz ABD'de de Statüsü Nedir?", s(7).isMotherInUSA || "-", false,0);
+    
+    }
 
   
 
  
 
     h1 = drawField("Anne/Baba Hariç ABD'de Yaşayan Yakın Akrabanız Var mı?", s(7).hasRelativeInUSA || "-", false, 0);
-    currentY -= h1 + 10;
+   
 
     if (s(7).hasRelativeInUSA === "YES" && Array.isArray(s(7).relatives) && s(7).relatives.length > 0) {
        h1 = drawField("Anne/Baba Hariç ABD'de Yaşayan Yakın Akraba Sayısı", s(7).relativeCount || "-", false, 0);
       s(7).relatives.forEach((rel, index) => {
         let r1 = drawField(`Akraba ${index + 1} - Ad Soyad`, rel.fullName || "-", false, 0);
         let r2 = drawField("Akrabanızın Yakınlık Derecesi", rel.level || "-", false,0);
-        currentY -= Math.max(r1, r2) + 8;
+       
 
         r1 = drawField("Akrabanızın Yasal Statüsü", rel.status || "-", false, 0);
-        currentY -= r1 + 10;
+       
       });
     }
 
     h1 = drawField("ABD'de Yaşayan Başka Yakınınız Var mı?", s(7).otherRelativeInUSA || "-", true, 0);
-    currentY -= h1 + 10;
+   
 
-    drawFooter(currentPage, pageCount);
-
-    // --- BÖLÜM 8: Eş ve Evlilik ---
-    currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
-    pageCount++;
-    currentY = PAGE_HEIGHT - MARGIN;
-    drawHeader(currentPage);
+   
 
     drawSection("8. BÖLÜM — EŞ VE EVLİLİK BİLGİLERİ");
+    if(s(1)?.maritalStatus === "SINGLE"){
+       h1 = drawField("Medeni Durumu Bekar Olduğu İçin Bu Kısım Boştur.", false, 0);
+    }
     if(s(1)?.maritalStatus === "MARRIED"){
        h1 = drawField("Eşinizin Adı Soyadı", s(8).spouseFullName || "-", false, 0);
     if(s(1)?.gender === "MALE"){
      h2 = drawField("Eşinizin Kızlık Soyadı", s(8).wifeMaidenName || "-", false,0);
     }
 
-    currentY -= Math.max(h1, h2) + 10;
+   
 
     h1 = drawField("Eşinizin Uyruğu", s(8).spouseNationality || "-", false, 0);
     h2 = drawField("Eşinizin Doğum Tarihi", s(8).spouseBirthDate ? toTRDate(s(8).spouseBirthDate) : "-", false,0);
-    currentY -= Math.max(h1, h2) + 10;
+   
 
     h1 = drawField(
       "Eşinizin Doğum Yeri",
@@ -795,13 +730,13 @@ if(s(4)?.hadUSDriverLicense === "YES"){
       false,
       0
     );
-    currentY -= h1 + 10;
+   
 
     h1 = drawField("Eşin Adresi", s(8).spouseAddress || "-", true, 0);
-    currentY -= h1 + 10;
+   
     if(s(8)?.spouseAddress === "OTHER"){
     h1 = drawField("Farklı Adres", s(8).otherSpouseAddress || "-", true, 0);
-        currentY -= h1 + 6;
+
        h1 = drawField(
       "Şehir / Ülke",
       `${s(8).otherSpouseAddressCity || "-"} / ${s(8).otherSpouseAddressCountry || "-"}`,
@@ -809,27 +744,26 @@ if(s(4)?.hadUSDriverLicense === "YES"){
       0
     );
     h2 = drawField("Posta Kodu", s(8).otherSpouseAddressPostCode || "-", false,0);
-    currentY -= Math.max(h1, h2) + 10;
+   
 
     }
    
-    currentY -= h1 + 6;
+   
 
    
     h1 = drawField("Evlilik Tarihi", s(8).marriageDate ? toTRDate(s(8).marriageDate) : "-", false, 0);
-    currentY -= h1 + 12;
+   
 
     } else if (((s(1)?.maritalStatus === "WIDOWED") || (s(1)?.maritalStatus === "DIVORCED"))){
     h1 = drawField("Eski Eş Adı Soyadı", s(8).oldSpouseFullName || "-", false, 0);
-    currentY -= h1 + 8;
-
+  
     h1 = drawField("Eski Evlilik Başlama Tarihi", s(8).oldMarriageDate ? toTRDate(s(8).oldMarriageDate) : "-", false, 0);
     h2 = drawField("Eski Evlilik Bitiş Tarihi", s(8).oldMarriageEndDate ? toTRDate(s(8).oldMarriageEndDate) : "-", false,0);
-    currentY -= Math.max(h1, h2) + 10;
+   
 
     h1 = drawField("Eski Eş Doğum Tarihi", s(8).oldSpouseBirthDate ? toTRDate(s(8).oldSpouseBirthDate) : "-", false, 0);
     h2 = drawField("Eski Eşinizin Uyruğu", s(8).oldSpouseNationality || "-", false,0);
-    currentY -= Math.max(h1, h2) + 10;
+   
 
     h1 = drawField(
       "Eski Eş Doğum Yeri",
@@ -843,30 +777,24 @@ if(s(4)?.hadUSDriverLicense === "YES"){
       false,
       0
     );
-    currentY -= h1 +h2 + 8;
+   
 
     h1 = drawField("Evliliğinizi Bitirdiğiniz Ülke", s(8).oldSpouseEndCountry || "-", true, 0);
     h2 = drawField("Evliliğiniz Nasıl Sona Erdi?", s(8).oldSpouseInfo || "-", true, 0);
-    currentY -= h1 + 10;
+   
       
     }
     
 
    
 
-    drawFooter(currentPage, pageCount);
-
-    // --- BÖLÜM 9: Meslek, İş ve Eğitim ---
-    currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
-    pageCount++;
-    currentY = PAGE_HEIGHT - MARGIN;
-    drawHeader(currentPage);
+    
 
     drawSection("9. BÖLÜM — MESLEK, İŞ VE EĞİTİM BİLGİLERİ");
 
     h1 = drawField("Mesleğiniz", s(9).occupation || "-", false, 0);
     h2 = drawField("İşyerinizin Tam Adı / Okul Adı", s(9).workOrSchoolName || "-", false,0);
-    currentY -= Math.max(h1, h2) + 10;
+   
 
     h1 = drawField(
       "İş Yerinin/Okulun Adresi",
@@ -892,21 +820,21 @@ if(s(4)?.hadUSDriverLicense === "YES"){
       true,
       0
     );
-    currentY -= h1 + 10;
+   
 
     h1 = drawField("İş Yeri/Okul Telefon", s(9).workOrSchoolPhone || "-", false, 0);
     h2 = drawField("İşe/Okula Başlama Tarihiniz", s(9).workStartDate ? toTRDate(s(9).workStartDate) : "-", false,0);
-    currentY -= Math.max(h1, h2) + 10;
-    h1 = drawField("Açık İş Tanımınız, Görevleriniz ve Ünvanınız", s(9).jobDescription || "-", true,0);
-    h2 = drawField("Aylık Gelir", s(9).monthlyIncome || "-", false, 0);
    
-    currentY -= Math.max(h1, h2) + 12;
+    h1 = drawField("Açık İş Tanımınız, Görevleriniz ve Ünvanınız", s(9).jobDescription || "-", true,0);
+    h2 = drawField("Aylık Geliri", s(9).monthlyIncome || "-", false, 0);
+   
+   
 
     if (s(9).previousJobBoolean === "YES" && Array.isArray(s(9).previousJobs)) {
       s(9).previousJobs.forEach((job, index) => {
         let j1 = drawField(`Önceki İş Yeri Adı ${index + 1}`, job.companyName || "-", false, 0);
         let j2 = drawField("Ünvanınız", job.position || "-", false,0);
-        currentY -= Math.max(j1, j2) + 8;
+       
 
         j1 = drawField(
           "İş Yerinin Adresi",
@@ -938,7 +866,7 @@ if(s(4)?.hadUSDriverLicense === "YES"){
           true,
           0
         )
-        currentY -= j1 + 6;
+       
 
         j1 = drawField(
           "İşe Giriş Tarihi",
@@ -964,7 +892,7 @@ if(s(4)?.hadUSDriverLicense === "YES"){
           false,
           0
         );
-        currentY -= j1 + 10;
+      
       });
     }
      h1 = drawField("Eğitim Durumunuz", s(9).educationBoolean || "-", true,0);
@@ -972,7 +900,7 @@ if(s(4)?.hadUSDriverLicense === "YES"){
       s(9).previousEducations.forEach((job, index) => {
         let j1 = drawField(`Eğitim Seviyesi`, job.level || "-", false, 0);
         let j2 = drawField(`Kurumun Adı ${index + 1}`, job.schoolName || "-", false, 0);
-        currentY -= Math.max(j1, j2) + 8;
+       
 
         j1 = drawField(
           "Okulun Adresi",
@@ -1007,11 +935,11 @@ if(s(4)?.hadUSDriverLicense === "YES"){
         )
               j1 = drawField(
           "Bölüm/Program",
-          job.course || "-",
+          job.department || "-",
           true,
           0
         )
-        currentY -= j1 + 6;
+       
 
         j1 = drawField(
           "Okul Başlangıç Tarihi",
@@ -1027,30 +955,24 @@ if(s(4)?.hadUSDriverLicense === "YES"){
         );
         
          
-        currentY -= j1 + 10;
+       
       });
     }
-    drawFooter(currentPage, pageCount);
-
-    // --- BÖLÜM 10: Diğer Bilgiler ---
-    currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
-    pageCount++;
-    currentY = PAGE_HEIGHT - MARGIN;
-    drawHeader(currentPage);
+    
 
     drawSection("10. BÖLÜM — DİĞER BİLGİLER");
 
     h1 = drawField("Bildiğiniz Diller", s(10).languages || "-", false, 0);
-    h2 = drawField("Ziyaret Edilen Ülkeler", s(10).visitedCountries || "-", false,0);
-    currentY -= Math.max(h1, h2) + 10;
+    h2 = drawField("Son 5 Yılda Ziyaret Edilen Ülkeler", s(10).visitedCountries || "-", false,0);
+   
 
     h1 = drawField("Askerlik Durumu", s(10).militaryStatus === "YES" ? "YAPTI" : "YAPMADI" , false, 0);
-    currentY -= h1 + 10;
+   
 
     if (s(10).militaryStatus === "YES") {
       h1 = drawField("Askerlik Başlangıç Tarihi", s(10).militaryStartDate ? toTRDate(s(10).militaryStartDate) : "-", false, 0);
       h2 = drawField("Askerlik Bitiş Tarihi", s(10).militaryEndDate ? toTRDate(s(10).militaryEndDate) : "-", false,0);
-      currentY -= Math.max(h1, h2) + 10;
+     
     }
 
     h1 = drawField("Ek Bilgiler", s(10).additionalInfo || "-", false, 0);
@@ -1082,8 +1004,8 @@ currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
           const scale = Math.min(width / embeddedImg.width, height / embeddedImg.height);
           imgDims = { width: embeddedImg.width * scale, height: embeddedImg.height * scale };
         } else if (type === "photo") {
-  const maxWidth = CONTENT_WIDTH / 3;   // sayfanın 1/3’ü
-  const maxHeight = PAGE_HEIGHT / 3;
+  const maxWidth =PAGE_WIDTH - 2 * MARGIN;  // sayfanın 1/3’ü
+  const maxHeight =(PAGE_HEIGHT - 150) / 3;
 
   const scale = Math.min(
     maxWidth / embeddedImg.width,
@@ -1125,7 +1047,7 @@ currentPage = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
         console.error("Dosya resmi eklenemedi:", title, e);
       }
     };
-
+drawSection("11. BÖLÜM — FOTOĞRAFLAR");
     await addFileImage(passportBase64, "Pasaport Görüntüsü", "passport");
     await addFileImage(photoBase64, "Biyometrik Fotoğraf", "photo");
 
@@ -1203,7 +1125,7 @@ const htmlBody = `
     letter-spacing: 0.3px;
   }
   .doc-header-text p {
-    font-size: 12px;
+    font-size: 14px;
     color: rgba(255,255,255,0.65);
     margin-top: 4px;
   }
@@ -1229,7 +1151,7 @@ const htmlBody = `
     background: #0f2c5c;
     color: #fff;
     font-family: 'DM Sans', sans-serif;
-    font-size: 10px;
+    font-size: 14px;
     font-weight: 600;
     padding: 2px 8px;
     border-radius: 20px;
@@ -1252,7 +1174,7 @@ const htmlBody = `
     background: #f1f4fb;
     color: #374569;
     font-weight: 600;
-    font-size: 12px;
+    font-size: 16px;
     padding: 10px 14px;
     text-align: left;
     width: 38%;
@@ -1263,7 +1185,7 @@ const htmlBody = `
   td {
     padding: 10px 14px;
     color: #1a1d23;
-    font-size: 13.5px;
+    font-size: 16px;
     vertical-align: top;
   }
 
@@ -1273,10 +1195,10 @@ const htmlBody = `
     border-radius: 8px;
     padding: 10px 14px;
     margin-bottom: 8px;
-    font-size: 13px;
+    font-size: 16px;
   }
   .sub-entry:last-child { margin-bottom: 0; }
-  .sub-entry strong { color: #0f2c5c; display: block; margin-bottom: 4px; font-size: 12px; }
+  .sub-entry strong { color: #0f2c5c; display: block; margin-bottom: 4px; font-size: 16px; }
 
   .photo-row {
     display: flex;
@@ -1294,7 +1216,7 @@ const htmlBody = `
     text-align: center;
   }
   .photo-box p {
-    font-size: 11px;
+    font-size: 16px;
     font-weight: 600;
     color: #6b7a99;
     letter-spacing: 0.6px;
@@ -1308,7 +1230,7 @@ const htmlBody = `
     border-top: 1px solid #e4e9f0;
     padding: 14px 40px;
     text-align: right;
-    font-size: 11px;
+    font-size: 16px;
     color: #8a94aa;
   }
 </style>
@@ -1338,7 +1260,7 @@ const htmlBody = `
         <tr><th>Medeni Durumu</th><td>${s(1).maritalStatus || "-"}</td></tr>
         ${s(1).maritalStatus === "MARRIED"
           ? `<tr><th>Daha Önce Kullanılan Ad ve Soyad</th><td>${s(1).maidenName || "-"}</td></tr>`
-          : `<tr><th>Cinsiyet</th><td>${s(1).gender || "-"}</td></tr>`
+          : `<tr><th>Cinsiyet</th><td>${s(1).gender === "M" ? "MALE" : s(1).gender === "F" ? "FEMALE" : "-"  || "-"}</td></tr>`
         }
       </table>
     </div>
@@ -1348,13 +1270,13 @@ const htmlBody = `
       <div class="section-title"><span class="badge">02</span> KİMLİK VE UYRUK BİLGİLERİ</div>
       <table>
         <tr><th>Uyruğunuz</th><td>${s(2).nationality || "-"}</td></tr>
-        <tr><th>Diğer Uyruğunuz</th><td>${s(2).otherNationalityExist === "EVET" && s(2).otherNationality ? s(2).otherNationality : "-"}</td></tr>
-        <tr><th>Diğer Uyruğunuza Ait Pasaport Numarası (Varsa)</th><td>${s(2).otherNationalityExist === "EVET" && s(2).otherNationalityPassportNo ? s(2).otherNationalityPassportNo : "-"}</td></tr>
+        <tr><th>Diğer Uyruğunuz</th><td>${s(2).otherNationalityExist === "YES" && s(2).otherNationality ? s(2).otherNationality : "-"}</td></tr>
+        <tr><th>Diğer Uyruğunuza Ait Pasaport Numarası (Varsa)</th><td>${s(2).otherNationalityExist === "YES" && s(2).otherNationalityPassportNo ? s(2).otherNationalityPassportNo : "-"}</td></tr>
         <tr><th>Ulusal Kimlik Numaranız</th><td>${s(2).tcId || "-"}</td></tr>
         <tr><th>Sosyal Güvenlik Numarası (ABD'de bulunduysanız)</th><td>${s(2).ssn || "-"}</td></tr>
         <tr><th>ABD Vergi Kimlik Numarası (ABD'de bulunduysanız)</th><td>${s(2).vkn || "-"}</td></tr>
         <tr><th>Kendi Ülkeniz Dışında Bir Ülkede Oturumunuz Var Mı?</th><td>${s(2).otherSessionExist || "-"}</td></tr>
-        <tr><th>Oturum Aldığınız Ülke</th><td>${s(2).otherSessionExist === "EVET" && s(2).otherSessionExistCountry ? s(2).otherSessionExistCountry : "-"}</td></tr>
+        <tr><th>Oturum Aldığınız Ülke</th><td>${s(2).otherSessionExist === "YES" && s(2).otherSessionExistCountry ? s(2).otherSessionExistCountry : "-"}</td></tr>
       </table>
     </div>
 
@@ -1373,7 +1295,7 @@ const htmlBody = `
         ` : ""}
         ${s(3).tourismPlanFinalized === "NO" ? `
         <tr><th>Tahmini Gidiş Tarihiniz</th><td>${s(3).estimatedArrival ? toTRDate(s(3).estimatedArrival) : "-"}</td></tr>
-        <tr><th>ABD'de Ne Kadar Kalacaksınız?</th><td>${s(3).stayDuration || "-"}</td></tr>
+      <tr><th>ABD'de Ne Kadar Kalacaksınız?</th><td>${(s(3).stayDurationValue && s(3).stayDurationUnit) ? `${s(3).stayDurationValue} ${s(3).stayDurationUnit}` : "-"}</td></tr>
         ` : ""}
         <tr><th>ABD'de Konaklayacağınız Şehir</th><td>${s(3).usaAddressCity || "-"}</td></tr>
         <tr><th>ABD'de Konaklayacağınız Eyalet</th><td>${s(3).usaAddressState || "-"}</td></tr>
@@ -1478,7 +1400,7 @@ const htmlBody = `
         <tr><th>İş Telefonu</th><td>${s(5).workPhone || "-"}</td></tr>
         <tr><th>E-Posta Adresiniz</th><td>${s(5).email || "-"}</td></tr>
         <tr><th>Sosyal Medya Hesabı Var mı?</th><td>${s(5).hasSocialMedia || "-"}</td></tr>
-        ${s(5).hasSocialMedia === "EVET" && Array.isArray(s(5).socialMediaAccounts) && s(5).socialMediaAccounts.length > 0 ? `
+        ${s(5).hasSocialMedia === "YES" && Array.isArray(s(5).socialMediaAccounts) && s(5).socialMediaAccounts.length > 0 ? `
         <tr><th>Sosyal Medya Hesapları</th><td>
           ${s(5).socialMediaAccounts.map((acc, i) => `
             <div class="sub-entry">
@@ -1534,17 +1456,17 @@ const htmlBody = `
     <div class="section">
       <div class="section-title"><span class="badge">07</span> ANNE, BABA VE ABD'DE AKRABALAR</div>
       <table>
-        <tr><th>Anne Adı Soyadı</th><td>${s(7).motherFullName || "-"}</td></tr>
-        <tr><th>Anne Doğum Tarihi</th><td>${s(7).motherBirthDate ? toTRDate(s(7).motherBirthDate) : "-"}</td></tr>
-        <tr><th>Anneniz ABD'de mi Yaşıyor?</th><td>${s(7).isMotherInUSA || "-"}</td></tr>
-        ${s(7).isMotherInUSA === "EVET" ? `
-        <tr><th>Annenizin ABD'deki Statüsü Nedir?</th><td>${s(7).isMotherUSAStatus || "-"}</td></tr>
-        ` : ""}
         <tr><th>Baba Adı Soyadı</th><td>${s(7).fatherFullName || "-"}</td></tr>
         <tr><th>Baba Doğum Tarihi</th><td>${s(7).fatherBirthDate ? toTRDate(s(7).fatherBirthDate) : "-"}</td></tr>
         <tr><th>Babanız ABD'de mi Yaşıyor?</th><td>${s(7).isFatherInUSA || "-"}</td></tr>
-        ${s(7).isFatherInUSA === "EVET" ? `
+        ${s(7).isFatherInUSA === "YES" ? `
         <tr><th>Babanızın ABD'deki Statüsü Nedir?</th><td>${s(7).isFatherUSAStatus || "-"}</td></tr>
+        ` : ""}
+         <tr><th>Anne Adı Soyadı</th><td>${s(7).motherFullName || "-"}</td></tr>
+        <tr><th>Anne Doğum Tarihi</th><td>${s(7).motherBirthDate ? toTRDate(s(7).motherBirthDate) : "-"}</td></tr>
+        <tr><th>Anneniz ABD'de mi Yaşıyor?</th><td>${s(7).isMotherInUSA || "-"}</td></tr>
+        ${s(7).isMotherInUSA === "YES" ? `
+        <tr><th>Annenizin ABD'deki Statüsü Nedir?</th><td>${s(7).isMotherUSAStatus || "-"}</td></tr>
         ` : ""}
         <tr><th>Anne/Baba Hariç ABD'de Yaşayan Yakın Akrabanız Var mı?</th><td>${s(7).hasRelativeInUSA || "-"}</td></tr>
         ${s(7).hasRelativeInUSA === "YES" && Array.isArray(s(7).relatives) && s(7).relatives.length > 0 ? `
@@ -1585,7 +1507,9 @@ const htmlBody = `
         ${(s(1).maritalStatus === "WIDOWED" || s(1).maritalStatus === "DIVORCED") ? `
         <tr><th>Eski Eş Adı Soyadı</th><td>${s(8).oldSpouseFullName || "-"}</td></tr>
         <tr><th>Eski Evlilik Başlama Tarihi</th><td>${s(8).oldMarriageDate ? toTRDate(s(8).oldMarriageDate) : "-"}</td></tr>
+      ${s(1).maritalStatus === "DIVORCED" ? `
         <tr><th>Eski Evlilik Bitiş Tarihi</th><td>${s(8).oldMarriageEndDate ? toTRDate(s(8).oldMarriageEndDate) : "-"}</td></tr>
+        ` : ""}
         <tr><th>Eski Eş Doğum Tarihi</th><td>${s(8).oldSpouseBirthDate ? toTRDate(s(8).oldSpouseBirthDate) : "-"}</td></tr>
         <tr><th>Eski Eşinizin Uyruğu</th><td>${s(8).oldSpouseNationality || "-"}</td></tr>
         <tr><th>Eski Eş Doğum Yeri</th><td>${s(8).oldSpouseBirthPlace || "-"}</td></tr>
@@ -1634,7 +1558,7 @@ const htmlBody = `
             <div class="sub-entry">
               <strong>${i + 1}. Kurum — ${edu.schoolName || "-"}</strong>
               Eğitim Seviyesi: ${edu.level || "-"}<br/>
-              Bölüm/Program: ${edu.course || "-"}<br/>
+              Bölüm/Program: ${edu.department || "-"}<br/>
               Adres: ${edu.address1 || "-"}<br/>
               Şehir: ${edu.city || "-"}<br/>
               Eyalet: ${edu.state || "-"}<br/>
@@ -1652,7 +1576,7 @@ const htmlBody = `
       <div class="section-title"><span class="badge">10</span> DİĞER BİLGİLER</div>
       <table>
         <tr><th>Bildiğiniz Diller</th><td>${s(10).languages || "-"}</td></tr>
-        <tr><th>Ziyaret Edilen Ülkeler</th><td>${s(10).visitedCountries || "-"}</td></tr>
+        <tr><th>Son 5 Yılda Ziyaret Edilen Ülkeler</th><td>${s(10).visitedCountries || "-"}</td></tr>
         <tr><th>Askerlik Durumu</th><td>${s(10).militaryStatus === "YES" ? "YAPTI" : "YAPMADI"}</td></tr>
         ${s(10).militaryStatus === "YES" ? `
         <tr><th>Askerlik Başlangıç Tarihi</th><td>${s(10).militaryStartDate ? toTRDate(s(10).militaryStartDate) : "-"}</td></tr>
