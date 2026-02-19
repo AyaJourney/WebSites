@@ -509,7 +509,12 @@ if (s(3).whoPays === "COMPANY") {
       if (Array.isArray(s(4).travels) && s(4).travels.length > 0) {
         s(4).travels.slice(0, 5).forEach((travel, index) => {
           let hA = drawField(`ABD Seyahati ${index + 1} - Gidiş Tarihi`, travel.date ? toTRDate(travel.date) : "-", false, 0);
-          let hB = drawField(`ABD Seyahati ${index + 1} - Kalış Süresi`, travel.duration || "-", false,0);
+         let hB = drawField(
+  `ABD Seyahati ${index + 1} - Kalış Süresi`,
+  (travel.durationValue && travel.durationUnit)
+    ? `${travel.durationValue} ${travel.durationUnit}`
+    : null
+);
          
         });
       } 
@@ -589,9 +594,32 @@ if(s(4)?.hadUSDriverLicense === "YES"){
     h2 = drawField("Pasaportu Veren Makam", s(5).passportAuthority || "-", false, 0);
    
 
+const passportEndRaw = s(5).passportEnd;
+const passportEndStr = passportEndRaw ? toTRDate(passportEndRaw) : "-";
 
+// 90 gün kontrolü
+let passportWarning = null;
+if (passportEndRaw) {
+  const endDate = new Date(passportEndRaw);
+  const today = new Date();
+  const diffDays = Math.ceil((endDate - today) / (1000 * 60 * 60 * 24));
+  if (diffDays <= 90) {
+    passportWarning = `⚠ Pasaport bitiş tarihine ${diffDays > 0 ? diffDays + " gün kaldı" : "geçti"}!`;
+  }
+}
     h1 = drawField("Pasaport Başlangıç Tarihi", s(5).passportStart ? toTRDate(s(5).passportStart) : "-", false, 0);
-    h2 = drawField("Pasaport Bitiş Tarihi", s(5).passportEnd ? toTRDate(s(5).passportEnd) : "-", false, 0);
+   h2 = drawField("Pasaport Bitiş Tarihi", passportEndStr);
+
+if (passportWarning) {
+  currentPage.drawText(passportWarning, {
+    x: MARGIN,
+    y: currentY,
+    size: 11,
+    font: boldFont,
+    color: rgb(0.85, 0.1, 0.1), // kırmızı
+  });
+  currentY -= LINE_HEIGHT + 4;
+}
    
 
     h1 = drawField("Daha Önce Pasaportu Kaybettiniz/Çaldırdınız mı?", s(5).lostPassportBoolean || "-", false, 0);
@@ -1356,7 +1384,7 @@ const htmlBody = `
               <div class="sub-entry">
                 <strong>${i + 1}. Seyahat</strong>
                 Gidiş Tarihi: ${t.date ? toTRDate(t.date) : "-"}<br/>
-                Kalış Süresi: ${t.duration || "-"}
+                Kalış Süresi: ${(t.durationValue && t.durationUnit) ? `${t.durationValue} ${t.durationUnit}` : "-"}
               </div>`).join("")
             : "-"}
         </td></tr>
