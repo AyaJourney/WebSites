@@ -391,7 +391,14 @@ const requiredFields = {
   6: ["passportFile","photoFile"],
 };
 
+const isValidResidenceDuration = (value = "") => {
+  const text = value.trim().toUpperCase();
 
+  // En az bir sayı + birim olmalı
+  const pattern = /^(\d+\s*(YIL|AY|GÜN))(?:\s+\d+\s*(YIL|AY|GÜN))*$/;
+
+  return pattern.test(text);
+};
 const validateStep = (step, formData) => {
 
   const stepData = formData.steps?.[step] || {};
@@ -409,7 +416,13 @@ const validateStep = (step, formData) => {
 
   // ================= STEP 1 =================
   if (step === 1) {
+const duration = formData.steps[1]?.residence_duration;
 
+  if (isEmpty(duration)) {
+    addField("residence_duration");
+  } else if (!isValidResidenceDuration(duration)) {
+    addField("residence_duration_format");
+  }
     if (stepData.home_owner === "DIGER") {
       addField("home_owner_info");
     }
@@ -418,7 +431,16 @@ const validateStep = (step, formData) => {
       addField("past_addresses");
     }
   }
+if(step ===2){
+      if (stepData.father_travel_with_you === "EVET") {
 
+      addField("father_passport_number");
+      }
+      if (stepData.mother_travel_with_you === "EVET") {
+
+      addField("mother_passport_number");
+      }
+}
   // ================= STEP 2 (CHILD) =================
   if (step === 2 && stepData.boolean_child === "EVET") {
 
@@ -644,7 +666,11 @@ const validateStep = (step, formData) => {
   // ================= FINAL MISSING CHECK =================
 
   const missing = fields.filter(field => {
-
+if (field === "residence_duration_format") {
+  return !isValidResidenceDuration(
+    stepData?.residence_duration
+  );
+}
     // DEPENDENT
     if (field.startsWith("dependent_")) {
       const [_, key, index] = field.split("_");
@@ -2389,6 +2415,11 @@ const updateDependent = (stepIndex, personIndex, field, value) => {
       {errors.residence_duration}
     </p>
   )}
+  {errors.residence_duration_format && (
+  <p className="text-red-500 text-xs mt-1">
+    Lütfen süreyi YIL AY GÜN formatında giriniz.
+  </p>
+)}
 </div>
 
 {form.steps[1].residence_months_total !== null &&
@@ -2941,7 +2972,7 @@ const updateDependent = (stepIndex, personIndex, field, value) => {
 )}
       </div>
         {form.steps[2].child_travel_with_you?.[i] === "EVET" && (   <div>
-        <label className="text-sm font-medium">{i + 1}. Çocuk Pasaport No (varsa)</label>
+        <label className="text-sm font-medium">{i + 1}. Çocuk Pasaport No</label>
         <input
           name={`child_passport_number_${i}`}
          className={`w-full mt-1 p-3 border rounded-xl shadow-sm outline-none transition
