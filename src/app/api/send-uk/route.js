@@ -165,16 +165,7 @@ if (fontBytes) {
       }
     }
 
-    const textWidthCache = new Map();
-    const getTextWidth = (font, size, text) => {
-      const fontKey = font === boldFont ? "b" : "r";
-      const key = `${fontKey}:${size}:${text}`;
-      if (textWidthCache.has(key)) return textWidthCache.get(key);
-      const width = font.widthOfTextAtSize(text, size);
-      if (textWidthCache.size > 2000) textWidthCache.clear();
-      textWidthCache.set(key, width);
-      return width;
-    };
+
 
 // 1. Sabitler
 const PAGE_WIDTH = 595;
